@@ -22,7 +22,9 @@ public enum UnidyeColor {
     BROWN(12, "brown", 0x773100, 8606770, 0x7A4E2F, 0x664430, 0x603b1f, 0x664b32, DyeColor.BROWN.getFireworkColor(), DyeColor.BROWN.getSignColor(), 0x754829, 0x8F5B35),
     GREEN(13, "green", 0x6FBA00, 6192150, 0x546d1b, 0x626B38, 0x495b24, 0x667f32, DyeColor.GREEN.getFireworkColor(), DyeColor.GREEN.getSignColor(), 0x556D1D, 0x658718),
     RED(14, "red", 0xFF0000, 11546150, 0xa02722, 0xB24C3C, 0x8e2020, 0x993232, DyeColor.RED.getFireworkColor(), DyeColor.RED.getSignColor(), 0x9B2523, 0xBF3B33),
-    BLACK(15, "black", 0x565656, 0x1D1D21, 0x252529, 0x301E16, 0x080a0f, 0x191919, DyeColor.BLACK.getFireworkColor(), DyeColor.BLACK.getSignColor(), 0x1F1F23, 0x31304C);
+    BLACK(15, "black", 0x565656, 0x1D1D21, 0x252529, 0x301E16, 0x080a0f, 0x191919, DyeColor.BLACK.getFireworkColor(), DyeColor.BLACK.getSignColor(), 0x1F1F23, 0x31304C),
+
+    ELL_MINT(16, "mint", 0x3FE47B, 0x64F9A2, 0x252529, 0x679D66, 0x51D47C, 0x65FF8E, 0x65FF8E, 0x65FF8E, 0x54E585, 0x76FFA7);
 
     private static final IntFunction<UnidyeColor> BY_ID;
     private final int id;

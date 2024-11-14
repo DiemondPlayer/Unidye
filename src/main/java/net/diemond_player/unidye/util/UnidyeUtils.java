@@ -4,6 +4,7 @@ import net.diemond_player.unidye.block.UnidyeBlocks;
 import net.diemond_player.unidye.item.UnidyeItems;
 import net.diemond_player.unidye.item.custom.CustomDyeItem;
 import net.diemond_player.unidye.item.custom.DyeableLeatheryBlockItem;
+import net.leafenzo.mint.item.ElsDyeModItems;
 import net.minecraft.item.*;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
@@ -36,6 +37,7 @@ public class UnidyeUtils {
         put(Items.PINK_DYE, UnidyeColor.PINK);
         put(Items.GRAY_DYE, UnidyeColor.GRAY);
         put(Items.PURPLE_DYE, UnidyeColor.PURPLE);
+        put(ElsDyeModItems.MINT_DYE, UnidyeColor.ELL_MINT);
     }};
     public static Map<Item, String> MATERIAL_TYPES = new HashMap<Item, String>() {{
         put(UnidyeBlocks.CUSTOM_WOOL.asItem(), "wool");
