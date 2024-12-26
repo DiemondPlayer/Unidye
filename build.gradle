@@ -68,34 +68,36 @@ dependencies {
 	modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:$rei_version"
 	modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:$rei_version"
 	modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:$rei_version"
-	//modCompileOnly "dev.emi:emi-fabric:${emi_version}:api"
-	//modLocalRuntime "dev.emi:emi-fabric:${emi_version}"
-	modImplementation "curse.maven:cloth-config-348521:4973440"
-	modImplementation "curse.maven:forge-config-api-port-fabric-547434:4583000"
-	modImplementation ("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlin_version}")
-	modImplementation "org.jetbrains.kotlin:kotlin-reflect:2.0.21"
-	implementation("com.eliotlash.mclib:mclib:${mclib_version}")
-	modImplementation "maven.modrinth:el-and-ls-dye-mod:1.0.4+1.20.1"
-	modImplementation "curse.maven:geckolib-388172:5675212"
-	modImplementation("net.fabricmc:fabric-language-kotlin:1.12.3+kotlin.2.0.21")
+
+	modCompileOnly "dev.emi:emi-fabric:${emi_version}:api"
+	modImplementation "dev.emi:emi-fabric:${emi_version}"
+
+	//modImplementation "curse.maven:cloth-config-348521:4973440"
+	//modImplementation "curse.maven:forge-config-api-port-fabric-547434:4583000"
+	//modImplementation ("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlin_version}")
+	//modImplementation "org.jetbrains.kotlin:kotlin-reflect:2.0.21"
+	//implementation("com.eliotlash.mclib:mclib:${mclib_version}")
+	//modImplementation "maven.modrinth:el-and-ls-dye-mod:1.0.4+1.20.1"
+	//modImplementation "curse.maven:geckolib-388172:5675212"
+	//modImplementation("net.fabricmc:fabric-language-kotlin:1.12.3+kotlin.2.0.21")
 	//modCompileOnly("com.simibubi.create:create-fabric-${minecraft_version}:${create_version}")
 
 	//so dye mod doesn't crash
 	//BetterEnd
-	modCompileOnly("maven.modrinth:gc8OEnCC:${betterend_version}")
-	modCompileOnly("com.github.quiqueck:BCLib:${bclib_version}")
-	modCompileOnly("com.github.quiqueck:WunderLib:${wunderlib_version}")
+	//modCompileOnly("maven.modrinth:gc8OEnCC:${betterend_version}")
+	//modCompileOnly("com.github.quiqueck:BCLib:${bclib_version}")
+	//modCompileOnly("com.github.quiqueck:WunderLib:${wunderlib_version}")
 	// Botania  	// this doesn't run here with modImpl but it does run in prod. So I'm chill with it.
-	modCompileOnly("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${cca_version}")
-	modCompileOnly("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${cca_version}")
-	modCompileOnly("maven.modrinth:trinkets:${trinkets_version}")
-	modCompileOnly("me.zeroeightsix:fiber:${fiber_version}")
-	modCompileOnly("com.github.emilyploszaj:step-height-entity-attribute:${step_height_version}")
-	modCompileOnly("maven.modrinth:patchouli:${patchouli_version}")
-	modCompileOnly("maven.modrinth:botania:${botania_version}")
+	//modCompileOnly("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${cca_version}")
+	//modCompileOnly("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${cca_version}")
+	//modCompileOnly("maven.modrinth:trinkets:${trinkets_version}")
+	//modCompileOnly("me.zeroeightsix:fiber:${fiber_version}")
+	//modCompileOnly("com.github.emilyploszaj:step-height-entity-attribute:${step_height_version}")
+	//modCompileOnly("maven.modrinth:patchouli:${patchouli_version}")
+	//modCompileOnly("maven.modrinth:botania:${botania_version}")
 	// Create - dependencies are added transitively
-	modCompileOnly("com.simibubi.create:create-fabric-${minecraft_version}:${create_version}")
-	include(modImplementation('com.github.Chocohead:Fabric-ASM:v2.3'))
+	//modCompileOnly("com.simibubi.create:create-fabric-${minecraft_version}:${create_version}")
+	//include(modImplementation('com.github.Chocohead:Fabric-ASM:v2.3'))
 
 	modRuntimeOnly "com.terraformersmc:modmenu:$modmenu_version"
 

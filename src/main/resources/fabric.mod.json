@@ -25,6 +25,9 @@
 		],
 		"rei_client": [
 			"net.diemond_player.unidye.compat.rei.UnidyeREIClientPlugin"
+		],
+		"emi": [
+			"net.diemond_player.unidye.compat.emi.UnidyeEmiPlugin"
 		]
 	},
 	"mixins": [
