@@ -7,6 +7,8 @@ import dev.emi.emi.api.recipe.EmiRecipe;
 import dev.emi.emi.api.recipe.EmiWorldInteractionRecipe;
 import dev.emi.emi.api.stack.EmiIngredient;
 import dev.emi.emi.api.stack.EmiStack;
+import dev.emi.emi.api.widget.GeneratedSlotWidget;
+import dev.emi.emi.config.FluidUnit;
 import dev.emi.emi.recipe.special.EmiBannerDuplicateRecipe;
 import dev.emi.emi.registry.EmiTags;
 import dev.emi.emi.runtime.EmiReloadLog;
@@ -17,7 +19,9 @@ import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.inventory.Inventory;
+import net.minecraft.item.DyeableItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.BannerDuplicateRecipe;
 import net.minecraft.recipe.CraftingRecipe;
@@ -79,6 +83,54 @@ public class UnidyeEmiPlugin implements EmiPlugin {
             }
         }
         addConcreteRecipe(registry, UnidyeBlocks.CUSTOM_CONCRETE_POWDER, EmiStack.of(Fluids.WATER), UnidyeBlocks.CUSTOM_CONCRETE);
+        addRecipeSafe(registry, () -> EmiWorldInteractionRecipe.builder()
+                .id(synthetic("world/cauldron_washing", "wools"))
+                .leftInput(EmiIngredient.of(ItemTags.WOOL))
+                .rightInput(EmiStack.of(Items.CAULDRON), true)
+                .rightInput(EmiStack.of(Fluids.WATER, FluidUnit.BOTTLE), false)
+                .output(EmiStack.of(Blocks.WHITE_WOOL))
+                .supportsRecipeTree(false)
+                .build());
+        addRecipeSafe(registry, () -> EmiWorldInteractionRecipe.builder()
+                .id(synthetic("world/cauldron_washing", "candles"))
+                .leftInput(EmiIngredient.of(ItemTags.CANDLES))
+                .rightInput(EmiStack.of(Items.CAULDRON), true)
+                .rightInput(EmiStack.of(Fluids.WATER, FluidUnit.BOTTLE), false)
+                .output(EmiStack.of(Blocks.CANDLE))
+                .supportsRecipeTree(false)
+                .build());
+        addRecipeSafe(registry, () -> EmiWorldInteractionRecipe.builder()
+                .id(synthetic("world/cauldron_washing", "shulker_boxes"))
+                .leftInput(EmiIngredient.of(ConventionalItemTags.SHULKER_BOXES))
+                .rightInput(EmiStack.of(Items.CAULDRON), true)
+                .rightInput(EmiStack.of(Fluids.WATER, FluidUnit.BOTTLE), false)
+                .output(EmiStack.of(Blocks.SHULKER_BOX))
+                .supportsRecipeTree(false)
+                .build());
+        addRecipeSafe(registry, () -> EmiWorldInteractionRecipe.builder()
+                .id(synthetic("world/cauldron_washing", "terracottas"))
+                .leftInput(EmiIngredient.of(ItemTags.TERRACOTTA))
+                .rightInput(EmiStack.of(Items.CAULDRON), true)
+                .rightInput(EmiStack.of(Fluids.WATER, FluidUnit.BOTTLE), false)
+                .output(EmiStack.of(Blocks.TERRACOTTA))
+                .supportsRecipeTree(false)
+                .build());
+        addRecipeSafe(registry, () -> EmiWorldInteractionRecipe.builder()
+                .id(synthetic("world/cauldron_washing", "candles"))
+                .leftInput(EmiIngredient.of(ItemTags.CANDLES))
+                .rightInput(EmiStack.of(Items.CAULDRON), true)
+                .rightInput(EmiStack.of(Fluids.WATER, FluidUnit.BOTTLE), false)
+                .output(EmiStack.of(Blocks.CANDLE))
+                .supportsRecipeTree(false)
+                .build());
+        addRecipeSafe(registry, () -> EmiWorldInteractionRecipe.builder()
+                .id(synthetic("world/cauldron_washing", "candles"))
+                .leftInput(EmiIngredient.of(ItemTags.CANDLES))
+                .rightInput(EmiStack.of(Items.CAULDRON), true)
+                .rightInput(EmiStack.of(Fluids.WATER, FluidUnit.BOTTLE), false)
+                .output(EmiStack.of(Blocks.CANDLE))
+                .supportsRecipeTree(false)
+                .build());
     }
     private static <C extends Inventory, T extends Recipe<C>> Iterable<T> getRecipes(EmiRegistry registry, RecipeType<T> type) {
         return registry.getRecipeManager().listAllOfType(type).stream()::iterator;
