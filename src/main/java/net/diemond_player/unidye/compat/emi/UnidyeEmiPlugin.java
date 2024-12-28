@@ -14,6 +14,7 @@ import dev.emi.emi.registry.EmiTags;
 import dev.emi.emi.runtime.EmiReloadLog;
 import net.diemond_player.unidye.block.UnidyeBlocks;
 import net.diemond_player.unidye.recipes.*;
+import net.fabricmc.fabric.api.tag.convention.v1.ConventionalBlockTags;
 import net.fabricmc.fabric.api.tag.convention.v1.ConventionalItemTags;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -33,6 +34,7 @@ import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 import dev.emi.emi.EmiPort;
 
+import java.util.List;
 import java.util.Set;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -84,7 +86,7 @@ public class UnidyeEmiPlugin implements EmiPlugin {
         }
         addConcreteRecipe(registry, UnidyeBlocks.CUSTOM_CONCRETE_POWDER, EmiStack.of(Fluids.WATER), UnidyeBlocks.CUSTOM_CONCRETE);
         addRecipeSafe(registry, () -> EmiWorldInteractionRecipe.builder()
-                .id(synthetic("world/cauldron_washing", "wools"))
+                .id(synthetic("world/cauldron_washing", "wool"))
                 .leftInput(EmiIngredient.of(ItemTags.WOOL))
                 .rightInput(EmiStack.of(Items.CAULDRON), true)
                 .rightInput(EmiStack.of(Fluids.WATER, FluidUnit.BOTTLE), false)
@@ -92,7 +94,7 @@ public class UnidyeEmiPlugin implements EmiPlugin {
                 .supportsRecipeTree(false)
                 .build());
         addRecipeSafe(registry, () -> EmiWorldInteractionRecipe.builder()
-                .id(synthetic("world/cauldron_washing", "candles"))
+                .id(synthetic("world/cauldron_washing", "candle"))
                 .leftInput(EmiIngredient.of(ItemTags.CANDLES))
                 .rightInput(EmiStack.of(Items.CAULDRON), true)
                 .rightInput(EmiStack.of(Fluids.WATER, FluidUnit.BOTTLE), false)
@@ -100,7 +102,7 @@ public class UnidyeEmiPlugin implements EmiPlugin {
                 .supportsRecipeTree(false)
                 .build());
         addRecipeSafe(registry, () -> EmiWorldInteractionRecipe.builder()
-                .id(synthetic("world/cauldron_washing", "shulker_boxes"))
+                .id(synthetic("world/cauldron_washing", "shulker_boxe"))
                 .leftInput(EmiIngredient.of(ConventionalItemTags.SHULKER_BOXES))
                 .rightInput(EmiStack.of(Items.CAULDRON), true)
                 .rightInput(EmiStack.of(Fluids.WATER, FluidUnit.BOTTLE), false)
@@ -108,7 +110,7 @@ public class UnidyeEmiPlugin implements EmiPlugin {
                 .supportsRecipeTree(false)
                 .build());
         addRecipeSafe(registry, () -> EmiWorldInteractionRecipe.builder()
-                .id(synthetic("world/cauldron_washing", "terracottas"))
+                .id(synthetic("world/cauldron_washing", "terracotta"))
                 .leftInput(EmiIngredient.of(ItemTags.TERRACOTTA))
                 .rightInput(EmiStack.of(Items.CAULDRON), true)
                 .rightInput(EmiStack.of(Fluids.WATER, FluidUnit.BOTTLE), false)
@@ -116,19 +118,60 @@ public class UnidyeEmiPlugin implements EmiPlugin {
                 .supportsRecipeTree(false)
                 .build());
         addRecipeSafe(registry, () -> EmiWorldInteractionRecipe.builder()
-                .id(synthetic("world/cauldron_washing", "candles"))
-                .leftInput(EmiIngredient.of(ItemTags.CANDLES))
+                .id(synthetic("world/cauldron_washing", "glass"))
+                .leftInput(EmiIngredient.of(ConventionalItemTags.GLASS_BLOCKS))
                 .rightInput(EmiStack.of(Items.CAULDRON), true)
                 .rightInput(EmiStack.of(Fluids.WATER, FluidUnit.BOTTLE), false)
-                .output(EmiStack.of(Blocks.CANDLE))
+                .output(EmiStack.of(Blocks.GLASS))
                 .supportsRecipeTree(false)
                 .build());
         addRecipeSafe(registry, () -> EmiWorldInteractionRecipe.builder()
-                .id(synthetic("world/cauldron_washing", "candles"))
-                .leftInput(EmiIngredient.of(ItemTags.CANDLES))
+                .id(synthetic("world/cauldron_washing", "glass_pane"))
+                .leftInput(EmiIngredient.of(ConventionalItemTags.GLASS_PANES))
                 .rightInput(EmiStack.of(Items.CAULDRON), true)
                 .rightInput(EmiStack.of(Fluids.WATER, FluidUnit.BOTTLE), false)
-                .output(EmiStack.of(Blocks.CANDLE))
+                .output(EmiStack.of(Blocks.GLASS_PANE))
+                .supportsRecipeTree(false)
+                .build());
+        addRecipeSafe(registry, () -> EmiWorldInteractionRecipe.builder()
+                .id(synthetic("world/cauldron_washing", "carpet"))
+                .leftInput(EmiIngredient.of(ItemTags.WOOL_CARPETS))
+                .rightInput(EmiStack.of(Items.CAULDRON), true)
+                .rightInput(EmiStack.of(Fluids.WATER, FluidUnit.BOTTLE), false)
+                .output(EmiStack.of(Blocks.WHITE_CARPET))
+                .supportsRecipeTree(false)
+                .build());
+        addRecipeSafe(registry, () -> EmiWorldInteractionRecipe.builder()
+                .id(synthetic("world/cauldron_washing", "concrete"))
+                .leftInput(EmiIngredient.of(List.of(
+                        EmiStack.of(Blocks.BLACK_CONCRETE),
+                        EmiStack.of(Blocks.BROWN_CONCRETE),
+                        EmiStack.of(Blocks.RED_CONCRETE),
+                        EmiStack.of(Blocks.BLUE_CONCRETE),
+                        EmiStack.of(Blocks.YELLOW_CONCRETE),
+                        EmiStack.of(Blocks.LIGHT_GRAY_CONCRETE),
+                        EmiStack.of(Blocks.GRAY_CONCRETE),
+                        EmiStack.of(Blocks.PINK_CONCRETE),
+                        EmiStack.of(Blocks.MAGENTA_CONCRETE),
+                        EmiStack.of(Blocks.PURPLE_CONCRETE),
+                        EmiStack.of(Blocks.LIGHT_BLUE_CONCRETE),
+                        EmiStack.of(Blocks.CYAN_CONCRETE),
+                        EmiStack.of(Blocks.ORANGE_CONCRETE),
+                        EmiStack.of(Blocks.GREEN_CONCRETE),
+                        EmiStack.of(Blocks.LIME_CONCRETE),
+                        EmiStack.of(UnidyeBlocks.CUSTOM_CONCRETE)
+                )))
+                .rightInput(EmiStack.of(Items.CAULDRON), true)
+                .rightInput(EmiStack.of(Fluids.WATER, FluidUnit.BOTTLE), false)
+                .output(EmiStack.of(Blocks.WHITE_CONCRETE))
+                .supportsRecipeTree(false)
+                .build());
+        addRecipeSafe(registry, () -> EmiWorldInteractionRecipe.builder()
+                .id(synthetic("world/cauldron_washing", "bed"))
+                .leftInput(EmiIngredient.of(ItemTags.BEDS))
+                .rightInput(EmiStack.of(Items.CAULDRON), true)
+                .rightInput(EmiStack.of(Fluids.WATER, FluidUnit.BOTTLE), false)
+                .output(EmiStack.of(Blocks.WHITE_BED))
                 .supportsRecipeTree(false)
                 .build());
     }
@@ -148,7 +191,7 @@ public class UnidyeEmiPlugin implements EmiPlugin {
                 synthetic("world/concrete", EmiUtil.subId(result))));
     }
     private static Identifier synthetic(String type, String name) {
-        return EmiPort.id("emi", "/" + type + "/" + name);
+        return EmiPort.id("unidye", "/" + type + "/" + name);
     }
     private static EmiRecipe basicWorld(EmiIngredient left, EmiIngredient right, EmiStack output, Identifier id) {
         return basicWorld(left, right, output, id, true);

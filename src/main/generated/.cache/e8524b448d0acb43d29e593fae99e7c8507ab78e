@@ -1,8 +1,9 @@
-// 1.20	2024-11-01T12:12:30.6223941	Unidye/Tags for minecraft:item
+// 1.20.1	2024-12-28T19:28:45.8869764	Unidye/Tags for minecraft:item
 1cb6de9d71caebcaa7ad711a4194a15cd434ba34 data\c\tags\items\glass_panes.json
 aebc6f465041cf3db65750ce5cddbc4a67918629 data\minecraft\tags\items\wool.json
 f1f5024229e8f17eb392ec2d218d4db8b2f43d3f data\c\tags\items\shulker_boxes.json
 15edfd7bf41541ff1646098cc4bc834c9f157222 data\minecraft\tags\items\dampens_vibrations.json
+51a0bac1dae2a78d2b6c25f928270ece850d9f39 data\minecraft\tags\items\beds.json
 50b4176f5a11ca96386c14b1c06090d0d8132dd1 data\c\tags\items\glass_blocks.json
 17732eed4842f40bc50baae436fd6b6cfee4c0fa data\minecraft\tags\items\terracotta.json
 d299e64369257533461ede62a9b5988d820fd067 data\minecraft\tags\items\wool_carpets.json

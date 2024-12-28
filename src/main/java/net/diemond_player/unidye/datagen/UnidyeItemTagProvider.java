@@ -25,6 +25,8 @@ public class UnidyeItemTagProvider extends FabricTagProvider.ItemTagProvider {
                 .add(UnidyeBlocks.CUSTOM_TERRACOTTA.asItem());
         getOrCreateTagBuilder(ItemTags.WOOL)
                 .add(UnidyeBlocks.CUSTOM_WOOL.asItem());
+        getOrCreateTagBuilder(ItemTags.BEDS)
+                .add(UnidyeBlocks.CUSTOM_BED.asItem());
         getOrCreateTagBuilder(ItemTags.WOOL_CARPETS)
                 .add(UnidyeBlocks.CUSTOM_CARPET.asItem());
         getOrCreateTagBuilder(ConventionalItemTags.GLASS_BLOCKS)
