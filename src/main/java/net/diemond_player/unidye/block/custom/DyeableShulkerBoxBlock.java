@@ -1,7 +1,6 @@
 package net.diemond_player.unidye.block.custom;
 
 import com.google.common.collect.Maps;
-import net.diemond_player.unidye.Unidye;
 import net.diemond_player.unidye.block.UnidyeBlocks;
 import net.diemond_player.unidye.block.entity.DyeableShulkerBoxBlockEntity;
 import net.diemond_player.unidye.block.entity.UnidyeBlockEntities;

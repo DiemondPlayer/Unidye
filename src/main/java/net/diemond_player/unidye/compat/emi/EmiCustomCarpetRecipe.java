@@ -2,7 +2,6 @@ package net.diemond_player.unidye.compat.emi;
 
 import com.google.common.collect.Lists;
 import dev.emi.emi.api.recipe.EmiPatternCraftingRecipe;
-import dev.emi.emi.api.stack.EmiIngredient;
 import dev.emi.emi.api.stack.EmiStack;
 import dev.emi.emi.api.widget.GeneratedSlotWidget;
 import dev.emi.emi.api.widget.SlotWidget;
@@ -16,7 +15,6 @@ import net.minecraft.util.Identifier;
 
 import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class EmiCustomCarpetRecipe extends EmiPatternCraftingRecipe {

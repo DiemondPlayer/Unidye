@@ -11,13 +11,11 @@ import me.shedaniel.rei.plugin.common.displays.crafting.DefaultCustomShapelessDi
 import net.diemond_player.unidye.block.UnidyeBlocks;
 import net.diemond_player.unidye.item.UnidyeItems;
 import net.diemond_player.unidye.recipes.CustomStainedGlassDyeingRecipe;
-import net.diemond_player.unidye.recipes.CustomWoolDyeingRecipe;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.fabricmc.fabric.api.tag.convention.v1.ConventionalItemTags;
 import net.minecraft.item.DyeItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.util.DyeColor;
 
 import java.util.ArrayList;

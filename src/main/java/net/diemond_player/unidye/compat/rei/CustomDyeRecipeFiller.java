@@ -1,21 +1,18 @@
 package net.diemond_player.unidye.compat.rei;
 
 import com.google.common.collect.Lists;
-import me.shedaniel.rei.api.client.registry.entry.EntryRegistry;
 import me.shedaniel.rei.api.common.display.Display;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
-import me.shedaniel.rei.api.common.entry.EntryStack;
-import me.shedaniel.rei.api.common.entry.type.VanillaEntryTypes;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
 import me.shedaniel.rei.plugin.client.categories.crafting.filler.CraftingRecipeFiller;
 import me.shedaniel.rei.plugin.common.displays.crafting.DefaultCustomShapelessDisplay;
 import net.diemond_player.unidye.Unidye;
 import net.diemond_player.unidye.item.UnidyeItems;
-import net.diemond_player.unidye.item.custom.CustomDyeItem;
 import net.diemond_player.unidye.recipes.CustomDyeRecipe;
 import net.diemond_player.unidye.util.UnidyeUtils;
-import net.minecraft.item.*;
-import net.minecraft.recipe.ArmorDyeRecipe;
+import net.minecraft.item.DyeItem;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.util.DyeColor;
 
 import java.util.ArrayList;

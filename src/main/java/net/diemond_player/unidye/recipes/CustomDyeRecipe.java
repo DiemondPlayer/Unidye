@@ -12,7 +12,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SpecialCraftingRecipe;
-import net.minecraft.recipe.SpecialRecipeSerializer;
 import net.minecraft.recipe.book.CraftingRecipeCategory;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.util.Identifier;
@@ -30,17 +29,21 @@ public class CustomDyeRecipe extends SpecialCraftingRecipe {
     public boolean matches(RecipeInputInventory inventory, World world) {
         boolean stick = false;
         boolean difference = false;
+        boolean custom = false;
         Item item = null;
         for (int i = 0; i < inventory.size(); ++i) {
             ItemStack itemStack2 = inventory.getStack(i);
             if (itemStack2.isEmpty()) {
                 continue;
             }
-            if (itemStack2.getItem() instanceof DyeItem && !(itemStack2.getItem() instanceof CustomDyeItem)) {
+            if (itemStack2.getItem() instanceof DyeItem) {
                 if (item == null) {
                     item = itemStack2.getItem();
                 } else if (item != itemStack2.getItem()) {
                     difference = true;
+                }
+                if(itemStack2.getItem() instanceof CustomDyeItem){
+                    custom = true;
                 }
                 continue;
             }
@@ -53,12 +56,17 @@ public class CustomDyeRecipe extends SpecialCraftingRecipe {
             }
             return false;
         }
-        return (stick || Unidye.POLYMORPH) && difference;
+        if(!custom) {
+            return (stick || Unidye.POLYMORPH) && difference;
+        }else{
+            return difference && stick;
+        }
     }
 
     @Override
     public ItemStack craft(RecipeInputInventory inventory, DynamicRegistryManager registryManager) {
         ArrayList<DyeItem> list = Lists.newArrayList();
+        ArrayList<ItemStack> customList = Lists.newArrayList();
         for (int i = 0; i < inventory.size(); ++i) {
             ItemStack itemStack2 = inventory.getStack(i);
             if (itemStack2.isEmpty()) continue;
@@ -66,12 +74,15 @@ public class CustomDyeRecipe extends SpecialCraftingRecipe {
             if (item instanceof DyeItem && !(itemStack2.getItem() instanceof CustomDyeItem)) {
                 list.add((DyeItem) item);
             }
+            if(item instanceof CustomDyeItem){
+                customList.add(itemStack2);
+            }
         }
-        if (list.isEmpty()) {
+        if (list.isEmpty() && customList.isEmpty()) {
             return ItemStack.EMPTY;
         }
-        ItemStack itemStack = UnidyeUtils.blendAndSetColor(new ItemStack(UnidyeItems.CUSTOM_DYE), list, Lists.newArrayList());
-        itemStack.setCount(list.size());
+        ItemStack itemStack = UnidyeUtils.blendAndSetColor(new ItemStack(UnidyeItems.CUSTOM_DYE), list, customList);
+        itemStack.setCount(list.size() + customList.size());
         return itemStack;
     }
 

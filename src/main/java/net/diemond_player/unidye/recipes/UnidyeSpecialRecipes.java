@@ -2,7 +2,6 @@ package net.diemond_player.unidye.recipes;
 
 import net.diemond_player.unidye.Unidye;
 import net.minecraft.recipe.RecipeSerializer;
-import net.minecraft.recipe.ShapedRecipe;
 import net.minecraft.recipe.SpecialRecipeSerializer;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;

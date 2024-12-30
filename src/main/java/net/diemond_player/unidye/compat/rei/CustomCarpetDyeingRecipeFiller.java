@@ -10,7 +10,6 @@ import me.shedaniel.rei.plugin.client.categories.crafting.filler.CraftingRecipeF
 import me.shedaniel.rei.plugin.common.displays.crafting.DefaultCustomShapelessDisplay;
 import net.diemond_player.unidye.block.UnidyeBlocks;
 import net.diemond_player.unidye.item.UnidyeItems;
-import net.diemond_player.unidye.recipes.CustomCandleDyeingRecipe;
 import net.diemond_player.unidye.recipes.CustomCarpetDyeingRecipe;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.item.DyeItem;

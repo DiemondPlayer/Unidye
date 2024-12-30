@@ -1,7 +1,6 @@
 package net.diemond_player.unidye.entity.client.renderer;
 
 import it.unimi.dsi.fastutil.ints.Int2IntFunction;
-import net.diemond_player.unidye.Unidye;
 import net.diemond_player.unidye.block.custom.DyeableBedBlock;
 import net.diemond_player.unidye.block.entity.DyeableBedBlockEntity;
 import net.diemond_player.unidye.block.entity.UnidyeBlockEntities;

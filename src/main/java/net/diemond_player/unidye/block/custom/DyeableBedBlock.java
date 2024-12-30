@@ -1,8 +1,6 @@
 package net.diemond_player.unidye.block.custom;
 
-import net.diemond_player.unidye.Unidye;
 import net.diemond_player.unidye.block.entity.DyeableBedBlockEntity;
-import net.diemond_player.unidye.block.entity.DyeableShulkerBoxBlockEntity;
 import net.diemond_player.unidye.block.entity.UnidyeBlockEntities;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.BedBlock;

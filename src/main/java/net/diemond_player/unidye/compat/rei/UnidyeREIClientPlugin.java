@@ -3,13 +3,7 @@ package net.diemond_player.unidye.compat.rei;
 import me.shedaniel.rei.api.client.plugins.REIClientPlugin;
 import me.shedaniel.rei.api.client.registry.category.CategoryRegistry;
 import me.shedaniel.rei.api.client.registry.display.DisplayRegistry;
-import me.shedaniel.rei.plugin.client.categories.crafting.filler.*;
-import me.shedaniel.rei.plugin.common.displays.crafting.DefaultCraftingDisplay;
-import me.shedaniel.rei.plugin.common.displays.crafting.DefaultCustomShapelessDisplay;
-import net.diemond_player.unidye.item.custom.CustomDyeItem;
-import net.diemond_player.unidye.recipes.CustomDyeRecipe;
-import net.minecraft.recipe.RecipeType;
-import net.minecraft.recipe.SpecialCraftingRecipe;
+import me.shedaniel.rei.plugin.client.categories.crafting.filler.CraftingRecipeFiller;
 
 public class UnidyeREIClientPlugin implements REIClientPlugin {
     private static final CraftingRecipeFiller<?>[] CRAFTING_RECIPE_FILLERS = new CraftingRecipeFiller[]{
