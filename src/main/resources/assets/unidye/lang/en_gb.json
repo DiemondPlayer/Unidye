@@ -71,5 +71,19 @@
   "block.minecraft.banner.triangle_bottom": "Chevron",
   "block.minecraft.banner.triangle_top": "Inverted Chevron",
   "block.minecraft.banner.triangles_bottom": "Base Indented",
-  "block.minecraft.banner.triangles_top": "Chief Indented"
+  "block.minecraft.banner.triangles_top": "Chief Indented",
+
+  "jei_description.unidye.custom_dye_polymorph": "Mix any dyes in a crafting table to get custom dyes! Then use custom dyes just like the vanilla ones to craft custom coloured blocks, fireworks, dye sheep, signs, etc.",
+  "jei_description.unidye.custom_dye": "Mix any dyes and a stick in a crafting table to get custom dyes! Then use custom dyes just like the vanilla ones to craft custom coloured blocks, fireworks, dye sheep, signs, etc.",
+  "jei_description.unidye.custom_wool": "Crafted from one custom dye and any 8 wool blocks around it. Used to make custom carpets, beds and banners.",
+  "jei_description.unidye.custom_carpet": "Crafted from custom wool just like vanilla carpets, or from one custom dye and any 8 wool carpets around it.",
+  "jei_description.unidye.custom_terracotta": "Crafted from one custom dye and any 8 terracotta blocks around it.",
+  "jei_description.unidye.custom_concrete": "Obtained by putting custom concrete powder blocks in water.",
+  "jei_description.unidye.custom_concrete_powder": "Crafted from one custom dye, 4 sand blocks and 4 gravel blocks. Used to make custom concrete blocks.",
+  "jei_description.unidye.custom_stained_glass": "Crafted from one custom dye and any 8 glass blocks around it. Used to make custom stained glass panes.",
+  "jei_description.unidye.custom_stained_glass_pane": "Crafted from one custom dye and any 8 glass pane blocks around it, or by crafting panes from custom glass blocks just like in vanilla.",
+  "jei_description.unidye.custom_shulker_box": "Crafted by dyeing a shulker box with any combination of vanilla or custom dyes.",
+  "jei_description.unidye.custom_bed": "Crafted from 3 custom wool blocks and 3 planks blocks.",
+  "jei_description.unidye.custom_candle": "Crafted from one custom dye and any 8 candles around it. Can be placed on cakes.",
+  "jei_description.unidye.custom_banner": "Crafted from 6 custom wool blocks and 1 stick. Can be used in a loom."
 }

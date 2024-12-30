@@ -28,6 +28,9 @@
 		],
 		"emi": [
 			"net.diemond_player.unidye.compat.emi.UnidyeEmiPlugin"
+		],
+		"jei_mod_plugin": [
+			"net.diemond_player.unidye.compat.jei.UnidyeJEIPlugin"
 		]
 	},
 	"mixins": [
