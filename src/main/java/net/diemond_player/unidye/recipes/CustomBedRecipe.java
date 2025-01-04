@@ -4,6 +4,7 @@ import net.diemond_player.unidye.block.UnidyeBlocks;
 import net.diemond_player.unidye.item.custom.DyeableLeatheryBlockItem;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.inventory.RecipeInputInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SpecialCraftingRecipe;
@@ -75,7 +76,7 @@ public class CustomBedRecipe extends SpecialCraftingRecipe {
 
     @Override
     public boolean fits(int width, int height) {
-        return width == 3 && height == 3;
+        return width == 3 && height == 2;
     }
 
     @Override

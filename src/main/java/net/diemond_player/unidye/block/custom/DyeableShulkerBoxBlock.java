@@ -64,7 +64,7 @@ public class DyeableShulkerBoxBlock extends ShulkerBoxBlock implements IDyeableB
     @Override
     @Nullable
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return DyeableShulkerBoxBlock.checkType(type, UnidyeBlockEntities.DYEABLE_SHULKER_BOX_BE, DyeableShulkerBoxBlockEntity::tick);
+        return DyeableShulkerBoxBlock.validateTicker(type, UnidyeBlockEntities.DYEABLE_SHULKER_BOX_BE, DyeableShulkerBoxBlockEntity::tick);
     }
 
     @Override
