@@ -96,7 +96,7 @@ public class UnidyeEmiPlugin implements EmiPlugin {
                 .supportsRecipeTree(false)
                 .build());
         addRecipeSafe(registry, () -> EmiWorldInteractionRecipe.builder()
-                .id(synthetic("world/cauldron_washing", "shulker_boxe"))
+                .id(synthetic("world/cauldron_washing", "shulker_box"))
                 .leftInput(EmiIngredient.of(ConventionalItemTags.SHULKER_BOXES))
                 .rightInput(EmiStack.of(Items.CAULDRON), true)
                 .rightInput(EmiStack.of(Fluids.WATER, FluidUnit.BOTTLE), false)
