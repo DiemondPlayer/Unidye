@@ -8,6 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
+import net.minecraft.world.WorldView;
 
 import static net.diemond_player.unidye.block.entity.DyeableLeatheryBlockEntity.DEFAULT_COLOR;
 
@@ -17,7 +18,7 @@ public class DyeableWoolBlock extends DyeableBlock {
     }
 
     @Override
-    public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
+    public ItemStack getPickStack(WorldView world, BlockPos pos, BlockState state) {
         if (DyeableLeatheryBlockEntity.getColor(world, pos) != DEFAULT_COLOR) {
             return pickBlock(world, pos, new ItemStack(this));
         } else {

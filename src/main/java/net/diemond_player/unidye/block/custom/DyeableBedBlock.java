@@ -11,6 +11,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
+import net.minecraft.world.WorldView;
 
 public class DyeableBedBlock extends BedBlock
         implements IDyeableBlock {
@@ -24,7 +25,7 @@ public class DyeableBedBlock extends BedBlock
     }
 
     @Override
-    public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
+    public ItemStack getPickStack(WorldView world, BlockPos pos, BlockState state) {
         if (DyeableBedBlockEntity.getColor(world, pos) != DyeableBedBlockEntity.DEFAULT_COLOR) {
             ItemStack stack = super.getPickStack(world, pos, state);
             return pickBlock(world, pos, stack);

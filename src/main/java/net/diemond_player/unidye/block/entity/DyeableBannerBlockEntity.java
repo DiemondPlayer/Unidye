@@ -103,7 +103,7 @@ public class DyeableBannerBlockEntity extends BlockEntity implements Nameable {
             nbt.put(PATTERNS_KEY, this.patternListNbt);
         }
         if (this.customName != null) {
-            nbt.putString("CustomName", Text.Serializer.toJson(this.customName));
+            nbt.putString("CustomName", Text.Serialization.toJsonString(this.customName));
         }
         if (color != DEFAULT_COLOR) {
             nbt.putInt("color", color);
@@ -114,7 +114,7 @@ public class DyeableBannerBlockEntity extends BlockEntity implements Nameable {
     public void readNbt(NbtCompound nbt) {
         super.readNbt(nbt);
         if (nbt.contains("CustomName", NbtElement.STRING_TYPE)) {
-            this.customName = Text.Serializer.fromJson(nbt.getString("CustomName"));
+            this.customName = Text.Serialization.fromJson(nbt.getString("CustomName"));
         }
         this.patternListNbt = nbt.getList(PATTERNS_KEY, NbtElement.COMPOUND_TYPE);
         this.patterns = null;

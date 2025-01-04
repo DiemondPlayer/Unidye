@@ -9,6 +9,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
+import net.minecraft.world.WorldView;
 
 import static net.diemond_player.unidye.item.custom.DyeableBlockItem.DEFAULT_COLOR;
 import static net.minecraft.item.DyeableItem.COLOR_KEY;
@@ -38,7 +39,7 @@ public class DyeableCandleBlock extends CandleBlock implements IDyeableBlock {
     }
 
     @Override
-    public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
+    public ItemStack getPickStack(WorldView world, BlockPos pos, BlockState state) {
         if (DyeableBlockEntity.getColor(world, pos) != DyeableBlockEntity.DEFAULT_COLOR) {
             ItemStack stack = super.getPickStack(world, pos, state);
             return pickBlock(world, pos, stack);

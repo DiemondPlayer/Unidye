@@ -52,7 +52,7 @@ public class DyeableBannerBlock extends BannerBlock {
     }
 
     @Override
-    public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
+    public ItemStack getPickStack(WorldView world, BlockPos pos, BlockState state) {
         BlockEntity blockEntity = world.getBlockEntity(pos);
         if (blockEntity instanceof DyeableBannerBlockEntity) {
             return ((DyeableBannerBlockEntity) blockEntity).getPickStack();

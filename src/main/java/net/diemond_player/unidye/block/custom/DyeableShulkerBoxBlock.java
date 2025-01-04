@@ -29,6 +29,7 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldView;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -96,7 +97,7 @@ public class DyeableShulkerBoxBlock extends ShulkerBoxBlock implements IDyeableB
     }
 
     @Override
-    public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+    public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
         BlockEntity blockEntity = world.getBlockEntity(pos);
         if (blockEntity instanceof DyeableShulkerBoxBlockEntity dyeableShulkerBoxBlockEntity) {
             if (!world.isClient && player.isCreative() && !dyeableShulkerBoxBlockEntity.isEmpty()) {
@@ -113,10 +114,10 @@ public class DyeableShulkerBoxBlock extends ShulkerBoxBlock implements IDyeableB
                 itemEntity.setToDefaultPickupDelay();
                 world.spawnEntity(itemEntity);
             } else {
-                dyeableShulkerBoxBlockEntity.checkLootInteraction(player);
+                dyeableShulkerBoxBlockEntity.generateLoot(player);
             }
         }
-        super.onBreak(world, pos, state, player);
+        return state;
     }
 
     @Override
@@ -171,8 +172,8 @@ public class DyeableShulkerBoxBlock extends ShulkerBoxBlock implements IDyeableB
     }
 
     @Override
-    public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
-        ItemStack itemStack = super.getPickStack(world, pos, state);
+    public ItemStack getPickStack(WorldView world, BlockPos pos, BlockState state) {
+        ItemStack itemStack = super.getPickStack((WorldView) world, pos, state);
         world.getBlockEntity(pos, UnidyeBlockEntities.DYEABLE_SHULKER_BOX_BE).ifPresent(blockEntity -> blockEntity.setStackNbt(itemStack));
         if (DyeableShulkerBoxBlockEntity.getColor(world, pos) != DyeableShulkerBoxBlockEntity.DEFAULT_COLOR) {
             return pickBlock(world, pos, itemStack);

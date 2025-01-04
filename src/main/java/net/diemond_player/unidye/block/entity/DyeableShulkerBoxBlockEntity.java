@@ -211,7 +211,7 @@ public class DyeableShulkerBoxBlockEntity extends LootableContainerBlockEntity
     @Override
     protected void writeNbt(NbtCompound nbt) {
         super.writeNbt(nbt);
-        if (!this.serializeLootTable(nbt)) {
+        if (!this.writeLootTable(nbt)) {
             Inventories.writeNbt(nbt, this.inventory, false);
         }
         if (color != DEFAULT_COLOR) {
@@ -221,13 +221,13 @@ public class DyeableShulkerBoxBlockEntity extends LootableContainerBlockEntity
 
     public void readInventoryNbt(NbtCompound nbt) {
         this.inventory = DefaultedList.ofSize(this.size(), ItemStack.EMPTY);
-        if (!this.deserializeLootTable(nbt) && nbt.contains(ITEMS_KEY, NbtElement.LIST_TYPE)) {
+        if (!this.readLootTable(nbt) && nbt.contains("Items", NbtElement.LIST_TYPE)) {
             Inventories.readNbt(nbt, this.inventory);
         }
     }
 
     @Override
-    protected DefaultedList<ItemStack> getInvStackList() {
+    protected DefaultedList<ItemStack> method_11282() {
         return this.inventory;
     }
 

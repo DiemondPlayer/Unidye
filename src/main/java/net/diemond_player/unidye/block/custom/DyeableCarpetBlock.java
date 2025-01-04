@@ -6,6 +6,7 @@ import net.minecraft.block.CarpetBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
+import net.minecraft.world.WorldView;
 
 public class DyeableCarpetBlock extends CarpetBlock implements IDyeableBlock {
     public DyeableCarpetBlock(Settings settings) {
@@ -13,7 +14,7 @@ public class DyeableCarpetBlock extends CarpetBlock implements IDyeableBlock {
     }
 
     @Override
-    public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
+    public ItemStack getPickStack(WorldView world, BlockPos pos, BlockState state) {
         if (DyeableBlockEntity.getColor(world, pos) != DyeableBlockEntity.DEFAULT_COLOR) {
             ItemStack stack = super.getPickStack(world, pos, state);
             return pickBlock(world, pos, stack);
