@@ -40,7 +40,7 @@ public class DyeableGlassBlock extends GlassBlock implements IDyeableBlock, Stai
         }
         NbtCompound subNbt = stack.getOrCreateSubNbt("display");
         subNbt.putInt("color", color);
-        if(stack.getNbt()!=null) {
+        if (stack.getNbt() != null) {
             stack.getNbt().putInt("leather", beaconColor);
         }
         return stack;

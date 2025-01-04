@@ -23,6 +23,7 @@ public class UnidyeREIClientPlugin implements REIClientPlugin {
             new CustomShulkerBoxDyeingRecipeFiller(),
             new CustomBedDyeingRecipeFiller()
     };
+
     @Override
     public void registerDisplays(DisplayRegistry registry) {
         for (CraftingRecipeFiller<?> filler : CRAFTING_RECIPE_FILLERS) {

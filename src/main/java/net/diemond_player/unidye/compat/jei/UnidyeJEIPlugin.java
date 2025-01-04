@@ -20,11 +20,11 @@ public class UnidyeJEIPlugin implements IModPlugin {
 
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
-        if(Unidye.POLYMORPH) {
+        if (Unidye.POLYMORPH) {
             registration.addIngredientInfo(UnidyeItems.CUSTOM_DYE.getDefaultStack(),
                     VanillaTypes.ITEM_STACK,
                     Text.translatable("jei_description.unidye.custom_dye_polymorph"));
-        }else{
+        } else {
             registration.addIngredientInfo(UnidyeItems.CUSTOM_DYE.getDefaultStack(),
                     VanillaTypes.ITEM_STACK,
                     Text.translatable("jei_description.unidye.custom_dye"));

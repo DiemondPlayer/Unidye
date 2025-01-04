@@ -28,6 +28,7 @@ public class EmiCustomShieldDecorationRecipe extends EmiPatternCraftingRecipe {
 
     private static final List<DyeItem> DYES = Stream.of(DyeColor.values()).map(DyeItem::byColor).filter(c -> !(c instanceof CustomDyeItem)).toList();
     private EmiStack banner;
+
     public EmiCustomShieldDecorationRecipe(Identifier id) {
         super(List.of(
                 EmiStack.of(UnidyeItems.CUSTOM_BANNER),
@@ -67,6 +68,7 @@ public class EmiCustomShieldDecorationRecipe extends EmiPatternCraftingRecipe {
         //stack.setNbt(tag);
         return EmiStack.of(stack);
     }
+
     public EmiStack getShield(Random random) {
         ItemStack stack = banner.getItemStack();
         ItemStack stack2 = new ItemStack(Items.SHIELD);

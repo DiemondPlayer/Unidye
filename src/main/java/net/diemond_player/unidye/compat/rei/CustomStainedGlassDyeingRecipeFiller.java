@@ -35,22 +35,22 @@ public class CustomStainedGlassDyeingRecipeFiller implements CraftingRecipeFille
             for (int j = 0; j < dyes; j++) {
                 DyeColor color = colors[new Random().nextInt(colors.length)];
                 DyeItem dyeItem = DyeItem.byColor(color);
-                if(dyeItem == UnidyeItems.CUSTOM_DYE){
+                if (dyeItem == UnidyeItems.CUSTOM_DYE) {
                     dyeItem = (DyeItem) Items.WHITE_DYE;
                 }
                 if (dyeItems.contains(dyeItem)) {
                     j--;
-                }else{
+                } else {
                     dyeItems.add(dyeItem);
                 }
             }
             ItemStack customDyeStack = UnidyeUtils.blendAndSetColor(new ItemStack(UnidyeItems.CUSTOM_DYE), dyeItems, Lists.newArrayList());
             ItemStack output = UnidyeUtils.blendAndSetColor(new ItemStack(UnidyeBlocks.CUSTOM_STAINED_GLASS), dyeItems, Lists.newArrayList());
             output.setCount(8);
-            for(int k = 0; k < 9; k++) {
-                if(k != 4) {
+            for (int k = 0; k < 9; k++) {
+                if (k != 4) {
                     inputs.add(EntryIngredients.ofItemTag(ConventionalItemTags.GLASS_BLOCKS));
-                }else{
+                } else {
                     inputs.add(EntryIngredient.of(EntryStack.of(VanillaEntryTypes.ITEM, customDyeStack)));
                 }
             }
@@ -60,6 +60,7 @@ public class CustomStainedGlassDyeingRecipeFiller implements CraftingRecipeFille
 
         return displays;
     }
+
     @Override
     public Class<CustomStainedGlassDyeingRecipe> getRecipeClass() {
         return CustomStainedGlassDyeingRecipe.class;

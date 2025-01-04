@@ -45,7 +45,7 @@ public class EmiCustomSingleDyeingRecipe extends EmiPatternCraftingRecipe {
                     return EmiStack.of(dyes.get(s));
                 }
                 return EmiStack.EMPTY;
-                }, unique, x, y);
+            }, unique, x, y);
         }
     }
 

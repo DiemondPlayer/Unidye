@@ -1,9 +1,7 @@
 {
   "itemgroup.unidye": "Unidye",
-
   "item.unidye.custom_dye": "Custom Dye",
   "item.unidye.shield_custom_color": "Custom Shield",
-
   "block.unidye.custom_banner": "Custom Banner",
   "block.unidye.custom_wool": "Custom Wool",
   "block.unidye.custom_carpet": "Custom Carpet",
@@ -15,7 +13,6 @@
   "block.unidye.custom_candle": "Custom Candle",
   "block.unidye.custom_shulker_box": "Custom Shulker Box",
   "block.unidye.custom_bed": "Custom Bed",
-
   "tooltip.unidye.dye_color": "Dye Color: ",
   "tooltip.unidye.wool_color": "Wool Color: ",
   "tooltip.unidye.glass_color": "Glass Color: ",
@@ -28,9 +25,7 @@
   "tooltip.unidye.beacon_color": "Beacon Beam Color: ",
   "tooltip.unidye.shulker_box_color": "Shulker Box Color: ",
   "tooltip.unidye.candle_color": "Candle Color: ",
-
   "tooltip.unidye.press_shift": "§7Press §fShift§r §7for more info§r",
-
   "block.minecraft.banner.base": "Fully Field",
   "block.minecraft.banner.border": "Bordure",
   "block.minecraft.banner.bricks": "Field Masoned",
@@ -72,7 +67,6 @@
   "block.minecraft.banner.triangle_top": "Inverted Chevron",
   "block.minecraft.banner.triangles_bottom": "Base Indented",
   "block.minecraft.banner.triangles_top": "Chief Indented",
-
   "jei_description.unidye.custom_dye_polymorph": "Mix any dyes in a crafting table to get custom dyes! Then use custom dyes just like the vanilla ones to craft custom colored blocks, fireworks, dye sheep, signs, etc.",
   "jei_description.unidye.custom_dye": "Mix any dyes and a stick in a crafting table to get custom dyes! Then use custom dyes just like the vanilla ones to craft custom colored blocks, fireworks, dye sheep, signs, etc.",
   "jei_description.unidye.custom_wool": "Crafted from one custom dye and any 8 wool blocks around it. Used to make custom carpets, beds and banners.",

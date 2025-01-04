@@ -4,7 +4,6 @@ import net.diemond_player.unidye.block.UnidyeBlocks;
 import net.diemond_player.unidye.item.custom.DyeableLeatheryBlockItem;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.inventory.RecipeInputInventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SpecialCraftingRecipe;

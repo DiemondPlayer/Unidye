@@ -1,9 +1,7 @@
 {
   "itemgroup.unidye": "Unidye",
-
   "item.unidye.custom_dye": "Кастомный краситель",
   "item.unidye.shield_custom_color": "Кастомный щит",
-
   "block.unidye.custom_banner": "Кастомный флаг",
   "block.unidye.custom_wool": "Кастомная шерсть",
   "block.unidye.custom_carpet": "Кастомный ковёр",
@@ -15,7 +13,6 @@
   "block.unidye.custom_candle": "Кастомная свеча",
   "block.unidye.custom_shulker_box": "Кастомный шалкеровый ящик",
   "block.unidye.custom_bed": "Кастомная кровать",
-
   "tooltip.unidye.dye_color": "Цвет красителя: ",
   "tooltip.unidye.wool_color": "Цвет шерсти: ",
   "tooltip.unidye.glass_color": "Цвет стекла: ",
@@ -28,9 +25,7 @@
   "tooltip.unidye.beacon_color": "Цвет луча маяка: ",
   "tooltip.unidye.shulker_box_color": "Цвет шалкерового ящика: ",
   "tooltip.unidye.candle_color": "Цвет свечи: ",
-
   "tooltip.unidye.press_shift": "§7Нажмите §fShift§r §7для подробностей§r",
-
   "block.minecraft.banner.base": "поле",
   "block.minecraft.banner.border": "кайма",
   "block.minecraft.banner.bricks": "муровка",
@@ -72,7 +67,6 @@
   "block.minecraft.banner.triangle_top": "опрокинутое остриё",
   "block.minecraft.banner.triangles_bottom": "зубчатое основание",
   "block.minecraft.banner.triangles_top": "зубчатая глава",
-
   "jei_description.unidye.custom_dye_polymorph": "Смешайте любые красители в верстаке чтобы получить кастомные красители! Затем используйте кастомные красители так же, как и ванильные: крафтить покрашенные блоки, феерверки, красить таблички, овец и т.д.",
   "jei_description.unidye.custom_dye": "Смешайте любые красители и палку в верстаке чтобы получить кастомные красители! Затем используйте кастомные красители так же, как и ванильные: крафтить покрашенные блоки, феерверки, красить таблички, овец и т.д.",
   "jei_description.unidye.custom_wool": "Крафтится из 8 любых блоков шерсти и кастомного красителя по центру. Используется для крафта ковров, кроватей и флагов.",

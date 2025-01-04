@@ -44,9 +44,9 @@ public class DyeableLeatheryBlockItem extends DyeableBlockItem {
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
         MutableText mutableText = Text.literal("■ ");
-        if(stack.isOf(UnidyeBlocks.CUSTOM_WOOL.asItem())) {
+        if (stack.isOf(UnidyeBlocks.CUSTOM_WOOL.asItem())) {
             tooltip.add(mutableText.setStyle(mutableText.getStyle().withColor(getLeatherColor(stack))).append(Text.translatable("tooltip.unidye.banner_color").append(getLeatherHexColor(stack)).formatted(Formatting.GRAY)));
-        }else{
+        } else {
             tooltip.add(mutableText.setStyle(mutableText.getStyle().withColor(getLeatherColor(stack))).append(Text.translatable("tooltip.unidye.beacon_color").append(getLeatherHexColor(stack)).formatted(Formatting.GRAY)));
         }
     }

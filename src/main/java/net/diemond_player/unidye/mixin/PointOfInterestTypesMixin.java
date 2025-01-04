@@ -20,10 +20,10 @@ import java.util.Optional;
 @Mixin(PointOfInterestTypes.class)
 public abstract class PointOfInterestTypesMixin {
     @Inject(method = "getTypeForState", at = @At(value = "RETURN"), cancellable = true)
-    private static void unidye$checkForCustomBedStates(BlockState state, CallbackInfoReturnable<Optional<RegistryEntry<PointOfInterestType>>> cir){
+    private static void unidye$checkForCustomBedStates(BlockState state, CallbackInfoReturnable<Optional<RegistryEntry<PointOfInterestType>>> cir) {
         Block[] blocks = new Block[1];
         blocks[0] = UnidyeBlocks.CUSTOM_BED;
-        if(state.getBlock() instanceof BedBlock && Arrays.stream(blocks).anyMatch(x -> x.equals(state.getBlock())) && state.get(BedBlock.PART) == BedPart.HEAD){
+        if (state.getBlock() instanceof BedBlock && Arrays.stream(blocks).anyMatch(x -> x.equals(state.getBlock())) && state.get(BedBlock.PART) == BedPart.HEAD) {
             cir.setReturnValue(
                     Optional.ofNullable(Registries.POINT_OF_INTEREST_TYPE.getEntry(PointOfInterestTypes.HOME).orElse(null))
             );

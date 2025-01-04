@@ -49,7 +49,7 @@ public class EmiCustomBannerDuplicateRecipe extends EmiPatternCraftingRecipe {
 
     @Override
     public SlotWidget getOutputWidget(int x, int y) {
-        return new GeneratedSlotWidget(r -> getPattern(r, false) , unique, x, y);
+        return new GeneratedSlotWidget(r -> getPattern(r, false), unique, x, y);
     }
 
     public EmiStack getPattern(Random random, boolean reminder) {
@@ -71,6 +71,7 @@ public class EmiCustomBannerDuplicateRecipe extends EmiPatternCraftingRecipe {
         }
         return emiStack;
     }
+
     private List<DyeItem> getDyes(Random random) {
         List<DyeItem> dyes = Lists.newArrayList();
         int amount = 2 + random.nextInt(7);

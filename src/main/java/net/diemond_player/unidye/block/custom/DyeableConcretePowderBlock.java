@@ -49,7 +49,7 @@ public class DyeableConcretePowderBlock extends ConcretePowderBlock implements I
     @Override
     public int getColor(BlockState state, BlockView world, BlockPos pos) {
         DyeableBlockEntity blockEntity = UnidyeBlockEntities.DYEABLE_BE.get(world, pos);
-        if(blockEntity != null) {
+        if (blockEntity != null) {
             return blockEntity.color;
         } else {
             return DEFAULT_COLOR;

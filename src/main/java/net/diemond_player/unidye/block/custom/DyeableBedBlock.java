@@ -17,10 +17,12 @@ public class DyeableBedBlock extends BedBlock
     public DyeableBedBlock(AbstractBlock.Settings settings) {
         super(DyeColor.CYAN, settings);
     }
+
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
         return new DyeableBedBlockEntity(pos, state);
     }
+
     @Override
     public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
         if (DyeableBedBlockEntity.getColor(world, pos) != DyeableBedBlockEntity.DEFAULT_COLOR) {
@@ -30,6 +32,7 @@ public class DyeableBedBlock extends BedBlock
             return new ItemStack(this);
         }
     }
+
     @Override
     public ItemStack pickBlock(BlockView world, BlockPos pos, ItemStack stack) {
         DyeableBedBlockEntity blockEntity = UnidyeBlockEntities.DYEABLE_BED_BE.get(world, pos);

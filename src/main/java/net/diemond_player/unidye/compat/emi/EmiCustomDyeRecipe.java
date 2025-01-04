@@ -34,7 +34,7 @@ public class EmiCustomDyeRecipe extends EmiPatternCraftingRecipe {
 
     @Override
     public SlotWidget getInputWidget(int slot, int x, int y) {
-        if(!Unidye.POLYMORPH) {
+        if (!Unidye.POLYMORPH) {
             if (slot == 0) {
                 return new SlotWidget(EmiStack.of(Items.STICK), x, y);
             } else {
@@ -47,14 +47,14 @@ public class EmiCustomDyeRecipe extends EmiPatternCraftingRecipe {
                     return EmiStack.EMPTY;
                 }, unique, x, y);
             }
-        }else{
+        } else {
             return new GeneratedSlotWidget(r -> {
-                    List<DyeItem> dyes = getDyes(r);
-                    if (slot < dyes.size()) {
-                        return EmiStack.of(dyes.get(slot));
-                    }
-                    return EmiStack.EMPTY;
-                }, unique, x, y);
+                List<DyeItem> dyes = getDyes(r);
+                if (slot < dyes.size()) {
+                    return EmiStack.of(dyes.get(slot));
+                }
+                return EmiStack.EMPTY;
+            }, unique, x, y);
         }
     }
 

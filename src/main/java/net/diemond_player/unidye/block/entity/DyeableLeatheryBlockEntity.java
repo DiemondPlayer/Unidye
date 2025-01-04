@@ -14,6 +14,7 @@ public class DyeableLeatheryBlockEntity extends BlockEntity {
     public DyeableLeatheryBlockEntity(BlockPos pos, BlockState state) {
         super(UnidyeBlockEntities.DYEABLE_LEATHERY_BE, pos, state);
     }
+
     public static final int DEFAULT_COLOR = 16777215;
     public int color = DEFAULT_COLOR;
     public int leatherColor = DEFAULT_COLOR;
@@ -42,6 +43,7 @@ public class DyeableLeatheryBlockEntity extends BlockEntity {
             color = nbt.getInt("color");
         }
     }
+
     @Override
     public void markDirty() {
         if (this.world != null) {
@@ -59,6 +61,7 @@ public class DyeableLeatheryBlockEntity extends BlockEntity {
     public NbtCompound toInitialChunkDataNbt() {
         return createNbt();
     }
+
     public static int getColor(BlockView world, BlockPos pos) {
         if (world == null) {
             return DyeableBlockEntity.DEFAULT_COLOR;

@@ -21,6 +21,7 @@ import java.util.stream.Stream;
 
 public class EmiCustomConcretePowderRecipe extends EmiPatternCraftingRecipe {
     private static final List<DyeItem> DYES = Stream.of(DyeColor.values()).map(DyeItem::byColor).filter(c -> !(c instanceof CustomDyeItem)).toList();
+
     public EmiCustomConcretePowderRecipe(Identifier id) {
         super(List.of(EmiStack.of(Items.SAND), EmiStack.of(Items.GRAVEL), EmiStack.of(UnidyeItems.CUSTOM_DYE)), EmiStack.of(UnidyeBlocks.CUSTOM_CONCRETE_POWDER), id);
     }

@@ -22,9 +22,10 @@ public abstract class ItemStackMixin {
     @Shadow
     @Nullable
     private NbtCompound nbt;
+
     @ModifyReturnValue(method = "getTooltip", at = @At(value = "TAIL"))
     private List<Text> unidye$getTooltip(List<Text> original) {
-        if(this.nbt != null) {
+        if (this.nbt != null) {
             if (original.contains(Text.translatable("item.color", String.format(Locale.ROOT, "#%06X", this.nbt.getCompound(DISPLAY_KEY).getInt(COLOR_KEY))).formatted(Formatting.GRAY))) {
                 MutableText mutableText = Text.literal("■ ");
                 mutableText.setStyle(mutableText.getStyle().withColor(this.nbt.getCompound(DISPLAY_KEY).getInt(COLOR_KEY)));

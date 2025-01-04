@@ -36,7 +36,7 @@ public class DyeableWoolBlock extends DyeableBlock {
         }
         NbtCompound subNbt = stack.getOrCreateSubNbt("display");
         subNbt.putInt("color", color);
-        if(stack.getNbt()!=null) {
+        if (stack.getNbt() != null) {
             stack.getNbt().putInt("leather", bannerColor);
         }
         return stack;

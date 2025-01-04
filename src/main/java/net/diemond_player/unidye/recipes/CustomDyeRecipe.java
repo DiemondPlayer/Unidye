@@ -42,7 +42,7 @@ public class CustomDyeRecipe extends SpecialCraftingRecipe {
                 } else if (item != itemStack2.getItem()) {
                     difference = true;
                 }
-                if(itemStack2.getItem() instanceof CustomDyeItem){
+                if (itemStack2.getItem() instanceof CustomDyeItem) {
                     custom = true;
                 }
                 continue;
@@ -56,9 +56,9 @@ public class CustomDyeRecipe extends SpecialCraftingRecipe {
             }
             return false;
         }
-        if(!custom) {
+        if (!custom) {
             return (stick || Unidye.POLYMORPH) && difference;
-        }else{
+        } else {
             return difference && stick;
         }
     }
@@ -74,7 +74,7 @@ public class CustomDyeRecipe extends SpecialCraftingRecipe {
             if (item instanceof DyeItem && !(itemStack2.getItem() instanceof CustomDyeItem)) {
                 list.add((DyeItem) item);
             }
-            if(item instanceof CustomDyeItem){
+            if (item instanceof CustomDyeItem) {
                 customList.add(itemStack2);
             }
         }

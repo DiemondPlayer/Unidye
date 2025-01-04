@@ -34,12 +34,12 @@ public class CustomShulkerBoxDyeingRecipeFiller implements CraftingRecipeFiller<
             for (int j = 0; j < dyes; j++) {
                 DyeColor color = colors[new Random().nextInt(colors.length)];
                 DyeItem dyeItem = DyeItem.byColor(color);
-                if(dyeItem == UnidyeItems.CUSTOM_DYE){
+                if (dyeItem == UnidyeItems.CUSTOM_DYE) {
                     dyeItem = (DyeItem) Items.WHITE_DYE;
                 }
                 if (dyeItems.contains(dyeItem)) {
                     j--;
-                }else{
+                } else {
                     dyeItems.add(dyeItem);
                     inputs.add(EntryIngredients.of(dyeItem));
                 }

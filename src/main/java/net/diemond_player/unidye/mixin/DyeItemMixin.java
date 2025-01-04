@@ -96,7 +96,7 @@ public abstract class DyeItemMixin extends Item {
 
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        if(UnidyeUtils.DYES.containsKey(stack.getItem())) {
+        if (UnidyeUtils.DYES.containsKey(stack.getItem())) {
             if (Screen.hasShiftDown()) {
                 UnidyeColor unidyeColor = UnidyeUtils.DYES.get(stack.getItem());
                 MutableText mutableText = Text.literal("■ ");

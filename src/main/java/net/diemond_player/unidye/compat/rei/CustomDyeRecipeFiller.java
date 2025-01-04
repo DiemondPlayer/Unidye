@@ -29,18 +29,18 @@ public class CustomDyeRecipeFiller implements CraftingRecipeFiller<CustomDyeReci
             int dyes = new Random().nextInt(2) + 2;
             List<EntryIngredient> inputs = new ArrayList<>();
             List<DyeItem> dyeItems = new ArrayList<>();
-            if(!Unidye.POLYMORPH){
+            if (!Unidye.POLYMORPH) {
                 inputs.add(EntryIngredients.of(Items.STICK));
             }
             for (int j = 0; j < dyes; j++) {
                 DyeColor color = colors[new Random().nextInt(colors.length)];
                 DyeItem dyeItem = DyeItem.byColor(color);
-                if(dyeItem == UnidyeItems.CUSTOM_DYE){
+                if (dyeItem == UnidyeItems.CUSTOM_DYE) {
                     dyeItem = (DyeItem) Items.WHITE_DYE;
                 }
                 if (dyeItems.contains(dyeItem)) {
                     j--;
-                }else{
+                } else {
                     dyeItems.add(dyeItem);
                     inputs.add(EntryIngredients.of(dyeItem));
                 }

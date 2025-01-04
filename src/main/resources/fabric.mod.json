@@ -1,48 +1,48 @@
 {
-	"schemaVersion": 1,
-	"id": "unidye",
-	"version": "${version}",
-	"name": "Unidye",
-	"description": "Unidye adds a way to make any dye your mind can think of! Mix any dyes with crafting table and get new custom blends! Polymorph is recommended, otherwise use stick item when crafting custom dyes from vanilla ones.",
-	"authors": [
-		"Diemond_Player"
-	],
-	"contact": {
-		"sources": "https://github.com/DiemondPlayer/Unidye"
-	},
-	"license": "MIT",
-	"icon": "assets/unidye/icon.png",
-	"environment": "*",
-	"entrypoints": {
-		"main": [
-			"net.diemond_player.unidye.Unidye"
-		],
-		"fabric-datagen": [
-			"net.diemond_player.unidye.UnidyeDataGenerator"
-		],
-		"client": [
-			"net.diemond_player.unidye.UnidyeClient"
-		],
-		"rei_client": [
-			"net.diemond_player.unidye.compat.rei.UnidyeREIClientPlugin"
-		],
-		"emi": [
-			"net.diemond_player.unidye.compat.emi.UnidyeEmiPlugin"
-		],
-		"jei_mod_plugin": [
-			"net.diemond_player.unidye.compat.jei.UnidyeJEIPlugin"
-		]
-	},
-	"mixins": [
-		"unidye.mixins.json"
-	],
-	"depends": {
-		"fabricloader": ">=0.15.11",
-		"minecraft": "=1.20.2",
-		"java": ">=17",
-		"fabric-api": "*"
-	},
-	"suggests": {
-		"polymorph": "*"
-	}
+  "schemaVersion": 1,
+  "id": "unidye",
+  "version": "${version}",
+  "name": "Unidye",
+  "description": "Unidye adds a way to make any dye your mind can think of! Mix any dyes with crafting table and get new custom blends! Polymorph is recommended, otherwise use stick item when crafting custom dyes from vanilla ones.",
+  "authors": [
+    "Diemond_Player"
+  ],
+  "contact": {
+    "sources": "https://github.com/DiemondPlayer/Unidye"
+  },
+  "license": "MIT",
+  "icon": "assets/unidye/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.diemond_player.unidye.Unidye"
+    ],
+    "fabric-datagen": [
+      "net.diemond_player.unidye.UnidyeDataGenerator"
+    ],
+    "client": [
+      "net.diemond_player.unidye.UnidyeClient"
+    ],
+    "rei_client": [
+      "net.diemond_player.unidye.compat.rei.UnidyeREIClientPlugin"
+    ],
+    "emi": [
+      "net.diemond_player.unidye.compat.emi.UnidyeEmiPlugin"
+    ],
+    "jei_mod_plugin": [
+      "net.diemond_player.unidye.compat.jei.UnidyeJEIPlugin"
+    ]
+  },
+  "mixins": [
+    "unidye.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.15.11",
+    "minecraft": "=1.20.2",
+    "java": ">=17",
+    "fabric-api": "*"
+  },
+  "suggests": {
+    "polymorph": "*"
+  }
 }

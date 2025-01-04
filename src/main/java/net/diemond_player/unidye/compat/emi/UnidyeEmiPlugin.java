@@ -37,36 +37,31 @@ import java.util.stream.Stream;
 public class UnidyeEmiPlugin implements EmiPlugin {
     @Override
     public void register(EmiRegistry registry) {
-        Set<Item> hiddenItems = Stream.concat(
-                EmiUtil.values(TagKey.of(EmiPort.getItemRegistry().getKey(), EmiTags.HIDDEN_FROM_RECIPE_VIEWERS)).map(RegistryEntry::value),
-                EmiPort.getDisabledItems()
-        ).collect(Collectors.toSet());
-
         for (CraftingRecipe recipe : getRecipes(registry, RecipeType.CRAFTING)) {
             Identifier id = EmiPort.getId(recipe);
-            if (recipe instanceof CustomDyeRecipe dye) {
+            if (recipe instanceof CustomDyeRecipe) {
                 addRecipeSafe(registry, () -> new EmiCustomDyeRecipe(id), recipe);
-            } else if(recipe instanceof CustomStainedGlassDyeingRecipe) {
+            } else if (recipe instanceof CustomStainedGlassDyeingRecipe) {
                 addRecipeSafe(registry, () -> new EmiCustomCircleDyeingRecipe(Items.GLASS, UnidyeBlocks.CUSTOM_STAINED_GLASS.asItem(), ConventionalItemTags.GLASS_BLOCKS, id), recipe);
-            } else if(recipe instanceof CustomStainedGlassPaneDyeingRecipe) {
+            } else if (recipe instanceof CustomStainedGlassPaneDyeingRecipe) {
                 addRecipeSafe(registry, () -> new EmiCustomCircleDyeingRecipe(Items.GLASS_PANE, UnidyeBlocks.CUSTOM_STAINED_GLASS_PANE.asItem(), ConventionalItemTags.GLASS_PANES, id), recipe);
-            } else if(recipe instanceof CustomCarpetDyeingRecipe) {
+            } else if (recipe instanceof CustomCarpetDyeingRecipe) {
                 addRecipeSafe(registry, () -> new EmiCustomCircleDyeingRecipe(Items.WHITE_CARPET, UnidyeBlocks.CUSTOM_CARPET.asItem(), ItemTags.WOOL_CARPETS, id), recipe);
-            } else if(recipe instanceof CustomCandleDyeingRecipe) {
+            } else if (recipe instanceof CustomCandleDyeingRecipe) {
                 addRecipeSafe(registry, () -> new EmiCustomCircleDyeingRecipe(Items.CANDLE, UnidyeBlocks.CUSTOM_CANDLE.asItem(), ItemTags.CANDLES, id), recipe);
-            } else if(recipe instanceof CustomWoolDyeingRecipe) {
+            } else if (recipe instanceof CustomWoolDyeingRecipe) {
                 addRecipeSafe(registry, () -> new EmiCustomCircleDyeingRecipe(Items.WHITE_WOOL, UnidyeBlocks.CUSTOM_WOOL.asItem(), ItemTags.WOOL, id), recipe);
-            } else if(recipe instanceof CustomTerracottaDyeingRecipe) {
+            } else if (recipe instanceof CustomTerracottaDyeingRecipe) {
                 addRecipeSafe(registry, () -> new EmiCustomCircleDyeingRecipe(Items.TERRACOTTA, UnidyeBlocks.CUSTOM_TERRACOTTA.asItem(), ItemTags.TERRACOTTA, id), recipe);
-            } else if(recipe instanceof CustomStainedGlassPaneRecipe) {
+            } else if (recipe instanceof CustomStainedGlassPaneRecipe) {
                 addRecipeSafe(registry, () -> new EmiCustomStainedGlassPaneRecipe(id), recipe);
-            } else if(recipe instanceof CustomCarpetRecipe) {
+            } else if (recipe instanceof CustomCarpetRecipe) {
                 addRecipeSafe(registry, () -> new EmiCustomCarpetRecipe(id), recipe);
-            } else if(recipe instanceof CustomBedRecipe) {
+            } else if (recipe instanceof CustomBedRecipe) {
                 addRecipeSafe(registry, () -> new EmiCustomBedRecipe(id), recipe);
-            } else if(recipe instanceof CustomConcretePowderRecipe) {
+            } else if (recipe instanceof CustomConcretePowderRecipe) {
                 addRecipeSafe(registry, () -> new EmiCustomConcretePowderRecipe(id), recipe);
-            } else if(recipe instanceof CustomBannerRecipe) {
+            } else if (recipe instanceof CustomBannerRecipe) {
                 addRecipeSafe(registry, () -> new EmiCustomBannerRecipe(id), recipe);
             } else if (recipe instanceof CustomBannerDuplicateRecipe) {
                 addRecipeSafe(registry, () -> new EmiCustomBannerDuplicateRecipe(id), recipe);
@@ -96,7 +91,7 @@ public class UnidyeEmiPlugin implements EmiPlugin {
                 .supportsRecipeTree(false)
                 .build());
         addRecipeSafe(registry, () -> EmiWorldInteractionRecipe.builder()
-                .id(synthetic("world/cauldron_washing", "shulker_boxe"))
+                .id(synthetic("world/cauldron_washing", "shulker_box"))
                 .leftInput(EmiIngredient.of(ConventionalItemTags.SHULKER_BOXES))
                 .rightInput(EmiStack.of(Items.CAULDRON), true)
                 .rightInput(EmiStack.of(Fluids.WATER, FluidUnit.BOTTLE), false)
@@ -169,9 +164,11 @@ public class UnidyeEmiPlugin implements EmiPlugin {
                 .supportsRecipeTree(false)
                 .build());
     }
+
     private static <C extends Inventory, T extends Recipe<C>> Iterable<T> getRecipes(EmiRegistry registry, RecipeType<T> type) {
-        return registry.getRecipeManager().listAllOfType(type).stream()::iterator;
+        return registry.getRecipeManager().listAllOfType(type).stream().map(e -> e.value())::iterator;
     }
+
     private static void addRecipeSafe(EmiRegistry registry, Supplier<EmiRecipe> supplier, Recipe<?> recipe) {
         try {
             registry.addRecipe(supplier.get());
@@ -180,13 +177,16 @@ public class UnidyeEmiPlugin implements EmiPlugin {
             EmiReloadLog.error(e);
         }
     }
+
     private static void addConcreteRecipe(EmiRegistry registry, Block powder, EmiStack water, Block result) {
         addRecipeSafe(registry, () -> basicWorld(EmiStack.of(powder), water, EmiStack.of(result),
                 synthetic("world/concrete", EmiUtil.subId(result))));
     }
+
     private static Identifier synthetic(String type, String name) {
         return EmiPort.id("unidye", "/" + type + "/" + name);
     }
+
     private static EmiRecipe basicWorld(EmiIngredient left, EmiIngredient right, EmiStack output, Identifier id) {
         return basicWorld(left, right, output, id, true);
     }
@@ -199,6 +199,7 @@ public class UnidyeEmiPlugin implements EmiPlugin {
                 .output(output)
                 .build();
     }
+
     private static void addRecipeSafe(EmiRegistry registry, Supplier<EmiRecipe> supplier) {
         try {
             registry.addRecipe(supplier.get());

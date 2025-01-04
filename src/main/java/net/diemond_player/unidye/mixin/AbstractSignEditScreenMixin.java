@@ -16,7 +16,7 @@ public abstract class AbstractSignEditScreenMixin {
 
     @ModifyVariable(method = "renderSignText", at = @At(value = "STORE"), ordinal = 0)
     private int unidye$renderSignText(int value) {
-        if(((UnidyeAccessor)this.text).unidye$getCustomColor() != 0xFFFFFF) {
+        if (((UnidyeAccessor) this.text).unidye$getCustomColor() != 0xFFFFFF) {
             return ((UnidyeAccessor) this.text).unidye$getCustomColor();
         }
         return value;

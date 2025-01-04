@@ -33,12 +33,12 @@ public class CustomBedRecipeFiller implements CraftingRecipeFiller<CustomBedReci
             for (int j = 0; j < dyes; j++) {
                 DyeColor color = colors[new Random().nextInt(colors.length)];
                 DyeItem dyeItem = DyeItem.byColor(color);
-                if(dyeItem == UnidyeItems.CUSTOM_DYE){
+                if (dyeItem == UnidyeItems.CUSTOM_DYE) {
                     dyeItem = (DyeItem) Items.WHITE_DYE;
                 }
                 if (dyeItems.contains(dyeItem)) {
                     j--;
-                }else{
+                } else {
                     dyeItems.add(dyeItem);
                 }
             }
@@ -51,11 +51,12 @@ public class CustomBedRecipeFiller implements CraftingRecipeFiller<CustomBedReci
             inputs.add(EntryIngredients.ofItemTag(ItemTags.PLANKS));
             ItemStack output = UnidyeUtils.blendAndSetColor(new ItemStack(UnidyeBlocks.CUSTOM_BED), dyeItems, Lists.newArrayList());
             displays.add(new DefaultCustomShapedDisplay(recipe,
-                    inputs, List.of(EntryIngredients.of(output)), 3 ,2));
+                    inputs, List.of(EntryIngredients.of(output)), 3, 2));
         }
 
         return displays;
     }
+
     @Override
     public Class<CustomBedRecipe> getRecipeClass() {
         return CustomBedRecipe.class;

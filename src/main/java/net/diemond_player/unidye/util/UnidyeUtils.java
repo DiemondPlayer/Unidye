@@ -62,6 +62,7 @@ public class UnidyeUtils {
         }
         return DEFAULT_COLOR;
     }
+
     public static boolean hasColor(ItemStack stack) {
         NbtCompound nbtCompound = stack.getSubNbt(DISPLAY_KEY);
         return nbtCompound != null && nbtCompound.contains(COLOR_KEY, NbtElement.NUMBER_TYPE);
@@ -124,8 +125,8 @@ public class UnidyeUtils {
         n = (n << 8) + o;
         n = (n << 8) + p;
         dyeableItem.setColor(itemStack, n);
-        if(stack.getItem() instanceof CustomDyeItem){
-        defineClosestVanillaDye(itemStack);
+        if (stack.getItem() instanceof CustomDyeItem) {
+            defineClosestVanillaDye(itemStack);
         }
         return itemStack;
     }
@@ -209,7 +210,7 @@ public class UnidyeUtils {
 
 
     public static void blendAndSetMaterialColor(ItemStack stack, ItemStack itemStack, List<DyeItem> colors,
-                                         List<ItemStack> customColors, String materialType) {
+                                                List<ItemStack> customColors, String materialType) {
         int n;
         int[] is = new int[3];
         int j = 0;
@@ -253,11 +254,11 @@ public class UnidyeUtils {
     }
 
     public static float[] getColorArray(String materialType, Item dyeItem) {
-        if(DYES.containsKey(dyeItem)) {
+        if (DYES.containsKey(dyeItem)) {
             return DYES.get(dyeItem).getColorComponents(materialType);
-        }else{
-            DyeColor dyeColor = ((DyeItem)dyeItem).getColor();
-            if(Objects.equals(materialType, "sign")){
+        } else {
+            DyeColor dyeColor = ((DyeItem) dyeItem).getColor();
+            if (Objects.equals(materialType, "sign")) {
                 return getColorArray(dyeColor.getSignColor());
             } else if (Objects.equals(materialType, "firework")) {
                 return getColorArray(dyeColor.getFireworkColor());
@@ -269,9 +270,9 @@ public class UnidyeUtils {
 
     public static float[] getCustomColorArray(String materialType, ItemStack itemStack) {
         int color;
-        if(Objects.equals(materialType, "dye")){
+        if (Objects.equals(materialType, "dye")) {
             color = getColor(itemStack);
-        }else {
+        } else {
             color = getMaterialColor(itemStack, materialType);
         }
         int j = (color & 0xFF0000) >> 16;
@@ -279,6 +280,7 @@ public class UnidyeUtils {
         int l = (color & 0xFF) >> 0;
         return new float[]{(float) j / 255.0f, (float) k / 255.0f, (float) l / 255.0f};
     }
+
     public static String getMaterialType(Item dyeableItem) {
         return MATERIAL_TYPES.getOrDefault(dyeableItem, "leather");
     }

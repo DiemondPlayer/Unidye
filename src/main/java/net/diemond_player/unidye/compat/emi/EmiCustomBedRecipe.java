@@ -21,8 +21,9 @@ import java.util.stream.Stream;
 
 public class EmiCustomBedRecipe extends EmiPatternCraftingRecipe {
     private static final List<DyeItem> DYES = Stream.of(DyeColor.values()).map(DyeItem::byColor).filter(c -> !(c instanceof CustomDyeItem)).toList();
+
     public EmiCustomBedRecipe(Identifier id) {
-        super(List.of(EmiIngredient.of(ItemTags.PLANKS), (EmiIngredient)EmiStack.of(UnidyeBlocks.CUSTOM_WOOL)), EmiStack.of(UnidyeBlocks.CUSTOM_BED), id, false);
+        super(List.of(EmiIngredient.of(ItemTags.PLANKS), (EmiIngredient) EmiStack.of(UnidyeBlocks.CUSTOM_WOOL)), EmiStack.of(UnidyeBlocks.CUSTOM_BED), id, false);
     }
 
     @Override

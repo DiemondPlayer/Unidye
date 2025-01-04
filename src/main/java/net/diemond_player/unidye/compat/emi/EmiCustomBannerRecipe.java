@@ -21,6 +21,7 @@ import java.util.stream.Stream;
 
 public class EmiCustomBannerRecipe extends EmiPatternCraftingRecipe {
     private static final List<DyeItem> DYES = Stream.of(DyeColor.values()).map(DyeItem::byColor).filter(c -> !(c instanceof CustomDyeItem)).toList();
+
     public EmiCustomBannerRecipe(Identifier id) {
         super(List.of(EmiStack.of(UnidyeBlocks.CUSTOM_WOOL), EmiStack.of(Items.STICK)), EmiStack.of(UnidyeItems.CUSTOM_BANNER), id, false);
     }

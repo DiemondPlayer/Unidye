@@ -161,7 +161,7 @@ public class UnidyeCauldronBehaviors {
         WATER_CAULDRON_BEHAVIOR.put(Blocks.GREEN_BED.asItem(), CLEAN_BED);
         WATER_CAULDRON_BEHAVIOR.put(Blocks.LIME_BED.asItem(), CLEAN_BED);
 
-        if(Unidye.SIMPLE_CONCRETE){
+        if (Unidye.SIMPLE_CONCRETE) {
             WATER_CAULDRON_BEHAVIOR.put(UnidyeBlocks.CUSTOM_CONCRETE_POWDER.asItem(), HARDEN_CUSTOM_CONCRETE_POWDER);
         }
     }
