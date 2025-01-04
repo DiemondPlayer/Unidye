@@ -14,8 +14,8 @@ import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
 public class CustomBedRecipe extends SpecialCraftingRecipe {
-    public CustomBedRecipe(Identifier id, CraftingRecipeCategory category) {
-        super(id, category);
+    public CustomBedRecipe(CraftingRecipeCategory category) {
+        super(category);
     }
 
     @Override

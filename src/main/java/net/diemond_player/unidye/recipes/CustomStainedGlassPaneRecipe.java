@@ -15,8 +15,8 @@ import net.minecraft.world.World;
 import java.util.Objects;
 
 public class CustomStainedGlassPaneRecipe extends SpecialCraftingRecipe {
-    public CustomStainedGlassPaneRecipe(Identifier id, CraftingRecipeCategory category) {
-        super(id, category);
+    public CustomStainedGlassPaneRecipe(CraftingRecipeCategory category) {
+        super(category);
     }
 
     @Override

@@ -19,8 +19,8 @@ import net.minecraft.world.World;
 import java.util.ArrayList;
 
 public class CustomBedDyeingRecipe extends SpecialCraftingRecipe {
-    public CustomBedDyeingRecipe(Identifier id, CraftingRecipeCategory category) {
-        super(id, category);
+    public CustomBedDyeingRecipe(CraftingRecipeCategory category) {
+        super(category);
     }
 
     @Override

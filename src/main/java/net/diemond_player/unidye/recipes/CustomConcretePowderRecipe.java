@@ -16,8 +16,8 @@ import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
 public class CustomConcretePowderRecipe extends SpecialCraftingRecipe {
-    public CustomConcretePowderRecipe(Identifier id, CraftingRecipeCategory category) {
-        super(id, category);
+    public CustomConcretePowderRecipe(CraftingRecipeCategory category) {
+        super(category);
     }
 
     @Override

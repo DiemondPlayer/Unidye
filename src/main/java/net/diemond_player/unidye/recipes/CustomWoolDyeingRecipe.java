@@ -16,8 +16,8 @@ import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
 public class CustomWoolDyeingRecipe extends SpecialCraftingRecipe {
-    public CustomWoolDyeingRecipe(Identifier id, CraftingRecipeCategory category) {
-        super(id, category);
+    public CustomWoolDyeingRecipe(CraftingRecipeCategory category) {
+        super(category);
     }
 
     @Override

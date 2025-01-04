@@ -16,8 +16,8 @@ import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
 public class CustomShieldDecorationRecipe extends SpecialCraftingRecipe {
-    public CustomShieldDecorationRecipe(Identifier id, CraftingRecipeCategory category) {
-        super(id, category);
+    public CustomShieldDecorationRecipe(CraftingRecipeCategory category) {
+        super(category);
     }
 
     @Override

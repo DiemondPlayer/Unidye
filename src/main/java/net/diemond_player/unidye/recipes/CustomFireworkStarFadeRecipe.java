@@ -19,8 +19,8 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class CustomFireworkStarFadeRecipe extends SpecialCraftingRecipe {
-    public CustomFireworkStarFadeRecipe(Identifier id, CraftingRecipeCategory category) {
-        super(id, category);
+    public CustomFireworkStarFadeRecipe(CraftingRecipeCategory category) {
+        super(category);
     }
 
     private static final Ingredient TYPE_MODIFIER = Ingredient.ofItems(Items.FIRE_CHARGE, Items.FEATHER, Items.GOLD_NUGGET, Items.SKELETON_SKULL, Items.WITHER_SKELETON_SKULL, Items.CREEPER_HEAD, Items.PLAYER_HEAD, Items.DRAGON_HEAD, Items.ZOMBIE_HEAD, Items.PIGLIN_HEAD);

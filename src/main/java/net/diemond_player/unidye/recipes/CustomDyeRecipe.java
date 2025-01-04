@@ -21,8 +21,8 @@ import net.minecraft.world.World;
 import java.util.ArrayList;
 
 public class CustomDyeRecipe extends SpecialCraftingRecipe {
-    public CustomDyeRecipe(Identifier id, CraftingRecipeCategory category) {
-        super(id, category);
+    public CustomDyeRecipe(CraftingRecipeCategory category) {
+        super(category);
     }
 
     @Override

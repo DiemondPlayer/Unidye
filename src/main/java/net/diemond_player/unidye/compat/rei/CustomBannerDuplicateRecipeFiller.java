@@ -12,6 +12,7 @@ import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.item.DyeItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.util.DyeColor;
 
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ import java.util.Random;
 
 public class CustomBannerDuplicateRecipeFiller implements CraftingRecipeFiller<CustomBannerDuplicateRecipe> {
     @Override
-    public Collection<Display> apply(CustomBannerDuplicateRecipe recipe) {
+    public Collection<Display> apply(RecipeEntry<CustomBannerDuplicateRecipe> recipe) {
         List<Display> displays = new ArrayList<>();
         DyeColor[] colors = DyeColor.values();
         for (int i = 0; i < 9; i++) {
@@ -54,4 +55,5 @@ public class CustomBannerDuplicateRecipeFiller implements CraftingRecipeFiller<C
     public Class<CustomBannerDuplicateRecipe> getRecipeClass() {
         return CustomBannerDuplicateRecipe.class;
     }
+
 }

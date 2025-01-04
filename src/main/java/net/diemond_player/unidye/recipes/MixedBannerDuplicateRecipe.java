@@ -16,8 +16,8 @@ import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
 
 public class MixedBannerDuplicateRecipe extends SpecialCraftingRecipe {
-    public MixedBannerDuplicateRecipe(Identifier identifier, CraftingRecipeCategory craftingRecipeCategory) {
-        super(identifier, craftingRecipeCategory);
+    public MixedBannerDuplicateRecipe(CraftingRecipeCategory craftingRecipeCategory) {
+        super(craftingRecipeCategory);
     }
 
     public boolean matches(RecipeInputInventory recipeInputInventory, World world) {

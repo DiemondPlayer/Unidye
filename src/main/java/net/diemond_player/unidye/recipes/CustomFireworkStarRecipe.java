@@ -18,8 +18,8 @@ import net.minecraft.world.World;
 import java.util.ArrayList;
 
 public class CustomFireworkStarRecipe extends SpecialCraftingRecipe {
-    public CustomFireworkStarRecipe(Identifier id, CraftingRecipeCategory category) {
-        super(id, category);
+    public CustomFireworkStarRecipe(CraftingRecipeCategory category) {
+        super(category);
     }
 
     private static final Ingredient INPUT_STAR = Ingredient.ofItems(Items.FIREWORK_STAR);

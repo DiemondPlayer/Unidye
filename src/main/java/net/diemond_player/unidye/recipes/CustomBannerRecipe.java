@@ -14,8 +14,8 @@ import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
 public class CustomBannerRecipe extends SpecialCraftingRecipe {
-    public CustomBannerRecipe(Identifier id, CraftingRecipeCategory category) {
-        super(id, category);
+    public CustomBannerRecipe(CraftingRecipeCategory category) {
+        super(category);
     }
 
     @Override

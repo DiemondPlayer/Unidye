@@ -15,8 +15,8 @@ import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
 public class CustomTerracottaDyeingRecipe extends SpecialCraftingRecipe {
-    public CustomTerracottaDyeingRecipe(Identifier id, CraftingRecipeCategory category) {
-        super(id, category);
+    public CustomTerracottaDyeingRecipe(CraftingRecipeCategory category) {
+        super(category);
     }
 
     @Override

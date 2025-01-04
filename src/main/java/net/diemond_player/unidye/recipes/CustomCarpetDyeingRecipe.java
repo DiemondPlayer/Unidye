@@ -15,8 +15,8 @@ import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
 public class CustomCarpetDyeingRecipe extends SpecialCraftingRecipe {
-    public CustomCarpetDyeingRecipe(Identifier id, CraftingRecipeCategory category) {
-        super(id, category);
+    public CustomCarpetDyeingRecipe(CraftingRecipeCategory category) {
+        super(category);
     }
 
     @Override

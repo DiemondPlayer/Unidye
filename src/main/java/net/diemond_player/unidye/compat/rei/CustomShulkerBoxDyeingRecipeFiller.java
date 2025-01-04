@@ -14,6 +14,7 @@ import net.fabricmc.fabric.api.tag.convention.v1.ConventionalItemTags;
 import net.minecraft.item.DyeItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.util.DyeColor;
 
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ import java.util.Random;
 
 public class CustomShulkerBoxDyeingRecipeFiller implements CraftingRecipeFiller<CustomShulkerBoxDyeingRecipe> {
     @Override
-    public Collection<Display> apply(CustomShulkerBoxDyeingRecipe recipe) {
+    public Collection<Display> apply(RecipeEntry<CustomShulkerBoxDyeingRecipe> recipe) {
         List<Display> displays = new ArrayList<>();
         DyeColor[] colors = DyeColor.values();
         for (int i = 0; i < 9; i++) {

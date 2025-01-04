@@ -75,7 +75,12 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:$rei_version"
+	// modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:$rei_version"
+	// REI API for Architectury Common
+	modCompileOnly "me.shedaniel:RoughlyEnoughItems-api:$rei_version"
+	modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin:$rei_version"
+
+	// REI API for Fabric
 	modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:$rei_version"
 	modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:$rei_version"
 
@@ -112,9 +117,9 @@ dependencies {
 	modRuntimeOnly "com.terraformersmc:modmenu:$modmenu_version"
 
 	// compile against the JEI API but do not include it at runtime
-	modCompileOnlyApi("mezz.jei:jei-${minecraft_version}-fabric-api:${jei_version}")
+	//modCompileOnlyApi("mezz.jei:jei-${mc_version}-fabric-api:${jei_version}")
 	// at runtime, use the full JEI jar for Fabric
-	modRuntimeOnly("mezz.jei:jei-${minecraft_version}-fabric:${jei_version}")
+	//modRuntimeOnly("mezz.jei:jei-${mc_version}-fabric:${jei_version}")
 }
 
 processResources {

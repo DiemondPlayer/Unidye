@@ -13,6 +13,7 @@ import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.item.DyeItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.util.DyeColor;
 
@@ -23,7 +24,7 @@ import java.util.Random;
 
 public class CustomBedRecipeFiller implements CraftingRecipeFiller<CustomBedRecipe> {
     @Override
-    public Collection<Display> apply(CustomBedRecipe recipe) {
+    public Collection<Display> apply(RecipeEntry<CustomBedRecipe> recipe) {
         List<Display> displays = new ArrayList<>();
         DyeColor[] colors = DyeColor.values();
         for (int i = 0; i < 9; i++) {

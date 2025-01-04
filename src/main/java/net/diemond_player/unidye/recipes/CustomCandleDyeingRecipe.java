@@ -15,8 +15,8 @@ import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
 public class CustomCandleDyeingRecipe extends SpecialCraftingRecipe {
-    public CustomCandleDyeingRecipe(Identifier id, CraftingRecipeCategory category) {
-        super(id, category);
+    public CustomCandleDyeingRecipe(CraftingRecipeCategory category) {
+        super(category);
     }
 
     @Override

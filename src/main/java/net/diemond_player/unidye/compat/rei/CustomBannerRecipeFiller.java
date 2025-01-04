@@ -13,6 +13,7 @@ import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.item.DyeItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.util.DyeColor;
 
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ import java.util.Random;
 
 public class CustomBannerRecipeFiller implements CraftingRecipeFiller<CustomBannerRecipe> {
     @Override
-    public Collection<Display> apply(CustomBannerRecipe recipe) {
+    public Collection<Display> apply(RecipeEntry<CustomBannerRecipe> recipe) {
         List<Display> displays = new ArrayList<>();
         DyeColor[] colors = DyeColor.values();
         for (int i = 0; i < 9; i++) {

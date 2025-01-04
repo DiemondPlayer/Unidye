@@ -19,8 +19,8 @@ import net.minecraft.world.World;
 import java.util.ArrayList;
 
 public class CustomShulkerBoxDyeingRecipe extends SpecialCraftingRecipe {
-    public CustomShulkerBoxDyeingRecipe(Identifier id, CraftingRecipeCategory category) {
-        super(id, category);
+    public CustomShulkerBoxDyeingRecipe(CraftingRecipeCategory category) {
+        super(category);
     }
 
     @Override
