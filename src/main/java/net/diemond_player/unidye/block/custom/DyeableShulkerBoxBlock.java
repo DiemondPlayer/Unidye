@@ -154,9 +154,8 @@ public class DyeableShulkerBoxBlock extends ShulkerBoxBlock implements IDyeableB
 
     @Override
     public VoxelShape getSidesShape(BlockState state, BlockView world, BlockPos pos) {
-        DyeableShulkerBoxBlockEntity dyeableShulkerBoxBlockEntity;
         BlockEntity blockEntity = world.getBlockEntity(pos);
-        if (blockEntity instanceof DyeableShulkerBoxBlockEntity && !(dyeableShulkerBoxBlockEntity = (DyeableShulkerBoxBlockEntity) blockEntity).suffocates()) {
+        if (blockEntity instanceof DyeableShulkerBoxBlockEntity && !((DyeableShulkerBoxBlockEntity) blockEntity).suffocates()) {
             return SIDES_SHAPES.get(state.get(FACING).getOpposite());
         }
         return VoxelShapes.fullCube();
