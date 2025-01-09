@@ -77,8 +77,8 @@ dependencies {
 
 	//modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:$rei_version"
 	// REI API for Architectury Common
-	modCompileOnly "me.shedaniel:RoughlyEnoughItems-api:$rei_version"
-	modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin:$rei_version"
+	//modCompileOnly "me.shedaniel:RoughlyEnoughItems-api:$rei_version"
+	//modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin:$rei_version"
 
 	// REI API for Fabric
 	modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:$rei_version"

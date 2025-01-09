@@ -33,22 +33,8 @@ public class DyeableBannerBlock extends BannerBlock {
     }
 
     @Override
-    public boolean canMobSpawnInside(BlockState state) {
-        return true;
-    }
-
-    @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
         return new DyeableBannerBlockEntity(pos, state);
-    }
-
-    @Override
-    public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
-        if (world.isClient) {
-            world.getBlockEntity(pos, UnidyeBlockEntities.DYEABLE_BANNER_BE).ifPresent(blockEntity -> blockEntity.readFrom(itemStack));
-        } else if (itemStack.hasCustomName()) {
-            world.getBlockEntity(pos, UnidyeBlockEntities.DYEABLE_BANNER_BE).ifPresent(blockEntity -> blockEntity.setCustomName(itemStack.getName()));
-        }
     }
 
     @Override
@@ -60,10 +46,6 @@ public class DyeableBannerBlock extends BannerBlock {
         return super.getPickStack(world, pos, state);
     }
 
-    @Override
-    public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
-        return world.getBlockState(pos.down()).isSolid();
-    }
 
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {

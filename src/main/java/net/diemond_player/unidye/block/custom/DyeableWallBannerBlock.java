@@ -34,15 +34,6 @@ public class DyeableWallBannerBlock extends WallBannerBlock {
         this.setDefaultState((BlockState) ((BlockState) this.stateManager.getDefaultState()).with(FACING, Direction.NORTH));
     }
 
-    @Override
-    public String getTranslationKey() {
-        return this.asItem().getTranslationKey();
-    }
-
-    @Override
-    public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
-        return world.getBlockState(pos.offset(state.get(FACING).getOpposite())).isSolid();
-    }
 
     @Override
     public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
@@ -85,11 +76,6 @@ public class DyeableWallBannerBlock extends WallBannerBlock {
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         builder.add(FACING);
-    }
-
-    @Override
-    public boolean canMobSpawnInside(BlockState state) {
-        return true;
     }
 
     @Override
