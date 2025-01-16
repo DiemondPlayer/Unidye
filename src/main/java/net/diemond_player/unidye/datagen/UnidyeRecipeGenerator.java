@@ -10,8 +10,6 @@ import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.util.Identifier;
 
-import java.util.function.Consumer;
-
 public class UnidyeRecipeGenerator extends FabricRecipeProvider {
     public UnidyeRecipeGenerator(FabricDataOutput output) {
         super(output);
