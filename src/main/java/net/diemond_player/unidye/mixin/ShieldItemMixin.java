@@ -18,8 +18,10 @@ import java.util.List;
 public abstract class ShieldItemMixin {
     @Inject(method = "getTranslationKey", at = @At(value = "RETURN", ordinal = 0), cancellable = true)
     private void unidye$getTranslationKey(ItemStack stack, CallbackInfoReturnable<String> cir) {
-        if (BlockItem.getBlockEntityNbt(stack).contains("CustomColored")) {
-            cir.setReturnValue("item.unidye.shield_custom_color");
+        if(BlockItem.getBlockEntityNbt(stack) != null) {
+            if (BlockItem.getBlockEntityNbt(stack).contains("CustomColored")) {
+                cir.setReturnValue("item.unidye.shield_custom_color");
+            }
         }
     }
 
