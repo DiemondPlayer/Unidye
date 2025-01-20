@@ -1,23 +1,34 @@
 package net.diemond_player.unidye.block.entity;
 
+import com.google.common.collect.Lists;
 import net.diemond_player.unidye.Unidye;
 import net.diemond_player.unidye.block.UnidyeBlocks;
+import net.diemond_player.unidye.block.custom.DyeableBlock;
+import net.diemond_player.unidye.util.UnidyeUtils;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
+import net.minecraft.block.AirBlock;
+import net.minecraft.block.Block;
+import net.minecraft.block.ConcretePowderBlock;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 
+import java.util.ArrayList;
+
+
 public class UnidyeBlockEntities {
+    public static final ArrayList<Block> DYEABLE_BE_BLOCKS = Lists.newArrayList(UnidyeBlocks.CUSTOM_TERRACOTTA,
+            UnidyeBlocks.CUSTOM_CONCRETE,
+            UnidyeBlocks.CUSTOM_CONCRETE_POWDER,
+            UnidyeBlocks.CUSTOM_CARPET,
+            UnidyeBlocks.CUSTOM_CANDLE,
+            UnidyeBlocks.CUSTOM_CANDLE_CAKE);
+
     public static final BlockEntityType<DyeableBlockEntity> DYEABLE_BE = Registry.register(
             Registries.BLOCK_ENTITY_TYPE, new Identifier(Unidye.MOD_ID, "dyeable_block_entity"),
             FabricBlockEntityTypeBuilder.create(DyeableBlockEntity::new,
-                    UnidyeBlocks.CUSTOM_TERRACOTTA,
-                    UnidyeBlocks.CUSTOM_CONCRETE,
-                    UnidyeBlocks.CUSTOM_CONCRETE_POWDER,
-                    UnidyeBlocks.CUSTOM_CARPET,
-                    UnidyeBlocks.CUSTOM_CANDLE,
-                    UnidyeBlocks.CUSTOM_CANDLE_CAKE
+                    DYEABLE_BE_BLOCKS.toArray(new Block[0])
             ).build(null));
 
     public static final BlockEntityType<DyeableShulkerBoxBlockEntity> DYEABLE_SHULKER_BOX_BE = Registry.register(
