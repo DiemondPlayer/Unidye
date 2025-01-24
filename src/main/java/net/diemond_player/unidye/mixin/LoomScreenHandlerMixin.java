@@ -4,6 +4,7 @@ import net.diemond_player.unidye.block.entity.UnidyeBlockEntities;
 import net.diemond_player.unidye.item.UnidyeItems;
 import net.diemond_player.unidye.item.custom.CustomDyeItem;
 import net.diemond_player.unidye.item.custom.DyeableBannerItem;
+import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.block.entity.BannerPattern;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.BannerItem;
@@ -98,7 +99,7 @@ public abstract class LoomScreenHandlerMixin extends ScreenHandler {
                 int n = (int) (a[0] * 255);
                 n = (n << 8) + (int) (a[1] * 255);
                 n = (n << 8) + (int) (a[2] * 255);
-                ((DyeableBannerItem) itemStack3.getItem()).setColor(itemStack3, n);
+                UnidyeUtils.setColor(itemStack3, n);
                 if (nbtCompound != null && nbtCompound.contains("Patterns", NbtElement.LIST_TYPE)) {
                     nbtList = nbtCompound.getList("Patterns", NbtElement.COMPOUND_TYPE);
                 } else {

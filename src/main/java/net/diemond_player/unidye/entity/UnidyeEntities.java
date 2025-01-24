@@ -12,7 +12,7 @@ public class UnidyeEntities {
 
     public static final EntityType<DyeableFallingBlockEntity> DYEABLE_FALLING_BLOCK_ENTITY = Registry.register(Registries.ENTITY_TYPE,
             new Identifier(Unidye.MOD_ID, "dyeable_falling_block"),
-            FabricEntityTypeBuilder.create(SpawnGroup.MISC, DyeableFallingBlockEntity::new)
+            EntityType.Builder.create(DyeableFallingBlockEntity::new, SpawnGroup.MISC)
                     .build());
 
     public static void registerModEntities() {

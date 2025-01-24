@@ -29,11 +29,11 @@ public class UnidyeItemTagProvider extends FabricTagProvider.ItemTagProvider {
                 .add(UnidyeBlocks.CUSTOM_BED.asItem());
         getOrCreateTagBuilder(ItemTags.WOOL_CARPETS)
                 .add(UnidyeBlocks.CUSTOM_CARPET.asItem());
-        getOrCreateTagBuilder(ConventionalItemTags.GLASS_BLOCKS)
+        getOrCreateTagBuilder(net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags.GLASS_BLOCKS)
                 .add(UnidyeBlocks.CUSTOM_STAINED_GLASS.asItem());
-        getOrCreateTagBuilder(ConventionalItemTags.GLASS_PANES)
+        getOrCreateTagBuilder(net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags.GLASS_PANES)
                 .add(UnidyeBlocks.CUSTOM_STAINED_GLASS_PANE.asItem());
-        getOrCreateTagBuilder(ConventionalItemTags.SHULKER_BOXES)
+        getOrCreateTagBuilder(net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags.SHULKER_BOXES)
                 .add(UnidyeBlocks.CUSTOM_SHULKER_BOX.asItem());
     }
 }

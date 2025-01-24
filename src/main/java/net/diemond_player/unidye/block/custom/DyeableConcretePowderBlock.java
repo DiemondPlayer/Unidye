@@ -15,7 +15,7 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 
-import static net.minecraft.item.DyeableItem.DEFAULT_COLOR;
+import static net.diemond_player.unidye.item.custom.CustomDyeItem.DEFAULT_COLOR;
 
 public class DyeableConcretePowderBlock extends ConcretePowderBlock implements IDyeableBlock {
 

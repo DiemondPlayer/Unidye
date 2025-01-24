@@ -12,7 +12,7 @@ import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SpecialCraftingRecipe;
 import net.minecraft.recipe.book.CraftingRecipeCategory;
 import net.minecraft.registry.DynamicRegistryManager;
-import net.minecraft.util.Identifier;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.world.World;
 
 public class CustomShieldDecorationRecipe extends SpecialCraftingRecipe {
@@ -50,7 +50,7 @@ public class CustomShieldDecorationRecipe extends SpecialCraftingRecipe {
     }
 
     @Override
-    public ItemStack craft(RecipeInputInventory recipeInputInventory, DynamicRegistryManager dynamicRegistryManager) {
+    public ItemStack craft(RecipeInputInventory recipeInputInventory, RegistryWrapper.WrapperLookup lookup) {
         ItemStack itemStack = ItemStack.EMPTY;
         ItemStack itemStack2 = ItemStack.EMPTY;
         for (int i = 0; i < recipeInputInventory.size(); ++i) {

@@ -14,6 +14,7 @@ import net.diemond_player.unidye.entity.client.renderer.DyeableShulkerBoxBlockEn
 import net.diemond_player.unidye.entity.layer.UnidyeModelLayers;
 import net.diemond_player.unidye.item.UnidyeItems;
 import net.diemond_player.unidye.util.UnidyeModelPredicateProvider;
+import net.diemond_player.unidye.util.UnidyeUtils;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
@@ -22,7 +23,6 @@ import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
-import net.minecraft.item.DyeableItem;
 import net.minecraft.item.Item;
 
 public class UnidyeClient implements ClientModInitializer {
@@ -62,11 +62,11 @@ public class UnidyeClient implements ClientModInitializer {
     }
 
     private void registerItemColor(Item item) {
-        ColorProviderRegistry.ITEM.register((stack, tintIndex) -> tintIndex > 0 ? -1 : ((DyeableItem) ((Object) stack.getItem())).getColor(stack), item);
+        ColorProviderRegistry.ITEM.register((stack, tintIndex) -> tintIndex > 0 ? -1 : UnidyeUtils.getColor(stack), item);
     }
 
     private void registerItemColor(Item item, int adjust) {
-        ColorProviderRegistry.ITEM.register((stack, tintIndex) -> tintIndex > 0 ? -1 : adjust(((DyeableItem) ((Object) stack.getItem())).getColor(stack), adjust), item);
+        ColorProviderRegistry.ITEM.register((stack, tintIndex) -> tintIndex > 0 ? -1 : adjust(UnidyeUtils.getColor(stack), adjust), item);
     }
 
     private void registerBlockColor(Block block) {

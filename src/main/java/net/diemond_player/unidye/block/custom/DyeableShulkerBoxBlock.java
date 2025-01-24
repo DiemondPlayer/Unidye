@@ -8,19 +8,21 @@ import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.DyedColorComponent;
 import net.minecraft.entity.ItemEntity;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.mob.PiglinBrain;
 import net.minecraft.entity.mob.ShulkerEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.DyeableItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.context.LootContextParameterSet;
 import net.minecraft.loot.context.LootContextParameters;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.stat.Stats;
 import net.minecraft.state.property.EnumProperty;
-import net.minecraft.util.*;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.DyeColor;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.Util;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
@@ -69,7 +71,7 @@ public class DyeableShulkerBoxBlock extends ShulkerBoxBlock implements IDyeableB
     }
 
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+    protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
         if (world.isClient) {
             return ActionResult.SUCCESS;
         }
@@ -91,9 +93,10 @@ public class DyeableShulkerBoxBlock extends ShulkerBoxBlock implements IDyeableB
     private static boolean canOpen(BlockState state, World world, BlockPos pos, DyeableShulkerBoxBlockEntity entity) {
         if (entity.getAnimationStage() != DyeableShulkerBoxBlockEntity.AnimationStage.CLOSED) {
             return true;
+        } else {
+            Box box = ShulkerEntity.calculateBoundingBox(1.0F, state.get(FACING), 0.0F, 0.5F).offset(pos).contract(1.0E-6);
+            return world.isSpaceEmpty(box);
         }
-        Box box = ShulkerEntity.calculateBoundingBox(state.get(FACING), 0.0f, 0.5f).offset(pos).contract(1.0E-6);
-        return world.isSpaceEmpty(box);
     }
 
     @Override
@@ -102,22 +105,19 @@ public class DyeableShulkerBoxBlock extends ShulkerBoxBlock implements IDyeableB
         if (blockEntity instanceof DyeableShulkerBoxBlockEntity dyeableShulkerBoxBlockEntity) {
             if (!world.isClient && player.isCreative() && !dyeableShulkerBoxBlockEntity.isEmpty()) {
                 ItemStack itemStack = new ItemStack(UnidyeBlocks.CUSTOM_SHULKER_BOX);
-                blockEntity.setStackNbt(itemStack);
-                if (dyeableShulkerBoxBlockEntity.hasCustomName()) {
-                    itemStack.setCustomName(dyeableShulkerBoxBlockEntity.getCustomName());
-                }
+                itemStack.applyComponentsFrom(blockEntity.createComponentMap());
+                ItemEntity itemEntity = new ItemEntity(world, (double)pos.getX() + 0.5, (double)pos.getY() + 0.5, (double)pos.getZ() + 0.5, itemStack);
                 if (dyeableShulkerBoxBlockEntity.color != DyeableShulkerBoxBlockEntity.DEFAULT_COLOR) {
-                    DyeableItem dyeableItem = (DyeableItem) (itemStack.getItem());
-                    dyeableItem.setColor(itemStack, dyeableShulkerBoxBlockEntity.color);
+                    itemStack.set(DataComponentTypes.DYED_COLOR, new DyedColorComponent(dyeableShulkerBoxBlockEntity.color, true));
                 }
-                ItemEntity itemEntity = new ItemEntity(world, (double) pos.getX() + 0.5, (double) pos.getY() + 0.5, (double) pos.getZ() + 0.5, itemStack);
                 itemEntity.setToDefaultPickupDelay();
                 world.spawnEntity(itemEntity);
             } else {
                 dyeableShulkerBoxBlockEntity.generateLoot(player);
             }
         }
-        return state;
+
+        return super.onBreak(world, pos, state, player);
     }
 
     @Override
@@ -131,14 +131,6 @@ public class DyeableShulkerBoxBlock extends ShulkerBoxBlock implements IDyeableB
             });
         }
         return super.getDroppedStacks(state, builder);
-    }
-
-    @Override
-    public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack) {
-        BlockEntity blockEntity;
-        if (itemStack.hasCustomName() && (blockEntity = world.getBlockEntity(pos)) instanceof DyeableShulkerBoxBlockEntity) {
-            ((DyeableShulkerBoxBlockEntity) blockEntity).setCustomName(itemStack.getName());
-        }
     }
 
     @Override
@@ -173,8 +165,8 @@ public class DyeableShulkerBoxBlock extends ShulkerBoxBlock implements IDyeableB
 
     @Override
     public ItemStack getPickStack(WorldView world, BlockPos pos, BlockState state) {
-        ItemStack itemStack = super.getPickStack((WorldView) world, pos, state);
-        world.getBlockEntity(pos, UnidyeBlockEntities.DYEABLE_SHULKER_BOX_BE).ifPresent(blockEntity -> blockEntity.setStackNbt(itemStack));
+        ItemStack itemStack = super.getPickStack(world, pos, state);
+        world.getBlockEntity(pos, UnidyeBlockEntities.DYEABLE_SHULKER_BOX_BE).ifPresent(blockEntity -> blockEntity.setStackNbt(itemStack, world.getRegistryManager()));
         if (DyeableShulkerBoxBlockEntity.getColor(world, pos) != DyeableShulkerBoxBlockEntity.DEFAULT_COLOR) {
             return pickBlock(world, pos, itemStack);
         }
@@ -188,8 +180,7 @@ public class DyeableShulkerBoxBlock extends ShulkerBoxBlock implements IDyeableB
         if (blockEntity != null) {
             color = blockEntity.color;
         }
-        NbtCompound subNbt = stack.getOrCreateSubNbt("display");
-        subNbt.putInt("color", color);
+        stack.set(DataComponentTypes.DYED_COLOR, new DyedColorComponent(color, true));
         return stack;
     }
 }

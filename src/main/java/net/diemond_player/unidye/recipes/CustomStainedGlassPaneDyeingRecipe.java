@@ -12,7 +12,7 @@ import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SpecialCraftingRecipe;
 import net.minecraft.recipe.book.CraftingRecipeCategory;
 import net.minecraft.registry.DynamicRegistryManager;
-import net.minecraft.util.Identifier;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.world.World;
 
 public class CustomStainedGlassPaneDyeingRecipe extends SpecialCraftingRecipe {
@@ -34,7 +34,7 @@ public class CustomStainedGlassPaneDyeingRecipe extends SpecialCraftingRecipe {
     }
 
     @Override
-    public ItemStack craft(RecipeInputInventory inventory, DynamicRegistryManager registryManager) {
+    public ItemStack craft(RecipeInputInventory inventory, RegistryWrapper.WrapperLookup lookup) {
         ItemStack itemStack1 = new ItemStack(UnidyeBlocks.CUSTOM_STAINED_GLASS_PANE.asItem());
         UnidyeUtils.setColor(itemStack1, CustomDyeItem.getMaterialColor(inventory.getStack(4), "glass"));
         DyeableLeatheryBlockItem.setLeatherColor(itemStack1, CustomDyeItem.getMaterialColor(inventory.getStack(4), "leather"));

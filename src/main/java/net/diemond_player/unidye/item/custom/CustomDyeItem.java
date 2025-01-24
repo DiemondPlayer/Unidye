@@ -4,12 +4,15 @@ import net.diemond_player.unidye.util.UnidyeAccessor;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.SignBlockEntity;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.item.TooltipContext;
+import net.minecraft.client.item.TooltipType;
+import net.minecraft.component.DataComponentType;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.NbtComponent;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.passive.SheepEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.DyeItem;
-import net.minecraft.item.DyeableItem;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SignChangingItem;
 import net.minecraft.nbt.NbtCompound;
@@ -27,7 +30,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class CustomDyeItem extends DyeItem implements SignChangingItem, DyeableItem {
+public class CustomDyeItem extends DyeItem implements SignChangingItem{
 
     public static final String CLOSEST_VANILLA_DYE_ID_KEY = "closest_vanilla_dye_id";
     public static final int DEFAULT_COLOR = 16777215;
@@ -36,20 +39,11 @@ public class CustomDyeItem extends DyeItem implements SignChangingItem, DyeableI
         super(DyeColor.WHITE, settings);
     }
 
-    @Override
-    public int getColor(ItemStack stack) {
-        NbtCompound nbtCompound = stack.getSubNbt(DISPLAY_KEY);
-        if (nbtCompound != null && nbtCompound.contains(COLOR_KEY, NbtElement.NUMBER_TYPE)) {
-            return nbtCompound.getInt(COLOR_KEY);
-        }
-        return DEFAULT_COLOR;
-    }
-
     public static float getClosestVanillaDyeId(ItemStack stack) {
-        NbtCompound nbtCompound = stack.getOrCreateNbt();
+        NbtComponent nbtComponent = stack.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(new NbtCompound()));
         float id;
-        if (nbtCompound.contains(CLOSEST_VANILLA_DYE_ID_KEY, NbtElement.NUMBER_TYPE)) {
-            id = nbtCompound.getInt(CLOSEST_VANILLA_DYE_ID_KEY);
+        if (nbtComponent.contains(CLOSEST_VANILLA_DYE_ID_KEY)) {
+            id = nbtComponent.copyNbt().getInt(CLOSEST_VANILLA_DYE_ID_KEY);
         } else {
             return 0;
         }
@@ -57,9 +51,9 @@ public class CustomDyeItem extends DyeItem implements SignChangingItem, DyeableI
     }
 
     public static Integer getMaterialColor(ItemStack stack, String materialType) {
-        NbtCompound nbtCompound = stack.getNbt();
-        if (nbtCompound != null && nbtCompound.contains(materialType, NbtElement.NUMBER_TYPE)) {
-            return nbtCompound.getInt(materialType);
+        NbtComponent nbtComponent = stack.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(new NbtCompound()));
+        if (nbtComponent.contains(materialType)) {
+            return nbtComponent.copyNbt().getInt(materialType);
         }
         return DEFAULT_COLOR;
     }
@@ -70,12 +64,14 @@ public class CustomDyeItem extends DyeItem implements SignChangingItem, DyeableI
     }
 
     public static void setMaterialColor(ItemStack itemStack, int n, String materialType) {
-        NbtCompound nbtCompound = itemStack.getOrCreateNbt();
+        NbtComponent nbtComponent = itemStack.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(new NbtCompound()));
+        NbtCompound nbtCompound = nbtComponent.copyNbt();
         nbtCompound.putInt(materialType, n);
+        itemStack.set(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(nbtCompound));
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+    public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType type) {
         if (Screen.hasShiftDown()) {
             MutableText mutableText = Text.literal("■ ");
             tooltip.add(mutableText.setStyle(mutableText.getStyle().withColor(getMaterialColor(stack, "wool"))).append(Text.translatable("tooltip.unidye.wool_color").append(getMaterialHexColor(stack, "wool")).formatted(Formatting.GRAY)));

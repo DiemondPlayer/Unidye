@@ -6,6 +6,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
 import org.jetbrains.annotations.Nullable;
@@ -19,15 +20,15 @@ public class DyeableBlockEntity extends BlockEntity {
     public int color = DEFAULT_COLOR;
 
     @Override
-    public void writeNbt(NbtCompound nbt) {
+    protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
         if (color != DEFAULT_COLOR) {
             nbt.putInt("color", color);
         }
-        super.writeNbt(nbt);
+        super.writeNbt(nbt, registryLookup);
     }
 
     @Override
-    public void readNbt(NbtCompound nbt) {
+    protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
         if (nbt.getInt("color") == 0) {
             color = DEFAULT_COLOR;
         } else {
@@ -50,8 +51,8 @@ public class DyeableBlockEntity extends BlockEntity {
     }
 
     @Override
-    public NbtCompound toInitialChunkDataNbt() {
-        return createNbt();
+    public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registryLookup) {
+        return this.createNbt(registryLookup);
     }
 
     public static int getColor(BlockView world, BlockPos pos) {

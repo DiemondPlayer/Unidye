@@ -42,11 +42,11 @@ public class UnidyeBlockTagProvider extends FabricTagProvider.BlockTagProvider {
                         UnidyeBlocks.CUSTOM_BANNER);
         getOrCreateTagBuilder(BlockTags.CANDLE_CAKES)
                 .add(UnidyeBlocks.CUSTOM_CANDLE_CAKE);
-        getOrCreateTagBuilder(ConventionalBlockTags.GLASS_BLOCKS)
+        getOrCreateTagBuilder(net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags.GLASS_BLOCKS)
                 .add(UnidyeBlocks.CUSTOM_STAINED_GLASS);
-        getOrCreateTagBuilder(ConventionalBlockTags.GLASS_PANES)
+        getOrCreateTagBuilder(net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags.GLASS_PANES)
                 .add(UnidyeBlocks.CUSTOM_STAINED_GLASS_PANE);
-        getOrCreateTagBuilder(ConventionalBlockTags.SHULKER_BOXES)
+        getOrCreateTagBuilder(net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags.SHULKER_BOXES)
                 .add(UnidyeBlocks.CUSTOM_SHULKER_BOX);
     }
 }

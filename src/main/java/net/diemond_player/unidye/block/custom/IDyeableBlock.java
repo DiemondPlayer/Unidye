@@ -5,8 +5,9 @@ import net.diemond_player.unidye.block.entity.UnidyeBlockEntities;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.DyedColorComponent;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
 
@@ -23,8 +24,7 @@ public interface IDyeableBlock extends BlockEntityProvider {
         if (blockEntity != null) {
             color = blockEntity.color;
         }
-        NbtCompound subNbt = stack.getOrCreateSubNbt("display");
-        subNbt.putInt("color", color);
+        stack.set(DataComponentTypes.DYED_COLOR, new DyedColorComponent(color, true));
         return stack;
     }
 }

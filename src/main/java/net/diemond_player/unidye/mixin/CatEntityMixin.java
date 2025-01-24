@@ -15,6 +15,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Hand;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -25,6 +26,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class CatEntityMixin implements UnidyeAccessor {
     @Unique
     private static final TrackedData<Integer> CUSTOM_COLOR = DataTracker.registerData(CatEntity.class, TrackedDataHandlerRegistry.INTEGER);
+
+    @Shadow
+    private void setCollarColor(DyeColor color) {
+    }
 
     @Inject(method = "writeCustomDataToNbt", at = @At("HEAD"))
     private void unidye$writeCustomDataToNbt(NbtCompound nbt, CallbackInfo ci) {
@@ -39,8 +44,8 @@ public abstract class CatEntityMixin implements UnidyeAccessor {
     }
 
     @Inject(method = "initDataTracker", at = @At("HEAD"))
-    private void unidye$initDataTracker(CallbackInfo ci) {
-        ((CatEntity) (Object) this).getDataTracker().startTracking(CUSTOM_COLOR, 0xFFFFFF);
+    private void unidye$initDataTracker(DataTracker.Builder builder, CallbackInfo ci) {
+        builder.add(CUSTOM_COLOR, 0xFFFFFF);
     }
 
 
@@ -57,7 +62,7 @@ public abstract class CatEntityMixin implements UnidyeAccessor {
         UnidyeAccessor cat = (UnidyeAccessor) ((CatEntity) (Object) this);
         DyeColor dyeColor = ((DyeItem) item).getColor();
         if (cat.unidye$getCustomColor() != 0xFFFFFF) {
-            ((CatEntity) (Object) this).setCollarColor(dyeColor);
+            this.setCollarColor(dyeColor);
             cat.unidye$setCustomColor(0xFFFFFF);
             if (!player.getAbilities().creativeMode) {
                 itemStack.decrement(1);

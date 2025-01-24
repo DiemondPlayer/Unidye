@@ -6,8 +6,9 @@ import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.BedBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.DyedColorComponent;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
@@ -41,8 +42,7 @@ public class DyeableBedBlock extends BedBlock
         if (blockEntity != null) {
             color = DyeableBedBlockEntity.getColor(world, pos);
         }
-        NbtCompound subNbt = stack.getOrCreateSubNbt("display");
-        subNbt.putInt("color", color);
+        stack.set(DataComponentTypes.DYED_COLOR, new DyedColorComponent(color, true));
         return stack;
     }
 }

@@ -12,7 +12,6 @@ import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.util.Identifier;
 
 import java.util.concurrent.CompletableFuture;
-import java.util.function.Consumer;
 
 public class UnidyeRecipeGenerator extends FabricRecipeProvider {
 

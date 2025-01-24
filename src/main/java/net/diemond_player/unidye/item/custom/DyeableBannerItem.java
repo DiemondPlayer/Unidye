@@ -2,11 +2,12 @@ package net.diemond_player.unidye.item.custom;
 
 import net.diemond_player.unidye.block.UnidyeBlocks;
 import net.diemond_player.unidye.block.entity.DyeableBannerBlockEntity;
+import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BannerPattern;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.client.item.TooltipContext;
+import net.minecraft.client.item.TooltipType;
 import net.minecraft.item.*;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
@@ -22,7 +23,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class DyeableBannerItem extends BannerItem implements DyeableItem {
+public class DyeableBannerItem extends BannerItem{
     public static final int DEFAULT_COLOR = 16777215;
     private static final String TRANSLATION_KEY_PREFIX = "block.minecraft.banner.";
 
@@ -38,7 +39,7 @@ public class DyeableBannerItem extends BannerItem implements DyeableItem {
         if (blockEntity instanceof DyeableBannerBlockEntity dyeableBannerBlockEntity
                 && !blockstate.isOf(UnidyeBlocks.CUSTOM_BANNER)
                 && !blockstate.isOf(UnidyeBlocks.CUSTOM_WALL_BANNER)) {
-            dyeableBannerBlockEntity.color = getColor(context.getStack());
+            dyeableBannerBlockEntity.color = UnidyeUtils.getColor(context.getStack());
         }
         return result;
     }
@@ -66,16 +67,7 @@ public class DyeableBannerItem extends BannerItem implements DyeableItem {
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+    public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType type) {
         DyeableBannerItem.appendBannerTooltip(stack, tooltip);
-    }
-
-    @Override
-    public int getColor(ItemStack stack) {
-        NbtCompound nbtCompound = stack.getSubNbt(DISPLAY_KEY);
-        if (nbtCompound != null && nbtCompound.contains(COLOR_KEY, NbtElement.NUMBER_TYPE)) {
-            return nbtCompound.getInt(COLOR_KEY);
-        }
-        return DEFAULT_COLOR;
     }
 }

@@ -12,6 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(FireworkStarItem.class)
 public abstract class FireworkStarItemMixin {
+    //TODO change that completely
     @Inject(method = "getColorText", at = @At(value = "HEAD"), cancellable = true)
     private static void unidye$getColorText(int color, CallbackInfoReturnable<Text> cir) {
         DyeColor dyeColor = DyeColor.byFireworkColor(color);

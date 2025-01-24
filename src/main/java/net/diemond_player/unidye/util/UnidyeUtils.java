@@ -4,9 +4,16 @@ import net.diemond_player.unidye.block.UnidyeBlocks;
 import net.diemond_player.unidye.item.UnidyeItems;
 import net.diemond_player.unidye.item.custom.CustomDyeItem;
 import net.diemond_player.unidye.item.custom.DyeableLeatheryBlockItem;
-import net.minecraft.item.*;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.DyedColorComponent;
+import net.minecraft.component.type.NbtComponent;
+import net.minecraft.item.DyeItem;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.util.DyeColor;
 
 import java.util.HashMap;
@@ -15,8 +22,6 @@ import java.util.Map;
 import java.util.Objects;
 
 import static net.diemond_player.unidye.item.custom.CustomDyeItem.*;
-import static net.minecraft.item.DyeableItem.COLOR_KEY;
-import static net.minecraft.item.DyeableItem.DISPLAY_KEY;
 
 public class UnidyeUtils {
     public static Map<Item, UnidyeColor> DYES = new HashMap<Item, UnidyeColor>() {{
@@ -52,20 +57,23 @@ public class UnidyeUtils {
     }};
 
     public static void setColor(ItemStack stack, int color) {
-        stack.getOrCreateSubNbt(DISPLAY_KEY).putInt(COLOR_KEY, color);
+        stack.set(DataComponentTypes.DYED_COLOR, new DyedColorComponent(color, true));
     }
 
     public static int getColor(ItemStack stack) {
-        NbtCompound nbtCompound = stack.getSubNbt(DISPLAY_KEY);
-        if (nbtCompound != null && nbtCompound.contains(COLOR_KEY, NbtElement.NUMBER_TYPE)) {
-            return nbtCompound.getInt(COLOR_KEY);
+        if(stack.get(DataComponentTypes.DYED_COLOR) != null) {
+            return stack.get(DataComponentTypes.DYED_COLOR).rgb();
+        } else {
+            return DEFAULT_COLOR;
         }
-        return DEFAULT_COLOR;
     }
 
     public static boolean hasColor(ItemStack stack) {
-        NbtCompound nbtCompound = stack.getSubNbt(DISPLAY_KEY);
-        return nbtCompound != null && nbtCompound.contains(COLOR_KEY, NbtElement.NUMBER_TYPE);
+        if(stack.get(DataComponentTypes.DYED_COLOR) != null) {
+            return stack.get(DataComponentTypes.DYED_COLOR).rgb() != DEFAULT_COLOR;
+        } else {
+            return false;
+        }
     }
 
     public static ItemStack blendAndSetColor(ItemStack stack, List<DyeItem> colors, List<ItemStack> customColors) {
@@ -79,13 +87,11 @@ public class UnidyeUtils {
         int n;
         int[] is = new int[3];
         int j = 0;
-        DyeableItem dyeableItem = null;
         Item item = stack.getItem();
-        if (item instanceof DyeableItem) {
-            dyeableItem = (DyeableItem) ((Object) item);
+        if (stack.isIn(ItemTags.DYEABLE)) {
             itemStack = stack.copyWithCount(1);
-            if (dyeableItem.hasColor(stack)) {
-                int k = dyeableItem.getColor(itemStack);
+            if (UnidyeUtils.hasColor(stack)) {
+                int k = UnidyeUtils.getColor(itemStack);
                 float f = (float) (k >> 16 & 0xFF) / 255.0f;
                 float g = (float) (k >> 8 & 0xFF) / 255.0f;
                 float h = (float) (k & 0xFF) / 255.0f;
@@ -95,7 +101,7 @@ public class UnidyeUtils {
                 ++j;
             }
             for (DyeItem dyeItem : colors) {
-                float[] fs = getColorArray(getMaterialType((Item) dyeableItem), dyeItem);
+                float[] fs = getColorArray(getMaterialType(item), dyeItem);
                 int l = (int) (fs[0] * 255.0f * fs[0] * 255.0f);
                 int m = (int) (fs[1] * 255.0f * fs[1] * 255.0f);
                 n = (int) (fs[2] * 255.0f * fs[2] * 255.0f);
@@ -105,7 +111,7 @@ public class UnidyeUtils {
                 ++j;
             }
             for (ItemStack customDyeItem : customColors) {
-                float[] fs = getCustomColorArray(getMaterialType((Item) dyeableItem), customDyeItem);
+                float[] fs = getCustomColorArray(getMaterialType(item), customDyeItem);
                 int l = (int) (fs[0] * 255.0f * fs[0] * 255.0f);
                 int m = (int) (fs[1] * 255.0f * fs[1] * 255.0f);
                 n = (int) (fs[2] * 255.0f * fs[2] * 255.0f);
@@ -115,7 +121,7 @@ public class UnidyeUtils {
                 ++j;
             }
         }
-        if (dyeableItem == null) {
+        if (item == null) {
             return ItemStack.EMPTY;
         }
         int k = (int) Math.sqrt((double) is[0] / j);
@@ -124,7 +130,7 @@ public class UnidyeUtils {
         n = k;
         n = (n << 8) + o;
         n = (n << 8) + p;
-        dyeableItem.setColor(itemStack, n);
+        UnidyeUtils.setColor(itemStack, n);
         if (stack.getItem() instanceof CustomDyeItem) {
             defineClosestVanillaDye(itemStack);
         }
@@ -137,7 +143,7 @@ public class UnidyeUtils {
         int n;
         int[] is = new int[3];
         int j = 0;
-        if (((DyeableItem) stack.getItem()).hasColor(stack)) {
+        if (UnidyeUtils.hasColor(stack)) {
             int k = DyeableLeatheryBlockItem.getLeatherColor(itemStack);
             float f = (float) (k >> 16 & 0xFF);
             float g = (float) (k >> 8 & 0xFF);
@@ -205,7 +211,10 @@ public class UnidyeUtils {
                 id = entry.getValue().getId();
             }
         }
-        itemStack.getOrCreateNbt().putInt("closest_vanilla_dye_id", id);
+        NbtComponent nbtComponent = itemStack.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(new NbtCompound()));
+        NbtCompound nbtCompound = nbtComponent.copyNbt();
+        nbtCompound.putInt("closest_vanilla_dye_id", id);
+        itemStack.set(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(nbtCompound));
     }
 
 

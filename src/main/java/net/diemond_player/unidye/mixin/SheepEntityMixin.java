@@ -4,6 +4,7 @@ import net.diemond_player.unidye.block.UnidyeBlocks;
 import net.diemond_player.unidye.item.custom.DyeableLeatheryBlockItem;
 import net.diemond_player.unidye.util.UnidyeAccessor;
 import net.diemond_player.unidye.util.UnidyeColor;
+import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.data.DataTracker;
@@ -11,9 +12,10 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.passive.SheepEntity;
-import net.minecraft.item.DyeableItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.loot.LootTable;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.Identifier;
@@ -48,13 +50,13 @@ public abstract class SheepEntityMixin implements UnidyeAccessor {
     }
 
     @Inject(method = "initDataTracker", at = @At("HEAD"))
-    private void initDataTracker(CallbackInfo ci) {
-        ((SheepEntity) (Object) this).getDataTracker().startTracking(CUSTOM_COLOR, 0xFFFFFF);
-        ((SheepEntity) (Object) this).getDataTracker().startTracking(SECONDARY_CUSTOM_COLOR, 0xFFFFFF);
+    private void initDataTracker(DataTracker.Builder builder, CallbackInfo ci) {
+        builder.add(CUSTOM_COLOR, 0xFFFFFF);
+        builder.add(SECONDARY_CUSTOM_COLOR, 0xFFFFFF);
     }
 
     @Inject(method = "getLootTableId", at = @At("HEAD"), cancellable = true)
-    private void getLootTableId(CallbackInfoReturnable<Identifier> cir) {
+    private void getLootTableId(CallbackInfoReturnable<RegistryKey<LootTable>> cir) {
         UnidyeAccessor sheep = (UnidyeAccessor) ((SheepEntity) (Object) this);
         if (sheep.unidye$getCustomColor() != 0xFFFFFF) {
             cir.setReturnValue(((SheepEntity) (Object) this).getType().getLootTableId());
@@ -182,9 +184,8 @@ public abstract class SheepEntityMixin implements UnidyeAccessor {
         if (sheep.unidye$getCustomColor() != 0xFFFFFF) {
             int i = 1 + ((SheepEntity) (Object) this).getRandom().nextInt(3);
             for (int j = 0; j < i; ++j) {
-                DyeableItem item = (DyeableItem) UnidyeBlocks.CUSTOM_WOOL.asItem();
                 ItemStack itemStack = UnidyeBlocks.CUSTOM_WOOL.asItem().getDefaultStack();
-                item.setColor(itemStack, sheep.unidye$getSecondaryCustomColor());
+                UnidyeUtils.setColor(itemStack, sheep.unidye$getSecondaryCustomColor());
                 DyeableLeatheryBlockItem.setLeatherColor(itemStack, sheep.unidye$getCustomColor());
                 ItemEntity itemEntity = ((SheepEntity) (Object) this).dropStack(itemStack, 1);
                 if (itemEntity != null) {

@@ -3,6 +3,7 @@ package net.diemond_player.unidye.block.entity;
 import net.diemond_player.unidye.block.custom.DyeableShulkerBoxBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.ShulkerBoxBlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.LootableContainerBlockEntity;
 import net.minecraft.block.piston.PistonBehavior;
@@ -19,6 +20,7 @@ import net.minecraft.nbt.NbtElement;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ShulkerBoxScreenHandler;
 import net.minecraft.sound.SoundCategory;
@@ -93,8 +95,8 @@ public class DyeableShulkerBoxBlockEntity extends LootableContainerBlockEntity
     }
 
     @Override
-    public NbtCompound toInitialChunkDataNbt() {
-        return createNbt();
+    public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registryLookup) {
+        return this.createNbt(registryLookup);
     }
 
     @Nullable
@@ -108,22 +110,28 @@ public class DyeableShulkerBoxBlockEntity extends LootableContainerBlockEntity
     }
 
     public Box getBoundingBox(BlockState state) {
-        return ShulkerEntity.calculateBoundingBox(state.get(DyeableShulkerBoxBlock.FACING), 0.5f * this.getAnimationProgress(1.0f));
+        return ShulkerEntity.calculateBoundingBox(1.0F, state.get(DyeableShulkerBoxBlock.FACING), 0.5F * this.getAnimationProgress(1.0F));
     }
 
     private void pushEntities(World world, BlockPos pos, BlockState state) {
-        if (!(state.getBlock() instanceof DyeableShulkerBoxBlock)) {
-            return;
-        }
-        Direction direction = state.get(DyeableShulkerBoxBlock.FACING);
-        Box box = ShulkerEntity.calculateBoundingBox(direction, this.prevAnimationProgress, this.animationProgress).offset(pos);
-        List<Entity> list = world.getOtherEntities(null, box);
-        if (list.isEmpty()) {
-            return;
-        }
-        for (Entity entity : list) {
-            if (entity.getPistonBehavior() == PistonBehavior.IGNORE) continue;
-            entity.move(MovementType.SHULKER_BOX, new Vec3d((box.getLengthX() + 0.01) * (double) direction.getOffsetX(), (box.getLengthY() + 0.01) * (double) direction.getOffsetY(), (box.getLengthZ() + 0.01) * (double) direction.getOffsetZ()));
+        if (state.getBlock() instanceof DyeableShulkerBoxBlock) {
+            Direction direction = state.get(DyeableShulkerBoxBlock.FACING);
+            Box box = ShulkerEntity.calculateBoundingBox(1.0F, direction, this.prevAnimationProgress, this.animationProgress).offset(pos);
+            List<Entity> list = world.getOtherEntities(null, box);
+            if (!list.isEmpty()) {
+                for (Entity entity : list) {
+                    if (entity.getPistonBehavior() != PistonBehavior.IGNORE) {
+                        entity.move(
+                                MovementType.SHULKER_BOX,
+                                new Vec3d(
+                                        (box.getLengthX() + 0.01) * (double)direction.getOffsetX(),
+                                        (box.getLengthY() + 0.01) * (double)direction.getOffsetY(),
+                                        (box.getLengthZ() + 0.01) * (double)direction.getOffsetZ()
+                                )
+                        );
+                    }
+                }
+            }
         }
     }
 
@@ -185,6 +193,16 @@ public class DyeableShulkerBoxBlockEntity extends LootableContainerBlockEntity
         return Text.translatable("container.shulkerBox");
     }
 
+    @Override
+    protected DefaultedList<ItemStack> getHeldStacks() {
+        return this.inventory;
+    }
+
+    @Override
+    protected void setHeldStacks(DefaultedList<ItemStack> inventory) {
+        this.inventory = inventory;
+    }
+
     public static int getColor(BlockView world, BlockPos pos) {
         if (world == null) {
             return DyeableShulkerBoxBlockEntity.DEFAULT_COLOR;
@@ -198,9 +216,9 @@ public class DyeableShulkerBoxBlockEntity extends LootableContainerBlockEntity
     }
 
     @Override
-    public void readNbt(NbtCompound nbt) {
-        super.readNbt(nbt);
-        this.readInventoryNbt(nbt);
+    protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+        super.readNbt(nbt, registryLookup);
+        this.readInventoryNbt(nbt, registryLookup);
         if (nbt.getInt("color") == 0) {
             color = DEFAULT_COLOR;
         } else {
@@ -209,31 +227,21 @@ public class DyeableShulkerBoxBlockEntity extends LootableContainerBlockEntity
     }
 
     @Override
-    protected void writeNbt(NbtCompound nbt) {
-        super.writeNbt(nbt);
+    protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+        super.writeNbt(nbt, registryLookup);
         if (!this.writeLootTable(nbt)) {
-            Inventories.writeNbt(nbt, this.inventory, false);
+            Inventories.writeNbt(nbt, this.inventory, false, registryLookup);
         }
         if (color != DEFAULT_COLOR) {
             nbt.putInt("color", color);
         }
     }
 
-    public void readInventoryNbt(NbtCompound nbt) {
+    public void readInventoryNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
         this.inventory = DefaultedList.ofSize(this.size(), ItemStack.EMPTY);
         if (!this.readLootTable(nbt) && nbt.contains("Items", NbtElement.LIST_TYPE)) {
-            Inventories.readNbt(nbt, this.inventory);
+            Inventories.readNbt(nbt, this.inventory, registries);
         }
-    }
-
-    @Override
-    protected DefaultedList<ItemStack> method_11282() {
-        return this.inventory;
-    }
-
-    @Override
-    protected void setInvStackList(DefaultedList<ItemStack> list) {
-        this.inventory = list;
     }
 
     @Override

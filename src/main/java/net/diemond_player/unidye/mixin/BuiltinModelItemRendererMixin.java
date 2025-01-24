@@ -12,6 +12,7 @@ import net.diemond_player.unidye.block.entity.DyeableShulkerBoxBlockEntity;
 import net.diemond_player.unidye.entity.client.renderer.DyeableBannerBlockEntityRenderer;
 import net.diemond_player.unidye.item.custom.DyeableBannerItem;
 import net.diemond_player.unidye.item.custom.DyeableBlockItem;
+import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BannerPattern;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -58,17 +59,17 @@ public abstract class BuiltinModelItemRendererMixin {
         if (item instanceof BlockItem) {
             Block block = ((BlockItem) item).getBlock();
             if (block instanceof DyeableBedBlock) {
-                this.renderDyeableBed.color = ((DyeableBlockItem) item).getColor(stack);
+                this.renderDyeableBed.color = UnidyeUtils.getColor(stack);
                 this.blockEntityRenderDispatcher.renderEntity(this.renderDyeableBed, matrices, vertexConsumers, light, overlay);
                 ci.cancel();
             }
             if (block instanceof DyeableShulkerBoxBlock) {
-                this.RENDER_DYEABLE_SHULKER_BOX.color = ((DyeableBlockItem) item).getColor(stack);
+                this.RENDER_DYEABLE_SHULKER_BOX.color = UnidyeUtils.getColor(stack);
                 this.blockEntityRenderDispatcher.renderEntity(this.RENDER_DYEABLE_SHULKER_BOX, matrices, vertexConsumers, light, overlay);
                 ci.cancel();
             }
             if (block instanceof DyeableBannerBlock || block instanceof DyeableWallBannerBlock) {
-                this.renderDyeableBanner.color = ((DyeableBannerItem) item).getColor(stack);
+                this.renderDyeableBanner.color = UnidyeUtils.getColor(stack);
                 this.renderDyeableBanner.readFrom(stack);
                 this.blockEntityRenderDispatcher.renderEntity(this.renderDyeableBanner, matrices, vertexConsumers, light, overlay);
                 ci.cancel();

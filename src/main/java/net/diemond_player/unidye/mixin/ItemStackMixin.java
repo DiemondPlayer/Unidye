@@ -1,6 +1,9 @@
 package net.diemond_player.unidye.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import net.fabricmc.fabric.api.item.v1.FabricItemStack;
+import net.minecraft.component.ComponentHolder;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.text.MutableText;
@@ -14,22 +17,17 @@ import org.spongepowered.asm.mixin.injection.At;
 import java.util.List;
 import java.util.Locale;
 
-import static net.minecraft.item.ItemStack.COLOR_KEY;
-import static net.minecraft.item.ItemStack.DISPLAY_KEY;
 
 @Mixin(ItemStack.class)
-public abstract class ItemStackMixin {
-    @Shadow
-    @Nullable
-    private NbtCompound nbt;
+public abstract class ItemStackMixin implements ComponentHolder, FabricItemStack {
 
     @ModifyReturnValue(method = "getTooltip", at = @At(value = "TAIL"))
     private List<Text> unidye$getTooltip(List<Text> original) {
-        if (this.nbt != null) {
-            if (original.contains(Text.translatable("item.color", String.format(Locale.ROOT, "#%06X", this.nbt.getCompound(DISPLAY_KEY).getInt(COLOR_KEY))).formatted(Formatting.GRAY))) {
+        if (this.contains(DataComponentTypes.DYED_COLOR)) {
+            if (original.contains(Text.translatable("item.color", String.format(Locale.ROOT, "#%06X", this.get(DataComponentTypes.DYED_COLOR).rgb())).formatted(Formatting.GRAY))) {
                 MutableText mutableText = Text.literal("■ ");
-                mutableText.setStyle(mutableText.getStyle().withColor(this.nbt.getCompound(DISPLAY_KEY).getInt(COLOR_KEY)));
-                original.set(original.indexOf(Text.translatable("item.color", String.format(Locale.ROOT, "#%06X", this.nbt.getCompound(DISPLAY_KEY).getInt(COLOR_KEY))).formatted(Formatting.GRAY)), mutableText.append(Text.translatable("item.color", String.format(Locale.ROOT, "#%06X", this.nbt.getCompound(DISPLAY_KEY).getInt(COLOR_KEY))).formatted(Formatting.GRAY)));
+                mutableText.setStyle(mutableText.getStyle().withColor(this.get(DataComponentTypes.DYED_COLOR).rgb()));
+                original.set(original.indexOf(Text.translatable("item.color", String.format(Locale.ROOT, "#%06X", this.get(DataComponentTypes.DYED_COLOR).rgb()).formatted(Formatting.GRAY))), mutableText.append(Text.translatable("item.color", String.format(Locale.ROOT, "#%06X", this.get(DataComponentTypes.DYED_COLOR).rgb()).formatted(Formatting.GRAY))));
             }
         }
         return original;

@@ -12,6 +12,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.Optional;
+
 @Mixin(MapBannerMarker.class)
 public abstract class MapBannerMarkerMixin {
     @Inject(method = "fromWorldBlock", at = @At(value = "HEAD"), cancellable = true)
@@ -19,7 +21,7 @@ public abstract class MapBannerMarkerMixin {
         BlockEntity blockEntity = blockView.getBlockEntity(blockPos);
         if (blockEntity instanceof DyeableBannerBlockEntity bannerBlockEntity) {
             Text text = bannerBlockEntity.hasCustomName() ? bannerBlockEntity.getCustomName() : null;
-            MapBannerMarker mapBannerMarker = new MapBannerMarker(blockPos, DyeColor.WHITE, text);
+            MapBannerMarker mapBannerMarker = new MapBannerMarker(blockPos, DyeColor.WHITE, Optional.ofNullable(text));
             cir.setReturnValue(mapBannerMarker);
         }
     }

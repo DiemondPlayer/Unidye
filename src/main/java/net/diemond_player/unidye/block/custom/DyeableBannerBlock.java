@@ -1,10 +1,8 @@
 package net.diemond_player.unidye.block.custom;
 
 import net.diemond_player.unidye.block.entity.DyeableBannerBlockEntity;
-import net.diemond_player.unidye.block.entity.UnidyeBlockEntities;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.StateManager;
@@ -18,10 +16,8 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.RotationPropertyHelper;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
-import org.jetbrains.annotations.Nullable;
 
 public class DyeableBannerBlock extends BannerBlock {
     public static final IntProperty ROTATION = Properties.ROTATION;
@@ -29,7 +25,7 @@ public class DyeableBannerBlock extends BannerBlock {
 
     public DyeableBannerBlock(AbstractBlock.Settings settings) {
         super(DyeColor.CYAN, settings);
-        this.setDefaultState((BlockState) ((BlockState) this.stateManager.getDefaultState()).with(ROTATION, 0));
+        this.setDefaultState(this.stateManager.getDefaultState().with(ROTATION, 0));
     }
 
     @Override
@@ -54,7 +50,7 @@ public class DyeableBannerBlock extends BannerBlock {
 
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
-        return (BlockState) this.getDefaultState().with(ROTATION, RotationPropertyHelper.fromYaw(ctx.getPlayerYaw() + 180.0f));
+        return this.getDefaultState().with(ROTATION, RotationPropertyHelper.fromYaw(ctx.getPlayerYaw() + 180.0f));
     }
 
     @Override
@@ -67,12 +63,12 @@ public class DyeableBannerBlock extends BannerBlock {
 
     @Override
     public BlockState rotate(BlockState state, BlockRotation rotation) {
-        return (BlockState) state.with(ROTATION, rotation.rotate(state.get(ROTATION), 16));
+        return state.with(ROTATION, rotation.rotate(state.get(ROTATION), 16));
     }
 
     @Override
     public BlockState mirror(BlockState state, BlockMirror mirror) {
-        return (BlockState) state.with(ROTATION, mirror.mirror(state.get(ROTATION), 16));
+        return state.with(ROTATION, mirror.mirror(state.get(ROTATION), 16));
     }
 
     @Override

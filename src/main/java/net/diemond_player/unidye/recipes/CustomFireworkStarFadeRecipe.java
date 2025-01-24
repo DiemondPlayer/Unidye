@@ -11,7 +11,7 @@ import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SpecialCraftingRecipe;
 import net.minecraft.recipe.book.CraftingRecipeCategory;
 import net.minecraft.registry.DynamicRegistryManager;
-import net.minecraft.util.Identifier;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.Util;
 import net.minecraft.world.World;
 
@@ -88,7 +88,7 @@ public class CustomFireworkStarFadeRecipe extends SpecialCraftingRecipe {
     }
 
     @Override
-    public ItemStack craft(RecipeInputInventory recipeInputInventory, DynamicRegistryManager dynamicRegistryManager) {
+    public ItemStack craft(RecipeInputInventory recipeInputInventory, RegistryWrapper.WrapperLookup lookup) {
         ItemStack itemStack = new ItemStack(Items.FIREWORK_STAR);
         NbtCompound nbtCompound = itemStack.getOrCreateSubNbt("Explosion");
         FireworkRocketItem.Type type = FireworkRocketItem.Type.SMALL_BALL;

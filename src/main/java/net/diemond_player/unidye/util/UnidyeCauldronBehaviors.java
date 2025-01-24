@@ -9,9 +9,11 @@ import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.LeveledCauldronBlock;
 import net.minecraft.block.cauldron.CauldronBehavior;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.ItemActionResult;
 
 import static net.minecraft.block.cauldron.CauldronBehavior.WATER_CAULDRON_BEHAVIOR;
 
@@ -168,7 +170,7 @@ public class UnidyeCauldronBehaviors {
 
     public static final CauldronBehavior CLEAN_CUSTOM_BANNER = (state, world, pos, player, hand, stack) -> {
         if (DyeableBannerBlockEntity.getPatternCount(stack) <= 0) {
-            return ActionResult.PASS;
+            return ItemActionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
         if (!world.isClient) {
             ItemStack itemStack = stack.copyWithCount(1);
@@ -187,25 +189,22 @@ public class UnidyeCauldronBehaviors {
             player.incrementStat(Stats.CLEAN_BANNER);
             LeveledCauldronBlock.decrementFluidLevel(state, world, pos);
         }
-        return ActionResult.success(world.isClient);
+        return ItemActionResult.success(world.isClient);
     };
 
     public static final CauldronBehavior CLEAN_CUSTOM_SHULKER_BOX = (state, world, pos, player, hand, stack) -> {
         Block block = Block.getBlockFromItem(stack.getItem());
         if (!(block instanceof DyeableShulkerBoxBlock)) {
-            return ActionResult.PASS;
+            return ItemActionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
         if (!world.isClient) {
             ItemStack itemStack = new ItemStack(Blocks.SHULKER_BOX);
-            if (stack.hasNbt()) {
-                stack.removeSubNbt("display");
-                itemStack.setNbt(stack.getNbt().copy());
-            }
+            stack.remove(DataComponentTypes.DYED_COLOR);
             player.setStackInHand(hand, itemStack);
             player.incrementStat(Stats.CLEAN_SHULKER_BOX);
             LeveledCauldronBlock.decrementFluidLevel(state, world, pos);
         }
-        return ActionResult.success(world.isClient);
+        return ItemActionResult.success(world.isClient);
     };
 
     public static final CauldronBehavior CLEAN_TERRACOTTA = (state, world, pos, player, hand, stack) -> {
@@ -216,7 +215,7 @@ public class UnidyeCauldronBehaviors {
             player.incrementStat(Stats.USE_CAULDRON);
             LeveledCauldronBlock.decrementFluidLevel(state, world, pos);
         }
-        return ActionResult.success(world.isClient);
+        return ItemActionResult.success(world.isClient);
     };
 
     public static final CauldronBehavior CLEAN_WOOL = (state, world, pos, player, hand, stack) -> {
@@ -227,7 +226,7 @@ public class UnidyeCauldronBehaviors {
             player.incrementStat(Stats.USE_CAULDRON);
             LeveledCauldronBlock.decrementFluidLevel(state, world, pos);
         }
-        return ActionResult.success(world.isClient);
+        return ItemActionResult.success(world.isClient);
     };
 
     public static final CauldronBehavior CLEAN_GLASS = (state, world, pos, player, hand, stack) -> {
@@ -238,7 +237,7 @@ public class UnidyeCauldronBehaviors {
             player.incrementStat(Stats.USE_CAULDRON);
             LeveledCauldronBlock.decrementFluidLevel(state, world, pos);
         }
-        return ActionResult.success(world.isClient);
+        return ItemActionResult.success(world.isClient);
     };
 
     public static final CauldronBehavior CLEAN_GLASS_PANE = (state, world, pos, player, hand, stack) -> {
@@ -249,7 +248,7 @@ public class UnidyeCauldronBehaviors {
             player.incrementStat(Stats.USE_CAULDRON);
             LeveledCauldronBlock.decrementFluidLevel(state, world, pos);
         }
-        return ActionResult.success(world.isClient);
+        return ItemActionResult.success(world.isClient);
     };
 
     public static final CauldronBehavior CLEAN_CARPET = (state, world, pos, player, hand, stack) -> {
@@ -260,7 +259,7 @@ public class UnidyeCauldronBehaviors {
             player.incrementStat(Stats.USE_CAULDRON);
             LeveledCauldronBlock.decrementFluidLevel(state, world, pos);
         }
-        return ActionResult.success(world.isClient);
+        return ItemActionResult.success(world.isClient);
     };
 
     public static final CauldronBehavior CLEAN_CANDLE = (state, world, pos, player, hand, stack) -> {
@@ -271,7 +270,7 @@ public class UnidyeCauldronBehaviors {
             player.incrementStat(Stats.USE_CAULDRON);
             LeveledCauldronBlock.decrementFluidLevel(state, world, pos);
         }
-        return ActionResult.success(world.isClient);
+        return ItemActionResult.success(world.isClient);
     };
 
     public static final CauldronBehavior CLEAN_CONCRETE = (state, world, pos, player, hand, stack) -> {
@@ -282,7 +281,7 @@ public class UnidyeCauldronBehaviors {
             player.incrementStat(Stats.USE_CAULDRON);
             LeveledCauldronBlock.decrementFluidLevel(state, world, pos);
         }
-        return ActionResult.success(world.isClient);
+        return ItemActionResult.success(world.isClient);
     };
 
     public static final CauldronBehavior CLEAN_BED = (state, world, pos, player, hand, stack) -> {
@@ -292,7 +291,7 @@ public class UnidyeCauldronBehaviors {
             player.incrementStat(Stats.USE_CAULDRON);
             LeveledCauldronBlock.decrementFluidLevel(state, world, pos);
         }
-        return ActionResult.success(world.isClient);
+        return ItemActionResult.success(world.isClient);
     };
 
     public static final CauldronBehavior HARDEN_CUSTOM_CONCRETE_POWDER = (state, world, pos, player, hand, stack) -> {
@@ -304,6 +303,6 @@ public class UnidyeCauldronBehaviors {
             player.incrementStat(Stats.USE_CAULDRON);
             LeveledCauldronBlock.decrementFluidLevel(state, world, pos);
         }
-        return ActionResult.success(world.isClient);
+        return ItemActionResult.success(world.isClient);
     };
 }

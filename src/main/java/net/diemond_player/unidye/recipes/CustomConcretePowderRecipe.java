@@ -12,7 +12,7 @@ import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SpecialCraftingRecipe;
 import net.minecraft.recipe.book.CraftingRecipeCategory;
 import net.minecraft.registry.DynamicRegistryManager;
-import net.minecraft.util.Identifier;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.world.World;
 
 public class CustomConcretePowderRecipe extends SpecialCraftingRecipe {
@@ -43,7 +43,7 @@ public class CustomConcretePowderRecipe extends SpecialCraftingRecipe {
     }
 
     @Override
-    public ItemStack craft(RecipeInputInventory inventory, DynamicRegistryManager registryManager) {
+    public ItemStack craft(RecipeInputInventory inventory, RegistryWrapper.WrapperLookup lookup) {
         ItemStack itemStack = ItemStack.EMPTY;
         for (int i = 0; i < inventory.size(); ++i) {
             if (inventory.getStack(i).getItem() == UnidyeItems.CUSTOM_DYE) {

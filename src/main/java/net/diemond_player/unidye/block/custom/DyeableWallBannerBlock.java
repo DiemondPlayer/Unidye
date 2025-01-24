@@ -3,10 +3,8 @@ package net.diemond_player.unidye.block.custom;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import net.diemond_player.unidye.block.entity.DyeableBannerBlockEntity;
-import net.diemond_player.unidye.block.entity.UnidyeBlockEntities;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.StateManager;
@@ -21,7 +19,6 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 
@@ -31,7 +28,7 @@ public class DyeableWallBannerBlock extends WallBannerBlock {
 
     public DyeableWallBannerBlock(AbstractBlock.Settings settings) {
         super(DyeColor.CYAN, settings);
-        this.setDefaultState((BlockState) ((BlockState) this.stateManager.getDefaultState()).with(FACING, Direction.NORTH));
+        this.setDefaultState(this.stateManager.getDefaultState().with(FACING, Direction.NORTH));
     }
 
 
@@ -50,13 +47,11 @@ public class DyeableWallBannerBlock extends WallBannerBlock {
 
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
-        Direction[] directions;
         BlockState blockState = this.getDefaultState();
         World worldView = ctx.getWorld();
         BlockPos blockPos = ctx.getBlockPos();
-        for (Direction direction : directions = ctx.getPlacementDirections()) {
-            Direction direction2;
-            if (!direction.getAxis().isHorizontal() || !(blockState = (BlockState) blockState.with(FACING, direction2 = direction.getOpposite())).canPlaceAt(worldView, blockPos))
+        for (Direction direction : ctx.getPlacementDirections()) {
+            if (!direction.getAxis().isHorizontal() || !(blockState = blockState.with(FACING, direction.getOpposite())).canPlaceAt(worldView, blockPos))
                 continue;
             return blockState;
         }
@@ -65,7 +60,7 @@ public class DyeableWallBannerBlock extends WallBannerBlock {
 
     @Override
     public BlockState rotate(BlockState state, BlockRotation rotation) {
-        return (BlockState) state.with(FACING, rotation.rotate(state.get(FACING)));
+        return state.with(FACING, rotation.rotate(state.get(FACING)));
     }
 
     @Override
@@ -81,15 +76,6 @@ public class DyeableWallBannerBlock extends WallBannerBlock {
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
         return new DyeableBannerBlockEntity(pos, state);
-    }
-
-    @Override
-    public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
-        if (world.isClient) {
-            world.getBlockEntity(pos, UnidyeBlockEntities.DYEABLE_BANNER_BE).ifPresent(blockEntity -> blockEntity.readFrom(itemStack));
-        } else if (itemStack.hasCustomName()) {
-            world.getBlockEntity(pos, UnidyeBlockEntities.DYEABLE_BANNER_BE).ifPresent(blockEntity -> blockEntity.setCustomName(itemStack.getName()));
-        }
     }
 
     @Override

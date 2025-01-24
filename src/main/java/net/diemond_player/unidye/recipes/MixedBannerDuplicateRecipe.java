@@ -11,7 +11,7 @@ import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SpecialCraftingRecipe;
 import net.minecraft.recipe.book.CraftingRecipeCategory;
 import net.minecraft.registry.DynamicRegistryManager;
-import net.minecraft.util.Identifier;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
 
@@ -20,6 +20,7 @@ public class MixedBannerDuplicateRecipe extends SpecialCraftingRecipe {
         super(craftingRecipeCategory);
     }
 
+    @Override
     public boolean matches(RecipeInputInventory recipeInputInventory, World world) {
         boolean bl = false;
         ItemStack itemStack = null;
@@ -63,7 +64,8 @@ public class MixedBannerDuplicateRecipe extends SpecialCraftingRecipe {
         return bl;
     }
 
-    public ItemStack craft(RecipeInputInventory recipeInputInventory, DynamicRegistryManager dynamicRegistryManager) {
+    @Override
+    public ItemStack craft(RecipeInputInventory recipeInputInventory, RegistryWrapper.WrapperLookup lookup) {
         for (int i = 0; i < recipeInputInventory.size(); ++i) {
             ItemStack itemStack = recipeInputInventory.getStack(i);
             if (!itemStack.isEmpty()) {
@@ -77,6 +79,7 @@ public class MixedBannerDuplicateRecipe extends SpecialCraftingRecipe {
         return ItemStack.EMPTY;
     }
 
+    @Override
     public DefaultedList<ItemStack> getRemainder(RecipeInputInventory recipeInputInventory) {
         DefaultedList<ItemStack> defaultedList = DefaultedList.ofSize(recipeInputInventory.size(), ItemStack.EMPTY);
 

@@ -13,7 +13,7 @@ import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SpecialCraftingRecipe;
 import net.minecraft.recipe.book.CraftingRecipeCategory;
 import net.minecraft.registry.DynamicRegistryManager;
-import net.minecraft.util.Identifier;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
@@ -70,7 +70,7 @@ public class CustomShulkerBoxDyeingRecipe extends SpecialCraftingRecipe {
     }
 
     @Override
-    public ItemStack craft(RecipeInputInventory inventory, DynamicRegistryManager registryManager) {
+    public ItemStack craft(RecipeInputInventory inventory, RegistryWrapper.WrapperLookup lookup) {
         ArrayList<DyeItem> dyeList = Lists.newArrayList();
         ArrayList<ItemStack> customDyeList = Lists.newArrayList();
         ItemStack itemStack = ItemStack.EMPTY;

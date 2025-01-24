@@ -16,6 +16,7 @@ public interface DyeableItemMixin {
      * @author Diemond_Player
      * @reason redirects to Unidye algorithm
      */
+    //TODO change this
     @Overwrite
     static ItemStack blendAndSetColor(ItemStack stack, List<DyeItem> colors) {
         return UnidyeUtils.blendAndSetColor(stack, colors, new ArrayList<>());

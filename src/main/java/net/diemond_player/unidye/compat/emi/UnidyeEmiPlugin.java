@@ -9,30 +9,22 @@ import dev.emi.emi.api.recipe.EmiWorldInteractionRecipe;
 import dev.emi.emi.api.stack.EmiIngredient;
 import dev.emi.emi.api.stack.EmiStack;
 import dev.emi.emi.config.FluidUnit;
-import dev.emi.emi.registry.EmiTags;
 import dev.emi.emi.runtime.EmiReloadLog;
 import net.diemond_player.unidye.block.UnidyeBlocks;
 import net.diemond_player.unidye.recipes.*;
-import net.fabricmc.fabric.api.tag.convention.v1.ConventionalItemTags;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.inventory.Inventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.CraftingRecipe;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeType;
-import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.ItemTags;
-import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 
 import java.util.List;
-import java.util.Set;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class UnidyeEmiPlugin implements EmiPlugin {
     @Override
@@ -42,9 +34,9 @@ public class UnidyeEmiPlugin implements EmiPlugin {
             if (recipe instanceof CustomDyeRecipe) {
                 addRecipeSafe(registry, () -> new EmiCustomDyeRecipe(id), recipe);
             } else if (recipe instanceof CustomStainedGlassDyeingRecipe) {
-                addRecipeSafe(registry, () -> new EmiCustomCircleDyeingRecipe(Items.GLASS, UnidyeBlocks.CUSTOM_STAINED_GLASS.asItem(), ConventionalItemTags.GLASS_BLOCKS, id), recipe);
+                addRecipeSafe(registry, () -> new EmiCustomCircleDyeingRecipe(Items.GLASS, UnidyeBlocks.CUSTOM_STAINED_GLASS.asItem(), net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags.GLASS_BLOCKS, id), recipe);
             } else if (recipe instanceof CustomStainedGlassPaneDyeingRecipe) {
-                addRecipeSafe(registry, () -> new EmiCustomCircleDyeingRecipe(Items.GLASS_PANE, UnidyeBlocks.CUSTOM_STAINED_GLASS_PANE.asItem(), ConventionalItemTags.GLASS_PANES, id), recipe);
+                addRecipeSafe(registry, () -> new EmiCustomCircleDyeingRecipe(Items.GLASS_PANE, UnidyeBlocks.CUSTOM_STAINED_GLASS_PANE.asItem(), net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags.GLASS_PANES, id), recipe);
             } else if (recipe instanceof CustomCarpetDyeingRecipe) {
                 addRecipeSafe(registry, () -> new EmiCustomCircleDyeingRecipe(Items.WHITE_CARPET, UnidyeBlocks.CUSTOM_CARPET.asItem(), ItemTags.WOOL_CARPETS, id), recipe);
             } else if (recipe instanceof CustomCandleDyeingRecipe) {
@@ -68,7 +60,7 @@ public class UnidyeEmiPlugin implements EmiPlugin {
             } else if (recipe instanceof CustomBedDyeingRecipe) {
                 addRecipeSafe(registry, () -> new EmiCustomSingleDyeingRecipe(ItemTags.BEDS, UnidyeBlocks.CUSTOM_BED.asItem(), id), recipe);
             } else if (recipe instanceof CustomShulkerBoxDyeingRecipe) {
-                addRecipeSafe(registry, () -> new EmiCustomSingleDyeingRecipe(ConventionalItemTags.SHULKER_BOXES, UnidyeBlocks.CUSTOM_SHULKER_BOX.asItem(), id), recipe);
+                addRecipeSafe(registry, () -> new EmiCustomSingleDyeingRecipe(net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags.SHULKER_BOXES, UnidyeBlocks.CUSTOM_SHULKER_BOX.asItem(), id), recipe);
             } else if (recipe instanceof CustomShieldDecorationRecipe) {
                 addRecipeSafe(registry, () -> new EmiCustomShieldDecorationRecipe(id), recipe);
             }
@@ -92,7 +84,7 @@ public class UnidyeEmiPlugin implements EmiPlugin {
                 .build());
         addRecipeSafe(registry, () -> EmiWorldInteractionRecipe.builder()
                 .id(synthetic("world/cauldron_washing", "shulker_box"))
-                .leftInput(EmiIngredient.of(ConventionalItemTags.SHULKER_BOXES))
+                .leftInput(EmiIngredient.of(net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags.SHULKER_BOXES))
                 .rightInput(EmiStack.of(Items.CAULDRON), true)
                 .rightInput(EmiStack.of(Fluids.WATER, FluidUnit.BOTTLE), false)
                 .output(EmiStack.of(Blocks.SHULKER_BOX))
@@ -108,7 +100,7 @@ public class UnidyeEmiPlugin implements EmiPlugin {
                 .build());
         addRecipeSafe(registry, () -> EmiWorldInteractionRecipe.builder()
                 .id(synthetic("world/cauldron_washing", "glass"))
-                .leftInput(EmiIngredient.of(ConventionalItemTags.GLASS_BLOCKS))
+                .leftInput(EmiIngredient.of(net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags.GLASS_BLOCKS))
                 .rightInput(EmiStack.of(Items.CAULDRON), true)
                 .rightInput(EmiStack.of(Fluids.WATER, FluidUnit.BOTTLE), false)
                 .output(EmiStack.of(Blocks.GLASS))
@@ -116,7 +108,7 @@ public class UnidyeEmiPlugin implements EmiPlugin {
                 .build());
         addRecipeSafe(registry, () -> EmiWorldInteractionRecipe.builder()
                 .id(synthetic("world/cauldron_washing", "glass_pane"))
-                .leftInput(EmiIngredient.of(ConventionalItemTags.GLASS_PANES))
+                .leftInput(EmiIngredient.of(net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags.GLASS_PANES))
                 .rightInput(EmiStack.of(Items.CAULDRON), true)
                 .rightInput(EmiStack.of(Fluids.WATER, FluidUnit.BOTTLE), false)
                 .output(EmiStack.of(Blocks.GLASS_PANE))

@@ -9,8 +9,8 @@ import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SpecialCraftingRecipe;
 import net.minecraft.recipe.book.CraftingRecipeCategory;
 import net.minecraft.registry.DynamicRegistryManager;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.ItemTags;
-import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
 public class CustomBedRecipe extends SpecialCraftingRecipe {
@@ -59,7 +59,7 @@ public class CustomBedRecipe extends SpecialCraftingRecipe {
     }
 
     @Override
-    public ItemStack craft(RecipeInputInventory inventory, DynamicRegistryManager registryManager) {
+    public ItemStack craft(RecipeInputInventory inventory, RegistryWrapper.WrapperLookup lookup) {
         ItemStack itemStack = ItemStack.EMPTY;
         ItemStack itemStack1 = new ItemStack(UnidyeBlocks.CUSTOM_BED.asItem());
         for (int i = 0; i < inventory.size(); ++i) {

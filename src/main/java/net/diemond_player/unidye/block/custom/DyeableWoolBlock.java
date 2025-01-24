@@ -4,6 +4,9 @@ import net.diemond_player.unidye.block.entity.DyeableLeatheryBlockEntity;
 import net.diemond_player.unidye.block.entity.UnidyeBlockEntities;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.DyedColorComponent;
+import net.minecraft.component.type.NbtComponent;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.BlockPos;
@@ -35,11 +38,10 @@ public class DyeableWoolBlock extends DyeableBlock {
             color = blockEntity.color;
             bannerColor = blockEntity.leatherColor;
         }
-        NbtCompound subNbt = stack.getOrCreateSubNbt("display");
-        subNbt.putInt("color", color);
-        if (stack.getNbt() != null) {
-            stack.getNbt().putInt("leather", bannerColor);
-        }
+        stack.set(DataComponentTypes.DYED_COLOR, new DyedColorComponent(color, true));
+        NbtCompound nbtCompound = new NbtCompound();
+        nbtCompound.putInt("leather", bannerColor);
+        stack.set(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(nbtCompound));
         return stack;
     }
 

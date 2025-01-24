@@ -6,7 +6,7 @@ import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.SignBlockEntity;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.item.TooltipContext;
+import net.minecraft.client.item.TooltipType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.passive.SheepEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -95,7 +95,7 @@ public abstract class DyeItemMixin extends Item {
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+    public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType type) {
         if (UnidyeUtils.DYES.containsKey(stack.getItem())) {
             if (Screen.hasShiftDown()) {
                 UnidyeColor unidyeColor = UnidyeUtils.DYES.get(stack.getItem());

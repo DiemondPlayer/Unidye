@@ -10,8 +10,8 @@ import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SpecialCraftingRecipe;
 import net.minecraft.recipe.book.CraftingRecipeCategory;
 import net.minecraft.registry.DynamicRegistryManager;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.ItemTags;
-import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
 public class CustomTerracottaDyeingRecipe extends SpecialCraftingRecipe {
@@ -33,7 +33,7 @@ public class CustomTerracottaDyeingRecipe extends SpecialCraftingRecipe {
     }
 
     @Override
-    public ItemStack craft(RecipeInputInventory inventory, DynamicRegistryManager registryManager) {
+    public ItemStack craft(RecipeInputInventory inventory, RegistryWrapper.WrapperLookup lookup) {
         ItemStack itemStack1 = new ItemStack(UnidyeBlocks.CUSTOM_TERRACOTTA.asItem());
         UnidyeUtils.setColor(itemStack1, CustomDyeItem.getMaterialColor(inventory.getStack(4), "terracotta"));
         itemStack1.setCount(8);

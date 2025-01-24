@@ -21,9 +21,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(CakeBlock.class)
 public abstract class CakeBlockMixin {
+    //TODO need to change that toUseOnitem stuff
     @Inject(method = "onUse", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;emitGameEvent(Lnet/minecraft/entity/Entity;Lnet/minecraft/world/event/GameEvent;Lnet/minecraft/util/math/BlockPos;)V"))
-    public void unidye$onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit, CallbackInfoReturnable<ActionResult> cir) {
-        ItemStack itemStack = player.getStackInHand(hand);
+    public void unidye$onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit, CallbackInfoReturnable<ActionResult> cir) {
+        ItemStack itemStack = player.getStackInHand(player.getActiveHand());
         if (itemStack.isOf(UnidyeBlocks.CUSTOM_CANDLE.asItem())) {
             ((DyeableCandleBlock) ((BlockItem) itemStack.getItem()).getBlock()).createBlockEntity(pos, state);
             ((DyeableBlockEntity) world.getBlockEntity(pos)).color = UnidyeUtils.getColor(itemStack);

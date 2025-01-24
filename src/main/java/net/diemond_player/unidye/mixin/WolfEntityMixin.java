@@ -15,6 +15,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Hand;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -26,6 +27,9 @@ public abstract class WolfEntityMixin implements UnidyeAccessor {
     @Unique
     private static final TrackedData<Integer> CUSTOM_COLOR = DataTracker.registerData(WolfEntity.class, TrackedDataHandlerRegistry.INTEGER);
 
+    @Shadow
+    private void setCollarColor(DyeColor color) {
+    }
     @Inject(method = "writeCustomDataToNbt", at = @At("HEAD"))
     private void unidye$writeCustomDataToNbt(NbtCompound nbt, CallbackInfo ci) {
         nbt.putInt("unidye.custom_color", unidye$getCustomColor());
@@ -39,8 +43,8 @@ public abstract class WolfEntityMixin implements UnidyeAccessor {
     }
 
     @Inject(method = "initDataTracker", at = @At("HEAD"))
-    private void unidye$initDataTracker(CallbackInfo ci) {
-        ((WolfEntity) (Object) this).getDataTracker().startTracking(CUSTOM_COLOR, 0xFFFFFF);
+    private void unidye$initDataTracker(DataTracker.Builder builder, CallbackInfo ci) {
+        builder.add(CUSTOM_COLOR, 0xFFFFFF);
     }
 
 
@@ -57,7 +61,7 @@ public abstract class WolfEntityMixin implements UnidyeAccessor {
         UnidyeAccessor wolf = (UnidyeAccessor) ((WolfEntity) (Object) this);
         DyeColor dyeColor = ((DyeItem) item).getColor();
         if (wolf.unidye$getCustomColor() != 0xFFFFFF) {
-            ((WolfEntity) (Object) this).setCollarColor(dyeColor);
+            this.setCollarColor(dyeColor);
             wolf.unidye$setCustomColor(0xFFFFFF);
             if (player.getAbilities().creativeMode) cir.setReturnValue(ActionResult.SUCCESS);
             itemStack.decrement(1);

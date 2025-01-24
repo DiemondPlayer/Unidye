@@ -6,6 +6,9 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Stainable;
 import net.minecraft.block.TransparentBlock;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.DyedColorComponent;
+import net.minecraft.component.type.NbtComponent;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.DyeColor;
@@ -39,11 +42,10 @@ public class DyeableGlassBlock extends TransparentBlock implements IDyeableBlock
             color = blockEntity.color;
             beaconColor = blockEntity.leatherColor;
         }
-        NbtCompound subNbt = stack.getOrCreateSubNbt("display");
-        subNbt.putInt("color", color);
-        if (stack.getNbt() != null) {
-            stack.getNbt().putInt("leather", beaconColor);
-        }
+        stack.set(DataComponentTypes.DYED_COLOR, new DyedColorComponent(color, true));
+        NbtCompound nbtCompound = new NbtCompound();
+        nbtCompound.putInt("leather", beaconColor);
+        stack.set(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(nbtCompound));
         return stack;
     }
 

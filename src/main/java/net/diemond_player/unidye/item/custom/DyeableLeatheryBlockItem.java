@@ -5,7 +5,10 @@ import net.diemond_player.unidye.block.entity.DyeableLeatheryBlockEntity;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.client.item.TooltipContext;
+import net.minecraft.client.item.TooltipType;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.NbtComponent;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -25,9 +28,9 @@ public class DyeableLeatheryBlockItem extends DyeableBlockItem {
     }
 
     public static int getLeatherColor(ItemStack stack) {
-        NbtCompound nbtCompound = stack.getNbt();
-        if (nbtCompound != null && nbtCompound.contains("leather", NbtElement.NUMBER_TYPE)) {
-            return nbtCompound.getInt("leather");
+        NbtComponent nbtComponent = stack.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(new NbtCompound()));
+        if (nbtComponent.contains("leather")) {
+            return nbtComponent.copyNbt().getInt("leather");
         }
         return DEFAULT_COLOR;
     }
@@ -38,11 +41,14 @@ public class DyeableLeatheryBlockItem extends DyeableBlockItem {
     }
 
     public static void setLeatherColor(ItemStack itemStack, int n) {
-        itemStack.getOrCreateNbt().putInt("leather", n);
+        NbtComponent nbtComponent = itemStack.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(new NbtCompound()));
+        NbtCompound nbtCompound = nbtComponent.copyNbt();
+        nbtCompound.putInt("leather", n);
+        itemStack.set(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(nbtCompound));
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+    public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType type) {
         MutableText mutableText = Text.literal("■ ");
         if (stack.isOf(UnidyeBlocks.CUSTOM_WOOL.asItem())) {
             tooltip.add(mutableText.setStyle(mutableText.getStyle().withColor(getLeatherColor(stack))).append(Text.translatable("tooltip.unidye.banner_color").append(getLeatherHexColor(stack)).formatted(Formatting.GRAY)));

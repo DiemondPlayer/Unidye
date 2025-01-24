@@ -41,7 +41,7 @@ public enum UnidyeColor {
     public final int candleColor;
     private float[] colorComponents;
 
-    private UnidyeColor(int id, String name, int dyeColor, int leatherColor, int woolColor, int terracottaColor, int concreteColor, int glassColor, int fireworkColor, int signColor, int shulkerBoxColor, int candleColor) {
+    UnidyeColor(int id, String name, int dyeColor, int leatherColor, int woolColor, int terracottaColor, int concreteColor, int glassColor, int fireworkColor, int signColor, int shulkerBoxColor, int candleColor) {
         this.id = id;
         this.name = name;
         this.dyeColor = dyeColor;

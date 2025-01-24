@@ -95,9 +95,9 @@ public class DyeableFallingBlockEntity extends FallingBlockEntity {
     }
 
     @Override
-    protected void initDataTracker() {
-        this.dataTracker.startTracking(BLOCK_POS, BlockPos.ORIGIN);
-        this.dataTracker.startTracking(CUSTOM_COLOR, 0xFFFFFF);
+    protected void initDataTracker(DataTracker.Builder builder) {
+        builder.add(BLOCK_POS, BlockPos.ORIGIN);
+        builder.add(CUSTOM_COLOR, 0xFFFFFF);
     }
 
     @Override
@@ -148,12 +148,12 @@ public class DyeableFallingBlockEntity extends FallingBlockEntity {
                                     }
                                 }
                                 if (this.blockEntityData != null && this.block.hasBlockEntity() && (blockEntity = this.getWorld().getBlockEntity(blockPos.down())) != null) {
-                                    NbtCompound nbtCompound = blockEntity.createNbt();
+                                    NbtCompound nbtCompound = blockEntity.createNbt(this.getWorld().getRegistryManager());
                                     for (String string : this.blockEntityData.getKeys()) {
                                         nbtCompound.put(string, this.blockEntityData.get(string).copy());
                                     }
                                     try {
-                                        blockEntity.readNbt(nbtCompound);
+                                        blockEntity.read(nbtCompound, this.getWorld().getRegistryManager());
                                     } catch (Exception exception) {
                                         LOGGER.error("Failed to load block entity from falling block", exception);
                                     }

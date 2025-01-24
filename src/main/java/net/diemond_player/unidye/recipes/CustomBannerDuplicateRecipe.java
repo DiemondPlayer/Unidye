@@ -2,6 +2,7 @@ package net.diemond_player.unidye.recipes;
 
 import net.diemond_player.unidye.block.entity.DyeableBannerBlockEntity;
 import net.diemond_player.unidye.item.custom.DyeableBannerItem;
+import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.inventory.RecipeInputInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -9,7 +10,7 @@ import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SpecialCraftingRecipe;
 import net.minecraft.recipe.book.CraftingRecipeCategory;
 import net.minecraft.registry.DynamicRegistryManager;
-import net.minecraft.util.Identifier;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
 
@@ -18,6 +19,7 @@ public class CustomBannerDuplicateRecipe extends SpecialCraftingRecipe {
         super(craftingRecipeCategory);
     }
 
+    @Override
     public boolean matches(RecipeInputInventory recipeInputInventory, World world) {
         int color = -1;
         ItemStack itemStack = null;
@@ -30,8 +32,8 @@ public class CustomBannerDuplicateRecipe extends SpecialCraftingRecipe {
                 return false;
             }
             if (color == -1) {
-                color = bannerItem.getColor(itemStack3);
-            } else if (color != bannerItem.getColor(itemStack3)) {
+                color = UnidyeUtils.getColor(itemStack3);
+            } else if (color != UnidyeUtils.getColor(itemStack3)) {
                 return false;
             }
             int j = DyeableBannerBlockEntity.getPatternCount(itemStack3);
@@ -54,9 +56,10 @@ public class CustomBannerDuplicateRecipe extends SpecialCraftingRecipe {
         return itemStack != null && itemStack2 != null;
     }
 
-    public ItemStack craft(RecipeInputInventory recipeInputInventory, DynamicRegistryManager dynamicRegistryManager) {
-        for (int i = 0; i < recipeInputInventory.size(); ++i) {
-            ItemStack itemStack = recipeInputInventory.getStack(i);
+    @Override
+    public ItemStack craft(RecipeInputInventory inventory, RegistryWrapper.WrapperLookup lookup) {
+        for (int i = 0; i < inventory.size(); ++i) {
+            ItemStack itemStack = inventory.getStack(i);
             if (!itemStack.isEmpty()) {
                 int j = DyeableBannerBlockEntity.getPatternCount(itemStack);
                 if (j > 0 && j <= 6) {
@@ -68,6 +71,8 @@ public class CustomBannerDuplicateRecipe extends SpecialCraftingRecipe {
         return ItemStack.EMPTY;
     }
 
+
+    @Override
     public DefaultedList<ItemStack> getRemainder(RecipeInputInventory recipeInputInventory) {
         DefaultedList<ItemStack> defaultedList = DefaultedList.ofSize(recipeInputInventory.size(), ItemStack.EMPTY);
 
