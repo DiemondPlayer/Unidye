@@ -1,5 +1,6 @@
 package net.diemond_player.unidye;
 
+import com.google.common.collect.Lists;
 import net.diemond_player.unidye.block.UnidyeBlocks;
 import net.diemond_player.unidye.block.entity.DyeableBlockEntity;
 import net.diemond_player.unidye.block.entity.DyeableLeatheryBlockEntity;
@@ -13,6 +14,7 @@ import net.diemond_player.unidye.entity.client.renderer.DyeableFallingBlockEntit
 import net.diemond_player.unidye.entity.client.renderer.DyeableShulkerBoxBlockEntityRenderer;
 import net.diemond_player.unidye.entity.layer.UnidyeModelLayers;
 import net.diemond_player.unidye.item.UnidyeItems;
+import net.diemond_player.unidye.util.UnidyeColor;
 import net.diemond_player.unidye.util.UnidyeModelPredicateProvider;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
@@ -25,10 +27,16 @@ import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
 import net.minecraft.item.DyeableItem;
 import net.minecraft.item.Item;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class UnidyeClient implements ClientModInitializer {
+    public static final HashMap<Block, Integer> DYEABLE_BLOCKS_ADJUST = new HashMap<>() {{
+            put(UnidyeBlocks.CUSTOM_CONCRETE_POWDER, 15);
+    }};
+
     @Override
     public void onInitializeClient() {
-
         EntityRendererRegistry.register(UnidyeEntities.DYEABLE_FALLING_BLOCK_ENTITY, DyeableFallingBlockEntityRenderer::new);
 
         BlockEntityRendererFactories.register(UnidyeBlockEntities.DYEABLE_SHULKER_BOX_BE, DyeableShulkerBoxBlockEntityRenderer::new);
@@ -47,15 +55,17 @@ public class UnidyeClient implements ClientModInitializer {
         registerItemColor(UnidyeBlocks.CUSTOM_BANNER.asItem());
 
         registerLeatheryBlockColor(UnidyeBlocks.CUSTOM_WOOL);
-        registerBlockColor(UnidyeBlocks.CUSTOM_CONCRETE);
-        registerBlockColor(UnidyeBlocks.CUSTOM_TERRACOTTA);
         registerLeatheryBlockColor(UnidyeBlocks.CUSTOM_STAINED_GLASS);
-        registerBlockColor(UnidyeBlocks.CUSTOM_CONCRETE_POWDER, 15);
-        registerBlockColor(UnidyeBlocks.CUSTOM_CARPET);
         registerLeatheryBlockColor(UnidyeBlocks.CUSTOM_STAINED_GLASS_PANE);
-        registerBlockColor(UnidyeBlocks.CUSTOM_CANDLE);
-        registerBlockColor(UnidyeBlocks.CUSTOM_CANDLE_CAKE);
         registerCustomShulkerBoxColor(UnidyeBlocks.CUSTOM_SHULKER_BOX);
+
+        UnidyeBlockEntities.DYEABLE_BE_BLOCKS.forEach(block -> {
+            if (DYEABLE_BLOCKS_ADJUST.containsKey(block)){
+                registerBlockColor(block, DYEABLE_BLOCKS_ADJUST.get(block));
+            } else {
+                registerBlockColor(block);
+            }
+        });
 
         UnidyeModelPredicateProvider.registerModModels();
 

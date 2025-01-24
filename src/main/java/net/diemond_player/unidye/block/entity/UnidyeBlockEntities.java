@@ -18,7 +18,8 @@ import java.util.ArrayList;
 
 
 public class UnidyeBlockEntities {
-    public static final ArrayList<Block> DYEABLE_BE_BLOCKS = Lists.newArrayList(UnidyeBlocks.CUSTOM_TERRACOTTA,
+    public static final ArrayList<Block> DYEABLE_BE_BLOCKS = Lists.newArrayList(
+            UnidyeBlocks.CUSTOM_TERRACOTTA,
             UnidyeBlocks.CUSTOM_CONCRETE,
             UnidyeBlocks.CUSTOM_CONCRETE_POWDER,
             UnidyeBlocks.CUSTOM_CARPET,

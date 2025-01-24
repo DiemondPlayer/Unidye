@@ -27,4 +27,6 @@ public interface IDyeableBlock extends BlockEntityProvider {
         subNbt.putInt("color", color);
         return stack;
     }
+
+    //TODO wth is up with someone extending this
 }

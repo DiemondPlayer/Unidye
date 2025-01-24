@@ -33,7 +33,7 @@ import static net.minecraft.client.render.WorldRenderer.DIRECTIONS;
 @Mixin(BlockModelRenderer.class)
 public abstract class BlockModelRendererMixin implements UnidyeAccessor {
     @Shadow
-    private void getQuadDimensions(BlockRenderView world, BlockState state, BlockPos pos, int[] vertexData, Direction face, @Nullable float[] box, BitSet flags) {
+    private void getQuadDimensions(BlockRenderView world, BlockState state, BlockPos pos, int[] vertexData, Direction face, @Nullable float[] box, BitSet flags){
 
     }
 
