@@ -17,7 +17,6 @@
   ],
   "result": {
     "count": 8,
-    "item": "minecraft:pink_carpet"
-  },
-  "show_notification": true
+    "id": "minecraft:pink_carpet"
+  }
 }

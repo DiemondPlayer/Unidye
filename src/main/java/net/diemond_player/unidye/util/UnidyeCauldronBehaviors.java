@@ -4,12 +4,15 @@ import net.diemond_player.unidye.Unidye;
 import net.diemond_player.unidye.block.UnidyeBlocks;
 import net.diemond_player.unidye.block.custom.DyeableShulkerBoxBlock;
 import net.diemond_player.unidye.block.entity.DyeableBannerBlockEntity;
+import net.diemond_player.unidye.component.CustomBannerPatternsComponent;
+import net.diemond_player.unidye.component.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.item.UnidyeItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.LeveledCauldronBlock;
 import net.minecraft.block.cauldron.CauldronBehavior;
 import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.BannerPatternsComponent;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.ActionResult;
@@ -169,27 +172,28 @@ public class UnidyeCauldronBehaviors {
     }
 
     public static final CauldronBehavior CLEAN_CUSTOM_BANNER = (state, world, pos, player, hand, stack) -> {
-        if (DyeableBannerBlockEntity.getPatternCount(stack) <= 0) {
+        CustomBannerPatternsComponent bannerPatternsComponent = stack.getOrDefault(UnidyeDataComponentTypes.CUSTOM_BANNER_PATTERNS, CustomBannerPatternsComponent.DEFAULT);
+        if (bannerPatternsComponent.layers().isEmpty()) {
             return ItemActionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-        }
-        if (!world.isClient) {
-            ItemStack itemStack = stack.copyWithCount(1);
-            DyeableBannerBlockEntity.loadFromItemStack(itemStack);
-            if (!player.getAbilities().creativeMode) {
-                stack.decrement(1);
+        } else {
+            if (!world.isClient) {
+                ItemStack itemStack = stack.copyWithCount(1);
+                itemStack.set(UnidyeDataComponentTypes.CUSTOM_BANNER_PATTERNS, bannerPatternsComponent.withoutTopLayer());
+                stack.decrementUnlessCreative(1, player);
+                if (stack.isEmpty()) {
+                    player.setStackInHand(hand, itemStack);
+                } else if (player.getInventory().insertStack(itemStack)) {
+                    player.playerScreenHandler.syncState();
+                } else {
+                    player.dropItem(itemStack, false);
+                }
+
+                player.incrementStat(Stats.CLEAN_BANNER);
+                LeveledCauldronBlock.decrementFluidLevel(state, world, pos);
             }
-            if (stack.isEmpty()) {
-                player.setStackInHand(hand, itemStack);
-                player.getStackInHand(player.getActiveHand());
-            } else if (player.getInventory().insertStack(itemStack)) {
-                player.playerScreenHandler.syncState();
-            } else {
-                player.dropItem(itemStack, false);
-            }
-            player.incrementStat(Stats.CLEAN_BANNER);
-            LeveledCauldronBlock.decrementFluidLevel(state, world, pos);
+
+            return ItemActionResult.success(world.isClient);
         }
-        return ItemActionResult.success(world.isClient);
     };
 
     public static final CauldronBehavior CLEAN_CUSTOM_SHULKER_BOX = (state, world, pos, player, hand, stack) -> {

@@ -1,8 +1,12 @@
 package net.diemond_player.unidye.recipes;
 
 import net.diemond_player.unidye.block.entity.DyeableBannerBlockEntity;
+import net.diemond_player.unidye.component.CustomBannerPatternsComponent;
+import net.diemond_player.unidye.component.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.item.custom.DyeableBannerItem;
 import net.diemond_player.unidye.util.UnidyeUtils;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.BannerPatternsComponent;
 import net.minecraft.inventory.RecipeInputInventory;
 import net.minecraft.item.BannerItem;
 import net.minecraft.item.Item;
@@ -31,7 +35,7 @@ public class MixedBannerDuplicateRecipe extends SpecialCraftingRecipe {
             Item item = itemStack3.getItem();
             if (item instanceof DyeableBannerItem && itemStack == null) {
                 itemStack = itemStack3;
-                int j = DyeableBannerBlockEntity.getPatternCount(itemStack3);
+                int j = itemStack3.getOrDefault(UnidyeDataComponentTypes.CUSTOM_BANNER_PATTERNS, CustomBannerPatternsComponent.DEFAULT).layers().size();
                 if (j > 6 || j == 0) {
                     return false;
                 }
@@ -41,7 +45,7 @@ public class MixedBannerDuplicateRecipe extends SpecialCraftingRecipe {
             }
 
             if (item instanceof BannerItem && itemStack2 == null) {
-                int j = DyeableBannerBlockEntity.getPatternCount(itemStack3);
+                int j = itemStack3.getOrDefault(DataComponentTypes.BANNER_PATTERNS, BannerPatternsComponent.DEFAULT).layers().size();
                 if (j > 0) {
                     return false;
                 }
@@ -66,10 +70,10 @@ public class MixedBannerDuplicateRecipe extends SpecialCraftingRecipe {
 
     @Override
     public ItemStack craft(RecipeInputInventory recipeInputInventory, RegistryWrapper.WrapperLookup lookup) {
-        for (int i = 0; i < recipeInputInventory.size(); ++i) {
+        for (int i = 0; i < recipeInputInventory.size(); i++) {
             ItemStack itemStack = recipeInputInventory.getStack(i);
             if (!itemStack.isEmpty()) {
-                int j = DyeableBannerBlockEntity.getPatternCount(itemStack);
+                int j = itemStack.getOrDefault(UnidyeDataComponentTypes.CUSTOM_BANNER_PATTERNS, CustomBannerPatternsComponent.DEFAULT).layers().size();
                 if (j > 0 && j <= 6) {
                     return itemStack.copyWithCount(1);
                 }
@@ -83,12 +87,12 @@ public class MixedBannerDuplicateRecipe extends SpecialCraftingRecipe {
     public DefaultedList<ItemStack> getRemainder(RecipeInputInventory recipeInputInventory) {
         DefaultedList<ItemStack> defaultedList = DefaultedList.ofSize(recipeInputInventory.size(), ItemStack.EMPTY);
 
-        for (int i = 0; i < defaultedList.size(); ++i) {
+        for (int i = 0; i < defaultedList.size(); i++) {
             ItemStack itemStack = recipeInputInventory.getStack(i);
             if (!itemStack.isEmpty()) {
                 if (itemStack.getItem().hasRecipeRemainder()) {
                     defaultedList.set(i, new ItemStack(itemStack.getItem().getRecipeRemainder()));
-                } else if (itemStack.hasNbt() && DyeableBannerBlockEntity.getPatternCount(itemStack) > 0) {
+                } else if (!itemStack.getOrDefault(UnidyeDataComponentTypes.CUSTOM_BANNER_PATTERNS, CustomBannerPatternsComponent.DEFAULT).layers().isEmpty()) {
                     defaultedList.set(i, itemStack.copyWithCount(1));
                 }
             }

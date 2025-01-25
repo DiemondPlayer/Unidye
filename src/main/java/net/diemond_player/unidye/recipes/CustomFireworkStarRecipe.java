@@ -1,7 +1,12 @@
 package net.diemond_player.unidye.recipes;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import it.unimi.dsi.fastutil.ints.IntArrayList;
+import it.unimi.dsi.fastutil.ints.IntList;
 import net.diemond_player.unidye.item.custom.CustomDyeItem;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.FireworkExplosionComponent;
 import net.minecraft.inventory.RecipeInputInventory;
 import net.minecraft.item.DyeItem;
 import net.minecraft.item.Item;
@@ -13,63 +18,128 @@ import net.minecraft.recipe.SpecialCraftingRecipe;
 import net.minecraft.recipe.book.CraftingRecipeCategory;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.util.Util;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class CustomFireworkStarRecipe extends SpecialCraftingRecipe {
     public CustomFireworkStarRecipe(CraftingRecipeCategory category) {
         super(category);
     }
 
-    private static final Ingredient INPUT_STAR = Ingredient.ofItems(Items.FIREWORK_STAR);
+    private static final Ingredient TYPE_MODIFIER = Ingredient.ofItems(
+            Items.FIRE_CHARGE,
+            Items.FEATHER,
+            Items.GOLD_NUGGET,
+            Items.SKELETON_SKULL,
+            Items.WITHER_SKELETON_SKULL,
+            Items.CREEPER_HEAD,
+            Items.PLAYER_HEAD,
+            Items.DRAGON_HEAD,
+            Items.ZOMBIE_HEAD,
+            Items.PIGLIN_HEAD
+    );
+    private static final Ingredient TRAIL_MODIFIER = Ingredient.ofItems(Items.DIAMOND);
+    private static final Ingredient FLICKER_MODIFIER = Ingredient.ofItems(Items.GLOWSTONE_DUST);
+    private static final Map<Item, FireworkExplosionComponent.Type> TYPE_MODIFIER_MAP = Util.make(
+            Maps.newHashMap(), typeModifiers -> {
+                typeModifiers.put(Items.FIRE_CHARGE, FireworkExplosionComponent.Type.LARGE_BALL);
+                typeModifiers.put(Items.FEATHER, FireworkExplosionComponent.Type.BURST);
+                typeModifiers.put(Items.GOLD_NUGGET, FireworkExplosionComponent.Type.STAR);
+                typeModifiers.put(Items.SKELETON_SKULL, FireworkExplosionComponent.Type.CREEPER);
+                typeModifiers.put(Items.WITHER_SKELETON_SKULL, FireworkExplosionComponent.Type.CREEPER);
+                typeModifiers.put(Items.CREEPER_HEAD, FireworkExplosionComponent.Type.CREEPER);
+                typeModifiers.put(Items.PLAYER_HEAD, FireworkExplosionComponent.Type.CREEPER);
+                typeModifiers.put(Items.DRAGON_HEAD, FireworkExplosionComponent.Type.CREEPER);
+                typeModifiers.put(Items.ZOMBIE_HEAD, FireworkExplosionComponent.Type.CREEPER);
+                typeModifiers.put(Items.PIGLIN_HEAD, FireworkExplosionComponent.Type.CREEPER);
+            }
+    );
+    private static final Ingredient GUNPOWDER = Ingredient.ofItems(Items.GUNPOWDER);
 
     @Override
     public boolean matches(RecipeInputInventory recipeInputInventory, World world) {
         boolean bl = false;
         boolean bl2 = false;
-        for (int i = 0; i < recipeInputInventory.size(); ++i) {
+        boolean bl3 = false;
+        boolean bl4 = false;
+        boolean bl5 = false;
+        boolean bl6 = false;
+
+        for (int i = 0; i < recipeInputInventory.size(); i++) {
             ItemStack itemStack = recipeInputInventory.getStack(i);
-            if (itemStack.isEmpty()) continue;
-            if (itemStack.getItem() instanceof DyeItem) {
-                bl = true;
-                continue;
-            }
-            if (INPUT_STAR.test(itemStack)) {
-                if (bl2) {
-                    return false;
+            if (!itemStack.isEmpty()) {
+                if (TYPE_MODIFIER.test(itemStack)) {
+                    if (bl3) {
+                        return false;
+                    }
+
+                    bl3 = true;
+                } else if (FLICKER_MODIFIER.test(itemStack)) {
+                    if (bl5) {
+                        return false;
+                    }
+
+                    bl5 = true;
+                } else if (TRAIL_MODIFIER.test(itemStack)) {
+                    if (bl4) {
+                        return false;
+                    }
+
+                    bl4 = true;
+                } else if (GUNPOWDER.test(itemStack)) {
+                    if (bl) {
+                        return false;
+                    }
+
+                    bl = true;
+                } else {
+                    if (!(itemStack.getItem() instanceof DyeItem)) {
+                        return false;
+                    }
+                    if (itemStack.getItem() instanceof CustomDyeItem){
+                        bl6 = true;
+                    }
+
+                    bl2 = true;
                 }
-                bl2 = true;
-                continue;
             }
-            return false;
         }
-        return bl2 && bl;
+
+        return bl && bl2 && bl6;
     }
 
     @Override
     public ItemStack craft(RecipeInputInventory recipeInputInventory, RegistryWrapper.WrapperLookup lookup) {
-        ArrayList<Integer> list = Lists.newArrayList();
-        ItemStack itemStack = null;
-        for (int i = 0; i < recipeInputInventory.size(); ++i) {
-            ItemStack itemStack2 = recipeInputInventory.getStack(i);
-            Item item = itemStack2.getItem();
-            if (item instanceof CustomDyeItem) {
-                list.add(CustomDyeItem.getMaterialColor(itemStack2, "firework"));
-                continue;
+        FireworkExplosionComponent.Type type = FireworkExplosionComponent.Type.SMALL_BALL;
+        boolean bl = false;
+        boolean bl2 = false;
+        IntList intList = new IntArrayList();
+
+        for (int i = 0; i < recipeInputInventory.size(); i++) {
+            ItemStack itemStack = recipeInputInventory.getStack(i);
+            if (!itemStack.isEmpty()) {
+                if (TYPE_MODIFIER.test(itemStack)) {
+                    type = TYPE_MODIFIER_MAP.get(itemStack.getItem());
+                } else if (FLICKER_MODIFIER.test(itemStack)) {
+                    bl = true;
+                } else if (TRAIL_MODIFIER.test(itemStack)) {
+                    bl2 = true;
+                } else if (itemStack.getItem() instanceof DyeItem) {
+                    if (itemStack.getItem() instanceof CustomDyeItem){
+                        intList.add(CustomDyeItem.getMaterialColor(itemStack, "firework").intValue());
+                    } else {
+                        intList.add(((DyeItem) itemStack.getItem()).getColor().getFireworkColor());
+                    }
+                }
             }
-            if (item instanceof DyeItem) {
-                list.add(((DyeItem) item).getColor().getFireworkColor());
-                continue;
-            }
-            if (!INPUT_STAR.test(itemStack2)) continue;
-            itemStack = itemStack2.copyWithCount(1);
         }
-        if (itemStack == null || list.isEmpty()) {
-            return ItemStack.EMPTY;
-        }
-        itemStack.getOrCreateSubNbt("Explosion").putIntArray("FadeColors", list);
-        return itemStack;
+
+        ItemStack itemStack2 = new ItemStack(Items.FIREWORK_STAR);
+        itemStack2.set(DataComponentTypes.FIREWORK_EXPLOSION, new FireworkExplosionComponent(type, intList, IntList.of(), bl2, bl));
+        return itemStack2;
     }
 
     @Override

@@ -5,24 +5,28 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "minecraft:cyan_dye"
-            ]
+            "items": "minecraft:cyan_dye"
           }
         ]
       },
       "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:cyan_wool_from_circle_dyeing"
+      },
+      "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_needed_dye"
     ]
   ],
   "rewards": {
     "recipes": [
-      "unidye:cyan_wool_from_circle_dyeing"
+      "minecraft:cyan_wool_from_circle_dyeing"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

@@ -2,12 +2,16 @@ package net.diemond_player.unidye.item.custom;
 
 import net.diemond_player.unidye.block.UnidyeBlocks;
 import net.diemond_player.unidye.block.entity.DyeableBannerBlockEntity;
+import net.diemond_player.unidye.component.CustomBannerPatternsComponent;
+import net.diemond_player.unidye.component.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BannerPattern;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.item.TooltipType;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.BannerPatternsComponent;
 import net.minecraft.item.*;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
@@ -45,25 +49,14 @@ public class DyeableBannerItem extends BannerItem{
     }
 
     public static void appendBannerTooltip(ItemStack stack, List<Text> tooltip) {
-        NbtCompound nbtCompound = BlockItem.getBlockEntityNbt(stack);
-        if (nbtCompound == null || !nbtCompound.contains("Patterns")) {
-            return;
-        }
-        NbtList nbtList = nbtCompound.getList("Patterns", NbtElement.COMPOUND_TYPE);
-        for (int i = 0; i < nbtList.size() && i < 6; ++i) {
-            NbtCompound nbtCompound2 = nbtList.getCompound(i);
-            int n = nbtCompound2.getInt("Color");
-            DyeColor dyeColor = DyeColor.byId(n);
-            RegistryEntry<BannerPattern> registryEntry = BannerPattern.byId(nbtCompound2.getString("Pattern"));
-            if (registryEntry == null) continue;
-            if (DyeColor.WHITE == dyeColor && n != 0) {
-                MutableText mutableText = Text.literal("■ ");
-                mutableText.setStyle(mutableText.getStyle().withColor(n));
-                registryEntry.getKey().map(key -> key.getValue().toShortTranslationKey()).ifPresent(translationKey -> tooltip.add(mutableText.append(Text.literal("§7#" + Integer.toString(n, 16).toUpperCase() + " ").append(Text.translatable(TRANSLATION_KEY_PREFIX + translationKey).formatted(Formatting.GRAY)))));
-            } else {
-                registryEntry.getKey().map(key -> key.getValue().toShortTranslationKey()).ifPresent(translationKey -> tooltip.add(Text.translatable(TRANSLATION_KEY_PREFIX + translationKey + "." + dyeColor.getName()).formatted(Formatting.GRAY)));
+        CustomBannerPatternsComponent bannerPatternsComponent = stack.get(UnidyeDataComponentTypes.CUSTOM_BANNER_PATTERNS);
+        if (bannerPatternsComponent != null) {
+            for (int i = 0; i < Math.min(bannerPatternsComponent.layers().size(), 6); i++) {
+                CustomBannerPatternsComponent.Layer layer = (CustomBannerPatternsComponent.Layer)bannerPatternsComponent.layers().get(i);
+                tooltip.add(layer.getTooltipText().formatted(Formatting.GRAY));
             }
         }
+        //TODO proper tooltips here
     }
 
     @Override

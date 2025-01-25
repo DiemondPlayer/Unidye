@@ -5,24 +5,28 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "minecraft:light_gray_dye"
-            ]
+            "items": "minecraft:light_gray_dye"
           }
         ]
       },
       "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:light_gray_carpet_from_circle_dyeing"
+      },
+      "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_needed_dye"
     ]
   ],
   "rewards": {
     "recipes": [
-      "unidye:light_gray_carpet_from_circle_dyeing"
+      "minecraft:light_gray_carpet_from_circle_dyeing"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

@@ -93,8 +93,7 @@ public class CustomShulkerBoxDyeingRecipe extends SpecialCraftingRecipe {
         if (customDyeList.isEmpty() && dyeList.isEmpty()) {
             return ItemStack.EMPTY;
         }
-        ItemStack itemStack1 = new ItemStack(UnidyeBlocks.CUSTOM_SHULKER_BOX);
-        itemStack1.setNbt(itemStack.getNbt());
+        ItemStack itemStack1 = itemStack.copyComponentsToNewStack(UnidyeBlocks.CUSTOM_SHULKER_BOX, 1);
         return UnidyeUtils.blendAndSetColor(itemStack1, dyeList, customDyeList);
     }
 

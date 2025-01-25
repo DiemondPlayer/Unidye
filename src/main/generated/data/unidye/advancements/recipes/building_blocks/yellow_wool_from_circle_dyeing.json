@@ -5,24 +5,28 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "minecraft:yellow_dye"
-            ]
+            "items": "minecraft:yellow_dye"
           }
         ]
       },
       "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:yellow_wool_from_circle_dyeing"
+      },
+      "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_needed_dye"
     ]
   ],
   "rewards": {
     "recipes": [
-      "unidye:yellow_wool_from_circle_dyeing"
+      "minecraft:yellow_wool_from_circle_dyeing"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

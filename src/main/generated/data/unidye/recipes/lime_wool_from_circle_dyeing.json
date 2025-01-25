@@ -17,7 +17,6 @@
   ],
   "result": {
     "count": 8,
-    "item": "minecraft:lime_wool"
-  },
-  "show_notification": true
+    "id": "minecraft:lime_wool"
+  }
 }

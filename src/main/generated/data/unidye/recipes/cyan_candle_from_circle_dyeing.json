@@ -17,7 +17,6 @@
   ],
   "result": {
     "count": 8,
-    "item": "minecraft:cyan_candle"
-  },
-  "show_notification": true
+    "id": "minecraft:cyan_candle"
+  }
 }

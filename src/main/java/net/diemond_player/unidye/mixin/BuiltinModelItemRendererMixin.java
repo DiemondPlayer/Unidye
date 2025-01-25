@@ -9,6 +9,7 @@ import net.diemond_player.unidye.block.custom.DyeableWallBannerBlock;
 import net.diemond_player.unidye.block.entity.DyeableBannerBlockEntity;
 import net.diemond_player.unidye.block.entity.DyeableBedBlockEntity;
 import net.diemond_player.unidye.block.entity.DyeableShulkerBoxBlockEntity;
+import net.diemond_player.unidye.component.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.entity.client.renderer.DyeableBannerBlockEntityRenderer;
 import net.diemond_player.unidye.item.custom.DyeableBannerItem;
 import net.diemond_player.unidye.item.custom.DyeableBlockItem;
@@ -16,16 +17,19 @@ import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BannerPattern;
 import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.block.entity.BannerBlockEntityRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.render.entity.model.ShieldEntityModel;
 import net.minecraft.client.render.item.BuiltinModelItemRenderer;
 import net.minecraft.client.render.model.ModelLoader;
 import net.minecraft.client.render.model.json.ModelTransformationMode;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.BlockPos;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
@@ -33,6 +37,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.List;
+import java.util.Objects;
 
 @Mixin(BuiltinModelItemRenderer.class)
 public abstract class BuiltinModelItemRendererMixin {
@@ -77,11 +82,21 @@ public abstract class BuiltinModelItemRendererMixin {
         }
     }
 
-    @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/entity/BannerBlockEntity;getPatternListNbt(Lnet/minecraft/item/ItemStack;)Lnet/minecraft/nbt/NbtList;"), cancellable = true)
+    @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/component/type/BannerPatternsComponent;layers()Ljava/util/List;"), cancellable = true)
     private void unidye$render1(ItemStack stack, ModelTransformationMode mode, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, CallbackInfo ci) {
-        if (BlockItem.getBlockEntityNbt(stack).contains("CustomColored")) {
-            List<Pair<RegistryEntry<BannerPattern>, ?>> list = DyeableBannerBlockEntity.getPatternsFromNbt(BlockItem.getBlockEntityNbt(stack).getInt("Base"), DyeableBannerBlockEntity.getPatternListNbt(stack));
-            DyeableBannerBlockEntityRenderer.renderCanvas(matrices, vertexConsumers, light, overlay, this.modelShield.getPlate(), ModelLoader.SHIELD_BASE, false, list, stack.hasGlint());
+        if(stack.get(UnidyeDataComponentTypes.CUSTOM_BANNER_PATTERNS) != null) {
+            DyeableBannerBlockEntityRenderer.renderCanvas(
+                    matrices,
+                    vertexConsumers,
+                    light,
+                    overlay,
+                    this.modelShield.getPlate(),
+                    ModelLoader.SHIELD_BASE,
+                    false,
+                    stack.get(DataComponentTypes.DYED_COLOR).rgb(),
+                    stack.get(UnidyeDataComponentTypes.CUSTOM_BANNER_PATTERNS),
+                    stack.hasGlint()
+            );
             matrices.pop();
             ci.cancel();
         }

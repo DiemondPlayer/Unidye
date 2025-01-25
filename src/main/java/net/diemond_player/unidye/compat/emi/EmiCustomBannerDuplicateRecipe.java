@@ -8,14 +8,21 @@ import dev.emi.emi.api.widget.GeneratedSlotWidget;
 import dev.emi.emi.api.widget.SlotWidget;
 import net.diemond_player.unidye.block.UnidyeBlocks;
 import net.diemond_player.unidye.block.entity.UnidyeBlockEntities;
+import net.diemond_player.unidye.component.CustomBannerPatternsComponent;
+import net.diemond_player.unidye.component.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.item.UnidyeItems;
 import net.diemond_player.unidye.item.custom.CustomDyeItem;
+import net.diemond_player.unidye.util.UnidyeColor;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.block.entity.BannerPattern;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.BannerPatternsComponent;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.DyeItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
 
@@ -55,16 +62,13 @@ public class EmiCustomBannerDuplicateRecipe extends EmiPatternCraftingRecipe {
     public EmiStack getPattern(Random random, boolean reminder) {
         ItemStack stack = UnidyeUtils.blendAndSetColor(new ItemStack(UnidyeBlocks.CUSTOM_BANNER), getDyes(random), Lists.newArrayList());
         int patterns = 1 + Math.max(random.nextInt(5), random.nextInt(3));
-        BannerPattern.Patterns pattern = new BannerPattern.Patterns();
+        CustomBannerPatternsComponent pattern = CustomBannerPatternsComponent.DEFAULT;
         for (int i = 0; i < patterns; i++) {
-            pattern = EmiPort.addRandomBanner(pattern, random);
+            pattern = addRandomBanner(pattern, random);
         }
 
-        NbtCompound tag = new NbtCompound();
-        tag.put("Patterns", pattern.toNbt());
+        stack.set(UnidyeDataComponentTypes.CUSTOM_BANNER_PATTERNS, pattern);
 
-        BlockItem.setBlockEntityNbt(stack, UnidyeBlockEntities.DYEABLE_BANNER_BE, tag);
-        //stack.setNbt(tag);
         EmiStack emiStack = EmiStack.of(stack);
         if (reminder) {
             emiStack.setRemainder(EmiStack.of(stack));
@@ -79,5 +83,10 @@ public class EmiCustomBannerDuplicateRecipe extends EmiPatternCraftingRecipe {
             dyes.add(DYES.get(random.nextInt(DYES.size())));
         }
         return dyes;
+    }
+    public static CustomBannerPatternsComponent addRandomBanner(CustomBannerPatternsComponent patterns, Random random) {
+        var bannerRegistry = MinecraftClient.getInstance().world.getRegistryManager().get(RegistryKeys.BANNER_PATTERN);
+        return new CustomBannerPatternsComponent.Builder().addAll(patterns).add(bannerRegistry.getEntry(random.nextInt(bannerRegistry.size())).get(),
+                UnidyeColor.values()[random.nextInt(DyeColor.values().length)].leatherColor).build();
     }
 }

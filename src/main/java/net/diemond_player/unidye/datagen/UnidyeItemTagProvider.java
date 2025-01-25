@@ -1,6 +1,7 @@
 package net.diemond_player.unidye.datagen;
 
 import net.diemond_player.unidye.block.UnidyeBlocks;
+import net.diemond_player.unidye.item.UnidyeItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.fabricmc.fabric.api.tag.convention.v1.ConventionalItemTags;
@@ -35,5 +36,17 @@ public class UnidyeItemTagProvider extends FabricTagProvider.ItemTagProvider {
                 .add(UnidyeBlocks.CUSTOM_STAINED_GLASS_PANE.asItem());
         getOrCreateTagBuilder(net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags.SHULKER_BOXES)
                 .add(UnidyeBlocks.CUSTOM_SHULKER_BOX.asItem());
+        getOrCreateTagBuilder(ItemTags.DYEABLE)
+                .add(UnidyeBlocks.CUSTOM_SHULKER_BOX.asItem())
+                .add(UnidyeBlocks.CUSTOM_CONCRETE_POWDER.asItem())
+                .add(UnidyeBlocks.CUSTOM_CONCRETE.asItem())
+                .add(UnidyeBlocks.CUSTOM_STAINED_GLASS.asItem())
+                .add(UnidyeBlocks.CUSTOM_STAINED_GLASS_PANE.asItem())
+                .add(UnidyeBlocks.CUSTOM_TERRACOTTA.asItem())
+                .add(UnidyeBlocks.CUSTOM_CANDLE.asItem())
+                .add(UnidyeBlocks.CUSTOM_CARPET.asItem())
+                .add(UnidyeBlocks.CUSTOM_WOOL.asItem())
+                .add(UnidyeItems.CUSTOM_BANNER)
+                .add(UnidyeItems.CUSTOM_DYE);
     }
 }

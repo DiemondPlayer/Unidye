@@ -3,9 +3,13 @@ package net.diemond_player.unidye.mixin;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.mojang.datafixers.util.Pair;
 import net.diemond_player.unidye.block.entity.DyeableBannerBlockEntity;
+import net.diemond_player.unidye.component.CustomBannerPatternsComponent;
+import net.diemond_player.unidye.component.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.entity.client.renderer.DyeableBannerBlockEntityRenderer;
 import net.diemond_player.unidye.item.UnidyeItems;
 import net.diemond_player.unidye.item.custom.DyeableBannerItem;
+import net.diemond_player.unidye.util.UnidyeColor;
+import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.block.entity.BannerPattern;
 import net.minecraft.client.gui.screen.ingame.LoomScreen;
 import net.minecraft.client.model.ModelPart;
@@ -13,6 +17,8 @@ import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BannerBlockEntityRenderer;
 import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.BannerPatternsComponent;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.DyeColor;
@@ -33,30 +39,27 @@ public abstract class LoomScreenMixin {
     private ItemStack banner;
 
     @Unique
-    private List<Pair<RegistryEntry<BannerPattern>, ?>> bannerPatterns;
+    private CustomBannerPatternsComponent bannerPatterns;
 
     @Shadow
     private ItemStack dye;
 
-    protected LoomScreenMixin(List<Pair<RegistryEntry<BannerPattern>, ?>> bannerPatterns) {
-        this.bannerPatterns = bannerPatterns;
-    }
 
-    @Redirect(method = "drawBackground", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/block/entity/BannerBlockEntityRenderer;renderCanvas(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;IILnet/minecraft/client/model/ModelPart;Lnet/minecraft/client/util/SpriteIdentifier;ZLjava/util/List;)V"))
-    private void unidye$drawBackground(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, ModelPart canvas, SpriteIdentifier baseSprite, boolean isBanner, List<Pair<RegistryEntry<BannerPattern>, DyeColor>> patterns) {
+    @Redirect(method = "drawBackground", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/block/entity/BannerBlockEntityRenderer;renderCanvas(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;IILnet/minecraft/client/model/ModelPart;Lnet/minecraft/client/util/SpriteIdentifier;ZLnet/minecraft/util/DyeColor;Lnet/minecraft/component/type/BannerPatternsComponent;)V"))
+    private void unidye$drawBackground(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, ModelPart canvas, SpriteIdentifier baseSprite, boolean isBanner, DyeColor color, BannerPatternsComponent patterns) {
         if (banner.isOf(UnidyeItems.CUSTOM_BANNER)) {
-            DyeableBannerBlockEntityRenderer.renderCanvas(matrices, vertexConsumers, light, overlay, canvas, baseSprite, isBanner, bannerPatterns);
+            DyeableBannerBlockEntityRenderer.renderCanvas(matrices, vertexConsumers, light, overlay, canvas, baseSprite, isBanner, UnidyeUtils.getColor(banner), bannerPatterns);
         } else if (dye.isOf(UnidyeItems.CUSTOM_DYE)) {
-            DyeableBannerBlockEntityRenderer.renderCanvas(matrices, vertexConsumers, light, overlay, canvas, baseSprite, isBanner, bannerPatterns);
+            DyeableBannerBlockEntityRenderer.renderCanvas(matrices, vertexConsumers, light, overlay, canvas, baseSprite, isBanner, UnidyeColor.byId(banner.get(DataComponentTypes.BASE_COLOR).getId()).leatherColor, bannerPatterns);
         } else {
-            BannerBlockEntityRenderer.renderCanvas(matrices, vertexConsumers, light, overlay, canvas, baseSprite, isBanner, patterns);
+            BannerBlockEntityRenderer.renderCanvas(matrices, vertexConsumers, light, overlay, canvas, baseSprite, isBanner, color, patterns);
         }
     }
 
     @Inject(method = "onInventoryChanged", at = @At(value = "TAIL"))
     private void unidye$onInventoryChanged(CallbackInfo ci, @Local(ordinal = 0) ItemStack itemStack) {
         if (itemStack.isOf(UnidyeItems.CUSTOM_BANNER)) {
-            bannerPatterns = DyeableBannerBlockEntity.getPatternsFromNbt(((DyeableBannerItem) itemStack.getItem()).getColor(itemStack), DyeableBannerBlockEntity.getPatternListNbt(itemStack));
+            bannerPatterns = itemStack.getOrDefault(UnidyeDataComponentTypes.CUSTOM_BANNER_PATTERNS, CustomBannerPatternsComponent.DEFAULT);
         }
     }
 }

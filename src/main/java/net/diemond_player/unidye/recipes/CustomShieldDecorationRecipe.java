@@ -1,9 +1,15 @@
 package net.diemond_player.unidye.recipes;
 
 import net.diemond_player.unidye.block.entity.UnidyeBlockEntities;
+import net.diemond_player.unidye.component.CustomBannerPatternsComponent;
+import net.diemond_player.unidye.component.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.item.custom.DyeableBannerItem;
 import net.diemond_player.unidye.util.UnidyeUtils;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.BannerPatternsComponent;
+import net.minecraft.component.type.NbtComponent;
 import net.minecraft.inventory.RecipeInputInventory;
+import net.minecraft.item.BannerItem;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -24,28 +30,35 @@ public class CustomShieldDecorationRecipe extends SpecialCraftingRecipe {
     public boolean matches(RecipeInputInventory recipeInputInventory, World world) {
         ItemStack itemStack = ItemStack.EMPTY;
         ItemStack itemStack2 = ItemStack.EMPTY;
-        for (int i = 0; i < recipeInputInventory.size(); ++i) {
+
+        for (int i = 0; i < recipeInputInventory.size(); i++) {
             ItemStack itemStack3 = recipeInputInventory.getStack(i);
-            if (itemStack3.isEmpty()) continue;
-            if (itemStack3.getItem() instanceof DyeableBannerItem) {
-                if (!itemStack2.isEmpty()) {
-                    return false;
+            if (!itemStack3.isEmpty()) {
+                if (itemStack3.getItem() instanceof DyeableBannerItem) {
+                    if (!itemStack2.isEmpty()) {
+                        return false;
+                    }
+
+                    itemStack2 = itemStack3;
+                } else {
+                    if (!itemStack3.isOf(Items.SHIELD)) {
+                        return false;
+                    }
+
+                    if (!itemStack.isEmpty()) {
+                        return false;
+                    }
+
+                    CustomBannerPatternsComponent bannerPatternsComponent = itemStack3.getOrDefault(UnidyeDataComponentTypes.CUSTOM_BANNER_PATTERNS, CustomBannerPatternsComponent.DEFAULT);
+                    if (!bannerPatternsComponent.layers().isEmpty()) {
+                        return false;
+                    }
+
+                    itemStack = itemStack3;
                 }
-                itemStack2 = itemStack3;
-                continue;
             }
-            if (itemStack3.isOf(Items.SHIELD)) {
-                if (!itemStack.isEmpty()) {
-                    return false;
-                }
-                if (BlockItem.getBlockEntityNbt(itemStack3) != null) {
-                    return false;
-                }
-                itemStack = itemStack3;
-                continue;
-            }
-            return false;
         }
+
         return !itemStack.isEmpty() && !itemStack2.isEmpty();
     }
 
@@ -53,25 +66,29 @@ public class CustomShieldDecorationRecipe extends SpecialCraftingRecipe {
     public ItemStack craft(RecipeInputInventory recipeInputInventory, RegistryWrapper.WrapperLookup lookup) {
         ItemStack itemStack = ItemStack.EMPTY;
         ItemStack itemStack2 = ItemStack.EMPTY;
-        for (int i = 0; i < recipeInputInventory.size(); ++i) {
+
+        for (int i = 0; i < recipeInputInventory.size(); i++) {
             ItemStack itemStack3 = recipeInputInventory.getStack(i);
-            if (itemStack3.isEmpty()) continue;
-            if (itemStack3.getItem() instanceof DyeableBannerItem) {
-                itemStack = itemStack3;
-                continue;
+            if (!itemStack3.isEmpty()) {
+                if (itemStack3.getItem() instanceof DyeableBannerItem) {
+                    itemStack = itemStack3;
+                } else if (itemStack3.isOf(Items.SHIELD)) {
+                    itemStack2 = itemStack3.copy();
+                }
             }
-            if (!itemStack3.isOf(Items.SHIELD)) continue;
-            itemStack2 = itemStack3.copy();
         }
+
         if (itemStack2.isEmpty()) {
             return itemStack2;
+        } else {
+            itemStack2.set(UnidyeDataComponentTypes.CUSTOM_BANNER_PATTERNS, itemStack.get(UnidyeDataComponentTypes.CUSTOM_BANNER_PATTERNS));
+            NbtCompound nbtCompound =  new NbtCompound();
+            nbtCompound.putInt("color", UnidyeUtils.getColor(itemStack));
+            itemStack2.set(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(nbtCompound));
+            itemStack2.remove(DataComponentTypes.BASE_COLOR);
+            itemStack2.remove(DataComponentTypes.BANNER_PATTERNS);
+            return itemStack2;
         }
-        NbtCompound nbtCompound = BlockItem.getBlockEntityNbt(itemStack);
-        NbtCompound nbtCompound2 = nbtCompound == null ? new NbtCompound() : nbtCompound.copy();
-        nbtCompound2.putInt("Base", UnidyeUtils.getColor(itemStack));
-        nbtCompound2.putBoolean("CustomColored", true);
-        BlockItem.setBlockEntityNbt(itemStack2, UnidyeBlockEntities.DYEABLE_BANNER_BE, nbtCompound2);
-        return itemStack2;
     }
 
     @Override

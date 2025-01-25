@@ -17,7 +17,6 @@
   ],
   "result": {
     "count": 8,
-    "item": "minecraft:pink_candle"
-  },
-  "show_notification": true
+    "id": "minecraft:pink_candle"
+  }
 }

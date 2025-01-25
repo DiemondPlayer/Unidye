@@ -8,14 +8,15 @@ import dev.emi.emi.api.widget.GeneratedSlotWidget;
 import dev.emi.emi.api.widget.SlotWidget;
 import net.diemond_player.unidye.block.UnidyeBlocks;
 import net.diemond_player.unidye.block.entity.UnidyeBlockEntities;
+import net.diemond_player.unidye.component.CustomBannerPatternsComponent;
+import net.diemond_player.unidye.component.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.item.UnidyeItems;
 import net.diemond_player.unidye.item.custom.CustomDyeItem;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.block.entity.BannerPattern;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.DyeItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.BannerPatternsComponent;
+import net.minecraft.item.*;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
@@ -40,44 +41,30 @@ public class EmiCustomShieldDecorationRecipe extends EmiPatternCraftingRecipe {
         if (slot == 0) {
             return new SlotWidget(EmiStack.of(Items.SHIELD), x, y);
         } else if (slot == 1) {
-            return new GeneratedSlotWidget(r -> {
-                banner = getPattern(r);
-                return banner;
-            }, unique, x, y);
+            return new GeneratedSlotWidget(r -> getPattern(r, null), unique, x, y);
         }
         return new SlotWidget(EmiStack.EMPTY, x, y);
     }
 
     @Override
     public SlotWidget getOutputWidget(int x, int y) {
-        return new GeneratedSlotWidget(r -> getShield(r), unique, x, y);
+        return new GeneratedSlotWidget(r -> getPattern(r, Items.SHIELD), unique, x, y);
     }
 
-    public EmiStack getPattern(Random random) {
-        ItemStack stack = UnidyeUtils.blendAndSetColor(new ItemStack(UnidyeBlocks.CUSTOM_BANNER), getDyes(random), Lists.newArrayList());
+    public EmiStack getPattern(Random random, Item item) {
+        ItemStack stack = new ItemStack(Items.SHIELD);
+        if (item == null) {
+            stack = UnidyeUtils.blendAndSetColor(new ItemStack(UnidyeBlocks.CUSTOM_BANNER), getDyes(random), Lists.newArrayList());;
+        }
         int patterns = 1 + Math.max(random.nextInt(5), random.nextInt(3));
-        BannerPattern.Patterns pattern = new BannerPattern.Patterns();
+        CustomBannerPatternsComponent pattern = CustomBannerPatternsComponent.DEFAULT;
         for (int i = 0; i < patterns; i++) {
-            pattern = EmiPort.addRandomBanner(pattern, random);
+            pattern = EmiCustomBannerDuplicateRecipe.addRandomBanner(pattern, random);
         }
 
-        NbtCompound tag = new NbtCompound();
-        tag.put("Patterns", pattern.toNbt());
+        stack.set(UnidyeDataComponentTypes.CUSTOM_BANNER_PATTERNS, pattern);
 
-        BlockItem.setBlockEntityNbt(stack, UnidyeBlockEntities.DYEABLE_BANNER_BE, tag);
-        //stack.setNbt(tag);
         return EmiStack.of(stack);
-    }
-
-    public EmiStack getShield(Random random) {
-        ItemStack stack = banner.getItemStack();
-        ItemStack stack2 = new ItemStack(Items.SHIELD);
-        NbtCompound nbtCompound = BlockItem.getBlockEntityNbt(stack);
-        NbtCompound nbtCompound2 = nbtCompound == null ? new NbtCompound() : nbtCompound.copy();
-        nbtCompound2.putInt("Base", UnidyeUtils.getColor(stack));
-        nbtCompound2.putBoolean("CustomColored", true);
-        BlockItem.setBlockEntityNbt(stack2, UnidyeBlockEntities.DYEABLE_BANNER_BE, nbtCompound2);
-        return EmiStack.of(stack2);
     }
 
     private List<DyeItem> getDyes(Random random) {
