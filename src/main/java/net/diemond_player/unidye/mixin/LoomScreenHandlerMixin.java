@@ -1,25 +1,18 @@
 package net.diemond_player.unidye.mixin;
 
-import net.diemond_player.unidye.block.entity.UnidyeBlockEntities;
 import net.diemond_player.unidye.component.CustomBannerPatternsComponent;
 import net.diemond_player.unidye.component.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.item.UnidyeItems;
 import net.diemond_player.unidye.item.custom.CustomDyeItem;
-import net.diemond_player.unidye.item.custom.DyeableBannerItem;
 import net.diemond_player.unidye.util.UnidyeColor;
-import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.block.entity.BannerPattern;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.BannerPatternsComponent;
 import net.minecraft.component.type.DyedColorComponent;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.BannerItem;
-import net.minecraft.item.BlockItem;
 import net.minecraft.item.DyeItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
-import net.minecraft.nbt.NbtList;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.screen.LoomScreenHandler;
 import net.minecraft.screen.ScreenHandler;
@@ -93,7 +86,7 @@ public abstract class LoomScreenHandlerMixin extends ScreenHandler {
             ci.cancel();
         } else if (itemStack2.getItem() instanceof CustomDyeItem) {
             ItemStack itemStack3 = new ItemStack(UnidyeItems.CUSTOM_BANNER, 1);
-            itemStack3.set(DataComponentTypes.DYED_COLOR, new DyedColorComponent(UnidyeColor.byId(itemStack.get(DataComponentTypes.BASE_COLOR).getId()).leatherColor, true));
+            itemStack3.set(DataComponentTypes.DYED_COLOR, new DyedColorComponent(UnidyeColor.byId(((BannerItem)itemStack.getItem()).getColor().getId()).leatherColor, true));
             for(BannerPatternsComponent.Layer layer : itemStack.get(DataComponentTypes.BANNER_PATTERNS).layers()){
                 itemStack3.apply(
                         UnidyeDataComponentTypes.CUSTOM_BANNER_PATTERNS,
@@ -105,7 +98,7 @@ public abstract class LoomScreenHandlerMixin extends ScreenHandler {
                 itemStack3.apply(
                         UnidyeDataComponentTypes.CUSTOM_BANNER_PATTERNS,
                         CustomBannerPatternsComponent.DEFAULT,
-                        component -> new CustomBannerPatternsComponent.Builder().addAll(component).add(pattern, CustomDyeItem.getMaterialColor(itemStack, "leather")).build()
+                        component -> new CustomBannerPatternsComponent.Builder().addAll(component).add(pattern, CustomDyeItem.getMaterialColor(itemStack2, "leather")).build()
                 );
             }
 

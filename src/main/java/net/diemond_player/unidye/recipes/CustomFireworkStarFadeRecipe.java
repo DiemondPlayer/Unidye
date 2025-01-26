@@ -1,26 +1,21 @@
 package net.diemond_player.unidye.recipes;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.ints.IntList;
 import net.diemond_player.unidye.item.custom.CustomDyeItem;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.FireworkExplosionComponent;
 import net.minecraft.inventory.RecipeInputInventory;
-import net.minecraft.item.*;
-import net.minecraft.nbt.NbtCompound;
+import net.minecraft.item.DyeItem;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SpecialCraftingRecipe;
 import net.minecraft.recipe.book.CraftingRecipeCategory;
-import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.util.Util;
 import net.minecraft.world.World;
-
-import java.util.ArrayList;
-import java.util.Map;
 
 public class CustomFireworkStarFadeRecipe extends SpecialCraftingRecipe {
     public CustomFireworkStarFadeRecipe(CraftingRecipeCategory category) {

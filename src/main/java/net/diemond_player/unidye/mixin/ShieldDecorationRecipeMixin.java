@@ -5,11 +5,9 @@ import com.llamalad7.mixinextras.sugar.Local;
 import net.diemond_player.unidye.component.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.item.custom.DyeableBannerItem;
 import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.NbtComponent;
 import net.minecraft.inventory.RecipeInputInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.recipe.ShieldDecorationRecipe;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
@@ -30,13 +28,7 @@ public abstract class ShieldDecorationRecipeMixin {
     public ItemStack unidye$craft(ItemStack original) {
         if(!original.isEmpty()) {
             original.remove(UnidyeDataComponentTypes.CUSTOM_BANNER_PATTERNS);
-            if (original.get(DataComponentTypes.CUSTOM_DATA) != null) {
-                NbtCompound nbtCompound = original.get(DataComponentTypes.CUSTOM_DATA).copyNbt();
-                if (nbtCompound.contains("color")) {
-                    nbtCompound.remove("color");
-                }
-                original.set(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(nbtCompound));
-            }
+            original.remove(DataComponentTypes.DYED_COLOR);
         }
         return original;
     }

@@ -1,14 +1,7 @@
 package net.diemond_player.unidye.mixin;
 
 import net.minecraft.item.FireworkStarItem;
-import net.minecraft.text.MutableText;
-import net.minecraft.text.Text;
-import net.minecraft.util.DyeColor;
-import net.minecraft.util.Formatting;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(FireworkStarItem.class)
 public abstract class FireworkStarItemMixin {

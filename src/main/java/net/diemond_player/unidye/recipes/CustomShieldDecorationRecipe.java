@@ -1,23 +1,17 @@
 package net.diemond_player.unidye.recipes;
 
-import net.diemond_player.unidye.block.entity.UnidyeBlockEntities;
 import net.diemond_player.unidye.component.CustomBannerPatternsComponent;
 import net.diemond_player.unidye.component.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.item.custom.DyeableBannerItem;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.BannerPatternsComponent;
-import net.minecraft.component.type.NbtComponent;
+import net.minecraft.component.type.DyedColorComponent;
 import net.minecraft.inventory.RecipeInputInventory;
-import net.minecraft.item.BannerItem;
-import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SpecialCraftingRecipe;
 import net.minecraft.recipe.book.CraftingRecipeCategory;
-import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.world.World;
 
@@ -82,9 +76,7 @@ public class CustomShieldDecorationRecipe extends SpecialCraftingRecipe {
             return itemStack2;
         } else {
             itemStack2.set(UnidyeDataComponentTypes.CUSTOM_BANNER_PATTERNS, itemStack.get(UnidyeDataComponentTypes.CUSTOM_BANNER_PATTERNS));
-            NbtCompound nbtCompound =  new NbtCompound();
-            nbtCompound.putInt("color", UnidyeUtils.getColor(itemStack));
-            itemStack2.set(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(nbtCompound));
+            itemStack2.set(DataComponentTypes.DYED_COLOR, new DyedColorComponent(UnidyeUtils.getColor(itemStack), true));
             itemStack2.remove(DataComponentTypes.BASE_COLOR);
             itemStack2.remove(DataComponentTypes.BANNER_PATTERNS);
             return itemStack2;

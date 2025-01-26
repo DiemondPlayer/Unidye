@@ -1,7 +1,6 @@
 package net.diemond_player.unidye.entity;
 
 import net.diemond_player.unidye.Unidye;
-import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.registry.Registries;

@@ -3,7 +3,6 @@ package net.diemond_player.unidye.block.entity;
 import net.diemond_player.unidye.block.custom.DyeableShulkerBoxBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.ShulkerBoxBlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.LootableContainerBlockEntity;
 import net.minecraft.block.piston.PistonBehavior;
