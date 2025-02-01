@@ -13,30 +13,15 @@
           "type": "minecraft:item",
           "functions": [
             {
-              "function": "minecraft:copy_name",
-              "source": "block_entity"
-            },
-            {
-              "function": "minecraft:copy_nbt",
-              "ops": [
-                {
-                  "op": "replace",
-                  "source": "Patterns",
-                  "target": "BlockEntityTag.Patterns"
-                }
+              "function": "minecraft:copy_components",
+              "include": [
+                "minecraft:dyed_color",
+                "minecraft:custom_name",
+                "minecraft:item_name",
+                "minecraft:hide_additional_tooltip",
+                "unidye:custom_banner_patterns"
               ],
               "source": "block_entity"
-            },
-            {
-              "function": "minecraft:copy_nbt",
-              "source": "block_entity",
-              "ops": [
-                {
-                  "source": "color",
-                  "target": "display.color",
-                  "op": "replace"
-                }
-              ]
             }
           ],
           "name": "unidye:custom_banner"

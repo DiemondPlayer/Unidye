@@ -24,21 +24,21 @@ public class DyeableBlockItem extends BlockItem{
 
     @Override
     public ActionResult place(ItemPlacementContext context) {
-        BlockState blockstate = context.getWorld().getBlockState(context.getBlockPos());
+        int color = getColor(context.getStack());
         ActionResult result = super.place(context);
         BlockEntity blockEntity = context.getWorld().getBlockEntity(context.getBlockPos());
         if(result.isAccepted()) {
             if (blockEntity instanceof DyeableBlockEntity dyeableBlockEntity) {
-                dyeableBlockEntity.color = getColor(context.getStack());
+                dyeableBlockEntity.color = color;
             }
             if (blockEntity instanceof DyeableShulkerBoxBlockEntity dyeableShulkerBoxBlockEntity) {
-                dyeableShulkerBoxBlockEntity.color = getColor(context.getStack());
+                dyeableShulkerBoxBlockEntity.color = color;
             }
             if (blockEntity instanceof DyeableBedBlockEntity dyeableBedBlockEntity) {
-                dyeableBedBlockEntity.color = getColor(context.getStack());
+                dyeableBedBlockEntity.color = color;
                 DyeableBedBlockEntity dyeableBedBlockEntity1 = (DyeableBedBlockEntity) context.getWorld().getBlockEntity(context.getBlockPos().offset(context.getWorld().getBlockState(context.getBlockPos()).get(FACING)));
                 if (dyeableBedBlockEntity1 != null) {
-                    dyeableBedBlockEntity1.color = getColor(context.getStack());
+                    dyeableBedBlockEntity1.color = color;
                 }
             }
         }

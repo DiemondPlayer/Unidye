@@ -29,6 +29,7 @@ public class DyeableBedBlockEntity extends BlockEntity {
 
     @Override
     protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+        super.readNbt(nbt, registryLookup);
         if (nbt.getInt("color") == 0) {
             color = DEFAULT_COLOR;
         } else {

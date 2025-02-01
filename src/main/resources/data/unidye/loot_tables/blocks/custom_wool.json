@@ -14,30 +14,12 @@
           "name": "unidye:custom_wool",
           "functions": [
             {
-              "function": "minecraft:copy_name",
+              "function": "minecraft:copy_components",
+              "include": [
+                "minecraft:dyed_color",
+                "minecraft:custom_data"
+              ],
               "source": "block_entity"
-            },
-            {
-              "function": "minecraft:copy_nbt",
-              "source": "block_entity",
-              "ops": [
-                {
-                  "source": "color",
-                  "target": "display.color",
-                  "op": "replace"
-                }
-              ]
-            },
-            {
-              "function": "minecraft:copy_nbt",
-              "source": "block_entity",
-              "ops": [
-                {
-                  "source": "leather",
-                  "target": "leather",
-                  "op": "replace"
-                }
-              ]
             }
           ]
         }

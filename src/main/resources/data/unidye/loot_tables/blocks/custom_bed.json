@@ -11,30 +11,22 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "function": "minecraft:copy_name",
-              "source": "block_entity"
-            },
-            {
-              "function": "minecraft:copy_nbt",
-              "source": "block_entity",
-              "ops": [
-                {
-                  "source": "color",
-                  "target": "display.color",
-                  "op": "replace"
-                }
-              ]
-            }
-          ],
           "conditions": [
             {
               "block": "unidye:custom_bed",
               "condition": "minecraft:block_state_property",
               "properties": {
-                "part": "head"
+                "part": "foot"
               }
+            }
+          ],
+          "functions": [
+            {
+              "function": "minecraft:copy_components",
+              "include": [
+                "minecraft:dyed_color"
+              ],
+              "source": "block_entity"
             }
           ],
           "name": "unidye:custom_bed"

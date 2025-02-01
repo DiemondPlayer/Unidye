@@ -46,6 +46,7 @@ public class UnidyeItemTagProvider extends FabricTagProvider.ItemTagProvider {
                 .add(UnidyeBlocks.CUSTOM_CARPET.asItem())
                 .add(UnidyeBlocks.CUSTOM_WOOL.asItem())
                 .add(UnidyeItems.CUSTOM_BANNER)
-                .add(UnidyeItems.CUSTOM_DYE);
+                .add(UnidyeItems.CUSTOM_DYE)
+                .add(UnidyeBlocks.CUSTOM_BED.asItem());
     }
 }

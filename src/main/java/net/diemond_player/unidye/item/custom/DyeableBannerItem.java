@@ -27,13 +27,13 @@ public class DyeableBannerItem extends BannerItem{
 
     @Override
     public ActionResult place(ItemPlacementContext context) {
-        BlockState blockstate = context.getWorld().getBlockState(context.getBlockPos());
+        int color = UnidyeUtils.getColor(context.getStack());
         ActionResult result = super.place(context);
         BlockEntity blockEntity = context.getWorld().getBlockEntity(context.getBlockPos());
-        if (blockEntity instanceof DyeableBannerBlockEntity dyeableBannerBlockEntity
-                && !blockstate.isOf(UnidyeBlocks.CUSTOM_BANNER)
-                && !blockstate.isOf(UnidyeBlocks.CUSTOM_WALL_BANNER)) {
-            dyeableBannerBlockEntity.color = UnidyeUtils.getColor(context.getStack());
+        if(result.isAccepted()) {
+            if (blockEntity instanceof DyeableBannerBlockEntity dyeableBannerBlockEntity) {
+                dyeableBannerBlockEntity.color = color;
+            }
         }
         return result;
     }
