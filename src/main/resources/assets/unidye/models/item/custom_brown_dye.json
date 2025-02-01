@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:item/generated",
+  "parent": "minecraft:item/generated_two_layers",
   "textures": {
     "layer0": "unidye:item/custom_brown_dye",
     "layer1": "unidye:item/custom_brown_dye_overlay"

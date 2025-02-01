@@ -14,6 +14,7 @@ import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.util.DyeColor;
+import net.minecraft.util.math.ColorHelper;
 
 import java.util.HashMap;
 import java.util.List;
@@ -126,9 +127,7 @@ public class UnidyeUtils {
         int k = (int) Math.sqrt((double) is[0] / j);
         int o = (int) Math.sqrt((double) is[1] / j);
         int p = (int) Math.sqrt((double) is[2] / j);
-        n = k;
-        n = (n << 8) + o;
-        n = (n << 8) + p;
+        n = ColorHelper.Argb.getArgb(0, k, o, p);
         UnidyeUtils.setColor(itemStack, n);
         if (stack.getItem() instanceof CustomDyeItem) {
             defineClosestVanillaDye(itemStack);
@@ -175,9 +174,7 @@ public class UnidyeUtils {
         int k = (int) Math.sqrt((double) is[0] / j);
         int o = (int) Math.sqrt((double) is[1] / j);
         int p = (int) Math.sqrt((double) is[2] / j);
-        n = k;
-        n = (n << 8) + o;
-        n = (n << 8) + p;
+        n = ColorHelper.Argb.getArgb(0, k, o, p);
         DyeableLeatheryBlockItem.setLeatherColor(itemStack, n);
         return itemStack;
     }
@@ -255,9 +252,7 @@ public class UnidyeUtils {
         int k = (int) Math.sqrt((double) is[0] / j);
         int o = (int) Math.sqrt((double) is[1] / j);
         int p = (int) Math.sqrt((double) is[2] / j);
-        n = k;
-        n = (n << 8) + o;
-        n = (n << 8) + p;
+        n = ColorHelper.Argb.getArgb(0, k, o, p);
         setMaterialColor(itemStack, n, materialType);
     }
 

@@ -1,0 +1,28 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_needed_dye": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:purple_dye"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_needed_dye"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "unidye:purple_candle_from_circle_dyeing"
+    ]
+  },
+  "sends_telemetry_event": false
+}

@@ -43,6 +43,7 @@ public class UnidyeClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlock(UnidyeBlocks.CUSTOM_STAINED_GLASS, RenderLayer.getTranslucent());
         BlockRenderLayerMap.INSTANCE.putBlock(UnidyeBlocks.CUSTOM_STAINED_GLASS_PANE, RenderLayer.getTranslucent());
 
+
         registerItemColor(UnidyeItems.CUSTOM_DYE);
         registerItemColor(UnidyeBlocks.CUSTOM_BANNER.asItem());
 

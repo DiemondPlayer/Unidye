@@ -83,7 +83,7 @@ public record CustomBannerPatternsComponent(List<CustomBannerPatternsComponent.L
 
         public MutableText getTooltipText() {
             String string = this.pattern.value().translationKey();
-            return Text.translatable(string + "." + String.format("#%06X", (0xFFFFFF & color)));
+            return Text.translatable(String.format("#%06X", (0xFFFFFF & color)) + " " + string);
         }
     }
 }
