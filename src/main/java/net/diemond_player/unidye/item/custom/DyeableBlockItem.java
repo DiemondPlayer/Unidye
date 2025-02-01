@@ -12,6 +12,7 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.util.ActionResult;
 
+import static net.diemond_player.unidye.util.UnidyeUtils.getColor;
 import static net.minecraft.block.HorizontalFacingBlock.FACING;
 
 public class DyeableBlockItem extends BlockItem{
@@ -26,22 +27,19 @@ public class DyeableBlockItem extends BlockItem{
         BlockState blockstate = context.getWorld().getBlockState(context.getBlockPos());
         ActionResult result = super.place(context);
         BlockEntity blockEntity = context.getWorld().getBlockEntity(context.getBlockPos());
-        if (blockEntity instanceof DyeableBlockEntity dyeableBlockEntity
-                && !blockstate.isOf(UnidyeBlocks.CUSTOM_CARPET)
-                && !blockstate.isOf(UnidyeBlocks.CUSTOM_CANDLE)
-                && !blockstate.isOf(UnidyeBlocks.CUSTOM_CANDLE_CAKE)) {
-            dyeableBlockEntity.color = UnidyeUtils.getColor(context.getStack());
-        }
-        if (blockEntity instanceof DyeableShulkerBoxBlockEntity dyeableShulkerBoxBlockEntity
-                && !blockstate.isOf(UnidyeBlocks.CUSTOM_SHULKER_BOX)) {
-            dyeableShulkerBoxBlockEntity.color = UnidyeUtils.getColor(context.getStack());
-        }
-        if (blockEntity instanceof DyeableBedBlockEntity dyeableBedBlockEntity
-                && !blockstate.isOf(UnidyeBlocks.CUSTOM_BED)) {
-            dyeableBedBlockEntity.color = UnidyeUtils.getColor(context.getStack());
-            DyeableBedBlockEntity dyeableBedBlockEntity1 = (DyeableBedBlockEntity) context.getWorld().getBlockEntity(context.getBlockPos().offset(context.getWorld().getBlockState(context.getBlockPos()).get(FACING)));
-            if (dyeableBedBlockEntity1 != null) {
-                dyeableBedBlockEntity1.color = UnidyeUtils.getColor(context.getStack());
+        if(result.isAccepted()) {
+            if (blockEntity instanceof DyeableBlockEntity dyeableBlockEntity) {
+                dyeableBlockEntity.color = getColor(context.getStack());
+            }
+            if (blockEntity instanceof DyeableShulkerBoxBlockEntity dyeableShulkerBoxBlockEntity) {
+                dyeableShulkerBoxBlockEntity.color = getColor(context.getStack());
+            }
+            if (blockEntity instanceof DyeableBedBlockEntity dyeableBedBlockEntity) {
+                dyeableBedBlockEntity.color = getColor(context.getStack());
+                DyeableBedBlockEntity dyeableBedBlockEntity1 = (DyeableBedBlockEntity) context.getWorld().getBlockEntity(context.getBlockPos().offset(context.getWorld().getBlockState(context.getBlockPos()).get(FACING)));
+                if (dyeableBedBlockEntity1 != null) {
+                    dyeableBedBlockEntity1.color = getColor(context.getStack());
+                }
             }
         }
         return result;
