@@ -34,10 +34,7 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.text.Text;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.*;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
@@ -58,8 +55,7 @@ public class DyeableFallingBlockEntity extends FallingBlockEntity {
     private float fallHurtAmount;
     @Nullable
     public NbtCompound blockEntityData;
-    protected static final TrackedData<BlockPos> BLOCK_POS = DataTracker.registerData(DyeableFallingBlockEntity.class, TrackedDataHandlerRegistry.BLOCK_POS);
-    private static final TrackedData<Integer> CUSTOM_COLOR = DataTracker.registerData(DyeableFallingBlockEntity.class, TrackedDataHandlerRegistry.INTEGER);
+    protected static final TrackedData<Integer> CUSTOM_COLOR = DataTracker.registerData(DyeableFallingBlockEntity.class, TrackedDataHandlerRegistry.INTEGER);
 
 
     public DyeableFallingBlockEntity(EntityType<? extends FallingBlockEntity> entityType, World world) {
@@ -80,7 +76,13 @@ public class DyeableFallingBlockEntity extends FallingBlockEntity {
     }
 
     public static DyeableFallingBlockEntity spawnFromBlock(World world, BlockPos pos, BlockState state) {
-        DyeableFallingBlockEntity fallingBlockEntity = new DyeableFallingBlockEntity(world, (double) pos.getX() + 0.5, pos.getY() + 1, (double) pos.getZ() + 0.5, state.contains(Properties.WATERLOGGED) ? (BlockState) state.with(Properties.WATERLOGGED, false) : state);
+       DyeableFallingBlockEntity fallingBlockEntity = new DyeableFallingBlockEntity(
+                world,
+                (double)pos.getX() + 0.5,
+                (double)pos.getY(),
+                (double)pos.getZ() + 0.5,
+                state.contains(Properties.WATERLOGGED) ? state.with(Properties.WATERLOGGED, Boolean.valueOf(false)) : state
+        );
         world.setBlockState(pos, state.getFluidState().getBlockState(), Block.NOTIFY_ALL);
         world.spawnEntity(fallingBlockEntity);
         return fallingBlockEntity;
@@ -96,99 +98,125 @@ public class DyeableFallingBlockEntity extends FallingBlockEntity {
 
     @Override
     protected void initDataTracker(DataTracker.Builder builder) {
-        builder.add(BLOCK_POS, BlockPos.ORIGIN);
+        super.initDataTracker(builder);
         builder.add(CUSTOM_COLOR, 0xFFFFFF);
+    }
+
+    @Override
+    protected Box calculateBoundingBox() {
+        return new Box(this.getPos().x - 0.5, this.getPos().y, this.getPos().z - 0.5, this.getPos().x + 0.5, this.getPos().y + 1.0, this.getPos().z + 0.5);
     }
 
     @Override
     public void tick() {
         if (this.block.isAir()) {
             this.discard();
-            return;
-        }
-        Block block = this.block.getBlock();
-        ++this.timeFalling;
-        if (!this.hasNoGravity()) {
-            this.setVelocity(this.getVelocity().add(0.0, -0.04, 0.0));
-        }
-        this.move(MovementType.SELF, this.getVelocity());
-        if (!this.getWorld().isClient) {
-            BlockHitResult blockHitResult;
-            BlockPos blockPos = this.getBlockPos().up();
-            boolean bl = this.block.getBlock() instanceof DyeableConcretePowderBlock;
-            boolean bl2 = bl && this.getWorld().getFluidState(blockPos).isIn(FluidTags.WATER);
-            double d = this.getVelocity().lengthSquared();
-            if (bl && d > 1.0 && (blockHitResult = this.getWorld().raycast(new RaycastContext(new Vec3d(this.prevX, this.prevY, this.prevZ), this.getPos(), RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.SOURCE_ONLY, this))).getType() != HitResult.Type.MISS && this.getWorld().getFluidState(blockHitResult.getBlockPos()).isIn(FluidTags.WATER)) {
-                blockPos = blockHitResult.getBlockPos();
-                bl2 = true;
-            }
-            if (this.isOnGround() || bl2) {
-                BlockState blockState = this.getWorld().getBlockState(blockPos.down(2));
-                this.setVelocity(this.getVelocity().multiply(0.7, -0.5, 0.7));
-                if (!blockState.isOf(Blocks.MOVING_PISTON)) {
-                    if (!this.destroyedOnLanding) {
-                        boolean bl5;
-                        boolean bl3 = blockState.canReplace(new AutomaticItemPlacementContext(this.getWorld(), blockPos.down(2), Direction.DOWN, ItemStack.EMPTY, Direction.UP));
-                        BlockState bls = this.getWorld().getBlockState(blockPos.down(3));
-                        boolean bl4 = FallingBlock.canFallThrough(bls) && (!bl || !bl2);
-                        boolean bl6 = bl5 = this.block.canPlaceAt(this.getWorld(), blockPos.down(2)) && !bl4;
-                        if (bl3 && bl5) {
-                            if (this.block.contains(Properties.WATERLOGGED) && this.getWorld().getFluidState(blockPos.down(2)).getFluid() == Fluids.WATER) {
-                                this.block = (BlockState) this.block.with(Properties.WATERLOGGED, true);
-                            }
-                            if (this.getWorld().setBlockState(blockPos.down(2), this.block, Block.NOTIFY_ALL)) {
-                                BlockEntity blockEntity;
-                                ((ServerWorld) this.getWorld()).getChunkManager().threadedAnvilChunkStorage.sendToOtherNearbyPlayers(this, new BlockUpdateS2CPacket(blockPos, this.getWorld().getBlockState(blockPos)));
-                                this.discard();
-                                if (block instanceof LandingBlock) {
-                                    ((LandingBlock) ((Object) block)).onLanding(this.getWorld(), blockPos.down(2), this.block, blockState, this);
-                                    BlockEntity blockEntity1 = this.getWorld().getBlockEntity(blockPos.down(2));
-                                    if (blockEntity1 instanceof DyeableBlockEntity dyeableBlockEntity) {
-                                        dyeableBlockEntity.color = this.getCustomColor();
-                                    }
-                                }
-                                if (this.blockEntityData != null && this.block.hasBlockEntity() && (blockEntity = this.getWorld().getBlockEntity(blockPos.down())) != null) {
-                                    NbtCompound nbtCompound = blockEntity.createNbt(this.getWorld().getRegistryManager());
-                                    for (String string : this.blockEntityData.getKeys()) {
-                                        nbtCompound.put(string, this.blockEntityData.get(string).copy());
-                                    }
-                                    try {
-                                        blockEntity.read(nbtCompound, this.getWorld().getRegistryManager());
-                                    } catch (Exception exception) {
-                                        LOGGER.error("Failed to load block entity from falling block", exception);
-                                    }
-                                    blockEntity.markDirty();
-                                }
-                            } else if (this.dropItem && this.getWorld().getGameRules().getBoolean(GameRules.DO_ENTITY_DROPS)) {
-                                this.discard();
-                                this.onDestroyedOnLanding(block, blockPos);
-                                this.dropItem(block);
-                            }
-                        } else {
-                            int color = this.getCustomColor();
-                            this.discard();
-                            if (this.dropItem && this.getWorld().getGameRules().getBoolean(GameRules.DO_ENTITY_DROPS)) {
-                                this.onDestroyedOnLanding(block, blockPos);
-                                ItemStack itemStack = new ItemStack(block, 1);
-                                UnidyeUtils.setColor(itemStack, color);
-                                this.dropStack(itemStack);
-                            }
-                        }
-                    } else {
-                        this.discard();
-                        this.onDestroyedOnLanding(block, blockPos);
+        } else {
+            Block block = this.block.getBlock();
+            this.timeFalling++;
+            this.applyGravity();
+            this.move(MovementType.SELF, this.getVelocity());
+            if (!this.getWorld().isClient) {
+                BlockPos blockPos = this.getBlockPos();
+                boolean bl = this.block.getBlock() instanceof DyeableConcretePowderBlock;
+                boolean bl2 = bl && this.getWorld().getFluidState(blockPos).isIn(FluidTags.WATER);
+                double d = this.getVelocity().lengthSquared();
+                if (bl && d > 1.0) {
+                    BlockHitResult blockHitResult = this.getWorld()
+                            .raycast(
+                                    new RaycastContext(
+                                            new Vec3d(this.prevX, this.prevY, this.prevZ), this.getPos(), RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.SOURCE_ONLY, this
+                                    )
+                            );
+                    if (blockHitResult.getType() != HitResult.Type.MISS && this.getWorld().getFluidState(blockHitResult.getBlockPos()).isIn(FluidTags.WATER)) {
+                        blockPos = blockHitResult.getBlockPos();
+                        bl2 = true;
                     }
                 }
-            } else if (!(this.getWorld().isClient || (this.timeFalling <= 100 || blockPos.getY() > this.getWorld().getBottomY() && blockPos.getY() <= this.getWorld().getTopY()) && this.timeFalling <= 600)) {
-                if (this.dropItem && this.getWorld().getGameRules().getBoolean(GameRules.DO_ENTITY_DROPS)) {
-                    ItemStack itemStack = new ItemStack(block, 1);
-                    UnidyeUtils.setColor(itemStack, this.getCustomColor());
-                    this.dropStack(itemStack);
+
+                if (this.isOnGround() || bl2) {
+                    BlockState blockState = this.getWorld().getBlockState(blockPos);
+                    this.setVelocity(this.getVelocity().multiply(0.7, -0.5, 0.7));
+                    if (!blockState.isOf(Blocks.MOVING_PISTON)) {
+                        if (!this.destroyedOnLanding) {
+                            boolean bl3 = blockState.canReplace(new AutomaticItemPlacementContext(this.getWorld(), blockPos, Direction.DOWN, ItemStack.EMPTY, Direction.UP));
+                            boolean bl4 = FallingBlock.canFallThrough(this.getWorld().getBlockState(blockPos.down())) && (!bl || !bl2);
+                            boolean bl5 = this.block.canPlaceAt(this.getWorld(), blockPos) && !bl4;
+                            if (bl3 && bl5) {
+                                if (this.block.contains(Properties.WATERLOGGED) && this.getWorld().getFluidState(blockPos).getFluid() == Fluids.WATER) {
+                                    this.block = this.block.with(Properties.WATERLOGGED, Boolean.valueOf(true));
+                                }
+
+                                if (this.getWorld().setBlockState(blockPos, this.block, Block.NOTIFY_ALL)) {
+                                    //TODO idk how to fix this: the powder takes the color but doesnt display it unless updated. Updating the block doesnt help
+                                    //TODO drops are broken
+                                    ((ServerWorld)this.getWorld())
+                                            .getChunkManager()
+                                            .threadedAnvilChunkStorage
+                                            .sendToOtherNearbyPlayers(this, new BlockUpdateS2CPacket(blockPos, this.getWorld().getBlockState(blockPos)));
+                                    this.discard();
+                                    if (block instanceof LandingBlock) {
+                                        ((LandingBlock) ((Object) block)).onLanding(this.getWorld(), blockPos, this.block, blockState, this);
+                                        BlockEntity blockEntity1 = this.getWorld().getBlockEntity(blockPos);
+                                        if (blockEntity1 instanceof DyeableBlockEntity dyeableBlockEntity) {
+                                            dyeableBlockEntity.color = this.getCustomColor();
+                                            dyeableBlockEntity.markDirty();
+                                        }
+                                    }
+
+                                    if (this.blockEntityData != null && this.block.hasBlockEntity()) {
+                                        BlockEntity blockEntity = this.getWorld().getBlockEntity(blockPos);
+                                        if (blockEntity != null) {
+                                            NbtCompound nbtCompound = blockEntity.createNbt(this.getWorld().getRegistryManager());
+
+                                            for (String string : this.blockEntityData.getKeys()) {
+                                                nbtCompound.put(string, this.blockEntityData.get(string).copy());
+                                            }
+
+                                            try {
+                                                blockEntity.read(nbtCompound, this.getWorld().getRegistryManager());
+                                            } catch (Exception var15) {
+                                                LOGGER.error("Failed to load block entity from falling block", (Throwable)var15);
+                                            }
+
+                                            blockEntity.markDirty();
+                                        }
+                                    }
+                                } else if (this.dropItem && this.getWorld().getGameRules().getBoolean(GameRules.DO_ENTITY_DROPS)) {
+                                    ItemStack itemStack = new ItemStack(block, 1);
+                                    UnidyeUtils.setColor(itemStack, this.getCustomColor());
+                                    this.discard();
+                                    this.onDestroyedOnLanding(block, blockPos);
+                                    this.dropStack(itemStack);
+                                }
+                            } else {
+                                ItemStack itemStack = new ItemStack(block, 1);
+                                UnidyeUtils.setColor(itemStack, this.getCustomColor());
+                                this.discard();
+                                if (this.dropItem && this.getWorld().getGameRules().getBoolean(GameRules.DO_ENTITY_DROPS)) {
+                                    this.onDestroyedOnLanding(block, blockPos);
+                                    this.dropStack(itemStack);
+                                }
+                            }
+                        } else {
+                            this.discard();
+                            this.onDestroyedOnLanding(block, blockPos);
+                        }
+                    }
+                } else if (!this.getWorld().isClient
+                        && (this.timeFalling > 100 && (blockPos.getY() <= this.getWorld().getBottomY() || blockPos.getY() > this.getWorld().getTopY()) || this.timeFalling > 600)) {
+                    if (this.dropItem && this.getWorld().getGameRules().getBoolean(GameRules.DO_ENTITY_DROPS)) {
+                        ItemStack itemStack = new ItemStack(block, 1);
+                        UnidyeUtils.setColor(itemStack, this.getCustomColor());
+                        this.dropStack(itemStack);
+                    }
+
+                    this.discard();
                 }
-                this.discard();
             }
+
+            this.setVelocity(this.getVelocity().multiply(0.98));
         }
-        this.setVelocity(this.getVelocity().multiply(0.98));
     }
 
     @Override

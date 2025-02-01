@@ -30,19 +30,17 @@ public class DyeableFallingBlockEntityRenderer extends EntityRenderer<DyeableFal
     @Override
     public void render(DyeableFallingBlockEntity fallingBlockEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i) {
         BlockState blockState = fallingBlockEntity.getBlockState();
-        if (blockState.getRenderType() != BlockRenderType.MODEL) {
-            return;
+        if (blockState.getRenderType() == BlockRenderType.MODEL) {
+            World world = fallingBlockEntity.getWorld();
+            if (blockState != world.getBlockState(fallingBlockEntity.getBlockPos()) && blockState.getRenderType() != BlockRenderType.INVISIBLE) {
+                matrixStack.push();
+                BlockPos blockPos = BlockPos.ofFloored(fallingBlockEntity.getX(), fallingBlockEntity.getBoundingBox().maxY, fallingBlockEntity.getZ());
+                matrixStack.translate(-0.5, 0.0, -0.5);
+                ((UnidyeAccessor) this.blockRenderManager.getModelRenderer()).unidye$render(world, this.blockRenderManager.getModel(blockState), blockState, blockPos, matrixStack, vertexConsumerProvider.getBuffer(RenderLayers.getMovingBlockLayer(blockState)), false, Random.create(), blockState.getRenderingSeed(fallingBlockEntity.getFallingBlockPos()), OverlayTexture.DEFAULT_UV, UnidyeClient.adjust(fallingBlockEntity.getCustomColor(), 15));
+                matrixStack.pop();
+                super.render(fallingBlockEntity, f, g, matrixStack, vertexConsumerProvider, i);
+            }
         }
-        World world = fallingBlockEntity.getWorld();
-        if (blockState == world.getBlockState(fallingBlockEntity.getBlockPos()) || blockState.getRenderType() == BlockRenderType.INVISIBLE) {
-            return;
-        }
-        matrixStack.push();
-        BlockPos blockPos = BlockPos.ofFloored(fallingBlockEntity.getX(), fallingBlockEntity.getBoundingBox().maxY, fallingBlockEntity.getZ());
-        matrixStack.translate(-0.5, -1.0, -0.5);
-        ((UnidyeAccessor) this.blockRenderManager.getModelRenderer()).unidye$render(world, this.blockRenderManager.getModel(blockState), blockState, blockPos, matrixStack, vertexConsumerProvider.getBuffer(RenderLayers.getMovingBlockLayer(blockState)), false, Random.create(), blockState.getRenderingSeed(fallingBlockEntity.getFallingBlockPos()), OverlayTexture.DEFAULT_UV, UnidyeClient.adjust(fallingBlockEntity.getCustomColor(), 15));
-        matrixStack.pop();
-        super.render(fallingBlockEntity, f, g, matrixStack, vertexConsumerProvider, i);
     }
 
     @Override
