@@ -1,12 +1,9 @@
 package net.diemond_player.unidye.item.custom;
 
-import net.diemond_player.unidye.block.UnidyeBlocks;
 import net.diemond_player.unidye.block.entity.DyeableBedBlockEntity;
 import net.diemond_player.unidye.block.entity.DyeableBlockEntity;
 import net.diemond_player.unidye.block.entity.DyeableShulkerBoxBlockEntity;
-import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemPlacementContext;

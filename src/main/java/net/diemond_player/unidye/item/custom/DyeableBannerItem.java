@@ -1,12 +1,10 @@
 package net.diemond_player.unidye.item.custom;
 
-import net.diemond_player.unidye.block.UnidyeBlocks;
 import net.diemond_player.unidye.block.entity.DyeableBannerBlockEntity;
 import net.diemond_player.unidye.component.CustomBannerPatternsComponent;
 import net.diemond_player.unidye.component.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.item.TooltipType;
 import net.minecraft.item.BannerItem;

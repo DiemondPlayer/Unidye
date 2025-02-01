@@ -2,7 +2,6 @@ package net.diemond_player.unidye.item.custom;
 
 import net.diemond_player.unidye.block.UnidyeBlocks;
 import net.diemond_player.unidye.block.entity.DyeableLeatheryBlockEntity;
-import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.item.TooltipType;
