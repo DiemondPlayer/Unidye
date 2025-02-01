@@ -15,13 +15,11 @@ import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.Formatting;
 
 import java.util.List;
 
 public class DyeableBannerItem extends BannerItem{
     public static final int DEFAULT_COLOR = 16777215;
-    private static final String TRANSLATION_KEY_PREFIX = "block.minecraft.banner.";
 
     public DyeableBannerItem(Block bannerBlock, Block wallBannerBlock, Item.Settings settings) {
         super(bannerBlock, wallBannerBlock, settings);
@@ -45,10 +43,9 @@ public class DyeableBannerItem extends BannerItem{
         if (bannerPatternsComponent != null) {
             for (int i = 0; i < Math.min(bannerPatternsComponent.layers().size(), 6); i++) {
                 CustomBannerPatternsComponent.Layer layer = (CustomBannerPatternsComponent.Layer)bannerPatternsComponent.layers().get(i);
-                tooltip.add(layer.getTooltipText().formatted(Formatting.GRAY));
+                tooltip.add(layer.getTooltipText());
             }
         }
-        //TODO proper tooltips here
     }
 
     @Override

@@ -42,7 +42,7 @@ public abstract class DyedColorComponentMixin implements TooltipAppender {
         if (type.isAdvanced()) {
             MutableText mutableText = Text.literal("■ ");
             mutableText.setStyle(mutableText.getStyle().withColor(this.rgb));
-            tooltip.accept(Text.translatable("item.color", String.format(Locale.ROOT, "#%06X", this.rgb)).formatted(Formatting.GRAY));
+            tooltip.accept(mutableText.append(Text.translatable("item.color", String.format(Locale.ROOT, "#%06X", this.rgb)).formatted(Formatting.GRAY)));
             ci.cancel();
         }
     }

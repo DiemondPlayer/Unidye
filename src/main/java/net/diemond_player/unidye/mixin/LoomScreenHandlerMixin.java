@@ -15,6 +15,7 @@ import net.minecraft.item.DyeItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.screen.LoomScreenHandler;
+import net.minecraft.screen.Property;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.screen.slot.Slot;
@@ -55,39 +56,40 @@ public abstract class LoomScreenHandlerMixin extends ScreenHandler {
     @Shadow
     private final Inventory input;
 
+    @Shadow
+    final Property selectedPattern = Property.create();
 
     @Inject(method = "updateOutputSlot", at = @At(value = "HEAD"), cancellable = true)
     private void unidye$updateOutputSlot(RegistryEntry<BannerPattern> pattern, CallbackInfo ci) {
         ItemStack itemStack = this.bannerSlot.getStack();
         ItemStack itemStack2 = this.dyeSlot.getStack();
         if (itemStack.isOf(UnidyeItems.CUSTOM_BANNER)) {
-            ItemStack itemStack3 = ItemStack.EMPTY;
-            if (!itemStack.isEmpty() && !itemStack2.isEmpty()) {
-                itemStack3 = itemStack.copyWithCount(1);
-                if (itemStack2.getItem() instanceof CustomDyeItem) {
-                    itemStack3.apply(
-                            UnidyeDataComponentTypes.CUSTOM_BANNER_PATTERNS,
-                            CustomBannerPatternsComponent.DEFAULT,
-                            component -> new CustomBannerPatternsComponent.Builder().addAll(component).add(pattern, CustomDyeItem.getMaterialColor(itemStack2, "leather")).build()
-                    );
-                } else {
-                    DyeColor dyeColor = ((DyeItem) itemStack2.getItem()).getColor();
-                    itemStack3.apply(
-                            UnidyeDataComponentTypes.CUSTOM_BANNER_PATTERNS,
-                            CustomBannerPatternsComponent.DEFAULT,
-                            component -> new CustomBannerPatternsComponent.Builder().addAll(component).add(pattern, UnidyeColor.byId(dyeColor.getId()).leatherColor).build()
-                    );
+                ItemStack itemStack3 = ItemStack.EMPTY;
+                if (!itemStack.isEmpty() && !itemStack2.isEmpty()) {
+                    itemStack3 = itemStack.copyWithCount(1);
+                    if (itemStack2.getItem() instanceof CustomDyeItem) {
+                        itemStack3.apply(
+                                UnidyeDataComponentTypes.CUSTOM_BANNER_PATTERNS,
+                                CustomBannerPatternsComponent.DEFAULT,
+                                component -> new CustomBannerPatternsComponent.Builder().addAll(component).add(pattern, CustomDyeItem.getMaterialColor(itemStack2, "leather")).build()
+                        );
+                    } else {
+                        DyeColor dyeColor = ((DyeItem) itemStack2.getItem()).getColor();
+                        itemStack3.apply(
+                                UnidyeDataComponentTypes.CUSTOM_BANNER_PATTERNS,
+                                CustomBannerPatternsComponent.DEFAULT,
+                                component -> new CustomBannerPatternsComponent.Builder().addAll(component).add(pattern, UnidyeColor.byId(dyeColor.getId()).leatherColor).build()
+                        );
+                    }
                 }
-            }
-
-            if (!ItemStack.areEqual(itemStack3, this.outputSlot.getStack())) {
-                this.outputSlot.setStackNoCallbacks(itemStack3);
-            }
+                if (!ItemStack.areEqual(itemStack3, this.outputSlot.getStack())) {
+                    this.outputSlot.setStackNoCallbacks(itemStack3);
+                }
             ci.cancel();
         } else if (itemStack2.getItem() instanceof CustomDyeItem) {
             ItemStack itemStack3 = new ItemStack(UnidyeItems.CUSTOM_BANNER, 1);
-            itemStack3.set(DataComponentTypes.DYED_COLOR, new DyedColorComponent(UnidyeColor.byId(((BannerItem)itemStack.getItem()).getColor().getId()).leatherColor, true));
-            for(BannerPatternsComponent.Layer layer : itemStack.get(DataComponentTypes.BANNER_PATTERNS).layers()){
+            itemStack3.set(DataComponentTypes.DYED_COLOR, new DyedColorComponent(UnidyeColor.byId(((BannerItem) itemStack.getItem()).getColor().getId()).leatherColor, true));
+            for (BannerPatternsComponent.Layer layer : itemStack.get(DataComponentTypes.BANNER_PATTERNS).layers()) {
                 itemStack3.apply(
                         UnidyeDataComponentTypes.CUSTOM_BANNER_PATTERNS,
                         CustomBannerPatternsComponent.DEFAULT,
@@ -105,6 +107,17 @@ public abstract class LoomScreenHandlerMixin extends ScreenHandler {
             if (!ItemStack.areEqual(itemStack3, this.outputSlot.getStack())) {
                 this.outputSlot.setStackNoCallbacks(itemStack3);
             }
+            ci.cancel();
+        }
+    }
+
+    @Inject(method = "onContentChanged", at = @At(value = "HEAD"), cancellable = true)
+    private void unidye$onContentChanged(Inventory inventory, CallbackInfo ci) {
+        CustomBannerPatternsComponent bannerPatternsComponent = this.bannerSlot.getStack().getOrDefault(UnidyeDataComponentTypes.CUSTOM_BANNER_PATTERNS, CustomBannerPatternsComponent.DEFAULT);
+        if (bannerPatternsComponent.layers().size() >= 6) {
+            this.selectedPattern.set(-1);
+            this.outputSlot.setStackNoCallbacks(ItemStack.EMPTY);
+            this.sendContentUpdates();
             ci.cancel();
         }
     }

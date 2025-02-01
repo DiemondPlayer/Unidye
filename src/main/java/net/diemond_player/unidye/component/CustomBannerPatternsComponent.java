@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.mojang.logging.LogUtils;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.block.entity.BannerPattern;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
@@ -13,6 +14,8 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
+import net.minecraft.util.DyeColor;
+import net.minecraft.util.Formatting;
 import org.slf4j.Logger;
 
 import java.util.List;
@@ -83,7 +86,14 @@ public record CustomBannerPatternsComponent(List<CustomBannerPatternsComponent.L
 
         public MutableText getTooltipText() {
             String string = this.pattern.value().translationKey();
-            return Text.translatable(String.format("#%06X", (0xFFFFFF & color)) + " " + string);
+            Optional<DyeColor> dyeColor = UnidyeUtils.findDyeColorByLeatherColor(this.color);
+            if (dyeColor.isEmpty()) {
+                MutableText mutableText = Text.literal("■ ");
+                mutableText.setStyle(mutableText.getStyle().withColor(this.color));
+                return mutableText.append(Text.literal("§7#" + Integer.toString(this.color, 16).toUpperCase() + " ").append(Text.translatable(string).formatted(Formatting.GRAY)));
+            } else {
+                return Text.translatable(string + "." + dyeColor.get().getName()).formatted(Formatting.GRAY);
+            }
         }
     }
 }

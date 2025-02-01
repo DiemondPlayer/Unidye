@@ -8,50 +8,15 @@
           "type": "minecraft:item",
           "functions": [
             {
-              "function": "minecraft:copy_name",
-              "source": "block_entity"
-            },
-            {
-              "function": "minecraft:copy_nbt",
-              "ops": [
-                {
-                  "op": "replace",
-                  "source": "Lock",
-                  "target": "BlockEntityTag.Lock"
-                },
-                {
-                  "op": "replace",
-                  "source": "LootTable",
-                  "target": "BlockEntityTag.LootTable"
-                },
-                {
-                  "op": "replace",
-                  "source": "LootTableSeed",
-                  "target": "BlockEntityTag.LootTableSeed"
-                }
+              "function": "minecraft:copy_components",
+              "include": [
+                "minecraft:dyed_color",
+                "minecraft:custom_name",
+                "minecraft:container",
+                "minecraft:lock",
+                "minecraft:container_loot"
               ],
               "source": "block_entity"
-            },
-            {
-              "function": "minecraft:copy_nbt",
-              "source": "block_entity",
-              "ops": [
-                {
-                  "source": "color",
-                  "target": "display.color",
-                  "op": "replace"
-                }
-              ]
-            },
-            {
-              "type": "unidye:dyeable_shulker_box_block_entity",
-              "entries": [
-                {
-                  "type": "minecraft:dynamic",
-                  "name": "minecraft:contents"
-                }
-              ],
-              "function": "minecraft:set_contents"
             }
           ],
           "name": "unidye:custom_shulker_box"

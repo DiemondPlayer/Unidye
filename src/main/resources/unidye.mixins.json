@@ -12,7 +12,7 @@
     "DyedColorComponentMixin",
     "DyeItemMixin",
     "FireworkStarFadeRecipeMixin",
-    "FireworkStarItemMixin",
+    "FireworkExplosionComponentMixin",
     "FireworkStarRecipeMixin",
     "LoomScreenHandlerMixin",
     "MapBannerMarkerMixin",

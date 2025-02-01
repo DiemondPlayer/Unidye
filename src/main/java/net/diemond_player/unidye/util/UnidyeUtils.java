@@ -16,10 +16,7 @@ import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.ColorHelper;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 import static net.diemond_player.unidye.item.custom.CustomDyeItem.*;
 
@@ -293,5 +290,10 @@ public class UnidyeUtils {
         int k = (n & 0xFF00) >> 8;
         int l = (n & 0xFF) >> 0;
         return new float[]{(float) j / 255.0f, (float) k / 255.0f, (float) l / 255.0f};
+    }
+
+    public static Optional<DyeColor> findDyeColorByLeatherColor(int leatherColor){
+        return Arrays.stream(DyeColor.values()).filter(dyeColor ->
+                Arrays.equals(dyeColor.getColorComponents(), getColorArray(leatherColor))).findFirst();
     }
 }
