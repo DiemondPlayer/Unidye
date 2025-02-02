@@ -4,11 +4,11 @@ import com.google.common.collect.Lists;
 import net.diemond_player.unidye.item.UnidyeItems;
 import net.diemond_player.unidye.item.custom.CustomDyeItem;
 import net.diemond_player.unidye.util.UnidyeUtils;
-import net.minecraft.inventory.RecipeInputInventory;
 import net.minecraft.item.DyeItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.ArmorDyeRecipe;
+import net.minecraft.recipe.input.CraftingRecipeInput;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.world.World;
@@ -24,12 +24,12 @@ public abstract class ArmorDyeRecipeMixin {
      * @reason allows for Unidye logic
      */
     @Overwrite
-    public boolean matches(RecipeInputInventory recipeInputInventory, World world) {
+    public boolean matches(CraftingRecipeInput recipeInputInventory, World world) {
         ItemStack itemStack = ItemStack.EMPTY;
         ArrayList<ItemStack> list = Lists.newArrayList();
         ArrayList<ItemStack> customColors = Lists.newArrayList();
-        for (int i = 0; i < recipeInputInventory.size(); ++i) {
-            ItemStack itemStack2 = recipeInputInventory.getStack(i);
+        for (int i = 0; i < recipeInputInventory.getSize(); ++i) {
+            ItemStack itemStack2 = recipeInputInventory.getStackInSlot(i);
             if (itemStack2.isEmpty()) continue;
             if (itemStack2.isIn(ItemTags.DYEABLE)) {
                 if (itemStack.isEmpty()) {
@@ -62,12 +62,12 @@ public abstract class ArmorDyeRecipeMixin {
      * @reason allows for Unidye logic
      */
     @Overwrite
-    public ItemStack craft(RecipeInputInventory recipeInputInventory, RegistryWrapper.WrapperLookup wrapperLookup) {
+    public ItemStack craft(CraftingRecipeInput recipeInputInventory, RegistryWrapper.WrapperLookup wrapperLookup) {
         ArrayList<DyeItem> list = Lists.newArrayList();
         ArrayList<ItemStack> customColors = Lists.newArrayList();
         ItemStack itemStack = ItemStack.EMPTY;
-        for (int i = 0; i < recipeInputInventory.size(); ++i) {
-            ItemStack itemStack2 = recipeInputInventory.getStack(i);
+        for (int i = 0; i < recipeInputInventory.getSize(); ++i) {
+            ItemStack itemStack2 = recipeInputInventory.getStackInSlot(i);
             if (itemStack2.isEmpty()) continue;
             Item item = itemStack2.getItem();
             if (itemStack2.isIn(ItemTags.DYEABLE)) {

@@ -9,6 +9,7 @@ import net.minecraft.inventory.RecipeInputInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.ShieldDecorationRecipe;
+import net.minecraft.recipe.input.CraftingRecipeInput;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -16,27 +17,31 @@ import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(ShieldDecorationRecipe.class)
 public abstract class ShieldDecorationRecipeMixin {
-    @ModifyReturnValue(method = "matches(Lnet/minecraft/inventory/RecipeInputInventory;Lnet/minecraft/world/World;)Z", at = @At(value = "RETURN"))
-    private boolean unidye$matches(boolean original, @Local(argsOnly = true) RecipeInputInventory recipeInputInventory, @Local(argsOnly = true) World world) {
+    @ModifyReturnValue(method = "matches(Lnet/minecraft/recipe/input/CraftingRecipeInput;Lnet/minecraft/world/World;)Z", at = @At(value = "RETURN"))
+    private boolean unidye$matches(boolean original, @Local(argsOnly = true) CraftingRecipeInput recipeInputInventory, @Local(argsOnly = true) World world) {
         if (original) {
             return checkForUnidyeItems(recipeInputInventory, world);
         }
         return false;
     }
 
-    @ModifyReturnValue(method = "craft(Lnet/minecraft/inventory/RecipeInputInventory;Lnet/minecraft/registry/RegistryWrapper$WrapperLookup;)Lnet/minecraft/item/ItemStack;", at = @At("TAIL"))
+    @ModifyReturnValue(method = "craft(Lnet/minecraft/recipe/input/CraftingRecipeInput;Lnet/minecraft/registry/RegistryWrapper$WrapperLookup;)Lnet/minecraft/item/ItemStack;", at = @At("TAIL"))
     public ItemStack unidye$craft(ItemStack original) {
         if(!original.isEmpty()) {
-            original.remove(UnidyeDataComponentTypes.CUSTOM_BANNER_PATTERNS);
-            original.remove(DataComponentTypes.DYED_COLOR);
+            if(original.contains(UnidyeDataComponentTypes.CUSTOM_BANNER_PATTERNS)) {
+                original.remove(UnidyeDataComponentTypes.CUSTOM_BANNER_PATTERNS);
+            }
+            if(original.contains(DataComponentTypes.DYED_COLOR)) {
+                original.remove(DataComponentTypes.DYED_COLOR);
+            }
         }
         return original;
     }
 
         @Unique
-    private boolean checkForUnidyeItems(RecipeInputInventory recipeInputInventory, World world) {
-        for (int i = 0; i < recipeInputInventory.size(); ++i) {
-            ItemStack itemStack3 = recipeInputInventory.getStack(i);
+    private boolean checkForUnidyeItems(CraftingRecipeInput recipeInputInventory, World world) {
+        for (int i = 0; i < recipeInputInventory.getSize(); ++i) {
+            ItemStack itemStack3 = recipeInputInventory.getStackInSlot(i);
             if (itemStack3.isEmpty()) continue;
             Item item = itemStack3.getItem();
             if (item instanceof DyeableBannerItem) {

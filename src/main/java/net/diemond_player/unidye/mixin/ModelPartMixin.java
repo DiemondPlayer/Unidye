@@ -32,12 +32,12 @@ public abstract class ModelPartMixin implements UnidyeAccessor {
     }
 
     @Shadow
-    private void renderCuboids(MatrixStack.Entry entry, VertexConsumer vertexConsumer, int light, int overlay, float red, float green, float blue, float alpha) {
+    private void renderCuboids(MatrixStack.Entry entry, VertexConsumer vertexConsumer, int light, int overlay, int color) {
 
     }
 
     @Override
-    public void unidye$renderCustomBed(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha) {
+    public void unidye$renderCustomBed(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, int color) {
         if (!((ModelPart) (Object) this).visible) {
             return;
         }
@@ -47,11 +47,11 @@ public abstract class ModelPartMixin implements UnidyeAccessor {
         matrices.push();
         ((ModelPart) (Object) this).rotate(matrices);
         if (!((ModelPart) (Object) this).hidden) {
-            this.renderCuboids(matrices.peek(), vertices, light, overlay, red, green, blue, alpha);
+            this.renderCuboids(matrices.peek(), vertices, light, overlay, color);
         }
         this.children.get("left_leg").render(matrices, vertices, light, overlay);
         this.children.get("right_leg").render(matrices, vertices, light, overlay);
-        this.children.get("main").render(matrices, vertices, light, overlay, red, green, blue, alpha);
+        this.children.get("main").render(matrices, vertices, light, overlay, color);
         if (this.children.containsKey("main1")) {
             this.children.get("main1").render(matrices, vertices, light, overlay);
         }

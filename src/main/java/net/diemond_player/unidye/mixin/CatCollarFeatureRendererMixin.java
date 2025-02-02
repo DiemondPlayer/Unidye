@@ -13,15 +13,12 @@ import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 @Mixin(CatCollarFeatureRenderer.class)
 public abstract class CatCollarFeatureRendererMixin {
 
-    @ModifyArgs(method = "render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;ILnet/minecraft/entity/passive/CatEntity;FFFFFF)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/entity/feature/CatCollarFeatureRenderer;render(Lnet/minecraft/client/render/entity/model/EntityModel;Lnet/minecraft/client/render/entity/model/EntityModel;Lnet/minecraft/util/Identifier;Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;ILnet/minecraft/entity/LivingEntity;FFFFFFFFF)V"))
+    @ModifyArgs(method = "render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;ILnet/minecraft/entity/passive/CatEntity;FFFFFF)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/entity/feature/CatCollarFeatureRenderer;render(Lnet/minecraft/client/render/entity/model/EntityModel;Lnet/minecraft/client/render/entity/model/EntityModel;Lnet/minecraft/util/Identifier;Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;ILnet/minecraft/entity/LivingEntity;FFFFFFI)V"))
     private void unidye$render(Args args, @Local(argsOnly = true) CatEntity catEntity) {
         UnidyeAccessor cat = (UnidyeAccessor) catEntity;
         int customColor = cat.unidye$getCustomColor();
         if (customColor != 0xFFFFFF) {
-            float[] fs = UnidyeUtils.getColorArray(customColor);
-            args.set(13, fs[0]);
-            args.set(14, fs[1]);
-            args.set(15, fs[2]);
+            args.set(13, customColor);
         }
     }
 }

@@ -1,12 +1,12 @@
 package net.diemond_player.unidye.mixin;
 
 import net.diemond_player.unidye.util.UnidyeUtils;
-import net.minecraft.client.item.TooltipType;
 import net.minecraft.component.type.DyedColorComponent;
 import net.minecraft.item.DyeItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.TooltipAppender;
+import net.minecraft.item.tooltip.TooltipAppender;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;

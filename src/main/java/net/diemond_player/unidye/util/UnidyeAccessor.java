@@ -21,6 +21,6 @@ public interface UnidyeAccessor {
 
     void unidye$render(BlockRenderView world, BakedModel model, BlockState state, BlockPos pos, MatrixStack matrices, VertexConsumer vertexConsumer, boolean cull, Random random, long seed, int overlay, int color);
 
-    void unidye$renderCustomBed(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha);
+    void unidye$renderCustomBed(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, int color);
 
 }

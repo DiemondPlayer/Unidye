@@ -11,15 +11,12 @@ import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 @Mixin(SheepWoolFeatureRenderer.class)
 public abstract class SheepWoolFeatureRendererMixin {
 
-    @ModifyArgs(method = "render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;ILnet/minecraft/entity/passive/SheepEntity;FFFFFF)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/entity/feature/SheepWoolFeatureRenderer;render(Lnet/minecraft/client/render/entity/model/EntityModel;Lnet/minecraft/client/render/entity/model/EntityModel;Lnet/minecraft/util/Identifier;Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;ILnet/minecraft/entity/LivingEntity;FFFFFFFFF)V"))
+    @ModifyArgs(method = "render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;ILnet/minecraft/entity/passive/SheepEntity;FFFFFF)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/entity/feature/SheepWoolFeatureRenderer;render(Lnet/minecraft/client/render/entity/model/EntityModel;Lnet/minecraft/client/render/entity/model/EntityModel;Lnet/minecraft/util/Identifier;Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;ILnet/minecraft/entity/LivingEntity;FFFFFFI)V"))
     private void unidye$render(Args args) {
         UnidyeAccessor sheep = (UnidyeAccessor) args.get(6);
         int customColor = sheep.unidye$getCustomColor();
         if (customColor != 0xFFFFFF) {
-            float[] fs = UnidyeUtils.getColorArray(customColor);
-            args.set(13, fs[0]);
-            args.set(14, fs[1]);
-            args.set(15, fs[2]);
+            args.set(13, customColor);
         }
     }
 }

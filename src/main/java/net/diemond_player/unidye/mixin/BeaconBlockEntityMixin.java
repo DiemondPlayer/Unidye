@@ -18,15 +18,15 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 @Mixin(BeaconBlockEntity.class)
 public abstract class BeaconBlockEntityMixin {
     @ModifyVariable(method = "tick", at = @At(value = "INVOKE_ASSIGN",
-            target = "Lnet/minecraft/util/DyeColor;getColorComponents()[F"), ordinal = 0)
-    private static float[] unidye$tick(float[] fs, World world, BlockPos BlockPos, BlockState state, BeaconBlockEntity blockEntity, @Local(ordinal = 1) BlockPos pos) {
+            target = "Lnet/minecraft/util/DyeColor;getEntityColor()I"), ordinal = 1)
+    private static int unidye$tick(int value, @Local(ordinal = 1) BlockPos pos, @Local(argsOnly = true) World world) {
         BlockState blockState = world.getBlockState(pos);
         Block block = blockState.getBlock();
         if (block instanceof DyeableGlassBlock || block instanceof DyeablePaneBlock) {
             if (UnidyeBlockEntities.DYEABLE_LEATHERY_BE.get(world, pos) != null) {
-                return UnidyeUtils.getColorArray(UnidyeBlockEntities.DYEABLE_LEATHERY_BE.get(world, pos).leatherColor);
+                return UnidyeBlockEntities.DYEABLE_LEATHERY_BE.get(world, pos).leatherColor;
             }
         }
-        return ((Stainable) ((Object) block)).getColor().getColorComponents();
+        return value;
     }
 }
