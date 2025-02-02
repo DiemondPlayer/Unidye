@@ -38,7 +38,7 @@ public abstract class ShieldDecorationRecipeMixin {
         return original;
     }
 
-        @Unique
+    @Unique
     private boolean checkForUnidyeItems(RecipeInputInventory recipeInputInventory, World world) {
         for (int i = 0; i < recipeInputInventory.size(); ++i) {
             ItemStack itemStack3 = recipeInputInventory.getStack(i);
