@@ -28,6 +28,7 @@ import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.FluidTags;
+import net.minecraft.server.network.EntityTrackerEntry;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.property.Properties;
 import net.minecraft.text.Text;
@@ -140,10 +141,9 @@ public class DyeableFallingBlockEntity extends FallingBlockEntity {
 
                                 if (this.getWorld().setBlockState(blockPos, this.block, Block.NOTIFY_ALL)) {
                                     //TODO idk how to fix this: the powder takes the color but doesnt display it unless updated. Updating the block doesnt help
-                                    //TODO drops are broken
                                     ((ServerWorld)this.getWorld())
                                             .getChunkManager()
-                                            .threadedAnvilChunkStorage
+                                            .chunkLoadingManager
                                             .sendToOtherNearbyPlayers(this, new BlockUpdateS2CPacket(blockPos, this.getWorld().getBlockState(blockPos)));
                                     if (block instanceof LandingBlock) {
                                         ((LandingBlock) block).onLanding(this.getWorld(), blockPos, this.block, blockState, this);
@@ -306,8 +306,8 @@ public class DyeableFallingBlockEntity extends FallingBlockEntity {
     }
 
     @Override
-    public Packet<ClientPlayPacketListener> createSpawnPacket() {
-        return new EntitySpawnS2CPacket(this, Block.getRawIdFromState(this.getBlockState()));
+    public Packet<ClientPlayPacketListener> createSpawnPacket(EntityTrackerEntry entityTrackerEntry) {
+        return new EntitySpawnS2CPacket(this, entityTrackerEntry, Block.getRawIdFromState(this.getBlockState()));
     }
 
     @Override

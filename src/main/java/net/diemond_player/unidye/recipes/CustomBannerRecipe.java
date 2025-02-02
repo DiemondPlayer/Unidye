@@ -3,7 +3,7 @@ package net.diemond_player.unidye.recipes;
 import net.diemond_player.unidye.block.UnidyeBlocks;
 import net.diemond_player.unidye.item.custom.DyeableLeatheryBlockItem;
 import net.diemond_player.unidye.util.UnidyeUtils;
-import net.minecraft.inventory.RecipeInputInventory;
+import net.minecraft.recipe.input.CraftingRecipeInput;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.RecipeSerializer;
@@ -18,10 +18,10 @@ public class CustomBannerRecipe extends SpecialCraftingRecipe {
     }
 
     @Override
-    public boolean matches(RecipeInputInventory inventory, World world) {
+    public boolean matches(CraftingRecipeInput inventory, World world) {
         ItemStack itemStack = ItemStack.EMPTY;
-        for (int i = 0; i < inventory.size(); ++i) {
-            ItemStack itemStack2 = inventory.getStack(i);
+        for (int i = 0; i < inventory.getSize(); ++i) {
+            ItemStack itemStack2 = inventory.getStackInSlot(i);
             if (itemStack2.isEmpty() && (i == 8 || i == 6)) continue;
             if (itemStack2.getItem() == Items.STICK && i == 7) continue;
             if (itemStack2.getItem() == UnidyeBlocks.CUSTOM_WOOL.asItem() && i <= 5) {
@@ -42,9 +42,9 @@ public class CustomBannerRecipe extends SpecialCraftingRecipe {
     }
 
     @Override
-    public ItemStack craft(RecipeInputInventory inventory, RegistryWrapper.WrapperLookup lookup) {
+    public ItemStack craft(CraftingRecipeInput inventory, RegistryWrapper.WrapperLookup lookup) {
         ItemStack itemStack1 = new ItemStack(UnidyeBlocks.CUSTOM_BANNER.asItem());
-        UnidyeUtils.setColor(itemStack1, DyeableLeatheryBlockItem.getLeatherColor(inventory.getStack(0)));
+        UnidyeUtils.setColor(itemStack1, DyeableLeatheryBlockItem.getLeatherColor(inventory.getStackInSlot(0)));
         return itemStack1;
     }
 

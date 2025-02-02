@@ -14,7 +14,7 @@ public class UnidyeDataComponentTypes {
             "custom_banner_patterns", builder -> builder.codec(CustomBannerPatternsComponent.CODEC).packetCodec(CustomBannerPatternsComponent.PACKET_CODEC).cache()
     );
 
-    private static <T> ComponentType<T> register(String name, UnaryOperator<DataComponentType.Builder<T>> builderOperator) {
+    private static <T> ComponentType<T> register(String name, UnaryOperator<ComponentType.Builder<T>> builderOperator) {
         return Registry.register(Registries.DATA_COMPONENT_TYPE, Identifier.of(Unidye.MOD_ID, name),
                 builderOperator.apply(ComponentType.builder()).build());
     }

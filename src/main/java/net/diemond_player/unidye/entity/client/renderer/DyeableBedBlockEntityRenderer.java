@@ -61,7 +61,7 @@ public class DyeableBedBlockEntityRenderer
     @Override
     public void render(DyeableBedBlockEntity bedBlockEntity, float f, MatrixStack matrixStack, VertexConsumerProvider
             vertexConsumerProvider, int i, int j) {
-        SpriteIdentifier spriteIdentifier = new SpriteIdentifier(TexturedRenderLayers.BEDS_ATLAS_TEXTURE, new Identifier("entity/bed/custom"));
+        SpriteIdentifier spriteIdentifier = new SpriteIdentifier(TexturedRenderLayers.BEDS_ATLAS_TEXTURE, Identifier.of("entity/bed/custom"));
         World world2 = bedBlockEntity.getWorld();
         if (world2 != null) {
             BlockState blockState = bedBlockEntity.getCachedState();
@@ -82,8 +82,7 @@ public class DyeableBedBlockEntityRenderer
         matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(180.0f + direction.asRotation()));
         matrices.translate(-0.5f, -0.5f, -0.5f);
         VertexConsumer vertexConsumer = sprite.getVertexConsumer(vertexConsumers, RenderLayer::getEntitySolid);
-        float[] fs = UnidyeUtils.getColorArray(dyeableBedBlockEntity.color);
-        ((UnidyeAccessor) (Object) part).unidye$renderCustomBed(matrices, vertexConsumer, light, overlay, fs[0], fs[1], fs[2], 1.0f);
+        ((UnidyeAccessor) (Object) part).unidye$renderCustomBed(matrices, vertexConsumer, light, overlay, dyeableBedBlockEntity.color);
         matrices.pop();
     }
 }

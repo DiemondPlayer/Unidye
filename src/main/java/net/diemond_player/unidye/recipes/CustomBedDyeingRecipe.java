@@ -4,7 +4,7 @@ import com.google.common.collect.Lists;
 import net.diemond_player.unidye.block.UnidyeBlocks;
 import net.diemond_player.unidye.item.custom.CustomDyeItem;
 import net.diemond_player.unidye.util.UnidyeUtils;
-import net.minecraft.inventory.RecipeInputInventory;
+import net.minecraft.recipe.input.CraftingRecipeInput;
 import net.minecraft.item.DyeItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -23,14 +23,14 @@ public class CustomBedDyeingRecipe extends SpecialCraftingRecipe {
     }
 
     @Override
-    public boolean matches(RecipeInputInventory inventory, World world) {
+    public boolean matches(CraftingRecipeInput inventory, World world) {
         boolean bed = false;
         boolean difference = false;
         int count = 0;
         Item item = null;
         ItemStack itemStack = null;
-        for (int i = 0; i < inventory.size(); ++i) {
-            ItemStack itemStack2 = inventory.getStack(i);
+        for (int i = 0; i < inventory.getSize(); ++i) {
+            ItemStack itemStack2 = inventory.getStackInSlot(i);
             if (itemStack2.isEmpty()) {
                 continue;
             }
@@ -69,11 +69,11 @@ public class CustomBedDyeingRecipe extends SpecialCraftingRecipe {
     }
 
     @Override
-    public ItemStack craft(RecipeInputInventory inventory, RegistryWrapper.WrapperLookup lookup) {
+    public ItemStack craft(CraftingRecipeInput inventory, RegistryWrapper.WrapperLookup lookup) {
         ArrayList<DyeItem> dyeList = Lists.newArrayList();
         ArrayList<ItemStack> customDyeList = Lists.newArrayList();
-        for (int i = 0; i < inventory.size(); ++i) {
-            ItemStack itemStack2 = inventory.getStack(i);
+        for (int i = 0; i < inventory.getSize(); ++i) {
+            ItemStack itemStack2 = inventory.getStackInSlot(i);
             if (itemStack2.isEmpty()) continue;
             Item item = itemStack2.getItem();
             if (item instanceof CustomDyeItem) {

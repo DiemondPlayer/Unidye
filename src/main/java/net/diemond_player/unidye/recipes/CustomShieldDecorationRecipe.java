@@ -6,7 +6,7 @@ import net.diemond_player.unidye.item.custom.DyeableBannerItem;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.DyedColorComponent;
-import net.minecraft.inventory.RecipeInputInventory;
+import net.minecraft.recipe.input.CraftingRecipeInput;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.RecipeSerializer;
@@ -21,12 +21,12 @@ public class CustomShieldDecorationRecipe extends SpecialCraftingRecipe {
     }
 
     @Override
-    public boolean matches(RecipeInputInventory recipeInputInventory, World world) {
+    public boolean matches(CraftingRecipeInput recipeInputInventory, World world) {
         ItemStack itemStack = ItemStack.EMPTY;
         ItemStack itemStack2 = ItemStack.EMPTY;
 
-        for (int i = 0; i < recipeInputInventory.size(); i++) {
-            ItemStack itemStack3 = recipeInputInventory.getStack(i);
+        for (int i = 0; i < recipeInputInventory.getSize(); i++) {
+            ItemStack itemStack3 = recipeInputInventory.getStackInSlot(i);
             if (!itemStack3.isEmpty()) {
                 if (itemStack3.getItem() instanceof DyeableBannerItem) {
                     if (!itemStack2.isEmpty()) {
@@ -57,12 +57,12 @@ public class CustomShieldDecorationRecipe extends SpecialCraftingRecipe {
     }
 
     @Override
-    public ItemStack craft(RecipeInputInventory recipeInputInventory, RegistryWrapper.WrapperLookup lookup) {
+    public ItemStack craft(CraftingRecipeInput recipeInputInventory, RegistryWrapper.WrapperLookup lookup) {
         ItemStack itemStack = ItemStack.EMPTY;
         ItemStack itemStack2 = ItemStack.EMPTY;
 
-        for (int i = 0; i < recipeInputInventory.size(); i++) {
-            ItemStack itemStack3 = recipeInputInventory.getStack(i);
+        for (int i = 0; i < recipeInputInventory.getSize(); i++) {
+            ItemStack itemStack3 = recipeInputInventory.getStackInSlot(i);
             if (!itemStack3.isEmpty()) {
                 if (itemStack3.getItem() instanceof DyeableBannerItem) {
                     itemStack = itemStack3;

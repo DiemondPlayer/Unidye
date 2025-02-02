@@ -18,7 +18,7 @@ public class UnidyeItems {
             new DyeableBannerItem(UnidyeBlocks.CUSTOM_BANNER, UnidyeBlocks.CUSTOM_WALL_BANNER, new Item.Settings().maxCount(16)));
 
     private static Item registerItem(String name, Item item) {
-        return Registry.register(Registries.ITEM, new Identifier(Unidye.MOD_ID, name), item);
+        return Registry.register(Registries.ITEM, Identifier.of(Unidye.MOD_ID, name), item);
     }
 
     public static void registerModItems() {

@@ -6,7 +6,7 @@ import it.unimi.dsi.fastutil.ints.IntList;
 import net.diemond_player.unidye.item.custom.CustomDyeItem;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.FireworkExplosionComponent;
-import net.minecraft.inventory.RecipeInputInventory;
+import net.minecraft.recipe.input.CraftingRecipeInput;
 import net.minecraft.item.DyeItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -57,7 +57,7 @@ public class CustomFireworkStarRecipe extends SpecialCraftingRecipe {
     private static final Ingredient GUNPOWDER = Ingredient.ofItems(Items.GUNPOWDER);
 
     @Override
-    public boolean matches(RecipeInputInventory recipeInputInventory, World world) {
+    public boolean matches(CraftingRecipeInput recipeInputInventory, World world) {
         boolean bl = false;
         boolean bl2 = false;
         boolean bl3 = false;
@@ -65,8 +65,8 @@ public class CustomFireworkStarRecipe extends SpecialCraftingRecipe {
         boolean bl5 = false;
         boolean bl6 = false;
 
-        for (int i = 0; i < recipeInputInventory.size(); i++) {
-            ItemStack itemStack = recipeInputInventory.getStack(i);
+        for (int i = 0; i < recipeInputInventory.getSize(); i++) {
+            ItemStack itemStack = recipeInputInventory.getStackInSlot(i);
             if (!itemStack.isEmpty()) {
                 if (TYPE_MODIFIER.test(itemStack)) {
                     if (bl3) {
@@ -109,14 +109,14 @@ public class CustomFireworkStarRecipe extends SpecialCraftingRecipe {
     }
 
     @Override
-    public ItemStack craft(RecipeInputInventory recipeInputInventory, RegistryWrapper.WrapperLookup lookup) {
+    public ItemStack craft(CraftingRecipeInput recipeInputInventory, RegistryWrapper.WrapperLookup lookup) {
         FireworkExplosionComponent.Type type = FireworkExplosionComponent.Type.SMALL_BALL;
         boolean bl = false;
         boolean bl2 = false;
         IntList intList = new IntArrayList();
 
-        for (int i = 0; i < recipeInputInventory.size(); i++) {
-            ItemStack itemStack = recipeInputInventory.getStack(i);
+        for (int i = 0; i < recipeInputInventory.getSize(); i++) {
+            ItemStack itemStack = recipeInputInventory.getStackInSlot(i);
             if (!itemStack.isEmpty()) {
                 if (TYPE_MODIFIER.test(itemStack)) {
                     type = TYPE_MODIFIER_MAP.get(itemStack.getItem());

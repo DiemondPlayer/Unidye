@@ -5,7 +5,7 @@ import net.diemond_player.unidye.Unidye;
 import net.diemond_player.unidye.item.UnidyeItems;
 import net.diemond_player.unidye.item.custom.CustomDyeItem;
 import net.diemond_player.unidye.util.UnidyeUtils;
-import net.minecraft.inventory.RecipeInputInventory;
+import net.minecraft.recipe.input.CraftingRecipeInput;
 import net.minecraft.item.DyeItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -25,13 +25,13 @@ public class CustomDyeRecipe extends SpecialCraftingRecipe {
     }
 
     @Override
-    public boolean matches(RecipeInputInventory inventory, World world) {
+    public boolean matches(CraftingRecipeInput inventory, World world) {
         boolean stick = false;
         boolean difference = false;
         boolean custom = false;
         Item item = null;
-        for (int i = 0; i < inventory.size(); ++i) {
-            ItemStack itemStack2 = inventory.getStack(i);
+        for (int i = 0; i < inventory.getSize(); ++i) {
+            ItemStack itemStack2 = inventory.getStackInSlot(i);
             if (itemStack2.isEmpty()) {
                 continue;
             }
@@ -63,11 +63,11 @@ public class CustomDyeRecipe extends SpecialCraftingRecipe {
     }
 
     @Override
-    public ItemStack craft(RecipeInputInventory inventory, RegistryWrapper.WrapperLookup lookup) {
+    public ItemStack craft(CraftingRecipeInput inventory, RegistryWrapper.WrapperLookup lookup) {
         ArrayList<DyeItem> list = Lists.newArrayList();
         ArrayList<ItemStack> customList = Lists.newArrayList();
-        for (int i = 0; i < inventory.size(); ++i) {
-            ItemStack itemStack2 = inventory.getStack(i);
+        for (int i = 0; i < inventory.getSize(); ++i) {
+            ItemStack itemStack2 = inventory.getStackInSlot(i);
             if (itemStack2.isEmpty()) continue;
             Item item = itemStack2.getItem();
             if (item instanceof DyeItem && !(itemStack2.getItem() instanceof CustomDyeItem)) {
@@ -96,10 +96,10 @@ public class CustomDyeRecipe extends SpecialCraftingRecipe {
     }
 
     @Override
-    public DefaultedList<ItemStack> getRemainder(RecipeInputInventory inventory) {
-        DefaultedList<ItemStack> defaultedList = DefaultedList.ofSize(inventory.size(), ItemStack.EMPTY);
+    public DefaultedList<ItemStack> getRemainder(CraftingRecipeInput inventory) {
+        DefaultedList<ItemStack> defaultedList = DefaultedList.ofSize(inventory.getSize(), ItemStack.EMPTY);
         for (int i = 0; i < defaultedList.size(); ++i) {
-            Item item = inventory.getStack(i).getItem();
+            Item item = inventory.getStackInSlot(i).getItem();
             if (item == Items.STICK) {
                 defaultedList.set(i, new ItemStack(Items.STICK));
             }

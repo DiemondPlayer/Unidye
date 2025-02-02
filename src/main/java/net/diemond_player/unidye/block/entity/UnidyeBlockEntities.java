@@ -9,7 +9,7 @@ import net.minecraft.util.Identifier;
 
 public class UnidyeBlockEntities {
     public static final BlockEntityType<DyeableBlockEntity> DYEABLE_BE = Registry.register(
-            Registries.BLOCK_ENTITY_TYPE, new Identifier(Unidye.MOD_ID, "dyeable_block_entity"),
+            Registries.BLOCK_ENTITY_TYPE, Identifier.of(Unidye.MOD_ID, "dyeable_block_entity"),
             BlockEntityType.Builder.create(DyeableBlockEntity::new,
                     UnidyeBlocks.CUSTOM_TERRACOTTA,
                     UnidyeBlocks.CUSTOM_CONCRETE,
@@ -20,23 +20,23 @@ public class UnidyeBlockEntities {
             ).build(null));
 
     public static final BlockEntityType<DyeableShulkerBoxBlockEntity> DYEABLE_SHULKER_BOX_BE = Registry.register(
-            Registries.BLOCK_ENTITY_TYPE, new Identifier(Unidye.MOD_ID, "dyeable_shulker_box_block_entity"),
+            Registries.BLOCK_ENTITY_TYPE, Identifier.of(Unidye.MOD_ID, "dyeable_shulker_box_block_entity"),
             BlockEntityType.Builder.create(DyeableShulkerBoxBlockEntity::new,
                     UnidyeBlocks.CUSTOM_SHULKER_BOX
             ).build(null));
     public static final BlockEntityType<DyeableBedBlockEntity> DYEABLE_BED_BE = Registry.register(
-            Registries.BLOCK_ENTITY_TYPE, new Identifier(Unidye.MOD_ID, "dyeable_bed_block_entity"),
+            Registries.BLOCK_ENTITY_TYPE, Identifier.of(Unidye.MOD_ID, "dyeable_bed_block_entity"),
             BlockEntityType.Builder.create(DyeableBedBlockEntity::new,
                     UnidyeBlocks.CUSTOM_BED
             ).build(null));
     public static final BlockEntityType<DyeableBannerBlockEntity> DYEABLE_BANNER_BE = Registry.register(
-            Registries.BLOCK_ENTITY_TYPE, new Identifier(Unidye.MOD_ID, "dyeable_banner_block_entity"),
+            Registries.BLOCK_ENTITY_TYPE, Identifier.of(Unidye.MOD_ID, "dyeable_banner_block_entity"),
             BlockEntityType.Builder.create(DyeableBannerBlockEntity::new,
                     UnidyeBlocks.CUSTOM_BANNER,
                     UnidyeBlocks.CUSTOM_WALL_BANNER
             ).build(null));
     public static final BlockEntityType<DyeableLeatheryBlockEntity> DYEABLE_LEATHERY_BE = Registry.register(
-            Registries.BLOCK_ENTITY_TYPE, new Identifier(Unidye.MOD_ID, "dyeable_leathery_block_entity"),
+            Registries.BLOCK_ENTITY_TYPE, Identifier.of(Unidye.MOD_ID, "dyeable_leathery_block_entity"),
             BlockEntityType.Builder.create(DyeableLeatheryBlockEntity::new,
                     UnidyeBlocks.CUSTOM_WOOL,
                     UnidyeBlocks.CUSTOM_STAINED_GLASS,

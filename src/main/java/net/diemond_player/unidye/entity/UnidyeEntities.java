@@ -10,7 +10,7 @@ import net.minecraft.util.Identifier;
 public class UnidyeEntities {
 
     public static final EntityType<DyeableFallingBlockEntity> DYEABLE_FALLING_BLOCK_ENTITY = Registry.register(Registries.ENTITY_TYPE,
-            new Identifier(Unidye.MOD_ID, "dyeable_falling_block"),
+            Identifier.of(Unidye.MOD_ID, "dyeable_falling_block"),
             EntityType.Builder.create(DyeableFallingBlockEntity::new, SpawnGroup.MISC)
                     .build());
 

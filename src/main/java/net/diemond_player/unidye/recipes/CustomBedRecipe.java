@@ -3,7 +3,7 @@ package net.diemond_player.unidye.recipes;
 import net.diemond_player.unidye.block.UnidyeBlocks;
 import net.diemond_player.unidye.item.custom.DyeableLeatheryBlockItem;
 import net.diemond_player.unidye.util.UnidyeUtils;
-import net.minecraft.inventory.RecipeInputInventory;
+import net.minecraft.recipe.input.CraftingRecipeInput;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SpecialCraftingRecipe;
@@ -18,12 +18,12 @@ public class CustomBedRecipe extends SpecialCraftingRecipe {
     }
 
     @Override
-    public boolean matches(RecipeInputInventory inventory, World world) {
+    public boolean matches(CraftingRecipeInput inventory, World world) {
         ItemStack itemStack = ItemStack.EMPTY;
         int woolCount = 0;
         int planksCount = 0;
-        for (int i = 0; i < inventory.size(); ++i) {
-            ItemStack itemStack2 = inventory.getStack(i);
+        for (int i = 0; i < inventory.getSize(); ++i) {
+            ItemStack itemStack2 = inventory.getStackInSlot(i);
             if (itemStack2.isEmpty()) continue;
             if (itemStack2.isIn(ItemTags.PLANKS) && woolCount == 3) {
                 if (planksCount == 3) return false;
@@ -46,23 +46,23 @@ public class CustomBedRecipe extends SpecialCraftingRecipe {
             }
             return false;
         }
-        if (!((inventory.getStack(0).isEmpty()
-                && inventory.getStack(1).isEmpty()
-                && inventory.getStack(2).isEmpty())
-                || (inventory.getStack(6).isEmpty()
-                && inventory.getStack(7).isEmpty()
-                && inventory.getStack(8).isEmpty()))) {
+        if (!((inventory.getStackInSlot(0).isEmpty()
+                && inventory.getStackInSlot(1).isEmpty()
+                && inventory.getStackInSlot(2).isEmpty())
+                || (inventory.getStackInSlot(6).isEmpty()
+                && inventory.getStackInSlot(7).isEmpty()
+                && inventory.getStackInSlot(8).isEmpty()))) {
             return false;
         }
         return !itemStack.isEmpty() && planksCount == 3;
     }
 
     @Override
-    public ItemStack craft(RecipeInputInventory inventory, RegistryWrapper.WrapperLookup lookup) {
+    public ItemStack craft(CraftingRecipeInput inventory, RegistryWrapper.WrapperLookup lookup) {
         ItemStack itemStack = ItemStack.EMPTY;
         ItemStack itemStack1 = new ItemStack(UnidyeBlocks.CUSTOM_BED.asItem());
-        for (int i = 0; i < inventory.size(); ++i) {
-            ItemStack itemStack2 = inventory.getStack(i);
+        for (int i = 0; i < inventory.getSize(); ++i) {
+            ItemStack itemStack2 = inventory.getStackInSlot(i);
             if (itemStack2.getItem() == UnidyeBlocks.CUSTOM_WOOL.asItem()) {
                 itemStack = itemStack2;
                 break;

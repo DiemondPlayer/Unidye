@@ -3,7 +3,7 @@ package net.diemond_player.unidye.recipes;
 import net.diemond_player.unidye.block.UnidyeBlocks;
 import net.diemond_player.unidye.item.custom.DyeableLeatheryBlockItem;
 import net.diemond_player.unidye.util.UnidyeUtils;
-import net.minecraft.inventory.RecipeInputInventory;
+import net.minecraft.recipe.input.CraftingRecipeInput;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SpecialCraftingRecipe;
@@ -17,12 +17,12 @@ public class CustomCarpetRecipe extends SpecialCraftingRecipe {
     }
 
     @Override
-    public boolean matches(RecipeInputInventory inventory, World world) {
+    public boolean matches(CraftingRecipeInput inventory, World world) {
         ItemStack itemStack = ItemStack.EMPTY;
         int count = 0;
         int[] positions = new int[2];
-        for (int i = 0; i < inventory.size(); ++i) {
-            ItemStack itemStack2 = inventory.getStack(i);
+        for (int i = 0; i < inventory.getSize(); ++i) {
+            ItemStack itemStack2 = inventory.getStackInSlot(i);
             if (itemStack2.isEmpty()) continue;
             if (itemStack2.getItem() == UnidyeBlocks.CUSTOM_WOOL.asItem()) {
                 if (count == 2) return false;
@@ -41,12 +41,12 @@ public class CustomCarpetRecipe extends SpecialCraftingRecipe {
             }
             return false;
         }
-        if (inventory.size() == 9) {
+        if (inventory.getSize() == 9) {
             if (positions[0] == 2 || positions[0] == 5) {
                 return false;
             }
         }
-        if (inventory.size() == 4) {
+        if (inventory.getSize() == 4) {
             if (positions[0] == 1) {
                 return false;
             }
@@ -55,11 +55,11 @@ public class CustomCarpetRecipe extends SpecialCraftingRecipe {
     }
 
     @Override
-    public ItemStack craft(RecipeInputInventory inventory, RegistryWrapper.WrapperLookup lookup) {
+    public ItemStack craft(CraftingRecipeInput inventory, RegistryWrapper.WrapperLookup lookup) {
         ItemStack itemStack = ItemStack.EMPTY;
         ItemStack itemStack1 = new ItemStack(UnidyeBlocks.CUSTOM_CARPET.asItem());
-        for (int i = 0; i < inventory.size(); ++i) {
-            ItemStack itemStack2 = inventory.getStack(i);
+        for (int i = 0; i < inventory.getSize(); ++i) {
+            ItemStack itemStack2 = inventory.getStackInSlot(i);
             if (itemStack2.getItem() == UnidyeBlocks.CUSTOM_WOOL.asItem()) {
                 itemStack = itemStack2;
             }

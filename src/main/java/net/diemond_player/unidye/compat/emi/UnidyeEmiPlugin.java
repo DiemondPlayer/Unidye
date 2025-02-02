@@ -21,6 +21,7 @@ import net.minecraft.recipe.CraftingRecipe;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.recipe.RecipeType;
+import net.minecraft.recipe.input.RecipeInput;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.util.Identifier;
 
@@ -158,8 +159,8 @@ public class UnidyeEmiPlugin implements EmiPlugin {
                 .build());
     }
 
-    private static <C extends Inventory, T extends Recipe<C>> Iterable<T> getRecipes(EmiRegistry registry, RecipeType<T> type) {
-        return registry.getRecipeManager().listAllOfType(type).stream().map(RecipeEntry::value)::iterator;
+    private static <C extends RecipeInput, T extends Recipe<C>> Iterable<T> getRecipes(EmiRegistry registry, RecipeType<T> type) {
+        return registry.getRecipeManager().listAllOfType(type).stream().map(e -> e.value())::iterator;
     }
 
     private static void addRecipeSafe(EmiRegistry registry, Supplier<EmiRecipe> supplier, Recipe<?> recipe) {

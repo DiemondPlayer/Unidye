@@ -84,7 +84,7 @@ public abstract class BuiltinModelItemRendererMixin {
                         .getTextureSpecificVertexConsumer(
                                 ItemRenderer.getDirectItemGlintConsumer(vertexConsumers, this.modelShield.getLayer(spriteIdentifier.getAtlasId()), true, stack.hasGlint())
                         );
-                this.modelShield.getHandle().render(matrices, vertexConsumer, light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
+                this.modelShield.getHandle().render(matrices, vertexConsumer, light, overlay);
                 DyeableBannerBlockEntityRenderer.renderCanvas(
                         matrices,
                         vertexConsumers,

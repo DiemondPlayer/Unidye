@@ -94,33 +94,33 @@ public class UnidyeBlocks {
     }
 
     private static Block registerBlockWithoutItem(String name, Block block) {
-        return Registry.register(Registries.BLOCK, new Identifier(Unidye.MOD_ID, name), block);
+        return Registry.register(Registries.BLOCK, Identifier.of(Unidye.MOD_ID, name), block);
     }
 
     private static Block registerDyeableBlock(String name, Block block) {
         registerDyeableBlockItem(name, block);
-        return Registry.register(Registries.BLOCK, new Identifier(Unidye.MOD_ID, name), block);
+        return Registry.register(Registries.BLOCK, Identifier.of(Unidye.MOD_ID, name), block);
     }
 
     private static void registerDyeableBlockItem(String name, Block block) {
-        Registry.register(Registries.ITEM, new Identifier(Unidye.MOD_ID, name), new DyeableBlockItem(block, new Item.Settings()));
+        Registry.register(Registries.ITEM, Identifier.of(Unidye.MOD_ID, name), new DyeableBlockItem(block, new Item.Settings()));
     }
 
     private static Block registerDyeableBlock(String name, Block block, Item.Settings fabricItemSettings) {
         registerDyeableBlockItem(name, block, fabricItemSettings);
-        return Registry.register(Registries.BLOCK, new Identifier(Unidye.MOD_ID, name), block);
+        return Registry.register(Registries.BLOCK, Identifier.of(Unidye.MOD_ID, name), block);
     }
 
     private static void registerDyeableBlockItem(String name, Block block, Item.Settings fabricItemSettings) {
-        Registry.register(Registries.ITEM, new Identifier(Unidye.MOD_ID, name), new DyeableBlockItem(block, fabricItemSettings));
+        Registry.register(Registries.ITEM, Identifier.of(Unidye.MOD_ID, name), new DyeableBlockItem(block, fabricItemSettings));
     }
 
     private static Block registerDyeableLeatheryBlock(String name, Block block) {
         registerDyeableLeatheryBlockItem(name, block);
-        return Registry.register(Registries.BLOCK, new Identifier(Unidye.MOD_ID, name), block);
+        return Registry.register(Registries.BLOCK, Identifier.of(Unidye.MOD_ID, name), block);
     }
 
     private static void registerDyeableLeatheryBlockItem(String name, Block block) {
-        Registry.register(Registries.ITEM, new Identifier(Unidye.MOD_ID, name), new DyeableLeatheryBlockItem(block, new Item.Settings()));
+        Registry.register(Registries.ITEM, Identifier.of(Unidye.MOD_ID, name), new DyeableLeatheryBlockItem(block, new Item.Settings()));
     }
 }

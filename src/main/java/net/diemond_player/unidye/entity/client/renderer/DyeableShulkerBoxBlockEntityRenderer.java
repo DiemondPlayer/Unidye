@@ -36,7 +36,7 @@ public class DyeableShulkerBoxBlockEntityRenderer
         if (shulkerBoxBlockEntity.hasWorld() && (blockState = shulkerBoxBlockEntity.getWorld().getBlockState(shulkerBoxBlockEntity.getPos())).getBlock() instanceof DyeableShulkerBoxBlock) {
             direction = blockState.get(DyeableShulkerBoxBlock.FACING);
         }
-        SpriteIdentifier spriteIdentifier = new SpriteIdentifier(TexturedRenderLayers.SHULKER_BOXES_ATLAS_TEXTURE, new Identifier("entity/shulker/shulker_custom"));
+        SpriteIdentifier spriteIdentifier = new SpriteIdentifier(TexturedRenderLayers.SHULKER_BOXES_ATLAS_TEXTURE, Identifier.of("entity/shulker/shulker_custom"));
         matrixStack.push();
         matrixStack.translate(0.5f, 0.5f, 0.5f);
         float g = 0.9995f;
@@ -48,8 +48,7 @@ public class DyeableShulkerBoxBlockEntityRenderer
         modelPart.setPivot(0.0f, 24.0f - shulkerBoxBlockEntity.getAnimationProgress(f) * 0.5f * 16.0f, 0.0f);
         modelPart.yaw = 270.0f * shulkerBoxBlockEntity.getAnimationProgress(f) * ((float) Math.PI / 180);
         VertexConsumer vertexConsumer = spriteIdentifier.getVertexConsumer(vertexConsumerProvider, RenderLayer::getEntityCutoutNoCull);
-        float[] fs = UnidyeUtils.getColorArray(shulkerBoxBlockEntity.color);
-        this.model.render(matrixStack, vertexConsumer, i, j, fs[0], fs[1], fs[2], 1.0f);
+        this.model.render(matrixStack, vertexConsumer, i, j, shulkerBoxBlockEntity.color);
         matrixStack.pop();
     }
 }

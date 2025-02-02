@@ -4,7 +4,6 @@ import net.diemond_player.unidye.util.UnidyeAccessor;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.SignBlockEntity;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.item.TooltipType;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.NbtComponent;
 import net.minecraft.entity.LivingEntity;
@@ -14,6 +13,7 @@ import net.minecraft.item.DyeItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SignChangingItem;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -69,6 +69,7 @@ public class CustomDyeItem extends DyeItem implements SignChangingItem{
 
     @Override
     public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType type) {
+        super.appendTooltip(stack, context, tooltip, type);
         if (Screen.hasShiftDown()) {
             MutableText mutableText = Text.literal("■ ");
             tooltip.add(mutableText.setStyle(mutableText.getStyle().withColor(getMaterialColor(stack, "wool"))).append(Text.translatable("tooltip.unidye.wool_color").append(getMaterialHexColor(stack, "wool")).formatted(Formatting.GRAY)));

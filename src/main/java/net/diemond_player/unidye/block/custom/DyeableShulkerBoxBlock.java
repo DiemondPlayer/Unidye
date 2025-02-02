@@ -53,7 +53,7 @@ public class DyeableShulkerBoxBlock extends ShulkerBoxBlock implements IDyeableB
         map.put(Direction.DOWN, DOWN_SHAPE);
     });
     public static final EnumProperty<Direction> FACING = FacingBlock.FACING;
-    public static final Identifier CONTENTS_DYNAMIC_DROP_ID = new Identifier("minecraft", "contents");
+    public static final Identifier CONTENTS_DYNAMIC_DROP_ID = Identifier.of("minecraft", "contents");
 
     public DyeableShulkerBoxBlock(AbstractBlock.Settings settings) {
         super(DyeColor.CYAN, settings);

@@ -6,11 +6,11 @@ import net.minecraft.util.Identifier;
 
 public class UnidyeModelLayers {
     public static final EntityModelLayer CUSTOM_SHULKER =
-            new EntityModelLayer(new Identifier(Unidye.MOD_ID, "shulker_custom"), "main");
+            new EntityModelLayer(Identifier.of(Unidye.MOD_ID, "shulker_custom"), "main");
     public static final EntityModelLayer CUSTOM_BED_FOOT =
-            new EntityModelLayer(new Identifier(Unidye.MOD_ID, "custom_bed_foot"), "main");
+            new EntityModelLayer(Identifier.of(Unidye.MOD_ID, "custom_bed_foot"), "main");
     public static final EntityModelLayer CUSTOM_BED_HEAD =
-            new EntityModelLayer(new Identifier(Unidye.MOD_ID, "custom_bed_head"), "main");
+            new EntityModelLayer(Identifier.of(Unidye.MOD_ID, "custom_bed_head"), "main");
     public static final EntityModelLayer CUSTOM_BANNER =
-            new EntityModelLayer(new Identifier(Unidye.MOD_ID, "custom_banner"), "main");
+            new EntityModelLayer(Identifier.of(Unidye.MOD_ID, "custom_banner"), "main");
 }

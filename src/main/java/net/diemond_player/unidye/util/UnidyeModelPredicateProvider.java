@@ -8,7 +8,7 @@ import net.minecraft.util.Identifier;
 
 public class UnidyeModelPredicateProvider {
     public static void registerModModels() {
-        ModelPredicateProviderRegistry.register(UnidyeItems.CUSTOM_DYE, new Identifier(Unidye.MOD_ID, "dye_id"),
+        ModelPredicateProviderRegistry.register(UnidyeItems.CUSTOM_DYE, Identifier.of(Unidye.MOD_ID, "dye_id"),
                 (stack, world, entity, seed) -> CustomDyeItem.getClosestVanillaDyeId(stack));
     }
 }

@@ -45,6 +45,6 @@ public class DyeableFallingBlockEntityRenderer extends EntityRenderer<DyeableFal
 
     @Override
     public Identifier getTexture(DyeableFallingBlockEntity fallingBlockEntity) {
-        return new Identifier(Unidye.MOD_ID, "custom_concrete_powder");
+        return Identifier.of(Unidye.MOD_ID, "custom_concrete_powder");
     }
 }

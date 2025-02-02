@@ -3,7 +3,7 @@ package net.diemond_player.unidye.recipes;
 import net.diemond_player.unidye.block.UnidyeBlocks;
 import net.diemond_player.unidye.item.custom.DyeableLeatheryBlockItem;
 import net.diemond_player.unidye.util.UnidyeUtils;
-import net.minecraft.inventory.RecipeInputInventory;
+import net.minecraft.recipe.input.CraftingRecipeInput;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SpecialCraftingRecipe;
@@ -19,11 +19,11 @@ public class CustomStainedGlassPaneRecipe extends SpecialCraftingRecipe {
     }
 
     @Override
-    public boolean matches(RecipeInputInventory inventory, World world) {
+    public boolean matches(CraftingRecipeInput inventory, World world) {
         ItemStack itemStack = ItemStack.EMPTY;
         int count = 0;
-        for (int i = 0; i < inventory.size(); ++i) {
-            ItemStack itemStack2 = inventory.getStack(i);
+        for (int i = 0; i < inventory.getSize(); ++i) {
+            ItemStack itemStack2 = inventory.getStackInSlot(i);
             if (itemStack2.isEmpty()) continue;
             if (itemStack2.getItem() == UnidyeBlocks.CUSTOM_STAINED_GLASS.asItem()) {
                 if (count == 6) return false;
@@ -41,23 +41,23 @@ public class CustomStainedGlassPaneRecipe extends SpecialCraftingRecipe {
             }
             return false;
         }
-        if (!((inventory.getStack(0).isEmpty()
-                && inventory.getStack(1).isEmpty()
-                && inventory.getStack(2).isEmpty())
-                || (inventory.getStack(6).isEmpty()
-                && inventory.getStack(7).isEmpty()
-                && inventory.getStack(8).isEmpty()))) {
+        if (!((inventory.getStackInSlot(0).isEmpty()
+                && inventory.getStackInSlot(1).isEmpty()
+                && inventory.getStackInSlot(2).isEmpty())
+                || (inventory.getStackInSlot(6).isEmpty()
+                && inventory.getStackInSlot(7).isEmpty()
+                && inventory.getStackInSlot(8).isEmpty()))) {
             return false;
         }
         return !itemStack.isEmpty() && count == 6;
     }
 
     @Override
-    public ItemStack craft(RecipeInputInventory inventory, RegistryWrapper.WrapperLookup lookup) {
+    public ItemStack craft(CraftingRecipeInput inventory, RegistryWrapper.WrapperLookup lookup) {
         ItemStack itemStack = ItemStack.EMPTY;
         ItemStack itemStack1 = new ItemStack(UnidyeBlocks.CUSTOM_STAINED_GLASS_PANE.asItem());
-        for (int i = 0; i < inventory.size(); ++i) {
-            ItemStack itemStack2 = inventory.getStack(i);
+        for (int i = 0; i < inventory.getSize(); ++i) {
+            ItemStack itemStack2 = inventory.getStackInSlot(i);
             if (itemStack2.getItem() == UnidyeBlocks.CUSTOM_STAINED_GLASS.asItem()) {
                 itemStack = itemStack2;
             }

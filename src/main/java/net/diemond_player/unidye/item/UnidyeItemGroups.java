@@ -12,7 +12,7 @@ import net.minecraft.util.Identifier;
 
 public class UnidyeItemGroups {
     public static final ItemGroup UNIDYE_GROUP = Registry.register(Registries.ITEM_GROUP,
-            new Identifier(Unidye.MOD_ID, "unidye"),
+            Identifier.of(Unidye.MOD_ID, "unidye"),
             FabricItemGroup.builder().displayName(Text.translatable("itemgroup.unidye"))
                     .icon(() -> new ItemStack(UnidyeItems.CUSTOM_DYE)).entries((displayContext, entries) -> {
 

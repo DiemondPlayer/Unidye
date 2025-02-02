@@ -4,7 +4,7 @@ import net.diemond_player.unidye.block.UnidyeBlocks;
 import net.diemond_player.unidye.item.UnidyeItems;
 import net.diemond_player.unidye.item.custom.CustomDyeItem;
 import net.diemond_player.unidye.util.UnidyeUtils;
-import net.minecraft.inventory.RecipeInputInventory;
+import net.minecraft.recipe.input.CraftingRecipeInput;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -20,12 +20,12 @@ public class CustomConcretePowderRecipe extends SpecialCraftingRecipe {
     }
 
     @Override
-    public boolean matches(RecipeInputInventory inventory, World world) {
+    public boolean matches(CraftingRecipeInput inventory, World world) {
         int gravelCount = 0;
         int sandCount = 0;
         boolean dye = false;
-        for (int i = 0; i < inventory.size(); ++i) {
-            Item item = inventory.getStack(i).getItem();
+        for (int i = 0; i < inventory.getSize(); ++i) {
+            Item item = inventory.getStackInSlot(i).getItem();
             if (item == Items.SAND) {
                 sandCount++;
                 continue;
@@ -42,11 +42,11 @@ public class CustomConcretePowderRecipe extends SpecialCraftingRecipe {
     }
 
     @Override
-    public ItemStack craft(RecipeInputInventory inventory, RegistryWrapper.WrapperLookup lookup) {
+    public ItemStack craft(CraftingRecipeInput inventory, RegistryWrapper.WrapperLookup lookup) {
         ItemStack itemStack = ItemStack.EMPTY;
-        for (int i = 0; i < inventory.size(); ++i) {
-            if (inventory.getStack(i).getItem() == UnidyeItems.CUSTOM_DYE) {
-                itemStack = inventory.getStack(i);
+        for (int i = 0; i < inventory.getSize(); ++i) {
+            if (inventory.getStackInSlot(i).getItem() == UnidyeItems.CUSTOM_DYE) {
+                itemStack = inventory.getStackInSlot(i);
             }
         }
         ItemStack itemStack1 = new ItemStack(UnidyeBlocks.CUSTOM_CONCRETE_POWDER.asItem());

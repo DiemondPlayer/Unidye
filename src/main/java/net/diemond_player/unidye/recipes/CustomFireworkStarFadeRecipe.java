@@ -5,7 +5,7 @@ import it.unimi.dsi.fastutil.ints.IntList;
 import net.diemond_player.unidye.item.custom.CustomDyeItem;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.FireworkExplosionComponent;
-import net.minecraft.inventory.RecipeInputInventory;
+import net.minecraft.recipe.input.CraftingRecipeInput;
 import net.minecraft.item.DyeItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -25,13 +25,13 @@ public class CustomFireworkStarFadeRecipe extends SpecialCraftingRecipe {
     private static final Ingredient INPUT_STAR = Ingredient.ofItems(Items.FIREWORK_STAR);
 
     @Override
-    public boolean matches(RecipeInputInventory recipeInputInventory, World world) {
+    public boolean matches(CraftingRecipeInput recipeInputInventory, World world) {
         boolean bl = false;
         boolean bl2 = false;
         boolean bl3 = false;
 
-        for (int i = 0; i < recipeInputInventory.size(); i++) {
-            ItemStack itemStack = recipeInputInventory.getStack(i);
+        for (int i = 0; i < recipeInputInventory.getSize(); i++) {
+            ItemStack itemStack = recipeInputInventory.getStackInSlot(i);
             if (!itemStack.isEmpty()) {
                 if (itemStack.getItem() instanceof DyeItem) {
                     bl = true;
@@ -56,12 +56,12 @@ public class CustomFireworkStarFadeRecipe extends SpecialCraftingRecipe {
     }
 
     @Override
-    public ItemStack craft(RecipeInputInventory recipeInputInventory, RegistryWrapper.WrapperLookup lookup) {
+    public ItemStack craft(CraftingRecipeInput recipeInputInventory, RegistryWrapper.WrapperLookup lookup) {
         IntList intList = new IntArrayList();
         ItemStack itemStack = null;
 
-        for (int i = 0; i < recipeInputInventory.size(); i++) {
-            ItemStack itemStack2 = recipeInputInventory.getStack(i);
+        for (int i = 0; i < recipeInputInventory.getSize(); i++) {
+            ItemStack itemStack2 = recipeInputInventory.getStackInSlot(i);
             Item item = itemStack2.getItem();
             if (item instanceof CustomDyeItem){
                 intList.add(CustomDyeItem.getMaterialColor(itemStack2, "firework").intValue());
