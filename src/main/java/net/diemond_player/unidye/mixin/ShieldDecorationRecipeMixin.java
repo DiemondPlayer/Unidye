@@ -33,6 +33,7 @@ public abstract class ShieldDecorationRecipeMixin {
             if(original.contains(DataComponentTypes.DYED_COLOR)) {
                 original.remove(DataComponentTypes.DYED_COLOR);
             }
+
         }
         return original;
     }
