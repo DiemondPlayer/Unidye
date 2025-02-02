@@ -62,12 +62,12 @@ public class DyeableBannerBlockEntityRenderer
             BlockState blockState = bannerBlockEntity.getCachedState();
             if (blockState.getBlock() instanceof DyeableBannerBlock) {
                 matrixStack.translate(0.5F, 0.5F, 0.5F);
-                float h = -RotationPropertyHelper.toDegrees((Integer)blockState.get(DyeableBannerBlock.ROTATION));
+                float h = -RotationPropertyHelper.toDegrees(blockState.get(DyeableBannerBlock.ROTATION));
                 matrixStack.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(h));
                 this.pillar.visible = true;
             } else {
                 matrixStack.translate(0.5F, -0.16666667F, 0.5F);
-                float h = -((Direction)blockState.get(DyeableWallBannerBlock.FACING)).asRotation();
+                float h = -blockState.get(DyeableWallBannerBlock.FACING).asRotation();
                 matrixStack.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(h));
                 matrixStack.translate(0.0F, -0.3125F, -0.4375F);
                 this.pillar.visible = false;
@@ -80,7 +80,7 @@ public class DyeableBannerBlockEntityRenderer
         this.pillar.render(matrixStack, vertexConsumer, i, j);
         this.crossbar.render(matrixStack, vertexConsumer, i, j);
         BlockPos blockPos = bannerBlockEntity.getPos();
-        float k = ((float)Math.floorMod((long)(blockPos.getX() * 7 + blockPos.getY() * 9 + blockPos.getZ() * 13) + l, 100L) + f) / 100.0F;
+        float k = ((float)Math.floorMod(blockPos.getX() * 7L + blockPos.getY() * 9L + blockPos.getZ() * 13L + l, 100L) + f) / 100.0F;
         this.banner.pitch = (-0.0125F + 0.01F * MathHelper.cos((float) (Math.PI * 2) * k)) * (float) Math.PI;
         this.banner.pivotY = -32.0F;
         renderCanvas(
@@ -120,7 +120,7 @@ public class DyeableBannerBlockEntityRenderer
         renderLayer(matrices, vertexConsumers, light, overlay, canvas, isBanner ? TexturedRenderLayers.BANNER_BASE : TexturedRenderLayers.SHIELD_BASE, color);
 
         for (int i = 0; i < 16 && i < patterns.layers().size(); i++) {
-            CustomBannerPatternsComponent.Layer layer = (CustomBannerPatternsComponent.Layer)patterns.layers().get(i);
+            CustomBannerPatternsComponent.Layer layer = patterns.layers().get(i);
             SpriteIdentifier spriteIdentifier = isBanner
                     ? TexturedRenderLayers.getBannerPatternTextureId(layer.pattern())
                     : TexturedRenderLayers.getShieldPatternTextureId(layer.pattern());

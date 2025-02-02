@@ -24,8 +24,6 @@ import org.slf4j.Logger;
 
 public class DyeableBannerBlockEntity extends BlockEntity implements Nameable {
     private static final Logger LOGGER = LogUtils.getLogger();
-    public static final int MAX_PATTERN_COUNT = 6;
-    private static final String PATTERNS_KEY = "patterns";
     @Nullable
     private Text customName;
     private CustomBannerPatternsComponent patterns = CustomBannerPatternsComponent.DEFAULT;

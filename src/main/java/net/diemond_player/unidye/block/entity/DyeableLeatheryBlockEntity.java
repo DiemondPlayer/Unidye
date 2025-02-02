@@ -2,6 +2,10 @@ package net.diemond_player.unidye.block.entity;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.component.ComponentMap;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.DyedColorComponent;
+import net.minecraft.component.type.NbtComponent;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
@@ -74,4 +78,26 @@ public class DyeableLeatheryBlockEntity extends BlockEntity {
             return DyeableBlockEntity.DEFAULT_COLOR;
         }
     }
+
+    @Override
+    protected void readComponents(ComponentsAccess components) {
+        super.readComponents(components);
+        this.color = ((DyedColorComponent)components.getOrDefault(DataComponentTypes.DYED_COLOR, DyedColorComponent.DEFAULT_COLOR)).rgb();
+        this.leatherColor = components.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT).copyNbt().getInt("leather");
+    }
+
+    @Override
+    protected void addComponents(ComponentMap.Builder componentMapBuilder) {
+        super.addComponents(componentMapBuilder);
+        componentMapBuilder.add(DataComponentTypes.DYED_COLOR, new DyedColorComponent(color, true));
+        NbtCompound nbtCompound = new NbtCompound();
+        nbtCompound.putInt("leather", leatherColor);
+        componentMapBuilder.add(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(nbtCompound));
+    }
+
+//    @Override
+//    public void removeFromCopiedStackNbt(NbtCompound nbt) {
+//        nbt.remove("color");
+//        nbt.remove("leather");
+//    }
 }

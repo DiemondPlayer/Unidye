@@ -24,7 +24,6 @@ import java.util.stream.Stream;
 
 public class EmiCustomDyeRecipe extends EmiPatternCraftingRecipe {
     private static final List<DyeItem> DYES = Stream.of(DyeColor.values()).map(DyeItem::byColor).filter(c -> !(c instanceof CustomDyeItem)).toList();
-    private final Item item = UnidyeItems.CUSTOM_DYE;
 
     public EmiCustomDyeRecipe(Identifier id) {
         super(List.of(

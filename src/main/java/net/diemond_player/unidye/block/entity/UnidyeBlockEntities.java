@@ -45,6 +45,6 @@ public class UnidyeBlockEntities {
 
 
     public static void registerBlockEntities() {
-        Unidye.LOGGER.info("Registering Block Entities for " + Unidye.MOD_ID);
+//        Unidye.LOGGER.info("Registering Block Entities for " + Unidye.MOD_ID);
     }
 }

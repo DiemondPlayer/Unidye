@@ -3,6 +3,7 @@ package net.diemond_player.unidye;
 import net.diemond_player.unidye.block.UnidyeBlocks;
 import net.diemond_player.unidye.block.entity.UnidyeBlockEntities;
 import net.diemond_player.unidye.component.UnidyeDataComponentTypes;
+import net.diemond_player.unidye.entity.UnidyeEntities;
 import net.diemond_player.unidye.item.UnidyeItemGroups;
 import net.diemond_player.unidye.item.UnidyeItems;
 import net.diemond_player.unidye.recipes.UnidyeSpecialRecipes;
@@ -29,5 +30,6 @@ public class Unidye implements ModInitializer {
         UnidyeCauldronBehaviors.registerCauldronBehaviors();
         UnidyeSpecialRecipes.registerSpecialRecipes();
         UnidyeDataComponentTypes.registerModDataComponentTypes();
+        UnidyeEntities.registerModEntities();
     }
 }

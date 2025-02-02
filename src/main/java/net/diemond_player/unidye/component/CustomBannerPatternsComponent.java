@@ -45,7 +45,7 @@ public record CustomBannerPatternsComponent(List<CustomBannerPatternsComponent.L
                 CustomBannerPatternsComponent.LOGGER.warn("Unable to find banner pattern with id: '{}'", pattern.getValue());
                 return this;
             } else {
-                return this.add((RegistryEntry<BannerPattern>)optional.get(), color);
+                return this.add(optional.get(), color);
             }
         }
 
@@ -68,7 +68,7 @@ public record CustomBannerPatternsComponent(List<CustomBannerPatternsComponent.L
         }
     }
 
-    public static record Layer(RegistryEntry<BannerPattern> pattern, int color) {
+    public record Layer(RegistryEntry<BannerPattern> pattern, int color) {
         public static final Codec<CustomBannerPatternsComponent.Layer> CODEC = RecordCodecBuilder.create(
                 instance -> instance.group(
                                 BannerPattern.ENTRY_CODEC.fieldOf("pattern").forGetter(CustomBannerPatternsComponent.Layer::pattern),

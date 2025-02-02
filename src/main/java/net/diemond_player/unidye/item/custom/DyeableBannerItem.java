@@ -40,7 +40,7 @@ public class DyeableBannerItem extends BannerItem{
         CustomBannerPatternsComponent bannerPatternsComponent = stack.get(UnidyeDataComponentTypes.CUSTOM_BANNER_PATTERNS);
         if (bannerPatternsComponent != null) {
             for (int i = 0; i < Math.min(bannerPatternsComponent.layers().size(), 6); i++) {
-                CustomBannerPatternsComponent.Layer layer = (CustomBannerPatternsComponent.Layer)bannerPatternsComponent.layers().get(i);
+                CustomBannerPatternsComponent.Layer layer = bannerPatternsComponent.layers().get(i);
                 tooltip.add(layer.getTooltipText());
             }
         }

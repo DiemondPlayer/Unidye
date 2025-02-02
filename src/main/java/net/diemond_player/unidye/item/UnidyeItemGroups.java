@@ -32,6 +32,6 @@ public class UnidyeItemGroups {
                     }).build());
 
     public static void registerItemGroups() {
-        Unidye.LOGGER.info("Registering Item Groups for" + Unidye.MOD_ID);
+//        Unidye.LOGGER.info("Registering Item Groups for" + Unidye.MOD_ID);
     }
 }

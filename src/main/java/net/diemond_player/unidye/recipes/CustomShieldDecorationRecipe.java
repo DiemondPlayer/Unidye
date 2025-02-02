@@ -72,15 +72,17 @@ public class CustomShieldDecorationRecipe extends SpecialCraftingRecipe {
             }
         }
 
-        if (itemStack2.isEmpty()) {
-            return itemStack2;
-        } else {
-            itemStack2.set(UnidyeDataComponentTypes.CUSTOM_BANNER_PATTERNS, itemStack.get(UnidyeDataComponentTypes.CUSTOM_BANNER_PATTERNS));
+        if (!itemStack2.isEmpty()) {
+            itemStack2.set(UnidyeDataComponentTypes.CUSTOM_BANNER_PATTERNS, new CustomBannerPatternsComponent(itemStack.getOrDefault(UnidyeDataComponentTypes.CUSTOM_BANNER_PATTERNS, CustomBannerPatternsComponent.DEFAULT).layers()));
             itemStack2.set(DataComponentTypes.DYED_COLOR, new DyedColorComponent(UnidyeUtils.getColor(itemStack), true));
-            itemStack2.remove(DataComponentTypes.BASE_COLOR);
-            itemStack2.remove(DataComponentTypes.BANNER_PATTERNS);
-            return itemStack2;
+            if(itemStack2.contains(DataComponentTypes.BASE_COLOR)) {
+                itemStack2.remove(DataComponentTypes.BASE_COLOR);
+            }
+            if(itemStack2.contains(DataComponentTypes.BANNER_PATTERNS)) {
+                itemStack2.remove(DataComponentTypes.BANNER_PATTERNS);
+            }
         }
+        return itemStack2;
     }
 
     @Override

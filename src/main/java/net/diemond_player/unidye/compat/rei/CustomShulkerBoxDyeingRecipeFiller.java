@@ -31,7 +31,7 @@ public class CustomShulkerBoxDyeingRecipeFiller implements CraftingRecipeFiller<
             int dyes = new Random().nextInt(2) + 2;
             List<EntryIngredient> inputs = new ArrayList<>();
             List<DyeItem> dyeItems = new ArrayList<>();
-            inputs.add(EntryIngredients.ofItemTag(ConventionalItemTags.SHULKER_BOXES));
+            inputs.add(EntryIngredients.ofItemTag( net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags.SHULKER_BOXES));
             for (int j = 0; j < dyes; j++) {
                 DyeColor color = colors[new Random().nextInt(colors.length)];
                 DyeItem dyeItem = DyeItem.byColor(color);

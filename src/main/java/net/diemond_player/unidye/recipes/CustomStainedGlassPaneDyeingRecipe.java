@@ -23,7 +23,7 @@ public class CustomStainedGlassPaneDyeingRecipe extends SpecialCraftingRecipe {
     public boolean matches(RecipeInputInventory inventory, World world) {
         for (int i = 0; i < inventory.size(); ++i) {
             ItemStack itemStack2 = inventory.getStack(i);
-            if ((itemStack2.isIn(ConventionalItemTags.GLASS_PANES) && i != 4)
+            if ((itemStack2.isIn(net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags.GLASS_PANES) && i != 4)
                     || (itemStack2.getItem() == UnidyeItems.CUSTOM_DYE && i == 4)) {
                 continue;
             }

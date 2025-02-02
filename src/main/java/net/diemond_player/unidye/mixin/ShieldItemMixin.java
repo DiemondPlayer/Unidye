@@ -16,16 +16,16 @@ import java.util.List;
 
 @Mixin(ShieldItem.class)
 public abstract class ShieldItemMixin {
-    @Inject(method = "getTranslationKey", at = @At(value = "RETURN", ordinal = 0), cancellable = true)
+    @Inject(method = "getTranslationKey", at = @At(value = "HEAD"), cancellable = true)
     private void unidye$getTranslationKey(ItemStack stack, CallbackInfoReturnable<String> cir) {
-        if(stack.get(DataComponentTypes.DYED_COLOR) != null) {
+        if(stack.contains(DataComponentTypes.DYED_COLOR)) {
             cir.setReturnValue("item.unidye.shield_custom_color");
         }
     }
 
     @Redirect(method = "appendTooltip", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/BannerItem;appendBannerTooltip(Lnet/minecraft/item/ItemStack;Ljava/util/List;)V"))
     private void unidye$appendTooltip(ItemStack stack, List<Text> tooltip) {
-        if(stack.get(DataComponentTypes.DYED_COLOR) != null) {
+        if(stack.contains(DataComponentTypes.DYED_COLOR)) {
             DyeableBannerItem.appendBannerTooltip(stack, tooltip);
         } else {
             BannerItem.appendBannerTooltip(stack, tooltip);

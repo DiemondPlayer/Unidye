@@ -25,7 +25,6 @@ import java.util.stream.Stream;
 public class EmiCustomShieldDecorationRecipe extends EmiPatternCraftingRecipe {
 
     private static final List<DyeItem> DYES = Stream.of(DyeColor.values()).map(DyeItem::byColor).filter(c -> !(c instanceof CustomDyeItem)).toList();
-    private EmiStack banner;
 
     public EmiCustomShieldDecorationRecipe(Identifier id) {
         super(List.of(
@@ -51,7 +50,7 @@ public class EmiCustomShieldDecorationRecipe extends EmiPatternCraftingRecipe {
     public EmiStack getPattern(Random random, Item item) {
         ItemStack stack = new ItemStack(Items.SHIELD);
         if (item == null) {
-            stack = UnidyeUtils.blendAndSetColor(new ItemStack(UnidyeBlocks.CUSTOM_BANNER), getDyes(random), Lists.newArrayList());;
+            stack = UnidyeUtils.blendAndSetColor(new ItemStack(UnidyeBlocks.CUSTOM_BANNER), getDyes(random), Lists.newArrayList());
         }
         int patterns = 1 + Math.max(random.nextInt(5), random.nextInt(3));
         CustomBannerPatternsComponent pattern = CustomBannerPatternsComponent.DEFAULT;

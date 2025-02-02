@@ -33,13 +33,13 @@ public abstract class SheepEntityMixin implements UnidyeAccessor {
     private static final TrackedData<Integer> SECONDARY_CUSTOM_COLOR = DataTracker.registerData(SheepEntity.class, TrackedDataHandlerRegistry.INTEGER);
 
     @Inject(method = "writeCustomDataToNbt", at = @At("HEAD"))
-    private void writeCustomDataToNbt(NbtCompound nbt, CallbackInfo ci) {
+    private void unidye$writeCustomDataToNbt(NbtCompound nbt, CallbackInfo ci) {
         nbt.putInt("unidye.custom_color", unidye$getCustomColor());
         nbt.putInt("unidye.secondary_custom_color", unidye$getSecondaryCustomColor());
     }
 
     @Inject(method = "readCustomDataFromNbt", at = @At("HEAD"))
-    private void readCustomDataFromNbt(NbtCompound nbt, CallbackInfo ci) {
+    private void unidye$readCustomDataFromNbt(NbtCompound nbt, CallbackInfo ci) {
         if (nbt.contains("unidye.custom_color")) {
             unidye$setCustomColor(nbt.getInt("unidye.custom_color"));
         }
@@ -49,13 +49,13 @@ public abstract class SheepEntityMixin implements UnidyeAccessor {
     }
 
     @Inject(method = "initDataTracker", at = @At("HEAD"))
-    private void initDataTracker(DataTracker.Builder builder, CallbackInfo ci) {
+    private void unidye$initDataTracker(DataTracker.Builder builder, CallbackInfo ci) {
         builder.add(CUSTOM_COLOR, 0xFFFFFF);
         builder.add(SECONDARY_CUSTOM_COLOR, 0xFFFFFF);
     }
 
     @Inject(method = "getLootTableId", at = @At("HEAD"), cancellable = true)
-    private void getLootTableId(CallbackInfoReturnable<RegistryKey<LootTable>> cir) {
+    private void unidye$getLootTableId(CallbackInfoReturnable<RegistryKey<LootTable>> cir) {
         UnidyeAccessor sheep = (UnidyeAccessor) ((SheepEntity) (Object) this);
         if (sheep.unidye$getCustomColor() != 0xFFFFFF) {
             cir.setReturnValue(((SheepEntity) (Object) this).getType().getLootTableId());
@@ -63,7 +63,7 @@ public abstract class SheepEntityMixin implements UnidyeAccessor {
     }
 
     @Inject(method = "createChild(Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/entity/passive/PassiveEntity;)Lnet/minecraft/entity/passive/PassiveEntity;", at = @At("HEAD"), cancellable = true)
-    private void createChild(ServerWorld world, PassiveEntity entity, CallbackInfoReturnable<PassiveEntity> cir) {
+    private void unidye$createChild(ServerWorld world, PassiveEntity entity, CallbackInfoReturnable<PassiveEntity> cir) {
         SheepEntity sheepEntity = (SheepEntity) EntityType.SHEEP.create(world);
         if (sheepEntity != null) {
             UnidyeAccessor firstSheep = (UnidyeAccessor) ((SheepEntity) (Object) this);
@@ -178,7 +178,7 @@ public abstract class SheepEntityMixin implements UnidyeAccessor {
     }
 
     @Inject(method = "sheared", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/passive/SheepEntity;setSheared(Z)V", shift = At.Shift.AFTER), cancellable = true)
-    private void sheared(SoundCategory shearedSoundCategory, CallbackInfo ci) {
+    private void unidye$sheared(SoundCategory shearedSoundCategory, CallbackInfo ci) {
         UnidyeAccessor sheep = (UnidyeAccessor) ((SheepEntity) (Object) this);
         if (sheep.unidye$getCustomColor() != 0xFFFFFF) {
             int i = 1 + ((SheepEntity) (Object) this).getRandom().nextInt(3);

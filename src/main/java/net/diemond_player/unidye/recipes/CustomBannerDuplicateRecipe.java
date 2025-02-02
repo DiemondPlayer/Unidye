@@ -28,7 +28,7 @@ public class CustomBannerDuplicateRecipe extends SpecialCraftingRecipe {
             ItemStack itemStack3 = recipeInputInventory.getStack(i);
             if (itemStack3.isEmpty()) continue;
             Item item = itemStack3.getItem();
-            if (!(item instanceof DyeableBannerItem bannerItem)) {
+            if (!(item instanceof DyeableBannerItem)) {
                 return false;
             }
             if (color == -1) {

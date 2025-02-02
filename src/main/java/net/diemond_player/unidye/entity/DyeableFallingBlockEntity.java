@@ -3,7 +3,6 @@ package net.diemond_player.unidye.entity;
 import com.mojang.logging.LogUtils;
 import net.diemond_player.unidye.block.UnidyeBlocks;
 import net.diemond_player.unidye.block.custom.DyeableConcretePowderBlock;
-import net.diemond_player.unidye.block.entity.DyeableBlockEntity;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
@@ -79,21 +78,13 @@ public class DyeableFallingBlockEntity extends FallingBlockEntity {
        DyeableFallingBlockEntity fallingBlockEntity = new DyeableFallingBlockEntity(
                 world,
                 (double)pos.getX() + 0.5,
-                (double)pos.getY(),
+               pos.getY(),
                 (double)pos.getZ() + 0.5,
-                state.contains(Properties.WATERLOGGED) ? state.with(Properties.WATERLOGGED, Boolean.valueOf(false)) : state
+                state.contains(Properties.WATERLOGGED) ? state.with(Properties.WATERLOGGED, Boolean.FALSE) : state
         );
         world.setBlockState(pos, state.getFluidState().getBlockState(), Block.NOTIFY_ALL);
         world.spawnEntity(fallingBlockEntity);
         return fallingBlockEntity;
-    }
-
-    public void setFallingBlockPos(BlockPos pos) {
-        this.dataTracker.set(BLOCK_POS, pos);
-    }
-
-    public BlockPos getFallingBlockPos() {
-        return this.dataTracker.get(BLOCK_POS);
     }
 
     @Override
@@ -144,7 +135,7 @@ public class DyeableFallingBlockEntity extends FallingBlockEntity {
                             boolean bl5 = this.block.canPlaceAt(this.getWorld(), blockPos) && !bl4;
                             if (bl3 && bl5) {
                                 if (this.block.contains(Properties.WATERLOGGED) && this.getWorld().getFluidState(blockPos).getFluid() == Fluids.WATER) {
-                                    this.block = this.block.with(Properties.WATERLOGGED, Boolean.valueOf(true));
+                                    this.block = this.block.with(Properties.WATERLOGGED, Boolean.TRUE);
                                 }
 
                                 if (this.getWorld().setBlockState(blockPos, this.block, Block.NOTIFY_ALL)) {
@@ -154,15 +145,17 @@ public class DyeableFallingBlockEntity extends FallingBlockEntity {
                                             .getChunkManager()
                                             .threadedAnvilChunkStorage
                                             .sendToOtherNearbyPlayers(this, new BlockUpdateS2CPacket(blockPos, this.getWorld().getBlockState(blockPos)));
-                                    this.discard();
                                     if (block instanceof LandingBlock) {
-                                        ((LandingBlock) ((Object) block)).onLanding(this.getWorld(), blockPos, this.block, blockState, this);
-                                        BlockEntity blockEntity1 = this.getWorld().getBlockEntity(blockPos);
-                                        if (blockEntity1 instanceof DyeableBlockEntity dyeableBlockEntity) {
-                                            dyeableBlockEntity.color = this.getCustomColor();
-                                            dyeableBlockEntity.markDirty();
-                                        }
+                                        ((LandingBlock) block).onLanding(this.getWorld(), blockPos, this.block, blockState, this);
+//                                        BlockEntity blockEntity1 = this.getWorld().getBlockEntity(blockPos);
+//                                        if (blockEntity1 instanceof DyeableBlockEntity dyeableBlockEntity) {
+//                                            dyeableBlockEntity.color = this.getCustomColor();
+//                                            dyeableBlockEntity.markDirty();
+//                                            blockEntity1.toUpdatePacket();
+//                                            this.getWorld().updateListeners(blockPos, this.getWorld().getBlockState(blockPos), this.getWorld().getBlockState(blockPos), 0);
+//                                        }
                                     }
+                                    this.discard();
 
                                     if (this.blockEntityData != null && this.block.hasBlockEntity()) {
                                         BlockEntity blockEntity = this.getWorld().getBlockEntity(blockPos);
@@ -176,7 +169,7 @@ public class DyeableFallingBlockEntity extends FallingBlockEntity {
                                             try {
                                                 blockEntity.read(nbtCompound, this.getWorld().getRegistryManager());
                                             } catch (Exception var15) {
-                                                LOGGER.error("Failed to load block entity from falling block", (Throwable)var15);
+                                                LOGGER.error("Failed to load block entity from falling block", var15);
                                             }
 
                                             blockEntity.markDirty();
@@ -232,7 +225,7 @@ public class DyeableFallingBlockEntity extends FallingBlockEntity {
         Predicate<Entity> predicate = EntityPredicates.EXCEPT_CREATIVE_OR_SPECTATOR.and(EntityPredicates.VALID_LIVING_ENTITY);
         Block block = this.block.getBlock();
         if (block instanceof LandingBlock) {
-            LandingBlock landingBlock = (LandingBlock) ((Object) block);
+            LandingBlock landingBlock = (LandingBlock) block;
             damageSource2 = landingBlock.getDamageSource(this);
         } else {
             damageSource2 = this.getDamageSources().fallingBlock(this);

@@ -20,6 +20,6 @@ public class UnidyeDataComponentTypes {
     }
 
     public static void registerModDataComponentTypes(){
-        Unidye.LOGGER.info("Registering Unidye Data Component Types");
+//        Unidye.LOGGER.info("Registering Unidye Data Component Types");
     }
 }

@@ -6,6 +6,9 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.LootableContainerBlockEntity;
 import net.minecraft.block.piston.PistonBehavior;
+import net.minecraft.component.ComponentMap;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.DyedColorComponent;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MovementType;
 import net.minecraft.entity.mob.ShulkerEntity;
@@ -39,7 +42,6 @@ public class DyeableShulkerBoxBlockEntity extends LootableContainerBlockEntity
         implements SidedInventory {
     public static final int DEFAULT_COLOR = 16777215;
     public int color = DEFAULT_COLOR;
-    public static final String ITEMS_KEY = "Items";
     private static final int[] AVAILABLE_SLOTS = IntStream.range(0, 27).toArray();
     private DefaultedList<ItemStack> inventory = DefaultedList.ofSize(27, ItemStack.EMPTY);
     private int viewerCount;
@@ -276,5 +278,17 @@ public class DyeableShulkerBoxBlockEntity extends LootableContainerBlockEntity
         OPENING,
         OPENED,
         CLOSING
+    }
+
+    @Override
+    protected void readComponents(BlockEntity.ComponentsAccess components) {
+        super.readComponents(components);
+        this.color = ((DyedColorComponent)components.getOrDefault(DataComponentTypes.DYED_COLOR, DyedColorComponent.DEFAULT_COLOR)).rgb();
+    }
+
+    @Override
+    protected void addComponents(ComponentMap.Builder componentMapBuilder) {
+        super.addComponents(componentMapBuilder);
+        componentMapBuilder.add(DataComponentTypes.DYED_COLOR, new DyedColorComponent(color, true));
     }
 }
