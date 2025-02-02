@@ -27,8 +27,12 @@ public abstract class ShieldDecorationRecipeMixin {
     @ModifyReturnValue(method = "craft(Lnet/minecraft/inventory/RecipeInputInventory;Lnet/minecraft/registry/RegistryWrapper$WrapperLookup;)Lnet/minecraft/item/ItemStack;", at = @At("TAIL"))
     public ItemStack unidye$craft(ItemStack original) {
         if(!original.isEmpty()) {
-            original.remove(UnidyeDataComponentTypes.CUSTOM_BANNER_PATTERNS);
-            original.remove(DataComponentTypes.DYED_COLOR);
+            if(original.contains(UnidyeDataComponentTypes.CUSTOM_BANNER_PATTERNS)) {
+                original.remove(UnidyeDataComponentTypes.CUSTOM_BANNER_PATTERNS);
+            }
+            if(original.contains(DataComponentTypes.DYED_COLOR)) {
+                original.remove(DataComponentTypes.DYED_COLOR);
+            }
         }
         return original;
     }
