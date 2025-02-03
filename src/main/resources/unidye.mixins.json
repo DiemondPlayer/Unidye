@@ -14,7 +14,6 @@
     "FireworkStarFadeRecipeMixin",
     "FireworkStarItemMixin",
     "FireworkStarRecipeMixin",
-    "ItemMixin",
     "ItemStackMixin",
     "LoomScreenHandlerMixin",
     "MapBannerMarkerMixin",
@@ -39,6 +38,7 @@
     "ModelPartMixin",
     "SheepWoolFeatureRendererMixin",
     "SignBlockEntityRendererMixin",
-    "WolfCollarFeatureRendererMixin"
+    "WolfCollarFeatureRendererMixin",
+    "ItemMixin"
   ]
 }
