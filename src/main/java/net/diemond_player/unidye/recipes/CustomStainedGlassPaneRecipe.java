@@ -20,14 +20,13 @@ public class CustomStainedGlassPaneRecipe extends SpecialCraftingRecipe {
 
     @Override
     public boolean matches(CraftingRecipeInput inventory, World world) {
+        if(!fits(inventory.getWidth(), inventory.getHeight())){
+            return false;
+        }
         ItemStack itemStack = ItemStack.EMPTY;
-        int count = 0;
-        for (int i = 0; i < inventory.getSize(); ++i) {
+        for (int i = 0; i < inventory.getSize(); i++) {
             ItemStack itemStack2 = inventory.getStackInSlot(i);
-            if (itemStack2.isEmpty()) continue;
             if (itemStack2.getItem() == UnidyeBlocks.CUSTOM_STAINED_GLASS.asItem()) {
-                if (count == 6) return false;
-                count++;
                 if (!itemStack.isEmpty()) {
                     if (UnidyeUtils.getColor(itemStack2) == UnidyeUtils.getColor(itemStack)
                             && Objects.equals(DyeableLeatheryBlockItem.getLeatherColor(itemStack2), DyeableLeatheryBlockItem.getLeatherColor(itemStack))) {
@@ -41,22 +40,14 @@ public class CustomStainedGlassPaneRecipe extends SpecialCraftingRecipe {
             }
             return false;
         }
-        if (!((inventory.getStackInSlot(0).isEmpty()
-                && inventory.getStackInSlot(1).isEmpty()
-                && inventory.getStackInSlot(2).isEmpty())
-                || (inventory.getStackInSlot(6).isEmpty()
-                && inventory.getStackInSlot(7).isEmpty()
-                && inventory.getStackInSlot(8).isEmpty()))) {
-            return false;
-        }
-        return !itemStack.isEmpty() && count == 6;
+        return !itemStack.isEmpty();
     }
 
     @Override
     public ItemStack craft(CraftingRecipeInput inventory, RegistryWrapper.WrapperLookup lookup) {
         ItemStack itemStack = ItemStack.EMPTY;
         ItemStack itemStack1 = new ItemStack(UnidyeBlocks.CUSTOM_STAINED_GLASS_PANE.asItem());
-        for (int i = 0; i < inventory.getSize(); ++i) {
+        for (int i = 0; i < inventory.getSize(); i++) {
             ItemStack itemStack2 = inventory.getStackInSlot(i);
             if (itemStack2.getItem() == UnidyeBlocks.CUSTOM_STAINED_GLASS.asItem()) {
                 itemStack = itemStack2;
@@ -70,7 +61,7 @@ public class CustomStainedGlassPaneRecipe extends SpecialCraftingRecipe {
 
     @Override
     public boolean fits(int width, int height) {
-        return width == 3 && height == 3;
+        return width == 3 && height == 2;
     }
 
     @Override

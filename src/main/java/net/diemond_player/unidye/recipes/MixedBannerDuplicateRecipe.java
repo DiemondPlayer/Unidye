@@ -15,6 +15,7 @@ import net.minecraft.recipe.SpecialCraftingRecipe;
 import net.minecraft.recipe.book.CraftingRecipeCategory;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.util.math.ColorHelper;
 import net.minecraft.world.World;
 
 public class MixedBannerDuplicateRecipe extends SpecialCraftingRecipe {
@@ -27,7 +28,7 @@ public class MixedBannerDuplicateRecipe extends SpecialCraftingRecipe {
         boolean bl = false;
         ItemStack itemStack = null;
         ItemStack itemStack2 = null;
-        for (int i = 0; i < recipeInputInventory.getSize(); ++i) {
+        for (int i = 0; i < recipeInputInventory.getSize(); i++) {
             ItemStack itemStack3 = recipeInputInventory.getStackInSlot(i);
             if (itemStack3.isEmpty()) continue;
             Item item = itemStack3.getItem();
@@ -57,7 +58,7 @@ public class MixedBannerDuplicateRecipe extends SpecialCraftingRecipe {
         }
         if (itemStack != null && itemStack2 != null) {
             int color = UnidyeUtils.getColor(itemStack);
-            int n = ((BannerItem) itemStack2.getItem()).getColor().getEntityColor();
+            int n = ColorHelper.Argb.withAlpha(0, ((BannerItem) itemStack2.getItem()).getColor().getEntityColor());
             bl = (n == color);
         }
         return bl;

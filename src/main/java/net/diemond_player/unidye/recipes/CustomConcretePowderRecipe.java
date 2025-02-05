@@ -21,10 +21,13 @@ public class CustomConcretePowderRecipe extends SpecialCraftingRecipe {
 
     @Override
     public boolean matches(CraftingRecipeInput inventory, World world) {
+        if(!fits(inventory.getWidth(), inventory.getHeight())){
+            return false;
+        }
         int gravelCount = 0;
         int sandCount = 0;
         boolean dye = false;
-        for (int i = 0; i < inventory.getSize(); ++i) {
+        for (int i = 0; i < inventory.getSize(); i++) {
             Item item = inventory.getStackInSlot(i).getItem();
             if (item == Items.SAND) {
                 sandCount++;
@@ -44,7 +47,7 @@ public class CustomConcretePowderRecipe extends SpecialCraftingRecipe {
     @Override
     public ItemStack craft(CraftingRecipeInput inventory, RegistryWrapper.WrapperLookup lookup) {
         ItemStack itemStack = ItemStack.EMPTY;
-        for (int i = 0; i < inventory.getSize(); ++i) {
+        for (int i = 0; i < inventory.getSize(); i++) {
             if (inventory.getStackInSlot(i).getItem() == UnidyeItems.CUSTOM_DYE) {
                 itemStack = inventory.getStackInSlot(i);
             }
@@ -57,7 +60,7 @@ public class CustomConcretePowderRecipe extends SpecialCraftingRecipe {
 
     @Override
     public boolean fits(int width, int height) {
-        return width >= 3 && height >= 3;
+        return width == 3 && height == 3;
     }
 
     @Override

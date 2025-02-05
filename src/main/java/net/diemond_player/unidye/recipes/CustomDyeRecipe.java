@@ -30,7 +30,7 @@ public class CustomDyeRecipe extends SpecialCraftingRecipe {
         boolean difference = false;
         boolean custom = false;
         Item item = null;
-        for (int i = 0; i < inventory.getSize(); ++i) {
+        for (int i = 0; i < inventory.getSize(); i++) {
             ItemStack itemStack2 = inventory.getStackInSlot(i);
             if (itemStack2.isEmpty()) {
                 continue;
@@ -66,7 +66,7 @@ public class CustomDyeRecipe extends SpecialCraftingRecipe {
     public ItemStack craft(CraftingRecipeInput inventory, RegistryWrapper.WrapperLookup lookup) {
         ArrayList<DyeItem> list = Lists.newArrayList();
         ArrayList<ItemStack> customList = Lists.newArrayList();
-        for (int i = 0; i < inventory.getSize(); ++i) {
+        for (int i = 0; i < inventory.getSize(); i++) {
             ItemStack itemStack2 = inventory.getStackInSlot(i);
             if (itemStack2.isEmpty()) continue;
             Item item = itemStack2.getItem();
@@ -87,7 +87,7 @@ public class CustomDyeRecipe extends SpecialCraftingRecipe {
 
     @Override
     public boolean fits(int width, int height) {
-        return width >= 2 && height >= 2;
+        return width * height >= 2;
     }
 
     @Override
@@ -98,7 +98,7 @@ public class CustomDyeRecipe extends SpecialCraftingRecipe {
     @Override
     public DefaultedList<ItemStack> getRemainder(CraftingRecipeInput inventory) {
         DefaultedList<ItemStack> defaultedList = DefaultedList.ofSize(inventory.getSize(), ItemStack.EMPTY);
-        for (int i = 0; i < defaultedList.size(); ++i) {
+        for (int i = 0; i < defaultedList.size(); i++) {
             Item item = inventory.getStackInSlot(i).getItem();
             if (item == Items.STICK) {
                 defaultedList.set(i, new ItemStack(Items.STICK));

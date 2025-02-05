@@ -19,12 +19,14 @@ public class CustomBedRecipe extends SpecialCraftingRecipe {
 
     @Override
     public boolean matches(CraftingRecipeInput inventory, World world) {
+        if(!fits(inventory.getWidth(), inventory.getHeight())){
+            return false;
+        }
         ItemStack itemStack = ItemStack.EMPTY;
         int woolCount = 0;
         int planksCount = 0;
-        for (int i = 0; i < inventory.getSize(); ++i) {
+        for (int i = 0; i < inventory.getSize(); i++) {
             ItemStack itemStack2 = inventory.getStackInSlot(i);
-            if (itemStack2.isEmpty()) continue;
             if (itemStack2.isIn(ItemTags.PLANKS) && woolCount == 3) {
                 if (planksCount == 3) return false;
                 planksCount++;
@@ -46,14 +48,6 @@ public class CustomBedRecipe extends SpecialCraftingRecipe {
             }
             return false;
         }
-        if (!((inventory.getStackInSlot(0).isEmpty()
-                && inventory.getStackInSlot(1).isEmpty()
-                && inventory.getStackInSlot(2).isEmpty())
-                || (inventory.getStackInSlot(6).isEmpty()
-                && inventory.getStackInSlot(7).isEmpty()
-                && inventory.getStackInSlot(8).isEmpty()))) {
-            return false;
-        }
         return !itemStack.isEmpty() && planksCount == 3;
     }
 
@@ -61,7 +55,7 @@ public class CustomBedRecipe extends SpecialCraftingRecipe {
     public ItemStack craft(CraftingRecipeInput inventory, RegistryWrapper.WrapperLookup lookup) {
         ItemStack itemStack = ItemStack.EMPTY;
         ItemStack itemStack1 = new ItemStack(UnidyeBlocks.CUSTOM_BED.asItem());
-        for (int i = 0; i < inventory.getSize(); ++i) {
+        for (int i = 0; i < inventory.getSize(); i++) {
             ItemStack itemStack2 = inventory.getStackInSlot(i);
             if (itemStack2.getItem() == UnidyeBlocks.CUSTOM_WOOL.asItem()) {
                 itemStack = itemStack2;

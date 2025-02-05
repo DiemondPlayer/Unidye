@@ -74,7 +74,7 @@ public class DyeableBedBlockEntity extends BlockEntity {
     @Override
     protected void readComponents(ComponentsAccess components) {
         super.readComponents(components);
-        this.color = ((DyedColorComponent)components.getOrDefault(DataComponentTypes.DYED_COLOR, DyedColorComponent.DEFAULT_COLOR)).rgb();
+        this.color = components.getOrDefault(DataComponentTypes.DYED_COLOR, new DyedColorComponent(DyedColorComponent.DEFAULT_COLOR, true)).rgb();
     }
 
     @Override

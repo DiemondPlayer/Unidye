@@ -21,7 +21,10 @@ public class CustomWoolDyeingRecipe extends SpecialCraftingRecipe {
 
     @Override
     public boolean matches(CraftingRecipeInput inventory, World world) {
-        for (int i = 0; i < inventory.getSize(); ++i) {
+        if(!fits(inventory.getWidth(), inventory.getHeight())){
+            return false;
+        }
+        for (int i = 0; i < inventory.getSize(); i++) {
             ItemStack itemStack2 = inventory.getStackInSlot(i);
             if ((itemStack2.isIn(ItemTags.WOOL) && i != 4)
                     || (itemStack2.getItem() == UnidyeItems.CUSTOM_DYE && i == 4)) {
@@ -43,7 +46,7 @@ public class CustomWoolDyeingRecipe extends SpecialCraftingRecipe {
 
     @Override
     public boolean fits(int width, int height) {
-        return width >= 3 && height >= 3;
+        return width == 3 && height == 3;
     }
 
     @Override

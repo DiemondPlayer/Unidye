@@ -29,7 +29,7 @@ public class CustomShulkerBoxDyeingRecipe extends SpecialCraftingRecipe {
         int count = 0;
         Item item = null;
         ItemStack itemStack = null;
-        for (int i = 0; i < inventory.getSize(); ++i) {
+        for (int i = 0; i < inventory.getSize(); i++) {
             ItemStack itemStack2 = inventory.getStackInSlot(i);
             if (itemStack2.isEmpty()) {
                 continue;
@@ -73,7 +73,7 @@ public class CustomShulkerBoxDyeingRecipe extends SpecialCraftingRecipe {
         ArrayList<DyeItem> dyeList = Lists.newArrayList();
         ArrayList<ItemStack> customDyeList = Lists.newArrayList();
         ItemStack itemStack = ItemStack.EMPTY;
-        for (int i = 0; i < inventory.getSize(); ++i) {
+        for (int i = 0; i < inventory.getSize(); i++) {
             ItemStack itemStack2 = inventory.getStackInSlot(i);
             if (itemStack2.isEmpty()) continue;
             Item item = itemStack2.getItem();
@@ -98,7 +98,7 @@ public class CustomShulkerBoxDyeingRecipe extends SpecialCraftingRecipe {
 
     @Override
     public boolean fits(int width, int height) {
-        return width >= 2 && height >= 2;
+        return width * height >= 2;
     }
 
     @Override

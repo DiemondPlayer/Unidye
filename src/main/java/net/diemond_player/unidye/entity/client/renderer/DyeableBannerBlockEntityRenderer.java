@@ -131,6 +131,6 @@ public class DyeableBannerBlockEntityRenderer
     private static void renderLayer(
             MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, ModelPart canvas, SpriteIdentifier textureId, int color
     ) {
-        canvas.render(matrices, textureId.getVertexConsumer(vertexConsumers, RenderLayer::getEntityNoOutline), light, overlay, color);
+        canvas.render(matrices, textureId.getVertexConsumer(vertexConsumers, RenderLayer::getEntityNoOutline), light, overlay, ColorHelper.Argb.fullAlpha(color));
     }
 }

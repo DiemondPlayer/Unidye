@@ -263,7 +263,7 @@ public class UnidyeUtils {
             } else if (Objects.equals(materialType, "firework")) {
                 return getColorArray(dyeColor.getFireworkColor());
             } else {
-                return getColorArray(dyeColor.getEntityColor());
+                return getColorArray(ColorHelper.Argb.withAlpha(0, dyeColor.getEntityColor()));
             }
         }
     }
@@ -294,6 +294,6 @@ public class UnidyeUtils {
 
     public static Optional<DyeColor> findDyeColorByLeatherColor(int leatherColor){
         return Arrays.stream(DyeColor.values()).filter(dyeColor ->
-                dyeColor.getEntityColor() == leatherColor).findFirst();
+                ColorHelper.Argb.withAlpha(0, dyeColor.getEntityColor()) == leatherColor).findFirst();
     }
 }

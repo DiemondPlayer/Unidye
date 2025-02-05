@@ -19,8 +19,11 @@ public class CustomBannerRecipe extends SpecialCraftingRecipe {
 
     @Override
     public boolean matches(CraftingRecipeInput inventory, World world) {
+        if(!fits(inventory.getWidth(), inventory.getHeight())){
+            return false;
+        }
         ItemStack itemStack = ItemStack.EMPTY;
-        for (int i = 0; i < inventory.getSize(); ++i) {
+        for (int i = 0; i < inventory.getSize(); i++) {
             ItemStack itemStack2 = inventory.getStackInSlot(i);
             if (itemStack2.isEmpty() && (i == 8 || i == 6)) continue;
             if (itemStack2.getItem() == Items.STICK && i == 7) continue;

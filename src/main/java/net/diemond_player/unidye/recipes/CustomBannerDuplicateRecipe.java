@@ -4,13 +4,12 @@ import net.diemond_player.unidye.component.CustomBannerPatternsComponent;
 import net.diemond_player.unidye.component.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.item.custom.DyeableBannerItem;
 import net.diemond_player.unidye.util.UnidyeUtils;
-import net.minecraft.recipe.input.CraftingRecipeInput;;
+import net.minecraft.recipe.input.CraftingRecipeInput;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SpecialCraftingRecipe;
 import net.minecraft.recipe.book.CraftingRecipeCategory;
-import net.minecraft.recipe.input.CraftingRecipeInput;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
@@ -25,7 +24,7 @@ public class CustomBannerDuplicateRecipe extends SpecialCraftingRecipe {
         int color = -1;
         ItemStack itemStack = null;
         ItemStack itemStack2 = null;
-        for (int i = 0; i < recipeInputInventory.getSize(); ++i) {
+        for (int i = 0; i < recipeInputInventory.getSize(); i++) {
             ItemStack itemStack3 = recipeInputInventory.getStackInSlot(i);
             if (itemStack3.isEmpty()) continue;
             Item item = itemStack3.getItem();
@@ -59,7 +58,7 @@ public class CustomBannerDuplicateRecipe extends SpecialCraftingRecipe {
 
     @Override
     public ItemStack craft(CraftingRecipeInput inventory, RegistryWrapper.WrapperLookup lookup) {
-        for (int i = 0; i < inventory.getSize(); ++i) {
+        for (int i = 0; i < inventory.getSize(); i++) {
             ItemStack itemStack = inventory.getStackInSlot(i);
             if (!itemStack.isEmpty()) {
                 int j = itemStack.getOrDefault(UnidyeDataComponentTypes.CUSTOM_BANNER_PATTERNS, CustomBannerPatternsComponent.DEFAULT).layers().size();

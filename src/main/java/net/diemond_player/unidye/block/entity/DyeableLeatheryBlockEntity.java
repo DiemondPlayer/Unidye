@@ -82,7 +82,7 @@ public class DyeableLeatheryBlockEntity extends BlockEntity {
     @Override
     protected void readComponents(ComponentsAccess components) {
         super.readComponents(components);
-        this.color = ((DyedColorComponent)components.getOrDefault(DataComponentTypes.DYED_COLOR, DyedColorComponent.DEFAULT_COLOR)).rgb();
+        this.color = components.getOrDefault(DataComponentTypes.DYED_COLOR, new DyedColorComponent(DyedColorComponent.DEFAULT_COLOR, true)).rgb();
         this.leatherColor = components.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT).copyNbt().getInt("leather");
     }
 

@@ -29,7 +29,7 @@ public class CustomBedDyeingRecipe extends SpecialCraftingRecipe {
         int count = 0;
         Item item = null;
         ItemStack itemStack = null;
-        for (int i = 0; i < inventory.getSize(); ++i) {
+        for (int i = 0; i < inventory.getSize(); i++) {
             ItemStack itemStack2 = inventory.getStackInSlot(i);
             if (itemStack2.isEmpty()) {
                 continue;
@@ -72,7 +72,7 @@ public class CustomBedDyeingRecipe extends SpecialCraftingRecipe {
     public ItemStack craft(CraftingRecipeInput inventory, RegistryWrapper.WrapperLookup lookup) {
         ArrayList<DyeItem> dyeList = Lists.newArrayList();
         ArrayList<ItemStack> customDyeList = Lists.newArrayList();
-        for (int i = 0; i < inventory.getSize(); ++i) {
+        for (int i = 0; i < inventory.getSize(); i++) {
             ItemStack itemStack2 = inventory.getStackInSlot(i);
             if (itemStack2.isEmpty()) continue;
             Item item = itemStack2.getItem();
