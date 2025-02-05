@@ -1,7 +1,6 @@
 package net.diemond_player.unidye.mixin;
 
 import net.diemond_player.unidye.util.UnidyeAccessor;
-import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.client.render.entity.feature.SheepWoolFeatureRenderer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

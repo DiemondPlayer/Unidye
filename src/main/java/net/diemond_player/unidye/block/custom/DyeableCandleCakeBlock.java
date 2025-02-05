@@ -48,7 +48,7 @@ public class DyeableCandleCakeBlock extends CandleCakeBlock implements IDyeableB
             int i = (Integer)state.get(BITES);
             world.emitGameEvent(player, GameEvent.EAT, pos);
             if (i < 6) {
-                world.setBlockState(pos, state.with(BITES, Integer.valueOf(i + 1)), Block.NOTIFY_ALL);
+                world.setBlockState(pos, state.with(BITES, i + 1), Block.NOTIFY_ALL);
             } else {
                 world.removeBlock(pos, false);
                 world.emitGameEvent(player, GameEvent.BLOCK_DESTROY, pos);

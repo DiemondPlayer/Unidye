@@ -21,7 +21,7 @@ import java.util.*;
 import static net.diemond_player.unidye.item.custom.CustomDyeItem.*;
 
 public class UnidyeUtils {
-    public static Map<Item, UnidyeColor> DYES = new HashMap<>() {{
+    public static final Map<Item, UnidyeColor> DYES = new HashMap<>() {{
         put(Items.WHITE_DYE, UnidyeColor.WHITE);
         put(Items.ORANGE_DYE, UnidyeColor.ORANGE);
         put(Items.YELLOW_DYE, UnidyeColor.YELLOW);
@@ -40,7 +40,7 @@ public class UnidyeUtils {
         put(Items.PURPLE_DYE, UnidyeColor.PURPLE);
 //        put(ElsDyeModItems.MINT_DYE, UnidyeColor.ELL_MINT);
     }};
-    public static Map<Item, String> MATERIAL_TYPES = new HashMap<>() {{
+    public static final Map<Item, String> MATERIAL_TYPES = new HashMap<>() {{
         put(UnidyeBlocks.CUSTOM_WOOL.asItem(), "wool");
         put(UnidyeBlocks.CUSTOM_CARPET.asItem(), "wool");
         put(UnidyeBlocks.CUSTOM_TERRACOTTA.asItem(), "terracotta");
@@ -277,7 +277,7 @@ public class UnidyeUtils {
         }
         int j = (color & 0xFF0000) >> 16;
         int k = (color & 0xFF00) >> 8;
-        int l = (color & 0xFF) >> 0;
+        int l = (color & 0xFF);
         return new float[]{(float) j / 255.0f, (float) k / 255.0f, (float) l / 255.0f};
     }
 
@@ -288,7 +288,7 @@ public class UnidyeUtils {
     public static float[] getColorArray(int n) {
         int j = (n & 0xFF0000) >> 16;
         int k = (n & 0xFF00) >> 8;
-        int l = (n & 0xFF) >> 0;
+        int l = (n & 0xFF);
         return new float[]{(float) j / 255.0f, (float) k / 255.0f, (float) l / 255.0f};
     }
 

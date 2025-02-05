@@ -45,7 +45,5 @@ public class UnidyeBlockTagProvider extends FabricTagProvider.BlockTagProvider {
                 .add(UnidyeBlocks.CUSTOM_STAINED_GLASS);
         getOrCreateTagBuilder(net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags.GLASS_PANES)
                 .add(UnidyeBlocks.CUSTOM_STAINED_GLASS_PANE);
-        getOrCreateTagBuilder(net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags.SHULKER_BOXES)
-                .add(UnidyeBlocks.CUSTOM_SHULKER_BOX);
     }
 }

@@ -29,15 +29,11 @@ public class EmiCustomBannerRecipe extends EmiPatternCraftingRecipe {
     @Override
     public SlotWidget getInputWidget(int slot, int x, int y) {
         if (slot < 6) {
-            return new GeneratedSlotWidget(r -> {
-                return EmiStack.of(UnidyeUtils.blendAndSetColor(new ItemStack(UnidyeBlocks.CUSTOM_WOOL), getDyes(r), Lists.newArrayList()));
-            }, unique, x, y);
+            return new GeneratedSlotWidget(r -> EmiStack.of(UnidyeUtils.blendAndSetColor(new ItemStack(UnidyeBlocks.CUSTOM_WOOL), getDyes(r), Lists.newArrayList())), unique, x, y);
         } else if (slot == 7) {
             return new SlotWidget(EmiStack.of(Items.STICK), x, y);
         }
-        return new GeneratedSlotWidget(r -> {
-            return EmiStack.EMPTY;
-        }, unique, x, y);
+        return new GeneratedSlotWidget(r -> EmiStack.EMPTY, unique, x, y);
     }
 
     @Override

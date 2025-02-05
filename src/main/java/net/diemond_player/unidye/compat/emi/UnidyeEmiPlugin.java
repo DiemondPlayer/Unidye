@@ -15,7 +15,6 @@ import net.diemond_player.unidye.recipes.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.CraftingRecipe;
 import net.minecraft.recipe.Recipe;
@@ -160,7 +159,7 @@ public class UnidyeEmiPlugin implements EmiPlugin {
     }
 
     private static <C extends RecipeInput, T extends Recipe<C>> Iterable<T> getRecipes(EmiRegistry registry, RecipeType<T> type) {
-        return registry.getRecipeManager().listAllOfType(type).stream().map(e -> e.value())::iterator;
+        return registry.getRecipeManager().listAllOfType(type).stream().map(RecipeEntry::value)::iterator;
     }
 
     private static void addRecipeSafe(EmiRegistry registry, Supplier<EmiRecipe> supplier, Recipe<?> recipe) {

@@ -85,7 +85,7 @@ public class CustomShulkerBoxDyeingRecipe extends SpecialCraftingRecipe {
                 dyeList.add((DyeItem) item);
                 continue;
             }
-            if (itemStack2.isIn(ConventionalItemTags.SHULKER_BOXES) && item != UnidyeBlocks.CUSTOM_SHULKER_BOX.asItem()) {
+            if (itemStack2.isIn( net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags.SHULKER_BOXES) && item != UnidyeBlocks.CUSTOM_SHULKER_BOX.asItem()) {
                 itemStack = itemStack2;
             }
         }

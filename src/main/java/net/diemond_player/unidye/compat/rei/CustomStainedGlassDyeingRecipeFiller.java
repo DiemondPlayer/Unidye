@@ -50,7 +50,7 @@ public class CustomStainedGlassDyeingRecipeFiller implements CraftingRecipeFille
             output.setCount(8);
             for (int k = 0; k < 9; k++) {
                 if (k != 4) {
-                    inputs.add(EntryIngredients.ofItemTag(ConventionalItemTags.GLASS_BLOCKS));
+                    inputs.add(EntryIngredients.ofItemTag( net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags.GLASS_BLOCKS));
                 } else {
                     inputs.add(EntryIngredient.of(EntryStack.of(VanillaEntryTypes.ITEM, customDyeStack)));
                 }

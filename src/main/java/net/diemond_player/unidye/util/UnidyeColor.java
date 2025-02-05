@@ -56,7 +56,7 @@ public enum UnidyeColor {
         this.candleColor = candleColor;
         int j = (leatherColor & 0xFF0000) >> 16;
         int k = (leatherColor & 0xFF00) >> 8;
-        int l = (leatherColor & 0xFF) >> 0;
+        int l = (leatherColor & 0xFF);
         this.colorComponents = new float[]{(float) j, (float) k, (float) l};
     }
 
@@ -72,52 +72,52 @@ public enum UnidyeColor {
         if (Objects.equals(materialType, "wool")) {
             int j = (woolColor & 0xFF0000) >> 16;
             int k = (woolColor & 0xFF00) >> 8;
-            int l = (woolColor & 0xFF) >> 0;
+            int l = (woolColor & 0xFF);
             colorComponents = new float[]{(float) j / 255.0f, (float) k / 255.0f, (float) l / 255.0f};
         } else if (Objects.equals(materialType, "terracotta")) {
             int j = (terracottaColor & 0xFF0000) >> 16;
             int k = (terracottaColor & 0xFF00) >> 8;
-            int l = (terracottaColor & 0xFF) >> 0;
+            int l = (terracottaColor & 0xFF);
             colorComponents = new float[]{(float) j / 255.0f, (float) k / 255.0f, (float) l / 255.0f};
         } else if (Objects.equals(materialType, "concrete") || Objects.equals(materialType, "bed")) {
             int j = (concreteColor & 0xFF0000) >> 16;
             int k = (concreteColor & 0xFF00) >> 8;
-            int l = (concreteColor & 0xFF) >> 0;
+            int l = (concreteColor & 0xFF);
             colorComponents = new float[]{(float) j / 255.0f, (float) k / 255.0f, (float) l / 255.0f};
         } else if (Objects.equals(materialType, "glass")) {
             int j = (glassColor & 0xFF0000) >> 16;
             int k = (glassColor & 0xFF00) >> 8;
-            int l = (glassColor & 0xFF) >> 0;
+            int l = (glassColor & 0xFF);
             colorComponents = new float[]{(float) j / 255.0f, (float) k / 255.0f, (float) l / 255.0f};
         } else if (Objects.equals(materialType, "dye")) {
             int j = (dyeColor & 0xFF0000) >> 16;
             int k = (dyeColor & 0xFF00) >> 8;
-            int l = (dyeColor & 0xFF) >> 0;
+            int l = (dyeColor & 0xFF);
             colorComponents = new float[]{(float) j / 255.0f, (float) k / 255.0f, (float) l / 255.0f};
         } else if (Objects.equals(materialType, "sign")) {
             int j = (signColor & 0xFF0000) >> 16;
             int k = (signColor & 0xFF00) >> 8;
-            int l = (signColor & 0xFF) >> 0;
+            int l = (signColor & 0xFF);
             colorComponents = new float[]{(float) j / 255.0f, (float) k / 255.0f, (float) l / 255.0f};
         } else if (Objects.equals(materialType, "firework")) {
             int j = (fireworkColor & 0xFF0000) >> 16;
             int k = (fireworkColor & 0xFF00) >> 8;
-            int l = (fireworkColor & 0xFF) >> 0;
+            int l = (fireworkColor & 0xFF);
             colorComponents = new float[]{(float) j / 255.0f, (float) k / 255.0f, (float) l / 255.0f};
         } else if (Objects.equals(materialType, "shulker_box")) {
             int j = (shulkerBoxColor & 0xFF0000) >> 16;
             int k = (shulkerBoxColor & 0xFF00) >> 8;
-            int l = (shulkerBoxColor & 0xFF) >> 0;
+            int l = (shulkerBoxColor & 0xFF);
             colorComponents = new float[]{(float) j / 255.0f, (float) k / 255.0f, (float) l / 255.0f};
         } else if (Objects.equals(materialType, "candle")) {
             int j = (candleColor & 0xFF0000) >> 16;
             int k = (candleColor & 0xFF00) >> 8;
-            int l = (candleColor & 0xFF) >> 0;
+            int l = (candleColor & 0xFF);
             colorComponents = new float[]{(float) j / 255.0f, (float) k / 255.0f, (float) l / 255.0f};
         } else {
             int j = (leatherColor & 0xFF0000) >> 16;
             int k = (leatherColor & 0xFF00) >> 8;
-            int l = (leatherColor & 0xFF) >> 0;
+            int l = (leatherColor & 0xFF);
             colorComponents = new float[]{(float) j / 255.0f, (float) k / 255.0f, (float) l / 255.0f};
         }
         return colorComponents;

@@ -3,6 +3,7 @@ package net.diemond_player.unidye.mixin;
 import net.diemond_player.unidye.block.UnidyeBlocks;
 import net.diemond_player.unidye.block.custom.DyeableCandleBlock;
 import net.diemond_player.unidye.block.entity.DyeableBlockEntity;
+import net.diemond_player.unidye.block.entity.UnidyeBlockEntities;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.block.*;
 import net.minecraft.entity.player.PlayerEntity;
@@ -25,8 +26,8 @@ public abstract class CakeBlockMixin {
         ItemStack itemStack = player.getStackInHand(player.getActiveHand());
         if (itemStack.isOf(UnidyeBlocks.CUSTOM_CANDLE.asItem())) {
             ((DyeableCandleBlock) ((BlockItem) itemStack.getItem()).getBlock()).createBlockEntity(pos, CandleCakeBlock.getCandleCakeFromCandle((CandleBlock) Block.getBlockFromItem(itemStack.getItem())));
-            if(world.getBlockEntity(pos) != null) {
-                ((DyeableBlockEntity) world.getBlockEntity(pos)).color = UnidyeUtils.getColor(itemStack);
+            if(world.getBlockEntity(pos, UnidyeBlockEntities.DYEABLE_BE).isPresent()) {
+                world.getBlockEntity(pos, UnidyeBlockEntities.DYEABLE_BE).get().color = UnidyeUtils.getColor(itemStack);
             }
         }
     }

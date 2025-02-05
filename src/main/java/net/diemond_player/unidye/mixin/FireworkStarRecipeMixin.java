@@ -3,7 +3,6 @@ package net.diemond_player.unidye.mixin;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.diemond_player.unidye.item.custom.CustomDyeItem;
-import net.minecraft.recipe.input.CraftingRecipeInput;;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.FireworkStarRecipe;

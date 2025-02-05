@@ -29,9 +29,7 @@ public class EmiCustomConcretePowderRecipe extends EmiPatternCraftingRecipe {
     @Override
     public SlotWidget getInputWidget(int slot, int x, int y) {
         if (slot == 0) {
-            return new GeneratedSlotWidget(r -> {
-                return EmiStack.of(UnidyeUtils.blendAndSetColor(new ItemStack(UnidyeItems.CUSTOM_DYE), getDyes(r), Lists.newArrayList()));
-            }, unique, x, y);
+            return new GeneratedSlotWidget(r -> EmiStack.of(UnidyeUtils.blendAndSetColor(new ItemStack(UnidyeItems.CUSTOM_DYE), getDyes(r), Lists.newArrayList())), unique, x, y);
         } else if (slot < 5) {
             return new SlotWidget(EmiStack.of(Items.SAND), x, y);
         }

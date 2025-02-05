@@ -224,8 +224,7 @@ public class DyeableFallingBlockEntity extends FallingBlockEntity {
         }
         Predicate<Entity> predicate = EntityPredicates.EXCEPT_CREATIVE_OR_SPECTATOR.and(EntityPredicates.VALID_LIVING_ENTITY);
         Block block = this.block.getBlock();
-        if (block instanceof LandingBlock) {
-            LandingBlock landingBlock = (LandingBlock) block;
+        if (block instanceof LandingBlock landingBlock) {
             damageSource2 = landingBlock.getDamageSource(this);
         } else {
             damageSource2 = this.getDamageSources().fallingBlock(this);

@@ -27,13 +27,9 @@ public class EmiCustomCarpetRecipe extends EmiPatternCraftingRecipe {
     @Override
     public SlotWidget getInputWidget(int slot, int x, int y) {
         if (slot == 3 || slot == 4) {
-            return new GeneratedSlotWidget(r -> {
-                return EmiStack.of(UnidyeUtils.blendAndSetColor(new ItemStack(UnidyeBlocks.CUSTOM_WOOL), getDyes(r), Lists.newArrayList()));
-            }, unique, x, y);
+            return new GeneratedSlotWidget(r -> EmiStack.of(UnidyeUtils.blendAndSetColor(new ItemStack(UnidyeBlocks.CUSTOM_WOOL), getDyes(r), Lists.newArrayList())), unique, x, y);
         }
-        return new GeneratedSlotWidget(r -> {
-            return EmiStack.EMPTY;
-        }, unique, x, y);
+        return new GeneratedSlotWidget(r -> EmiStack.EMPTY, unique, x, y);
     }
 
     @Override

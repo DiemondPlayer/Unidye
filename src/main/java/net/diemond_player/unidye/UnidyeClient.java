@@ -93,7 +93,7 @@ public class UnidyeClient implements ClientModInitializer {
     public static int adjust(int color, int i) {
         int j = Math.min(((color & 0xFF0000) >> 16) + i, 255);
         int k = Math.min(((color & 0xFF00) >> 8) + i, 255);
-        int l = Math.min(((color & 0xFF) >> 0) + i, 255);
+        int l = Math.min(((color & 0xFF)) + i, 255);
         int res = j;
         res = (res << 8) + k;
         res = (res << 8) + l;

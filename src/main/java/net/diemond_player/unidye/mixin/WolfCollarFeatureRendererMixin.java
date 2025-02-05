@@ -2,7 +2,6 @@ package net.diemond_player.unidye.mixin;
 
 import com.llamalad7.mixinextras.sugar.Local;
 import net.diemond_player.unidye.util.UnidyeAccessor;
-import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.client.render.entity.feature.WolfCollarFeatureRenderer;
 import net.minecraft.entity.passive.WolfEntity;
 import org.spongepowered.asm.mixin.Mixin;
