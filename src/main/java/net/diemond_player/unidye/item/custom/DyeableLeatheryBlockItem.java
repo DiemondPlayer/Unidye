@@ -47,6 +47,7 @@ public class DyeableLeatheryBlockItem extends DyeableBlockItem {
 
     @Override
     public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType type) {
+        super.appendTooltip(stack, context, tooltip, type);
         MutableText mutableText = Text.literal("■ ");
         if (stack.isOf(UnidyeBlocks.CUSTOM_WOOL.asItem())) {
             tooltip.add(mutableText.setStyle(mutableText.getStyle().withColor(getLeatherColor(stack))).append(Text.translatable("tooltip.unidye.banner_color").append(getLeatherHexColor(stack)).formatted(Formatting.GRAY)));

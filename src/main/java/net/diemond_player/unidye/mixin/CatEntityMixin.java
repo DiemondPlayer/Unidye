@@ -69,7 +69,7 @@ public abstract class CatEntityMixin implements UnidyeAccessor {
             }
 
             ((CatEntity) (Object) this).setPersistent();
-            cir.setReturnValue(ActionResult.CONSUME);
+            cir.setReturnValue(ActionResult.SUCCESS);
         }
     }
 

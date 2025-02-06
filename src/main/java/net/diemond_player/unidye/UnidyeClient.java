@@ -25,7 +25,14 @@ import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
 import net.minecraft.item.Item;
 
+import java.util.HashMap;
+
 public class UnidyeClient implements ClientModInitializer {
+
+    public static final HashMap<Block, Integer> DYEABLE_BLOCKS_ADJUST = new HashMap<>() {{
+        put(UnidyeBlocks.CUSTOM_CONCRETE_POWDER, 15);
+    }};
+
     @Override
     public void onInitializeClient() {
 
@@ -48,15 +55,17 @@ public class UnidyeClient implements ClientModInitializer {
         registerItemColor(UnidyeBlocks.CUSTOM_BANNER.asItem());
 
         registerLeatheryBlockColor(UnidyeBlocks.CUSTOM_WOOL);
-        registerBlockColor(UnidyeBlocks.CUSTOM_CONCRETE);
-        registerBlockColor(UnidyeBlocks.CUSTOM_TERRACOTTA);
         registerLeatheryBlockColor(UnidyeBlocks.CUSTOM_STAINED_GLASS);
-        registerBlockColor(UnidyeBlocks.CUSTOM_CONCRETE_POWDER, 15);
-        registerBlockColor(UnidyeBlocks.CUSTOM_CARPET);
         registerLeatheryBlockColor(UnidyeBlocks.CUSTOM_STAINED_GLASS_PANE);
-        registerBlockColor(UnidyeBlocks.CUSTOM_CANDLE);
-        registerBlockColor(UnidyeBlocks.CUSTOM_CANDLE_CAKE);
         registerCustomShulkerBoxColor(UnidyeBlocks.CUSTOM_SHULKER_BOX);
+
+        UnidyeBlockEntities.DYEABLE_BE_BLOCKS.forEach(block -> {
+            if (DYEABLE_BLOCKS_ADJUST.containsKey(block)){
+                registerBlockColor(block, DYEABLE_BLOCKS_ADJUST.get(block));
+            } else {
+                registerBlockColor(block);
+            }
+        });
 
         UnidyeModelPredicateProvider.registerModModels();
 
