@@ -14,7 +14,6 @@
     "FireworkExplosionComponentMixin",
     "FireworkStarFadeRecipeMixin",
     "FireworkStarRecipeMixin",
-    "ItemMixin",
     "LoomScreenHandlerMixin",
     "MapBannerMarkerMixin",
     "PointOfInterestTypesMixin",
@@ -30,6 +29,7 @@
     "defaultRequire": 1
   },
   "client": [
+    "ItemMixin",
     "AbstractSignEditScreenMixin",
     "BlockModelRendererMixin",
     "BuiltinModelItemRendererMixin",
