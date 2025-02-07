@@ -16,6 +16,6 @@ public class UnidyeEntities {
                     .build());
 
     public static void registerModEntities() {
-        Unidye.LOGGER.info("Registering Mod Entities for " + Unidye.MOD_ID);
+        //Unidye.LOGGER.info("Registering Mod Entities for " + Unidye.MOD_ID);
     }
 }

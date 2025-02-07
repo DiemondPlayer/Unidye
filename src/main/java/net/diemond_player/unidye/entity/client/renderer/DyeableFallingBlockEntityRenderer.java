@@ -39,7 +39,7 @@ public class DyeableFallingBlockEntityRenderer extends EntityRenderer<DyeableFal
         }
         matrixStack.push();
         BlockPos blockPos = BlockPos.ofFloored(fallingBlockEntity.getX(), fallingBlockEntity.getBoundingBox().maxY, fallingBlockEntity.getZ());
-        matrixStack.translate(-0.5, -1.0, -0.5);
+        matrixStack.translate(-0.5, 0, -0.5);
         ((UnidyeAccessor) this.blockRenderManager.getModelRenderer()).unidye$render(world, this.blockRenderManager.getModel(blockState), blockState, blockPos, matrixStack, vertexConsumerProvider.getBuffer(RenderLayers.getMovingBlockLayer(blockState)), false, Random.create(), blockState.getRenderingSeed(fallingBlockEntity.getFallingBlockPos()), OverlayTexture.DEFAULT_UV, UnidyeClient.adjust(fallingBlockEntity.getCustomColor(), 15));
         matrixStack.pop();
         super.render(fallingBlockEntity, f, g, matrixStack, vertexConsumerProvider, i);

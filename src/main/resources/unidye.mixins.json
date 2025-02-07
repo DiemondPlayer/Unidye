@@ -31,6 +31,7 @@
     "defaultRequire": 1
   },
   "client": [
+    "ItemMixin",
     "AbstractSignEditScreenMixin",
     "BlockModelRendererMixin",
     "BuiltinModelItemRendererMixin",
