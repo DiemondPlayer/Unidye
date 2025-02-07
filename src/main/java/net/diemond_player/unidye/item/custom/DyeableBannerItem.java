@@ -1,6 +1,5 @@
 package net.diemond_player.unidye.item.custom;
 
-import net.diemond_player.unidye.block.UnidyeBlocks;
 import net.diemond_player.unidye.block.entity.DyeableBannerBlockEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -35,10 +34,10 @@ public class DyeableBannerItem extends BannerItem implements DyeableItem {
         BlockState blockstate = context.getWorld().getBlockState(context.getBlockPos());
         ActionResult result = super.place(context);
         BlockEntity blockEntity = context.getWorld().getBlockEntity(context.getBlockPos());
-        if (blockEntity instanceof DyeableBannerBlockEntity dyeableBannerBlockEntity
-                && !blockstate.isOf(UnidyeBlocks.CUSTOM_BANNER)
-                && !blockstate.isOf(UnidyeBlocks.CUSTOM_WALL_BANNER)) {
-            dyeableBannerBlockEntity.color = getColor(context.getStack());
+        if(result.isAccepted()) {
+            if (blockEntity instanceof DyeableBannerBlockEntity dyeableBannerBlockEntity) {
+                dyeableBannerBlockEntity.color = getColor(context.getStack());
+            }
         }
         return result;
     }

@@ -1,0 +1,36 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:copy_name",
+              "source": "block_entity"
+            },
+            {
+              "function": "minecraft:copy_nbt",
+              "source": "block_entity",
+              "ops": [
+                {
+                  "source": "color",
+                  "target": "display.color",
+                  "op": "replace"
+                }
+              ]
+            },
+            {
+              "function": "minecraft:explosion_decay"
+            }
+          ],
+          "name": "unidye:custom_candle"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "unidye:blocks/custom_candle_cake"
+}

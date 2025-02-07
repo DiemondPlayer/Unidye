@@ -76,6 +76,7 @@ public class CustomDyeItem extends DyeItem implements SignChangingItem, DyeableI
 
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+        super.appendTooltip(stack, world, tooltip, context);
         if (Screen.hasShiftDown()) {
             MutableText mutableText = Text.literal("■ ");
             tooltip.add(mutableText.setStyle(mutableText.getStyle().withColor(getMaterialColor(stack, "wool"))).append(Text.translatable("tooltip.unidye.wool_color").append(getMaterialHexColor(stack, "wool")).formatted(Formatting.GRAY)));
