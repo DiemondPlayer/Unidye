@@ -23,7 +23,7 @@ public class UnidyeItems {
     }
 
     public static void registerModItems() {
-        Unidye.LOGGER.info("Registering Mod Items for" + Unidye.MOD_ID);
+        //Unidye.LOGGER.info("Registering Mod Items for" + Unidye.MOD_ID);
     }
 
 }

@@ -11,8 +11,8 @@ public class UnidyeDataGenerator implements DataGeneratorEntrypoint {
     public void onInitializeDataGenerator(FabricDataGenerator fabricDataGenerator) {
         FabricDataGenerator.Pack pack = fabricDataGenerator.createPack();
 
-        pack.addProvider(UnidyeRecipeGenerator::new);
-        pack.addProvider(UnidyeBlockTagProvider::new);
-        pack.addProvider(UnidyeItemTagProvider::new);
+//        pack.addProvider(UnidyeRecipeGenerator::new);
+//        pack.addProvider(UnidyeBlockTagProvider::new);
+//        pack.addProvider(UnidyeItemTagProvider::new);
     }
 }
