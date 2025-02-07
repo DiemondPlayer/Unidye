@@ -8,11 +8,11 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.ConcretePowderBlock;
 import net.minecraft.block.FallingBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 
 import static net.minecraft.item.DyeableItem.DEFAULT_COLOR;
@@ -39,7 +39,12 @@ public class DyeableConcretePowderBlock extends ConcretePowderBlock implements I
             return;
         }
         int color = DyeableBlockEntity.getColor(world, pos);
+        NbtCompound nbtCompound = new NbtCompound();
+        if(UnidyeBlockEntities.DYEABLE_BE.get(world, pos) != null){
+            nbtCompound = UnidyeBlockEntities.DYEABLE_BE.get(world, pos).createNbt();
+        }
         DyeableFallingBlockEntity dyeableFallingBlockEntity = DyeableFallingBlockEntity.spawnFromBlock(world, pos, state);
+        dyeableFallingBlockEntity.blockEntityData = nbtCompound;
         this.configureFallingBlockEntity(dyeableFallingBlockEntity, color);
     }
 
@@ -55,9 +60,5 @@ public class DyeableConcretePowderBlock extends ConcretePowderBlock implements I
         } else {
             return DEFAULT_COLOR;
         }
-    }
-
-    @Override
-    public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
     }
 }
