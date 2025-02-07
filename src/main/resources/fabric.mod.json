@@ -25,9 +25,6 @@
     ],
     "emi": [
       "net.diemond_player.unidye.compat.emi.UnidyeEmiPlugin"
-    ],
-    "rei_client": [
-      "net.diemond_player.unidye.compat.rei.UnidyeREIClientPlugin"
     ]
   },
   "mixins": [
@@ -35,7 +32,7 @@
   ],
   "depends": {
     "fabricloader": ">=0.15.11",
-    "minecraft": "=1.20.4",
+    "minecraft": "=1.20.3",
     "java": ">=17",
     "fabric-api": "*"
   },
