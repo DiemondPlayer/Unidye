@@ -43,6 +43,7 @@ public class DyeableLeatheryBlockItem extends DyeableBlockItem {
 
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+        super.appendTooltip(stack,world,tooltip,context);
         MutableText mutableText = Text.literal("■ ");
         if (stack.isOf(UnidyeBlocks.CUSTOM_WOOL.asItem())) {
             tooltip.add(mutableText.setStyle(mutableText.getStyle().withColor(getLeatherColor(stack))).append(Text.translatable("tooltip.unidye.banner_color").append(getLeatherHexColor(stack)).formatted(Formatting.GRAY)));
@@ -55,9 +56,11 @@ public class DyeableLeatheryBlockItem extends DyeableBlockItem {
     public ActionResult place(ItemPlacementContext context) {
         ActionResult result = super.place(context);
         BlockEntity blockEntity = context.getWorld().getBlockEntity(context.getBlockPos());
-        if (blockEntity instanceof DyeableLeatheryBlockEntity dyeableBlockEntity) {
-            dyeableBlockEntity.color = UnidyeUtils.getColor(context.getStack());
-            dyeableBlockEntity.leatherColor = getLeatherColor(context.getStack());
+        if(result.isAccepted()) {
+            if (blockEntity instanceof DyeableLeatheryBlockEntity dyeableBlockEntity) {
+                dyeableBlockEntity.color = UnidyeUtils.getColor(context.getStack());
+                dyeableBlockEntity.leatherColor = getLeatherColor(context.getStack());
+            }
         }
         return result;
     }

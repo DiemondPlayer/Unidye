@@ -90,7 +90,7 @@ public class UnidyeBlocks {
             new DyeableWallBannerBlock(FabricBlockSettings.copyOf(Blocks.WHITE_WALL_BANNER).dropsLike(CUSTOM_BANNER)));
 
     public static void registerModBlocks() {
-        Unidye.LOGGER.info("Registering Mod Blocks for " + Unidye.MOD_ID);
+        //Unidye.LOGGER.info("Registering Mod Blocks for " + Unidye.MOD_ID);
     }
 
     private static Block registerBlockWithoutItem(String name, Block block) {
