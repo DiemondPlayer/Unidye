@@ -4,6 +4,7 @@ import net.diemond_player.unidye.util.UnidyeAccessor;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.util.math.ColorHelper;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
@@ -47,11 +48,11 @@ public abstract class ModelPartMixin implements UnidyeAccessor {
         matrices.push();
         ((ModelPart) (Object) this).rotate(matrices);
         if (!((ModelPart) (Object) this).hidden) {
-            this.renderCuboids(matrices.peek(), vertices, light, overlay, color);
+            this.renderCuboids(matrices.peek(), vertices, light, overlay, ColorHelper.Argb.fullAlpha(color));
         }
         this.children.get("left_leg").render(matrices, vertices, light, overlay);
         this.children.get("right_leg").render(matrices, vertices, light, overlay);
-        this.children.get("main").render(matrices, vertices, light, overlay, color);
+        this.children.get("main").render(matrices, vertices, light, overlay, ColorHelper.Argb.fullAlpha(color));
         if (this.children.containsKey("main1")) {
             this.children.get("main1").render(matrices, vertices, light, overlay);
         }

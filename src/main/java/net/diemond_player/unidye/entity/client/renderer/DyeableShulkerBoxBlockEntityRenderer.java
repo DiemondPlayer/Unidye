@@ -17,6 +17,7 @@ import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.ColorHelper;
 import net.minecraft.util.math.Direction;
 
 @Environment(value = EnvType.CLIENT)
@@ -47,7 +48,7 @@ public class DyeableShulkerBoxBlockEntityRenderer
         modelPart.setPivot(0.0f, 24.0f - shulkerBoxBlockEntity.getAnimationProgress(f) * 0.5f * 16.0f, 0.0f);
         modelPart.yaw = 270.0f * shulkerBoxBlockEntity.getAnimationProgress(f) * ((float) Math.PI / 180);
         VertexConsumer vertexConsumer = spriteIdentifier.getVertexConsumer(vertexConsumerProvider, RenderLayer::getEntityCutoutNoCull);
-        this.model.render(matrixStack, vertexConsumer, i, j, shulkerBoxBlockEntity.color);
+        this.model.render(matrixStack, vertexConsumer, i, j, ColorHelper.Argb.fullAlpha(shulkerBoxBlockEntity.color));
         matrixStack.pop();
     }
 }
