@@ -34,7 +34,6 @@
     "BlockModelRendererMixin",
     "BuiltinModelItemRendererMixin",
     "CatCollarFeatureRendererMixin",
-    "ItemRendererMixin",
     "LoomScreenMixin",
     "ModelPartMixin",
     "SheepWoolFeatureRendererMixin",

@@ -24,6 +24,7 @@ import net.minecraft.block.Block;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
 import net.minecraft.item.Item;
+import net.minecraft.util.math.ColorHelper;
 
 import java.util.HashMap;
 
@@ -72,11 +73,11 @@ public class UnidyeClient implements ClientModInitializer {
     }
 
     private void registerItemColor(Item item) {
-        ColorProviderRegistry.ITEM.register((stack, tintIndex) -> tintIndex > 0 ? -1 : UnidyeUtils.getColor(stack), item);
+        ColorProviderRegistry.ITEM.register((stack, tintIndex) -> tintIndex > 0 ? -1 : ColorHelper.Argb.fullAlpha(UnidyeUtils.getColor(stack)), item);
     }
 
     private void registerItemColor(Item item, int adjust) {
-        ColorProviderRegistry.ITEM.register((stack, tintIndex) -> tintIndex > 0 ? -1 : adjust(UnidyeUtils.getColor(stack), adjust), item);
+        ColorProviderRegistry.ITEM.register((stack, tintIndex) -> tintIndex > 0 ? -1 : ColorHelper.Argb.fullAlpha(adjust(UnidyeUtils.getColor(stack), adjust)), item);
     }
 
     private void registerBlockColor(Block block) {
