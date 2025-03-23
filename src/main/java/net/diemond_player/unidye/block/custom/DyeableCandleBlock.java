@@ -1,6 +1,6 @@
 package net.diemond_player.unidye.block.custom;
 
-import net.diemond_player.unidye.block.entity.DyeableBlockEntity;
+import net.diemond_player.unidye.block.entity.IDyeableBlockEntity;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CandleBlock;
 import net.minecraft.item.ItemPlacementContext;
@@ -10,7 +10,7 @@ import net.minecraft.nbt.NbtElement;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
 
-import static net.diemond_player.unidye.item.custom.DyeableBlockItem.DEFAULT_COLOR;
+import static net.diemond_player.unidye.item.custom.CustomDyeItem.DEFAULT_WHITE_COLOR;
 import static net.minecraft.item.DyeableItem.COLOR_KEY;
 import static net.minecraft.item.DyeableItem.DISPLAY_KEY;
 
@@ -25,7 +25,7 @@ public class DyeableCandleBlock extends CandleBlock implements IDyeableBlock {
         if (nbtCompound != null && nbtCompound.contains(COLOR_KEY, NbtElement.NUMBER_TYPE)) {
             return nbtCompound.getInt(COLOR_KEY);
         }
-        return DEFAULT_COLOR;
+        return DEFAULT_WHITE_COLOR;
     }
 
     @Override
@@ -39,7 +39,7 @@ public class DyeableCandleBlock extends CandleBlock implements IDyeableBlock {
 
     @Override
     public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
-        if (DyeableBlockEntity.getColor(world, pos) != DyeableBlockEntity.DEFAULT_COLOR) {
+        if (IDyeableBlockEntity.getColor(world, pos) != DEFAULT_WHITE_COLOR) {
             ItemStack stack = super.getPickStack(world, pos, state);
             return pickBlock(world, pos, stack);
         } else {

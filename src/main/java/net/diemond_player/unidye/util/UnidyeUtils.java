@@ -1,18 +1,18 @@
 package net.diemond_player.unidye.util;
 
-import com.google.common.collect.Lists;
 import net.diemond_player.unidye.block.UnidyeBlocks;
 import net.diemond_player.unidye.item.UnidyeItems;
 import net.diemond_player.unidye.item.custom.CustomDyeItem;
 import net.diemond_player.unidye.item.custom.DyeableLeatheryBlockItem;
-import net.minecraft.block.AirBlock;
-import net.minecraft.block.Block;
 import net.minecraft.item.*;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.util.DyeColor;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 import static net.diemond_player.unidye.item.custom.CustomDyeItem.*;
 import static net.minecraft.item.DyeableItem.COLOR_KEY;
@@ -21,21 +21,21 @@ import static net.minecraft.item.DyeableItem.DISPLAY_KEY;
 public class UnidyeUtils {
     public static Map<Item, UnidyeColor> DYES = new HashMap<>() {{
         put(Items.WHITE_DYE, UnidyeColor.WHITE);
+        put(Items.LIGHT_GRAY_DYE, UnidyeColor.LIGHT_GRAY);
+        put(Items.GRAY_DYE, UnidyeColor.GRAY);
+        put(Items.BLACK_DYE, UnidyeColor.BLACK);
+        put(Items.BROWN_DYE, UnidyeColor.BROWN);
+        put(Items.RED_DYE, UnidyeColor.RED);
         put(Items.ORANGE_DYE, UnidyeColor.ORANGE);
         put(Items.YELLOW_DYE, UnidyeColor.YELLOW);
-        put(Items.LIGHT_GRAY_DYE, UnidyeColor.LIGHT_GRAY);
-        put(Items.CYAN_DYE, UnidyeColor.CYAN);
-        put(Items.BLUE_DYE, UnidyeColor.BLUE);
-        put(Items.BROWN_DYE, UnidyeColor.BROWN);
-        put(Items.GREEN_DYE, UnidyeColor.GREEN);
-        put(Items.RED_DYE, UnidyeColor.RED);
-        put(Items.BLACK_DYE, UnidyeColor.BLACK);
-        put(Items.LIGHT_BLUE_DYE, UnidyeColor.LIGHT_BLUE);
-        put(Items.MAGENTA_DYE, UnidyeColor.MAGENTA);
         put(Items.LIME_DYE, UnidyeColor.LIME);
-        put(Items.PINK_DYE, UnidyeColor.PINK);
-        put(Items.GRAY_DYE, UnidyeColor.GRAY);
+        put(Items.GREEN_DYE, UnidyeColor.GREEN);
+        put(Items.CYAN_DYE, UnidyeColor.CYAN);
+        put(Items.LIGHT_BLUE_DYE, UnidyeColor.LIGHT_BLUE);
+        put(Items.BLUE_DYE, UnidyeColor.BLUE);
         put(Items.PURPLE_DYE, UnidyeColor.PURPLE);
+        put(Items.MAGENTA_DYE, UnidyeColor.MAGENTA);
+        put(Items.PINK_DYE, UnidyeColor.PINK);
 //        put(ElsDyeModItems.MINT_DYE, UnidyeColor.ELL_MINT);
     }};
     public static Map<Item, String> MATERIAL_TYPES = new HashMap<>() {{
@@ -60,7 +60,7 @@ public class UnidyeUtils {
         if (nbtCompound != null && nbtCompound.contains(COLOR_KEY, NbtElement.NUMBER_TYPE)) {
             return nbtCompound.getInt(COLOR_KEY);
         }
-        return DEFAULT_COLOR;
+        return DEFAULT_WHITE_COLOR;
     }
     public static boolean hasColor(ItemStack stack) {
         NbtCompound nbtCompound = stack.getSubNbt(DISPLAY_KEY);

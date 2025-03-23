@@ -1,10 +1,7 @@
 package net.diemond_player.unidye;
 
-import com.google.common.collect.Lists;
 import net.diemond_player.unidye.block.UnidyeBlocks;
-import net.diemond_player.unidye.block.entity.DyeableBlockEntity;
-import net.diemond_player.unidye.block.entity.DyeableLeatheryBlockEntity;
-import net.diemond_player.unidye.block.entity.DyeableShulkerBoxBlockEntity;
+import net.diemond_player.unidye.block.entity.IDyeableBlockEntity;
 import net.diemond_player.unidye.block.entity.UnidyeBlockEntities;
 import net.diemond_player.unidye.entity.UnidyeEntities;
 import net.diemond_player.unidye.entity.client.model.DyeableShulkerEntityModel;
@@ -14,7 +11,6 @@ import net.diemond_player.unidye.entity.client.renderer.DyeableFallingBlockEntit
 import net.diemond_player.unidye.entity.client.renderer.DyeableShulkerBoxBlockEntityRenderer;
 import net.diemond_player.unidye.entity.layer.UnidyeModelLayers;
 import net.diemond_player.unidye.item.UnidyeItems;
-import net.diemond_player.unidye.util.UnidyeColor;
 import net.diemond_player.unidye.util.UnidyeModelPredicateProvider;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
@@ -27,7 +23,6 @@ import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
 import net.minecraft.item.DyeableItem;
 import net.minecraft.item.Item;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class UnidyeClient implements ClientModInitializer {
@@ -54,10 +49,10 @@ public class UnidyeClient implements ClientModInitializer {
         registerItemColor(UnidyeItems.CUSTOM_DYE);
         registerItemColor(UnidyeBlocks.CUSTOM_BANNER.asItem());
 
-        registerLeatheryBlockColor(UnidyeBlocks.CUSTOM_WOOL);
-        registerLeatheryBlockColor(UnidyeBlocks.CUSTOM_STAINED_GLASS);
-        registerLeatheryBlockColor(UnidyeBlocks.CUSTOM_STAINED_GLASS_PANE);
-        registerCustomShulkerBoxColor(UnidyeBlocks.CUSTOM_SHULKER_BOX);
+        registerBlockColor(UnidyeBlocks.CUSTOM_WOOL);
+        registerBlockColor(UnidyeBlocks.CUSTOM_STAINED_GLASS);
+        registerBlockColor(UnidyeBlocks.CUSTOM_STAINED_GLASS_PANE);
+        registerBlockColor(UnidyeBlocks.CUSTOM_SHULKER_BOX);
 
         UnidyeBlockEntities.DYEABLE_BE_BLOCKS.forEach(block -> {
             if (DYEABLE_BLOCKS_ADJUST.containsKey(block)){
@@ -68,35 +63,24 @@ public class UnidyeClient implements ClientModInitializer {
         });
 
         UnidyeModelPredicateProvider.registerModModels();
-
     }
 
-    private void registerItemColor(Item item) {
-        ColorProviderRegistry.ITEM.register((stack, tintIndex) -> tintIndex > 0 ? -1 : ((DyeableItem) ((Object) stack.getItem())).getColor(stack), item);
+    private static void registerItemColor(Item item) {
+        ColorProviderRegistry.ITEM.register((stack, tintIndex) -> tintIndex > 0 ? -1 : ((DyeableItem) stack.getItem()).getColor(stack), item);
     }
 
-    private void registerItemColor(Item item, int adjust) {
-        ColorProviderRegistry.ITEM.register((stack, tintIndex) -> tintIndex > 0 ? -1 : adjust(((DyeableItem) ((Object) stack.getItem())).getColor(stack), adjust), item);
+    private static void registerItemColor(Item item, int adjust) {
+        ColorProviderRegistry.ITEM.register((stack, tintIndex) -> tintIndex > 0 ? -1 : adjust(((DyeableItem) stack.getItem()).getColor(stack), adjust), item);
     }
 
-    private void registerBlockColor(Block block) {
+    public static void registerBlockColor(Block block) {
         registerItemColor(block.asItem());
-        ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) -> DyeableBlockEntity.getColor(world, pos), block);
+        ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) -> IDyeableBlockEntity.getColor(world, pos), block);
     }
 
-    private void registerCustomShulkerBoxColor(Block block) {
-        registerItemColor(block.asItem());
-        ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) -> DyeableShulkerBoxBlockEntity.getColor(world, pos), block);
-    }
-
-    private void registerLeatheryBlockColor(Block block) {
-        registerItemColor(block.asItem());
-        ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) -> DyeableLeatheryBlockEntity.getColor(world, pos), block);
-    }
-
-    private void registerBlockColor(Block block, int adjust) {
+    public static void registerBlockColor(Block block, int adjust) {
         registerItemColor(block.asItem(), adjust);
-        ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) -> adjust(DyeableBlockEntity.getColor(world, pos), adjust), block);
+        ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) -> adjust(IDyeableBlockEntity.getColor(world, pos), adjust), block);
     }
 
     public static int adjust(int color, int i) {

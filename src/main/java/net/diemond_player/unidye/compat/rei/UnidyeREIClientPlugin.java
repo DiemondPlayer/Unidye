@@ -4,16 +4,19 @@ import me.shedaniel.rei.api.client.plugins.REIClientPlugin;
 import me.shedaniel.rei.api.client.registry.category.CategoryRegistry;
 import me.shedaniel.rei.api.client.registry.display.DisplayRegistry;
 import me.shedaniel.rei.plugin.client.categories.crafting.filler.CraftingRecipeFiller;
+import net.diemond_player.unidye.block.UnidyeBlocks;
+import net.fabricmc.fabric.api.tag.convention.v1.ConventionalItemTags;
+import net.minecraft.registry.tag.ItemTags;
 
 public class UnidyeREIClientPlugin implements REIClientPlugin {
-    private static final CraftingRecipeFiller<?>[] CRAFTING_RECIPE_FILLERS = new CraftingRecipeFiller[]{
+    public static final CraftingRecipeFiller<?>[] CRAFTING_RECIPE_FILLERS = new CraftingRecipeFiller[]{
             new CustomDyeRecipeFiller(),
-            new CustomWoolDyeingRecipeFiller(),
-            new CustomTerracottaDyeingRecipeFiller(),
-            new CustomCandleDyeingRecipeFiller(),
-            new CustomCarpetDyeingRecipeFiller(),
-            new CustomStainedGlassDyeingRecipeFiller(),
-            new CustomStainedGlassPaneDyeingRecipeFiller(),
+            new CustomCircleDyeingRecipeFiller(ConventionalItemTags.GLASS_BLOCKS, UnidyeBlocks.CUSTOM_STAINED_GLASS),
+            new CustomCircleDyeingRecipeFiller(ConventionalItemTags.GLASS_PANES, UnidyeBlocks.CUSTOM_STAINED_GLASS_PANE),
+            new CustomCircleDyeingRecipeFiller(ItemTags.CANDLES, UnidyeBlocks.CUSTOM_CANDLE),
+            new CustomCircleDyeingRecipeFiller(ItemTags.WOOL_CARPETS, UnidyeBlocks.CUSTOM_CARPET),
+            new CustomCircleDyeingRecipeFiller(ItemTags.WOOL, UnidyeBlocks.CUSTOM_WOOL),
+            new CustomCircleDyeingRecipeFiller(ItemTags.TERRACOTTA, UnidyeBlocks.CUSTOM_TERRACOTTA),
             new CustomCarpetRecipeFiller(),
             new CustomBedRecipeFiller(),
             new CustomBannerRecipeFiller(),

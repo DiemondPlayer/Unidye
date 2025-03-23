@@ -1,6 +1,5 @@
 package net.diemond_player.unidye.item.custom;
 
-import net.diemond_player.unidye.block.UnidyeBlocks;
 import net.diemond_player.unidye.block.entity.DyeableBannerBlockEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -23,7 +22,6 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public class DyeableBannerItem extends BannerItem implements DyeableItem {
-    public static final int DEFAULT_COLOR = 16777215;
     private static final String TRANSLATION_KEY_PREFIX = "block.minecraft.banner.";
 
     public DyeableBannerItem(Block bannerBlock, Block wallBannerBlock, Item.Settings settings) {
@@ -37,7 +35,7 @@ public class DyeableBannerItem extends BannerItem implements DyeableItem {
         BlockEntity blockEntity = context.getWorld().getBlockEntity(context.getBlockPos());
         if(result.isAccepted()) {
             if (blockEntity instanceof DyeableBannerBlockEntity dyeableBannerBlockEntity) {
-                dyeableBannerBlockEntity.color = getColor(context.getStack());
+                dyeableBannerBlockEntity.setColor(getColor(context.getStack()));
             }
         }
         return result;
@@ -76,6 +74,6 @@ public class DyeableBannerItem extends BannerItem implements DyeableItem {
         if (nbtCompound != null && nbtCompound.contains(COLOR_KEY, NbtElement.NUMBER_TYPE)) {
             return nbtCompound.getInt(COLOR_KEY);
         }
-        return DEFAULT_COLOR;
+        return CustomDyeItem.DEFAULT_WHITE_COLOR;
     }
 }

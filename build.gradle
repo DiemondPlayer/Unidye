@@ -83,6 +83,7 @@ dependencies {
 	modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:$rei_version"
 
 	modCompileOnly "dev.emi:emi-fabric:${emi_version}:api"
+	//modCompileOnly "dev.emi:emi-fabric:${emi_version}"
 	modImplementation "dev.emi:emi-fabric:${emi_version}"
 
 	//modImplementation "curse.maven:cloth-config-348521:4973440"

@@ -144,7 +144,7 @@ public class DyeableFallingBlockEntity extends FallingBlockEntity {
                                     ((LandingBlock) ((Object) block)).onLanding(this.getWorld(), blockPos.down(2), this.block, blockState, this);
                                     BlockEntity blockEntity1 = this.getWorld().getBlockEntity(blockPos.down(2));
                                     if (blockEntity1 instanceof DyeableBlockEntity dyeableBlockEntity) {
-                                        dyeableBlockEntity.color = this.getCustomColor();
+                                        dyeableBlockEntity.setColor(this.getCustomColor());
                                     }
                                 }
                                 if (this.blockEntityData != null && this.block.hasBlockEntity() && (blockEntity = this.getWorld().getBlockEntity(blockPos.down())) != null) {

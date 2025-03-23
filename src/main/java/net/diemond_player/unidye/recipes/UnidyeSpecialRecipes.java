@@ -1,51 +1,131 @@
 package net.diemond_player.unidye.recipes;
 
 import net.diemond_player.unidye.Unidye;
+import net.diemond_player.unidye.block.UnidyeBlocks;
+import net.fabricmc.fabric.api.tag.convention.v1.ConventionalItemTags;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemConvertible;
 import net.minecraft.recipe.RecipeSerializer;
+import net.minecraft.recipe.SpecialCraftingRecipe;
 import net.minecraft.recipe.SpecialRecipeSerializer;
+import net.minecraft.recipe.book.CraftingRecipeCategory;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.registry.tag.ItemTags;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 
+import java.util.ArrayList;
+import java.util.function.BiFunction;
+@SuppressWarnings({"unchecked", "unused"})
 public class UnidyeSpecialRecipes {
-    public static final RecipeSerializer<CustomCarpetRecipe> CUSTOM_CARPET = Registry.register(Registries.RECIPE_SERIALIZER, new Identifier(Unidye.MOD_ID, "custom_carpet"),
-            new SpecialRecipeSerializer<CustomCarpetRecipe>(CustomCarpetRecipe::new));
-    public static final RecipeSerializer<CustomStainedGlassPaneRecipe> CUSTOM_STAINED_GLASS_PANE = Registry.register(Registries.RECIPE_SERIALIZER, new Identifier(Unidye.MOD_ID, "custom_stained_glass_pane"),
-            new SpecialRecipeSerializer<CustomStainedGlassPaneRecipe>(CustomStainedGlassPaneRecipe::new));
-    public static final RecipeSerializer<CustomTerracottaDyeingRecipe> CUSTOM_TERRACOTTA_DYEING = Registry.register(Registries.RECIPE_SERIALIZER, new Identifier(Unidye.MOD_ID, "custom_terracotta_dyeing"),
-                new SpecialRecipeSerializer<CustomTerracottaDyeingRecipe>(CustomTerracottaDyeingRecipe::new));
-    public static final RecipeSerializer<CustomStainedGlassDyeingRecipe> CUSTOM_STAINED_GLASS_DYEING = Registry.register(Registries.RECIPE_SERIALIZER, new Identifier(Unidye.MOD_ID, "custom_stained_glass_dyeing"),
-                new SpecialRecipeSerializer<CustomStainedGlassDyeingRecipe>(CustomStainedGlassDyeingRecipe::new));
-    public static final RecipeSerializer<CustomStainedGlassPaneDyeingRecipe> CUSTOM_STAINED_GLASS_PANE_DYEING = Registry.register(Registries.RECIPE_SERIALIZER, new Identifier(Unidye.MOD_ID, "custom_stained_glass_pane_dyeing"),
-                new SpecialRecipeSerializer<CustomStainedGlassPaneDyeingRecipe>(CustomStainedGlassPaneDyeingRecipe::new));
-    public static final RecipeSerializer<CustomCandleDyeingRecipe> CUSTOM_CANDLE_DYEING = Registry.register(Registries.RECIPE_SERIALIZER, new Identifier(Unidye.MOD_ID, "custom_candle_dyeing"),
-                new SpecialRecipeSerializer<CustomCandleDyeingRecipe>(CustomCandleDyeingRecipe::new));
-    public static final RecipeSerializer<CustomCarpetDyeingRecipe> CUSTOM_CARPET_DYEING = Registry.register(Registries.RECIPE_SERIALIZER, new Identifier(Unidye.MOD_ID, "custom_carpet_dyeing"),
-                new SpecialRecipeSerializer<CustomCarpetDyeingRecipe>(CustomCarpetDyeingRecipe::new));
-    public static final RecipeSerializer<CustomWoolDyeingRecipe> CUSTOM_WOOL_DYEING = Registry.register(Registries.RECIPE_SERIALIZER, new Identifier(Unidye.MOD_ID, "custom_wool_dyeing"),
-                new SpecialRecipeSerializer<CustomWoolDyeingRecipe>(CustomWoolDyeingRecipe::new));
-    public static final RecipeSerializer<CustomConcretePowderRecipe> CUSTOM_CONCRETE_POWDER = Registry.register(Registries.RECIPE_SERIALIZER, new Identifier(Unidye.MOD_ID, "custom_concrete_powder"),
-                new SpecialRecipeSerializer<CustomConcretePowderRecipe>(CustomConcretePowderRecipe::new));
-    public static final RecipeSerializer<CustomDyeRecipe> CUSTOM_DYE = Registry.register(Registries.RECIPE_SERIALIZER, new Identifier(Unidye.MOD_ID, "custom_dye"),
-                new SpecialRecipeSerializer<CustomDyeRecipe>(CustomDyeRecipe::new));
-    public static final RecipeSerializer<CustomBannerRecipe> CUSTOM_BANNER = Registry.register(Registries.RECIPE_SERIALIZER, new Identifier(Unidye.MOD_ID, "custom_banner"),
-                new SpecialRecipeSerializer<CustomBannerRecipe>(CustomBannerRecipe::new));
-    public static final RecipeSerializer<CustomBedRecipe> CUSTOM_BED = Registry.register(Registries.RECIPE_SERIALIZER, new Identifier(Unidye.MOD_ID, "custom_bed"),
-                new SpecialRecipeSerializer<CustomBedRecipe>(CustomBedRecipe::new));
-    public static final RecipeSerializer<CustomBedDyeingRecipe> CUSTOM_BED_DYEING = Registry.register(Registries.RECIPE_SERIALIZER, new Identifier(Unidye.MOD_ID, "custom_bed_dyeing"),
-                new SpecialRecipeSerializer<CustomBedDyeingRecipe>(CustomBedDyeingRecipe::new));
-    public static final RecipeSerializer<CustomShulkerBoxDyeingRecipe> CUSTOM_SHULKER_BOX_DYEING = Registry.register(Registries.RECIPE_SERIALIZER, new Identifier(Unidye.MOD_ID, "custom_shulker_box_dyeing"),
-                new SpecialRecipeSerializer<CustomShulkerBoxDyeingRecipe>(CustomShulkerBoxDyeingRecipe::new));
-    public static final RecipeSerializer<CustomShieldDecorationRecipe> CUSTOM_SHIELD_DECORATION = Registry.register(Registries.RECIPE_SERIALIZER, new Identifier(Unidye.MOD_ID, "custom_shield_decoration"),
-                new SpecialRecipeSerializer<CustomShieldDecorationRecipe>(CustomShieldDecorationRecipe::new));
-    public static final RecipeSerializer<CustomBannerDuplicateRecipe> CUSTOM_BANNER_DUPLICATE = Registry.register(Registries.RECIPE_SERIALIZER, new Identifier(Unidye.MOD_ID, "custom_banner_duplicate"),
-                new SpecialRecipeSerializer<CustomBannerDuplicateRecipe>(CustomBannerDuplicateRecipe::new));
-    public static final RecipeSerializer<MixedBannerDuplicateRecipe> MIXED_BANNER_DUPLICATE = Registry.register(Registries.RECIPE_SERIALIZER, new Identifier(Unidye.MOD_ID, "mixed_banner_duplicate"),
-                new SpecialRecipeSerializer<MixedBannerDuplicateRecipe>(MixedBannerDuplicateRecipe::new));
-    public static final RecipeSerializer<CustomFireworkStarRecipe> CUSTOM_FIREWORK_STAR = Registry.register(Registries.RECIPE_SERIALIZER, new Identifier(Unidye.MOD_ID, "custom_firework_star"),
-                new SpecialRecipeSerializer<CustomFireworkStarRecipe>(CustomFireworkStarRecipe::new));
-    public static final RecipeSerializer<CustomFireworkStarFadeRecipe> CUSTOM_FIREWORK_STAR_FADE = Registry.register(Registries.RECIPE_SERIALIZER, new Identifier(Unidye.MOD_ID, "custom_firework_star_fade"),
-                new SpecialRecipeSerializer<CustomFireworkStarFadeRecipe>(CustomFireworkStarFadeRecipe::new));
+    public static final RecipeSerializer<CustomCarpetRecipe> CUSTOM_CARPET = (RecipeSerializer<CustomCarpetRecipe>)
+            registerSpecialRecipe("custom_carpet",
+            CustomCarpetRecipe::new);
+
+    public static final RecipeSerializer<CustomStainedGlassPaneRecipe> CUSTOM_STAINED_GLASS_PANE = (RecipeSerializer<CustomStainedGlassPaneRecipe>)
+            registerSpecialRecipe("custom_stained_glass_pane",
+            CustomStainedGlassPaneRecipe::new);
+
+    public static final RecipeSerializer<CustomCircleDyeingRecipe> CUSTOM_TERRACOTTA_DYEING = registerSpecialCircleDyeingRecipe(
+            "custom_terracotta_dyeing",
+            ItemTags.TERRACOTTA, UnidyeBlocks.CUSTOM_TERRACOTTA);
+
+    public static final RecipeSerializer<CustomCircleDyeingRecipe> CUSTOM_STAINED_GLASS_DYEING = registerSpecialCircleDyeingRecipe(
+            "custom_stained_glass_dyeing",
+            ConventionalItemTags.GLASS_BLOCKS, UnidyeBlocks.CUSTOM_STAINED_GLASS);
+
+    public static final RecipeSerializer<CustomCircleDyeingRecipe> CUSTOM_STAINED_GLASS_PANE_DYEING = registerSpecialCircleDyeingRecipe(
+            "custom_stained_glass_pane_dyeing",
+            ConventionalItemTags.GLASS_PANES, UnidyeBlocks.CUSTOM_STAINED_GLASS_PANE);
+
+    public static final RecipeSerializer<CustomCircleDyeingRecipe> CUSTOM_CANDLE_DYEING = registerSpecialCircleDyeingRecipe(
+            "custom_candle_dyeing",
+            ItemTags.CANDLES, UnidyeBlocks.CUSTOM_CANDLE);
+
+    public static final RecipeSerializer<CustomCircleDyeingRecipe> CUSTOM_CARPET_DYEING = registerSpecialCircleDyeingRecipe(
+            "custom_carpet_dyeing",
+            ItemTags.WOOL_CARPETS, UnidyeBlocks.CUSTOM_CARPET);
+
+    public static final RecipeSerializer<CustomCircleDyeingRecipe> CUSTOM_WOOL_DYEING = registerSpecialCircleDyeingRecipe(
+            "custom_wool_dyeing",
+            ItemTags.WOOL, UnidyeBlocks.CUSTOM_WOOL);
+
+    public static final RecipeSerializer<CustomConcretePowderRecipe> CUSTOM_CONCRETE_POWDER = (RecipeSerializer<CustomConcretePowderRecipe>)
+            registerSpecialRecipe("custom_concrete_powder",
+            CustomConcretePowderRecipe::new);
+
+    public static final RecipeSerializer<CustomDyeRecipe> CUSTOM_DYE = (RecipeSerializer<CustomDyeRecipe>)
+            registerSpecialRecipe("custom_dye",
+            CustomDyeRecipe::new);
+
+    public static final RecipeSerializer<CustomBannerRecipe> CUSTOM_BANNER = (RecipeSerializer<CustomBannerRecipe>)
+            registerSpecialRecipe("custom_banner",
+            CustomBannerRecipe::new);
+
+    public static final RecipeSerializer<CustomBedRecipe> CUSTOM_BED = (RecipeSerializer<CustomBedRecipe>)
+            registerSpecialRecipe("custom_bed",
+            CustomBedRecipe::new);
+
+    public static final RecipeSerializer<CustomBedDyeingRecipe> CUSTOM_BED_DYEING = (RecipeSerializer<CustomBedDyeingRecipe>)
+            registerSpecialRecipe("custom_bed_dyeing",
+            CustomBedDyeingRecipe::new);
+
+    public static final RecipeSerializer<CustomShulkerBoxDyeingRecipe> CUSTOM_SHULKER_BOX_DYEING = (RecipeSerializer<CustomShulkerBoxDyeingRecipe>)
+            registerSpecialRecipe("custom_shulker_box_dyeing",
+            CustomShulkerBoxDyeingRecipe::new);
+
+    public static final RecipeSerializer<CustomShieldDecorationRecipe> CUSTOM_SHIELD_DECORATION = (RecipeSerializer<CustomShieldDecorationRecipe>)
+            registerSpecialRecipe("custom_shield_decoration",
+            CustomShieldDecorationRecipe::new);
+
+    public static final RecipeSerializer<CustomBannerDuplicateRecipe> CUSTOM_BANNER_DUPLICATE = (RecipeSerializer<CustomBannerDuplicateRecipe>)
+            registerSpecialRecipe("custom_banner_duplicate",
+            CustomBannerDuplicateRecipe::new);
+
+    public static final RecipeSerializer<MixedBannerDuplicateRecipe> MIXED_BANNER_DUPLICATE = (RecipeSerializer<MixedBannerDuplicateRecipe>)
+            registerSpecialRecipe("mixed_banner_duplicate",
+            MixedBannerDuplicateRecipe::new);
+
+    public static final RecipeSerializer<CustomFireworkStarRecipe> CUSTOM_FIREWORK_STAR = (RecipeSerializer<CustomFireworkStarRecipe>)
+            registerSpecialRecipe("custom_firework_star",
+            CustomFireworkStarRecipe::new);
+
+    public static final RecipeSerializer<CustomFireworkStarFadeRecipe> CUSTOM_FIREWORK_STAR_FADE = (RecipeSerializer<CustomFireworkStarFadeRecipe>)
+            registerSpecialRecipe("custom_firework_star_fade",
+            CustomFireworkStarFadeRecipe::new);
+
     public static void registerSpecialRecipes() {
+    }
+
+    private static RecipeSerializer<CustomCircleDyeingRecipe> registerSpecialCircleDyeingRecipe(String name, ArrayList<Item> acceptedItems, ItemConvertible outputItem){
+        return registerSpecialCircleDyeingRecipe(Unidye.MOD_ID, name, acceptedItems, outputItem);
+    }
+
+    private static RecipeSerializer<CustomCircleDyeingRecipe> registerSpecialCircleDyeingRecipe(String name, TagKey<Item> itemOrItemTag, ItemConvertible outputItem){
+        return registerSpecialCircleDyeingRecipe(Unidye.MOD_ID, name, itemOrItemTag, outputItem);
+    }
+
+    private static RecipeSerializer<? extends SpecialCraftingRecipe> registerSpecialRecipe(String name, BiFunction<Identifier, CraftingRecipeCategory, SpecialCraftingRecipe> toRecipe){
+        return registerSpecialRecipe(Unidye.MOD_ID, name, toRecipe);
+    }
+
+    public static RecipeSerializer<CustomCircleDyeingRecipe> registerSpecialCircleDyeingRecipe(String modId, String name, TagKey<Item> itemOrItemTag, ItemConvertible outputItem){
+        Identifier identifier = new Identifier(modId, name);
+        return Registry.register(Registries.RECIPE_SERIALIZER, identifier,
+                new SpecialRecipeSerializer<>(((id, category) ->
+                        new CustomCircleDyeingRecipe(itemOrItemTag, outputItem, id, category, identifier))));
+    }
+
+    public static RecipeSerializer<CustomCircleDyeingRecipe> registerSpecialCircleDyeingRecipe(String modId, String name, ArrayList<Item> acceptedItems, ItemConvertible outputItem){
+        Identifier identifier = new Identifier(modId, name);
+        return Registry.register(Registries.RECIPE_SERIALIZER, identifier,
+                new SpecialRecipeSerializer<>(((id, category) ->
+                        new CustomCircleDyeingRecipe(acceptedItems, outputItem, id, category, identifier))));
+    }
+
+    public static RecipeSerializer<? extends SpecialCraftingRecipe> registerSpecialRecipe(String modId, String name, BiFunction<Identifier, CraftingRecipeCategory, SpecialCraftingRecipe> toRecipe){
+        return Registry.register(Registries.RECIPE_SERIALIZER, new Identifier(modId, name),
+                new SpecialRecipeSerializer<>(toRecipe::apply));
     }
 }

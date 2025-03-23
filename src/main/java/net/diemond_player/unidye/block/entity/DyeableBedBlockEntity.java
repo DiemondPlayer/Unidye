@@ -7,12 +7,12 @@ import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.BlockView;
 import org.jetbrains.annotations.Nullable;
 
-public class DyeableBedBlockEntity extends BlockEntity {
-    public static final int DEFAULT_COLOR = 16777215;
-    public int color = DEFAULT_COLOR;
+import static net.diemond_player.unidye.item.custom.CustomDyeItem.DEFAULT_WHITE_COLOR;
+
+public class DyeableBedBlockEntity extends BlockEntity implements IDyeableBlockEntity {
+    private int color = DEFAULT_WHITE_COLOR;
 
     public DyeableBedBlockEntity(BlockPos pos, BlockState state) {
         super(UnidyeBlockEntities.DYEABLE_BED_BE, pos, state);
@@ -20,7 +20,7 @@ public class DyeableBedBlockEntity extends BlockEntity {
 
     @Override
     public void writeNbt(NbtCompound nbt) {
-        if (color != DEFAULT_COLOR) {
+        if (color != DEFAULT_WHITE_COLOR) {
             nbt.putInt("color", color);
             super.writeNbt(nbt);
         }
@@ -29,7 +29,7 @@ public class DyeableBedBlockEntity extends BlockEntity {
     @Override
     public void readNbt(NbtCompound nbt) {
         if (nbt.getInt("color") == 0) {
-            color = DEFAULT_COLOR;
+            color = DEFAULT_WHITE_COLOR;
         } else {
             color = nbt.getInt("color");
         }
@@ -54,16 +54,13 @@ public class DyeableBedBlockEntity extends BlockEntity {
         return createNbt();
     }
 
+    @Override
+    public int getColor() {
+        return color;
+    }
 
-    public static int getColor(BlockView world, BlockPos pos) {
-        if (world == null) {
-            return DyeableBedBlockEntity.DEFAULT_COLOR;
-        }
-        BlockEntity blockEntity = world.getBlockEntity(pos);
-        if (blockEntity instanceof DyeableBedBlockEntity dyeableBlockEntity) {
-            return dyeableBlockEntity.color;
-        } else {
-            return DyeableBedBlockEntity.DEFAULT_COLOR;
-        }
+    @Override
+    public void setColor(int color) {
+        this.color = color;
     }
 }

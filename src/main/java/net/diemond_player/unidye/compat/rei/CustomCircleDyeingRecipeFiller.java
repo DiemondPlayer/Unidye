@@ -7,15 +7,12 @@ import me.shedaniel.rei.api.common.entry.EntryStack;
 import me.shedaniel.rei.api.common.entry.type.VanillaEntryTypes;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
 import me.shedaniel.rei.plugin.client.categories.crafting.filler.CraftingRecipeFiller;
-import me.shedaniel.rei.plugin.common.displays.crafting.DefaultCustomShapelessDisplay;
-import net.diemond_player.unidye.block.UnidyeBlocks;
+import me.shedaniel.rei.plugin.common.displays.crafting.DefaultCustomShapedDisplay;
 import net.diemond_player.unidye.item.UnidyeItems;
-import net.diemond_player.unidye.recipes.CustomWoolDyeingRecipe;
+import net.diemond_player.unidye.recipes.CustomCircleDyeingRecipe;
 import net.diemond_player.unidye.util.UnidyeUtils;
-import net.minecraft.item.DyeItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.registry.tag.ItemTags;
+import net.minecraft.item.*;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.DyeColor;
 
 import java.util.ArrayList;
@@ -23,9 +20,26 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
-public class CustomWoolDyeingRecipeFiller implements CraftingRecipeFiller<CustomWoolDyeingRecipe> {
+public class CustomCircleDyeingRecipeFiller implements CraftingRecipeFiller<CustomCircleDyeingRecipe> {
+
+    private final ItemConvertible itemOutput;
+    private final TagKey<Item> itemTag;
+    private final ArrayList<Item> acceptedItems;
+
+    public CustomCircleDyeingRecipeFiller(TagKey<Item> itemTag, ItemConvertible itemOutput) {
+        this.itemOutput = itemOutput;
+        this.itemTag = itemTag;
+        this.acceptedItems = null;
+    }
+
+    public CustomCircleDyeingRecipeFiller(ArrayList<Item> acceptedItems, ItemConvertible itemOutput) {
+        this.itemOutput = itemOutput;
+        this.itemTag = null;
+        this.acceptedItems = acceptedItems;
+    }
+
     @Override
-    public Collection<Display> apply(CustomWoolDyeingRecipe recipe) {
+    public Collection<Display> apply(CustomCircleDyeingRecipe recipe) {
         List<Display> displays = new ArrayList<>();
         DyeColor[] colors = DyeColor.values();
         for (int i = 0; i < 9; i++) {
@@ -45,23 +59,30 @@ public class CustomWoolDyeingRecipeFiller implements CraftingRecipeFiller<Custom
                 }
             }
             ItemStack customDyeStack = UnidyeUtils.blendAndSetColor(new ItemStack(UnidyeItems.CUSTOM_DYE), dyeItems, Lists.newArrayList());
-            ItemStack output = UnidyeUtils.blendAndSetColor(new ItemStack(UnidyeBlocks.CUSTOM_WOOL), dyeItems, Lists.newArrayList());
+            ItemStack output = UnidyeUtils.blendAndSetColor(new ItemStack(itemOutput), dyeItems, Lists.newArrayList());
             output.setCount(8);
             for(int k = 0; k < 9; k++) {
                 if(k != 4) {
-                    inputs.add(EntryIngredients.ofItemTag(ItemTags.WOOL));
+                    if(itemTag !=null) {
+                        inputs.add(EntryIngredients.ofItemTag(itemTag));
+                    }else if(acceptedItems != null){
+                        inputs.add(EntryIngredient.of(
+                                acceptedItems.stream().map((item ->
+                                        EntryStack.of(VanillaEntryTypes.ITEM, new ItemStack(item))))
+                                        .toList()));
+                    }
                 }else{
                     inputs.add(EntryIngredient.of(EntryStack.of(VanillaEntryTypes.ITEM, customDyeStack)));
                 }
             }
-            displays.add(new DefaultCustomShapelessDisplay(recipe,
-                    inputs, List.of(EntryIngredients.of(output))));
+            displays.add(new DefaultCustomShapedDisplay(recipe,
+                    inputs, List.of(EntryIngredients.of(output)), 3, 3));
         }
 
         return displays;
     }
     @Override
-    public Class<CustomWoolDyeingRecipe> getRecipeClass() {
-        return CustomWoolDyeingRecipe.class;
+    public Class<CustomCircleDyeingRecipe> getRecipeClass() {
+        return CustomCircleDyeingRecipe.class;
     }
 }

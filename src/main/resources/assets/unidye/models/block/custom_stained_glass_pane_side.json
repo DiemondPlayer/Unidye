@@ -1,20 +1,7 @@
 {
-  "ambientocclusion": false,
+  "parent": "unidye:block/templates/template_tintable_glass_pane_side",
   "textures": {
-    "particle": "unidye:block/custom_stained_glass",
     "edge": "unidye:block/custom_stained_glass_pane_top",
     "pane": "unidye:block/custom_stained_glass"
-  },
-  "elements": [
-    {   "from": [ 7, 0, 0 ],
-      "to": [ 9, 16, 7 ],
-      "faces": {
-        "down":  { "uv": [  7, 0,  9,  7 ], "texture": "#edge", "tintindex": 0},
-        "up":    { "uv": [  7, 0,  9,  7 ], "texture": "#edge", "tintindex": 0},
-        "north": { "uv": [  7, 0,  9, 16 ], "texture": "#edge", "cullface": "north", "tintindex": 0},
-        "west":  { "uv": [ 16, 0,  9, 16 ], "texture": "#pane", "tintindex": 0},
-        "east":  { "uv": [  9, 0, 16, 16 ], "texture": "#pane", "tintindex": 0}
-      }
-    }
-  ]
+  }
 }

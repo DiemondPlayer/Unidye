@@ -1,0 +1,82 @@
+Unidye v1.0.0 | Released October 27, 2024
+-----------------------------------------
+• Initial release
+
+Unidye v1.1.0 | Released November 5, 2024
+-----------------------------------------
+• Added colorful squares next to custom dye tooltips
+• Added tooltips containing material colors for vanilla dyes
+• Added colorful squares next to vanilla dye tooltips
+• Added en_gb and ru_ru lang files
+• Fixed villagers not sleeping in custom beds
+• Fixed unidye crashing the game in multiplayer
+• Fixed custom colors not being displayed properly in a sign edit screen
+• Fixed custom shulker box and custom bed middle mouse click issue
+• Fixed custom shulker box not being broken by moving pistons
+• Fixed custom beds dropping their loot twice when broken by moving pistons
+
+Unidye v1.2.0 | Released December 30, 2024
+-----------------------------------------
+• Added EMI compat
+• Added REI compat
+• Added JEI compat
+• Slightly tweaked the recipe logic
+Dev commentary
+This update is not a big one, but it is really important.
+Now you can view unidye recipes using EMI and REI, and you can read text
+guides in-game using JEI (because JEI does not really support special recipes like
+leather armor dyeing, so I could not make it display unidye's recipes, and I wrote
+in-game documentation instead!). Personally, I would prefer EMI and REI to view the recipes.
+
+The update also includes some recipe tweaks but
+it is not that noticible, just some qol changes.
+
+Moving forward, I can finally start working on porting the mod
+to the newer versions, so stay tuned!
+
+Unidye v1.2.1 | Released January 17, 2025
+-----------------------------------------
+• Fixed crash if shield's nbt is null
+• Fixed crash when the other mods that modify dye items tooltips are present
+
+Unidye v1.2.2 | Released February 7, 2025
+-----------------------------------------
+• Fixed non-full custom blocks accidentally being recolored
+when trying to place custom blocks in their spot
+• Fixed crash when trying to start a dedicated server
+• Fixed player's hand not swinging after coloring cat collars with custom dyes
+• Fixed cakes with custom candles not dropping the candle after being eaten/destroyed
+• Removed unnecessary logger info on minecraft startup
+
+Unidye v1.2.3 | Released February 10, 2025
+-----------------------------------------
+• Fixed custom beds and shulker boxes not rendering with certain shaders (Minecraft 1.21+)
+• Fixed custom dyes, glass and glass panes rendering
+incorrectly in the inventory when Sodium is installed (Minecraft 1.20.5+)
+
+Unidye v2.0.0 | Indev
+-----------------------------------------
+• Added changelog.txt, which will contain all the changes, including the minor code ones
+The changelog posted on Modrinth/Curseforge would be without those minor changes
+• Added general_todo.txt and moved most of the to-dos there
+• Removed repeating DEFAULT_COLOR in different classes, from now on DEFAULT_COLOR is stored in CustomDyeItem
+• Renamed DEFAULT_COLOR to DEFAULT_WHITE_COLOR to avoid confusion with vanilla DyeableItem.DEFAULT_COLOR
+• Created a separate class DyeableBedItem for Custom Bed
+• Created an interface IDyeableBlockEntity, used to automate the place action in DyeableBlockItem
+• Rewritten register methods in UnidyeBlocks, they use far less methods now and are more versatile
+• Added CustomCircleDyeingRecipe to automate special circle dyeing recipes
+• Rewritten UnidyeClient block registry, now utilizes IDyeableBlockEntity
+• Rewritten UnidyeSpecialRecipes registry, they use far less methods now and are more versatile
+• Added usage of IDyeableBlockEntity in various scenarios
+• Suppressed "cant find @Shadow target" warning in BlockModelRendererMixin
+• Fixed shapelessness of some recipes in REI compat
+• Fixed wrong lists of ingredients in EMI compat
+• Deleted unnecessary Special Recipes and replaced them with versatile CustomCircleDyeingRecipe
+• Overloaded the methods in UnidyeBlocks
+• Added DyeableSlabBlock, DyeableStairsBlock, DyeableWallBlock for compat to utilize
+• Moved templates for tintable block models into models/block/templates folder
+• Adopted model templates for walls, stairs and slabs from UnidyeAC
+• Adopted the stonecutter mixins from UnidyeAC and added a proper check for preserving NBT
+• Changed CircleDyeingRecipes to take in ItemConvertible instead of Item (less .asItem() calls this way)
+• Added an optional way to determine CustomCircleDyeingRecipe with an ArrayList of Blocks instead of a TagKey<Item>
+• Added /unidye random and /unidye dyes command

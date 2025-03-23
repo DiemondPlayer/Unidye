@@ -1,7 +1,7 @@
 package net.diemond_player.unidye.block.custom;
 
 import net.diemond_player.unidye.block.entity.DyeableLeatheryBlockEntity;
-import net.diemond_player.unidye.block.entity.UnidyeBlockEntities;
+import net.diemond_player.unidye.block.entity.IDyeableBlockEntity;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.PaneBlock;
 import net.minecraft.block.Stainable;
@@ -12,7 +12,7 @@ import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
 
-import static net.diemond_player.unidye.block.entity.DyeableLeatheryBlockEntity.DEFAULT_COLOR;
+import static net.diemond_player.unidye.item.custom.CustomDyeItem.DEFAULT_WHITE_COLOR;
 
 public class DyeablePaneBlock extends PaneBlock implements IDyeableBlock, Stainable {
     public DyeablePaneBlock(Settings settings) {
@@ -21,7 +21,7 @@ public class DyeablePaneBlock extends PaneBlock implements IDyeableBlock, Staina
 
     @Override
     public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
-        if (DyeableLeatheryBlockEntity.getColor(world, pos) != DyeableLeatheryBlockEntity.DEFAULT_COLOR) {
+        if (IDyeableBlockEntity.getColor(world, pos) != DEFAULT_WHITE_COLOR) {
             ItemStack stack = super.getPickStack(world, pos, state);
             return pickBlock(world, pos, stack);
         } else {
@@ -31,12 +31,12 @@ public class DyeablePaneBlock extends PaneBlock implements IDyeableBlock, Staina
 
     @Override
     public ItemStack pickBlock(BlockView world, BlockPos pos, ItemStack stack) {
-        DyeableLeatheryBlockEntity blockEntity = UnidyeBlockEntities.DYEABLE_LEATHERY_BE.get(world, pos);
-        int color = DEFAULT_COLOR;
-        int beaconColor = DEFAULT_COLOR;
-        if (blockEntity != null) {
-            color = blockEntity.color;
-            beaconColor = blockEntity.leatherColor;
+        BlockEntity blockEntity = world.getBlockEntity(pos);
+        int color = DEFAULT_WHITE_COLOR;
+        int beaconColor = DEFAULT_WHITE_COLOR;
+        if (blockEntity instanceof DyeableLeatheryBlockEntity dyeableLeatheryBlockEntity) {
+            color = dyeableLeatheryBlockEntity.getColor();
+            beaconColor = dyeableLeatheryBlockEntity.leatherColor;
         }
         NbtCompound subNbt = stack.getOrCreateSubNbt("display");
         subNbt.putInt("color", color);

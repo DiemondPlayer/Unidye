@@ -3,6 +3,7 @@ package net.diemond_player.unidye.block.custom;
 import com.google.common.collect.Maps;
 import net.diemond_player.unidye.block.UnidyeBlocks;
 import net.diemond_player.unidye.block.entity.DyeableShulkerBoxBlockEntity;
+import net.diemond_player.unidye.block.entity.IDyeableBlockEntity;
 import net.diemond_player.unidye.block.entity.UnidyeBlockEntities;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
@@ -17,7 +18,6 @@ import net.minecraft.item.DyeableItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.context.LootContextParameterSet;
 import net.minecraft.loot.context.LootContextParameters;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.stat.Stats;
 import net.minecraft.state.property.EnumProperty;
 import net.minecraft.util.*;
@@ -33,6 +33,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Map;
+
+import static net.diemond_player.unidye.item.custom.CustomDyeItem.DEFAULT_WHITE_COLOR;
 
 public class DyeableShulkerBoxBlock extends ShulkerBoxBlock implements IDyeableBlock {
     private static final VoxelShape UP_SHAPE = Block.createCuboidShape(0.0, 15.0, 0.0, 16.0, 16.0, 16.0);
@@ -105,9 +107,9 @@ public class DyeableShulkerBoxBlock extends ShulkerBoxBlock implements IDyeableB
                 if (dyeableShulkerBoxBlockEntity.hasCustomName()) {
                     itemStack.setCustomName(dyeableShulkerBoxBlockEntity.getCustomName());
                 }
-                if (dyeableShulkerBoxBlockEntity.color != DyeableShulkerBoxBlockEntity.DEFAULT_COLOR) {
+                if (dyeableShulkerBoxBlockEntity.getColor() != DEFAULT_WHITE_COLOR) {
                     DyeableItem dyeableItem = (DyeableItem) ((Object) itemStack.getItem());
-                    dyeableItem.setColor(itemStack, dyeableShulkerBoxBlockEntity.color);
+                    dyeableItem.setColor(itemStack, dyeableShulkerBoxBlockEntity.getColor());
                 }
                 ItemEntity itemEntity = new ItemEntity(world, (double) pos.getX() + 0.5, (double) pos.getY() + 0.5, (double) pos.getZ() + 0.5, itemStack);
                 itemEntity.setToDefaultPickupDelay();
@@ -175,21 +177,9 @@ public class DyeableShulkerBoxBlock extends ShulkerBoxBlock implements IDyeableB
     public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
         ItemStack itemStack = super.getPickStack(world, pos, state);
         world.getBlockEntity(pos, UnidyeBlockEntities.DYEABLE_SHULKER_BOX_BE).ifPresent(blockEntity -> blockEntity.setStackNbt(itemStack));
-        if (DyeableShulkerBoxBlockEntity.getColor(world, pos) != DyeableShulkerBoxBlockEntity.DEFAULT_COLOR) {
+        if (IDyeableBlockEntity.getColor(world, pos) != DEFAULT_WHITE_COLOR) {
             return pickBlock(world, pos, itemStack);
         }
         return itemStack;
-    }
-
-    @Override
-    public ItemStack pickBlock(BlockView world, BlockPos pos, ItemStack stack) {
-        DyeableShulkerBoxBlockEntity blockEntity = UnidyeBlockEntities.DYEABLE_SHULKER_BOX_BE.get(world, pos);
-        int color = DyeableShulkerBoxBlockEntity.DEFAULT_COLOR;
-        if (blockEntity != null) {
-            color = blockEntity.color;
-        }
-        NbtCompound subNbt = stack.getOrCreateSubNbt("display");
-        subNbt.putInt("color", color);
-        return stack;
     }
 }

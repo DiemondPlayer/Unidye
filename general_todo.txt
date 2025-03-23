@@ -1,0 +1,27 @@
+        unlikely
+    TODOO dye blocks second layer! (umhhhhh)
+    FIXMEE sheep do not drop colored wool on death
+    FIXMEE when dropped on blocks; wrong particles
+    FIXMEE middlemouse + ctrl works not like intended
+    FIXMEE proper map markers check MapIcon.Type FilledMapItem map_icons MapRenderer
+    FIXMEE map colors
+
+        post-1.0
+    TODO jeb_ dye
+    TODO dye naming system (?)
+    TODO dye recipe saving system (?)
+    TODO add Llama carpets
+    TODO add Glazed Terracotta
+    TODO integration with:
+    DyeDepot
+    El & L's Dyes
+    Create
+    Arts&Crafts
+    Supplementaries
+    SupplementariesSquared
+    ...
+
+        general rewrite todos and fixmes
+    TODO MERGE leathery stuff with regular dyeable block entity stuff, making this more versatile
+    FIXME REI compat gives way too many example displays?
+    TODO warns and errors through LOGGER would be useful

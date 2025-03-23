@@ -4,8 +4,6 @@ import com.google.common.collect.Lists;
 import net.diemond_player.unidye.Unidye;
 import net.diemond_player.unidye.block.UnidyeBlocks;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;

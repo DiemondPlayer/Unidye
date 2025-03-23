@@ -3,7 +3,6 @@ package net.diemond_player.unidye.block.entity;
 import net.diemond_player.unidye.block.custom.DyeableShulkerBoxBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.LootableContainerBlockEntity;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.Entity;
@@ -26,7 +25,6 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.*;
-import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.Nullable;
@@ -34,10 +32,11 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import static net.diemond_player.unidye.item.custom.CustomDyeItem.DEFAULT_WHITE_COLOR;
+
 public class DyeableShulkerBoxBlockEntity extends LootableContainerBlockEntity
-        implements SidedInventory {
-    public static final int DEFAULT_COLOR = 16777215;
-    public int color = DEFAULT_COLOR;
+        implements SidedInventory, IDyeableBlockEntity {
+    private int color = DEFAULT_WHITE_COLOR;
     public static final String ITEMS_KEY = "Items";
     private static final int[] AVAILABLE_SLOTS = IntStream.range(0, 27).toArray();
     private DefaultedList<ItemStack> inventory = DefaultedList.ofSize(27, ItemStack.EMPTY);
@@ -186,24 +185,12 @@ public class DyeableShulkerBoxBlockEntity extends LootableContainerBlockEntity
         return Text.translatable("container.shulkerBox");
     }
 
-    public static int getColor(BlockView world, BlockPos pos) {
-        if (world == null) {
-            return DyeableShulkerBoxBlockEntity.DEFAULT_COLOR;
-        }
-        BlockEntity blockEntity = world.getBlockEntity(pos);
-        if (blockEntity instanceof DyeableShulkerBoxBlockEntity dyeableBlockEntity) {
-            return dyeableBlockEntity.color;
-        } else {
-            return DyeableShulkerBoxBlockEntity.DEFAULT_COLOR;
-        }
-    }
-
     @Override
     public void readNbt(NbtCompound nbt) {
         super.readNbt(nbt);
         this.readInventoryNbt(nbt);
         if (nbt.getInt("color") == 0) {
-            color = DEFAULT_COLOR;
+            color = DEFAULT_WHITE_COLOR;
         } else {
             color = nbt.getInt("color");
         }
@@ -215,7 +202,7 @@ public class DyeableShulkerBoxBlockEntity extends LootableContainerBlockEntity
         if (!this.serializeLootTable(nbt)) {
             Inventories.writeNbt(nbt, this.inventory, false);
         }
-        if (color != DEFAULT_COLOR) {
+        if (color != DEFAULT_WHITE_COLOR) {
             nbt.putInt("color", color);
         }
     }
@@ -259,6 +246,16 @@ public class DyeableShulkerBoxBlockEntity extends LootableContainerBlockEntity
     @Override
     protected ScreenHandler createScreenHandler(int syncId, PlayerInventory playerInventory) {
         return new ShulkerBoxScreenHandler(syncId, playerInventory, this);
+    }
+
+    @Override
+    public int getColor() {
+        return color;
+    }
+
+    @Override
+    public void setColor(int color) {
+        this.color = color;
     }
 
     public boolean suffocates() {

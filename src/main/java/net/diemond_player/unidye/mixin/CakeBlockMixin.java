@@ -26,7 +26,7 @@ public abstract class CakeBlockMixin {
         ItemStack itemStack = player.getStackInHand(hand);
         if (itemStack.isOf(UnidyeBlocks.CUSTOM_CANDLE.asItem())) {
             ((DyeableCandleBlock) ((BlockItem) itemStack.getItem()).getBlock()).createBlockEntity(pos, state);
-            ((DyeableBlockEntity) world.getBlockEntity(pos)).color = UnidyeUtils.getColor(itemStack);
+            ((DyeableBlockEntity) world.getBlockEntity(pos)).setColor(UnidyeUtils.getColor(itemStack));
         }
     }
 }

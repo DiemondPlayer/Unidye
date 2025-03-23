@@ -24,6 +24,7 @@
     "ShulkerBoxColoringRecipeMixin",
     "SignBlockEntityMixin",
     "SignTextMixin",
+    "StonecutterScreenHandlerMixin",
     "WolfEntityMixin"
   ],
   "injectors": {
@@ -34,11 +35,12 @@
     "BlockModelRendererMixin",
     "BuiltinModelItemRendererMixin",
     "CatCollarFeatureRendererMixin",
+    "ItemMixin",
     "LoomScreenMixin",
     "ModelPartMixin",
     "SheepWoolFeatureRendererMixin",
     "SignBlockEntityRendererMixin",
-    "WolfCollarFeatureRendererMixin",
-    "ItemMixin"
+    "StonecutterScreenMixin",
+    "WolfCollarFeatureRendererMixin"
   ]
 }

@@ -29,7 +29,7 @@ public class DyeableLeatheryBlockItem extends DyeableBlockItem {
         if (nbtCompound != null && nbtCompound.contains("leather", NbtElement.NUMBER_TYPE)) {
             return nbtCompound.getInt("leather");
         }
-        return DEFAULT_COLOR;
+        return CustomDyeItem.DEFAULT_WHITE_COLOR;
     }
 
     public String getLeatherHexColor(ItemStack stack) {
@@ -58,7 +58,7 @@ public class DyeableLeatheryBlockItem extends DyeableBlockItem {
         BlockEntity blockEntity = context.getWorld().getBlockEntity(context.getBlockPos());
         if(result.isAccepted()) {
             if (blockEntity instanceof DyeableLeatheryBlockEntity dyeableBlockEntity) {
-                dyeableBlockEntity.color = UnidyeUtils.getColor(context.getStack());
+                dyeableBlockEntity.setColor(UnidyeUtils.getColor(context.getStack()));
                 dyeableBlockEntity.leatherColor = getLeatherColor(context.getStack());
             }
         }

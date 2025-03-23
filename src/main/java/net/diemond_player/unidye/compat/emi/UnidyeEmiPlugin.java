@@ -44,20 +44,14 @@ public class UnidyeEmiPlugin implements EmiPlugin {
 
         for (CraftingRecipe recipe : getRecipes(registry, RecipeType.CRAFTING)) {
             Identifier id = EmiPort.getId(recipe);
-            if (recipe instanceof CustomDyeRecipe dye) {
+            if (recipe instanceof CustomDyeRecipe) {
                 addRecipeSafe(registry, () -> new EmiCustomDyeRecipe(id), recipe);
-            } else if(recipe instanceof CustomStainedGlassDyeingRecipe) {
-                addRecipeSafe(registry, () -> new EmiCustomCircleDyeingRecipe(Items.GLASS, UnidyeBlocks.CUSTOM_STAINED_GLASS.asItem(), ConventionalItemTags.GLASS_BLOCKS, id), recipe);
-            } else if(recipe instanceof CustomStainedGlassPaneDyeingRecipe) {
-                addRecipeSafe(registry, () -> new EmiCustomCircleDyeingRecipe(Items.GLASS_PANE, UnidyeBlocks.CUSTOM_STAINED_GLASS_PANE.asItem(), ConventionalItemTags.GLASS_PANES, id), recipe);
-            } else if(recipe instanceof CustomCarpetDyeingRecipe) {
-                addRecipeSafe(registry, () -> new EmiCustomCircleDyeingRecipe(Items.WHITE_CARPET, UnidyeBlocks.CUSTOM_CARPET.asItem(), ItemTags.WOOL_CARPETS, id), recipe);
-            } else if(recipe instanceof CustomCandleDyeingRecipe) {
-                addRecipeSafe(registry, () -> new EmiCustomCircleDyeingRecipe(Items.CANDLE, UnidyeBlocks.CUSTOM_CANDLE.asItem(), ItemTags.CANDLES, id), recipe);
-            } else if(recipe instanceof CustomWoolDyeingRecipe) {
-                addRecipeSafe(registry, () -> new EmiCustomCircleDyeingRecipe(Items.WHITE_WOOL, UnidyeBlocks.CUSTOM_WOOL.asItem(), ItemTags.WOOL, id), recipe);
-            } else if(recipe instanceof CustomTerracottaDyeingRecipe) {
-                addRecipeSafe(registry, () -> new EmiCustomCircleDyeingRecipe(Items.TERRACOTTA, UnidyeBlocks.CUSTOM_TERRACOTTA.asItem(), ItemTags.TERRACOTTA, id), recipe);
+            } else if(recipe instanceof CustomCircleDyeingRecipe customCircleDyeingRecipe){
+                if(customCircleDyeingRecipe.itemTag != null) {
+                    addRecipeSafe(registry, () -> new EmiCustomCircleDyeingRecipe(customCircleDyeingRecipe.itemTag, customCircleDyeingRecipe.outputItem, id), recipe);
+                }else if(customCircleDyeingRecipe.acceptedItems != null){
+                    addRecipeSafe(registry, () -> new EmiCustomCircleDyeingRecipe(customCircleDyeingRecipe.acceptedItems, customCircleDyeingRecipe.outputItem, id), recipe);
+                }
             } else if(recipe instanceof CustomStainedGlassPaneRecipe) {
                 addRecipeSafe(registry, () -> new EmiCustomStainedGlassPaneRecipe(id), recipe);
             } else if(recipe instanceof CustomCarpetRecipe) {

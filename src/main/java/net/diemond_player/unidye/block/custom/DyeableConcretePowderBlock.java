@@ -1,6 +1,7 @@
 package net.diemond_player.unidye.block.custom;
 
 import net.diemond_player.unidye.block.entity.DyeableBlockEntity;
+import net.diemond_player.unidye.block.entity.IDyeableBlockEntity;
 import net.diemond_player.unidye.block.entity.UnidyeBlockEntities;
 import net.diemond_player.unidye.entity.DyeableFallingBlockEntity;
 import net.minecraft.block.Block;
@@ -14,7 +15,7 @@ import net.minecraft.util.math.random.Random;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
-import static net.minecraft.item.DyeableItem.DEFAULT_COLOR;
+import static net.diemond_player.unidye.item.custom.CustomDyeItem.DEFAULT_WHITE_COLOR;
 
 public class DyeableConcretePowderBlock extends ConcretePowderBlock implements IDyeableBlock {
 
@@ -24,7 +25,7 @@ public class DyeableConcretePowderBlock extends ConcretePowderBlock implements I
 
     @Override
     public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
-        if (DyeableBlockEntity.getColor(world, pos) != DyeableBlockEntity.DEFAULT_COLOR) {
+        if (IDyeableBlockEntity.getColor(world, pos) != DEFAULT_WHITE_COLOR) {
             ItemStack stack = super.getPickStack(world, pos, state);
             return pickBlock(world, pos, stack);
         } else {
@@ -37,7 +38,7 @@ public class DyeableConcretePowderBlock extends ConcretePowderBlock implements I
         if (!FallingBlock.canFallThrough(world.getBlockState(pos.down())) || pos.getY() < world.getBottomY()) {
             return;
         }
-        int color = DyeableBlockEntity.getColor(world, pos);
+        int color = IDyeableBlockEntity.getColor(world, pos);
         DyeableFallingBlockEntity dyeableFallingBlockEntity = DyeableFallingBlockEntity.spawnFromBlock(world, pos, state);
         this.configureFallingBlockEntity(dyeableFallingBlockEntity, color);
     }
@@ -50,9 +51,9 @@ public class DyeableConcretePowderBlock extends ConcretePowderBlock implements I
     public int getColor(BlockState state, BlockView world, BlockPos pos) {
         DyeableBlockEntity blockEntity = UnidyeBlockEntities.DYEABLE_BE.get(world, pos);
         if(blockEntity != null) {
-            return blockEntity.color;
+            return blockEntity.getColor();
         } else {
-            return DEFAULT_COLOR;
+            return DEFAULT_WHITE_COLOR;
         }
     }
 

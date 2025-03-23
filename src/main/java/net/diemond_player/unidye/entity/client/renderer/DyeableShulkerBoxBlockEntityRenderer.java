@@ -48,7 +48,7 @@ public class DyeableShulkerBoxBlockEntityRenderer
         modelPart.setPivot(0.0f, 24.0f - shulkerBoxBlockEntity.getAnimationProgress(f) * 0.5f * 16.0f, 0.0f);
         modelPart.yaw = 270.0f * shulkerBoxBlockEntity.getAnimationProgress(f) * ((float) Math.PI / 180);
         VertexConsumer vertexConsumer = spriteIdentifier.getVertexConsumer(vertexConsumerProvider, RenderLayer::getEntityCutoutNoCull);
-        float[] fs = UnidyeUtils.getColorArray(shulkerBoxBlockEntity.color);
+        float[] fs = UnidyeUtils.getColorArray(shulkerBoxBlockEntity.getColor());
         this.model.render(matrixStack, vertexConsumer, i, j, fs[0], fs[1], fs[2], 1.0f);
         matrixStack.pop();
     }

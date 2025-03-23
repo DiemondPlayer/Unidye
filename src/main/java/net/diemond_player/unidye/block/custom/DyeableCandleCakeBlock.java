@@ -1,7 +1,7 @@
 package net.diemond_player.unidye.block.custom;
 
 import net.diemond_player.unidye.block.UnidyeBlocks;
-import net.diemond_player.unidye.block.entity.DyeableBlockEntity;
+import net.diemond_player.unidye.block.entity.IDyeableBlockEntity;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -34,7 +34,7 @@ public class DyeableCandleCakeBlock extends CandleCakeBlock implements IDyeableB
                 extinguish(player, state, world, pos);
                 return ActionResult.success(world.isClient);
             } else {
-                int color = DyeableBlockEntity.getColor(world, pos);
+                int color = IDyeableBlockEntity.getColor(world, pos);
                 ActionResult actionResult = tryEat(world, pos, Blocks.CAKE.getDefaultState(), player);
                 if (actionResult.isAccepted()) {
                     ItemStack itemStack1 = new ItemStack(UnidyeBlocks.CUSTOM_CANDLE);

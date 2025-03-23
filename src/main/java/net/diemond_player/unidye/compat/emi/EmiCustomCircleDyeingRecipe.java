@@ -6,29 +6,46 @@ import dev.emi.emi.api.stack.EmiIngredient;
 import dev.emi.emi.api.stack.EmiStack;
 import dev.emi.emi.api.widget.GeneratedSlotWidget;
 import dev.emi.emi.api.widget.SlotWidget;
+import net.diemond_player.unidye.Unidye;
 import net.diemond_player.unidye.item.UnidyeItems;
 import net.diemond_player.unidye.item.custom.CustomDyeItem;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.item.DyeItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
+import net.minecraft.recipe.Ingredient;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class EmiCustomCircleDyeingRecipe extends EmiPatternCraftingRecipe {
     private static final List<DyeItem> DYES = Stream.of(DyeColor.values()).map(DyeItem::byColor).filter(c -> !(c instanceof CustomDyeItem)).toList();
-    private final Item item_output;
-    private final TagKey<Item> tag;
+    private final ItemConvertible itemOutput;
+    private final TagKey<Item> itemTag;
+    private final ArrayList<Item> acceptedItems;
 
-    public EmiCustomCircleDyeingRecipe(Item item, Item item_output, TagKey<Item> tag, Identifier id) {
-        super(List.of(EmiStack.of(item), EmiStack.of(UnidyeItems.CUSTOM_DYE)), EmiStack.of(item_output), id, false);
-        this.item_output = item_output;
-        this.tag = tag;
+    public EmiCustomCircleDyeingRecipe(TagKey<Item> itemTag, ItemConvertible itemOutput, Identifier id) {
+        super(List.of(EmiIngredient.of(Arrays.stream(Ingredient.fromTag(itemTag).getMatchingStacks()).map(i -> (EmiIngredient) EmiStack.of(i)).collect(Collectors.toList())),
+                EmiStack.of(UnidyeItems.CUSTOM_DYE)), EmiStack.of(itemOutput), id, false);
+        this.itemOutput = itemOutput;
+        this.itemTag = itemTag;
+        this.acceptedItems = null;
+    }
+
+    public EmiCustomCircleDyeingRecipe(ArrayList<Item> acceptedItems, ItemConvertible itemOutput, Identifier id) {
+        super(List.of(EmiIngredient.of(acceptedItems.stream().map(EmiStack::of).toList()),
+                EmiStack.of(UnidyeItems.CUSTOM_DYE)), EmiStack.of(itemOutput), id, false);
+        this.itemOutput = itemOutput;
+        this.itemTag = null;
+        this.acceptedItems = acceptedItems;
     }
 
     @Override
@@ -38,14 +55,20 @@ public class EmiCustomCircleDyeingRecipe extends EmiPatternCraftingRecipe {
                 return EmiStack.of(UnidyeUtils.blendAndSetColor(new ItemStack(UnidyeItems.CUSTOM_DYE), getDyes(r), Lists.newArrayList()));
             }, unique, x, y);
         } else {
-            return new SlotWidget(EmiIngredient.of(tag), x, y);
+            if(itemTag != null) {
+                return new SlotWidget(EmiIngredient.of(itemTag), x, y);
+            } else if (acceptedItems != null) {
+                return new SlotWidget(EmiIngredient.of(acceptedItems.stream().map(EmiStack::of).toList()), x, y);
+            }
+            Unidye.LOGGER.warn("Error loading EMI special recipe display for {} in ({}, {}) slot", this.id, x/18 + 1, y/18 + 1);
+            return new SlotWidget(EmiStack.of(ItemStack.EMPTY), x, y);
         }
     }
 
     @Override
     public SlotWidget getOutputWidget(int x, int y) {
         return new GeneratedSlotWidget(r -> {
-            ItemStack itemStack = UnidyeUtils.blendAndSetColor(new ItemStack(item_output), getDyes(r), Lists.newArrayList());
+            ItemStack itemStack = UnidyeUtils.blendAndSetColor(new ItemStack(itemOutput), getDyes(r), Lists.newArrayList());
             itemStack.setCount(8);
             return EmiStack.of(itemStack);
         }, unique, x, y);

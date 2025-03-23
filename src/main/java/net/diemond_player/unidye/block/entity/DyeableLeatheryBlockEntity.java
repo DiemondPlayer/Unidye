@@ -7,23 +7,23 @@ import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.BlockView;
 import org.jetbrains.annotations.Nullable;
 
-public class DyeableLeatheryBlockEntity extends BlockEntity {
+import static net.diemond_player.unidye.item.custom.CustomDyeItem.DEFAULT_WHITE_COLOR;
+
+public class DyeableLeatheryBlockEntity extends BlockEntity implements IDyeableBlockEntity{
     public DyeableLeatheryBlockEntity(BlockPos pos, BlockState state) {
         super(UnidyeBlockEntities.DYEABLE_LEATHERY_BE, pos, state);
     }
-    public static final int DEFAULT_COLOR = 16777215;
-    public int color = DEFAULT_COLOR;
-    public int leatherColor = DEFAULT_COLOR;
+    private int color = DEFAULT_WHITE_COLOR;
+    public int leatherColor = DEFAULT_WHITE_COLOR;
 
     @Override
     public void writeNbt(NbtCompound nbt) {
-        if (color != DEFAULT_COLOR) {
+        if (color != DEFAULT_WHITE_COLOR) {
             nbt.putInt("color", color);
         }
-        if (leatherColor != DEFAULT_COLOR) {
+        if (leatherColor != DEFAULT_WHITE_COLOR) {
             nbt.putInt("leather", leatherColor);
         }
         super.writeNbt(nbt);
@@ -32,12 +32,12 @@ public class DyeableLeatheryBlockEntity extends BlockEntity {
     @Override
     public void readNbt(NbtCompound nbt) {
         if (nbt.getInt("leather") == 0) {
-            leatherColor = DEFAULT_COLOR;
+            leatherColor = DEFAULT_WHITE_COLOR;
         } else {
             leatherColor = nbt.getInt("leather");
         }
         if (nbt.getInt("color") == 0) {
-            color = DEFAULT_COLOR;
+            color = DEFAULT_WHITE_COLOR;
         } else {
             color = nbt.getInt("color");
         }
@@ -59,15 +59,14 @@ public class DyeableLeatheryBlockEntity extends BlockEntity {
     public NbtCompound toInitialChunkDataNbt() {
         return createNbt();
     }
-    public static int getColor(BlockView world, BlockPos pos) {
-        if (world == null) {
-            return DyeableBlockEntity.DEFAULT_COLOR;
-        }
-        BlockEntity blockEntity = world.getBlockEntity(pos);
-        if (blockEntity instanceof DyeableLeatheryBlockEntity dyeableBlockEntity) {
-            return dyeableBlockEntity.color;
-        } else {
-            return DyeableBlockEntity.DEFAULT_COLOR;
-        }
+
+    @Override
+    public int getColor() {
+        return color;
+    }
+
+    @Override
+    public void setColor(int color) {
+        this.color = color;
     }
 }

@@ -30,7 +30,7 @@ import java.util.List;
 public class CustomDyeItem extends DyeItem implements SignChangingItem, DyeableItem {
 
     public static final String CLOSEST_VANILLA_DYE_ID_KEY = "closest_vanilla_dye_id";
-    public static final int DEFAULT_COLOR = 16777215;
+    public static final int DEFAULT_WHITE_COLOR = 16777215;
 
     public CustomDyeItem(Settings settings) {
         super(DyeColor.WHITE, settings);
@@ -42,7 +42,7 @@ public class CustomDyeItem extends DyeItem implements SignChangingItem, DyeableI
         if (nbtCompound != null && nbtCompound.contains(COLOR_KEY, NbtElement.NUMBER_TYPE)) {
             return nbtCompound.getInt(COLOR_KEY);
         }
-        return DEFAULT_COLOR;
+        return DEFAULT_WHITE_COLOR;
     }
 
     public static float getClosestVanillaDyeId(ItemStack stack) {
@@ -61,7 +61,7 @@ public class CustomDyeItem extends DyeItem implements SignChangingItem, DyeableI
         if (nbtCompound != null && nbtCompound.contains(materialType, NbtElement.NUMBER_TYPE)) {
             return nbtCompound.getInt(materialType);
         }
-        return DEFAULT_COLOR;
+        return DEFAULT_WHITE_COLOR;
     }
 
     public static String getMaterialHexColor(ItemStack stack, String materialType) {
