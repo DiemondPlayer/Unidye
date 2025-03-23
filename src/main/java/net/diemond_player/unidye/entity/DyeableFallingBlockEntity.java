@@ -80,7 +80,7 @@ public class DyeableFallingBlockEntity extends FallingBlockEntity {
     }
 
     public static DyeableFallingBlockEntity spawnFromBlock(World world, BlockPos pos, BlockState state) {
-        DyeableFallingBlockEntity fallingBlockEntity = new DyeableFallingBlockEntity(world, (double) pos.getX() + 0.5, pos.getY() + 1, (double) pos.getZ() + 0.5, state.contains(Properties.WATERLOGGED) ? (BlockState) state.with(Properties.WATERLOGGED, false) : state);
+        DyeableFallingBlockEntity fallingBlockEntity = new DyeableFallingBlockEntity(world, (double) pos.getX() + 0.5, pos.getY() + 1, (double) pos.getZ() + 0.5, state.contains(Properties.WATERLOGGED) ? state.with(Properties.WATERLOGGED, false) : state);
         world.setBlockState(pos, state.getFluidState().getBlockState(), Block.NOTIFY_ALL);
         world.spawnEntity(fallingBlockEntity);
         return fallingBlockEntity;
@@ -134,14 +134,14 @@ public class DyeableFallingBlockEntity extends FallingBlockEntity {
                         boolean bl6 = bl5 = this.block.canPlaceAt(this.getWorld(), blockPos.down(2)) && !bl4;
                         if (bl3 && bl5) {
                             if (this.block.contains(Properties.WATERLOGGED) && this.getWorld().getFluidState(blockPos.down(2)).getFluid() == Fluids.WATER) {
-                                this.block = (BlockState) this.block.with(Properties.WATERLOGGED, true);
+                                this.block = this.block.with(Properties.WATERLOGGED, true);
                             }
                             if (this.getWorld().setBlockState(blockPos.down(2), this.block, Block.NOTIFY_ALL)) {
                                 BlockEntity blockEntity;
                                 ((ServerWorld) this.getWorld()).getChunkManager().threadedAnvilChunkStorage.sendToOtherNearbyPlayers(this, new BlockUpdateS2CPacket(blockPos, this.getWorld().getBlockState(blockPos)));
                                 this.discard();
                                 if (block instanceof LandingBlock) {
-                                    ((LandingBlock) ((Object) block)).onLanding(this.getWorld(), blockPos.down(2), this.block, blockState, this);
+                                    ((LandingBlock) block).onLanding(this.getWorld(), blockPos.down(2), this.block, blockState, this);
                                     BlockEntity blockEntity1 = this.getWorld().getBlockEntity(blockPos.down(2));
                                     if (blockEntity1 instanceof DyeableBlockEntity dyeableBlockEntity) {
                                         dyeableBlockEntity.setColor(this.getCustomColor());
@@ -204,7 +204,7 @@ public class DyeableFallingBlockEntity extends FallingBlockEntity {
         Predicate<Entity> predicate = EntityPredicates.EXCEPT_CREATIVE_OR_SPECTATOR.and(EntityPredicates.VALID_LIVING_ENTITY);
         Block block = this.block.getBlock();
         if (block instanceof LandingBlock) {
-            LandingBlock landingBlock = (LandingBlock) ((Object) block);
+            LandingBlock landingBlock = (LandingBlock) block;
             damageSource2 = landingBlock.getDamageSource(this);
         } else {
             damageSource2 = this.getDamageSources().fallingBlock(this);

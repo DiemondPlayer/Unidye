@@ -57,6 +57,7 @@ public class DyeableConcretePowderBlock extends ConcretePowderBlock implements I
         }
     }
 
+
     @Override
     public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
     }

@@ -1,6 +1,5 @@
 package net.diemond_player.unidye.entity.client.renderer;
 
-import it.unimi.dsi.fastutil.ints.Int2IntFunction;
 import net.diemond_player.unidye.block.custom.DyeableBedBlock;
 import net.diemond_player.unidye.block.entity.DyeableBedBlockEntity;
 import net.diemond_player.unidye.block.entity.UnidyeBlockEntities;
@@ -66,7 +65,7 @@ public class DyeableBedBlockEntityRenderer
         if (world2 != null) {
             BlockState blockState = bedBlockEntity.getCachedState();
             DoubleBlockProperties.PropertySource<DyeableBedBlockEntity> propertySource = DoubleBlockProperties.toPropertySource(UnidyeBlockEntities.DYEABLE_BED_BE, DyeableBedBlock::getBedPart, DyeableBedBlock::getOppositePartDirection, ChestBlock.FACING, blockState, world2, bedBlockEntity.getPos(), (world, pos) -> false);
-            int k = ((Int2IntFunction) propertySource.apply(new LightmapCoordinatesRetriever())).get(i);
+            int k = propertySource.apply(new LightmapCoordinatesRetriever<>()).get(i);
             this.renderPart(matrixStack, vertexConsumerProvider, blockState.get(DyeableBedBlock.PART) == BedPart.HEAD ? this.bedHead : this.bedFoot, blockState.get(DyeableBedBlock.FACING), spriteIdentifier, k, j, false, bedBlockEntity);
         } else {
             this.renderPart(matrixStack, vertexConsumerProvider, this.bedHead, Direction.SOUTH, spriteIdentifier, i, j, false, bedBlockEntity);

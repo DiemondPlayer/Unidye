@@ -108,7 +108,7 @@ public class DyeableShulkerBoxBlock extends ShulkerBoxBlock implements IDyeableB
                     itemStack.setCustomName(dyeableShulkerBoxBlockEntity.getCustomName());
                 }
                 if (dyeableShulkerBoxBlockEntity.getColor() != DEFAULT_WHITE_COLOR) {
-                    DyeableItem dyeableItem = (DyeableItem) ((Object) itemStack.getItem());
+                    DyeableItem dyeableItem = (DyeableItem) itemStack.getItem();
                     dyeableItem.setColor(itemStack, dyeableShulkerBoxBlockEntity.getColor());
                 }
                 ItemEntity itemEntity = new ItemEntity(world, (double) pos.getX() + 0.5, (double) pos.getY() + 0.5, (double) pos.getZ() + 0.5, itemStack);
@@ -156,9 +156,8 @@ public class DyeableShulkerBoxBlock extends ShulkerBoxBlock implements IDyeableB
 
     @Override
     public VoxelShape getSidesShape(BlockState state, BlockView world, BlockPos pos) {
-        DyeableShulkerBoxBlockEntity dyeableShulkerBoxBlockEntity;
         BlockEntity blockEntity = world.getBlockEntity(pos);
-        if (blockEntity instanceof DyeableShulkerBoxBlockEntity && !(dyeableShulkerBoxBlockEntity = (DyeableShulkerBoxBlockEntity) blockEntity).suffocates()) {
+        if (blockEntity instanceof DyeableShulkerBoxBlockEntity && !((DyeableShulkerBoxBlockEntity) blockEntity).suffocates()) {
             return SIDES_SHAPES.get(state.get(FACING).getOpposite());
         }
         return VoxelShapes.fullCube();

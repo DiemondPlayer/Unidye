@@ -78,11 +78,13 @@ public abstract class BuiltinModelItemRendererMixin {
 
     @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/entity/BannerBlockEntity;getPatternListNbt(Lnet/minecraft/item/ItemStack;)Lnet/minecraft/nbt/NbtList;"), cancellable = true)
     private void unidye$render1(ItemStack stack, ModelTransformationMode mode, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, CallbackInfo ci) {
-        if (BlockItem.getBlockEntityNbt(stack).contains("CustomColored")) {
-            List<Pair<RegistryEntry<BannerPattern>, ?>> list = DyeableBannerBlockEntity.getPatternsFromNbt(BlockItem.getBlockEntityNbt(stack).getInt("Base"), DyeableBannerBlockEntity.getPatternListNbt(stack));
-            DyeableBannerBlockEntityRenderer.renderCanvas(matrices, vertexConsumers, light, overlay, this.modelShield.getPlate(), ModelLoader.SHIELD_BASE, false, list, stack.hasGlint());
-            matrices.pop();
-            ci.cancel();
+        if(BlockItem.getBlockEntityNbt(stack) != null) {
+            if (BlockItem.getBlockEntityNbt(stack).contains("CustomColored")) {
+                List<Pair<RegistryEntry<BannerPattern>, ?>> list = DyeableBannerBlockEntity.getPatternsFromNbt(BlockItem.getBlockEntityNbt(stack).getInt("Base"), DyeableBannerBlockEntity.getPatternListNbt(stack));
+                DyeableBannerBlockEntityRenderer.renderCanvas(matrices, vertexConsumers, light, overlay, this.modelShield.getPlate(), ModelLoader.SHIELD_BASE, false, list, stack.hasGlint());
+                matrices.pop();
+                ci.cancel();
+            }
         }
     }
 }

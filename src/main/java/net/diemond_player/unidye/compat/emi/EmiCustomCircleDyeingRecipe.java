@@ -51,9 +51,7 @@ public class EmiCustomCircleDyeingRecipe extends EmiPatternCraftingRecipe {
     @Override
     public SlotWidget getInputWidget(int slot, int x, int y) {
         if (slot == 4) {
-            return new GeneratedSlotWidget(r -> {
-                return EmiStack.of(UnidyeUtils.blendAndSetColor(new ItemStack(UnidyeItems.CUSTOM_DYE), getDyes(r), Lists.newArrayList()));
-            }, unique, x, y);
+            return new GeneratedSlotWidget(r -> EmiStack.of(UnidyeUtils.blendAndSetColor(new ItemStack(UnidyeItems.CUSTOM_DYE), getDyes(r), Lists.newArrayList())), unique, x, y);
         } else {
             if(itemTag != null) {
                 return new SlotWidget(EmiIngredient.of(itemTag), x, y);

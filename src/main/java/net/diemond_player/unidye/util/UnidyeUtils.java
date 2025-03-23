@@ -81,7 +81,7 @@ public class UnidyeUtils {
         DyeableItem dyeableItem = null;
         Item item = stack.getItem();
         if (item instanceof DyeableItem) {
-            dyeableItem = (DyeableItem) ((Object) item);
+            dyeableItem = (DyeableItem) item;
             itemStack = stack.copyWithCount(1);
             if (dyeableItem.hasColor(stack)) {
                 int k = dyeableItem.getColor(itemStack);
@@ -276,7 +276,7 @@ public class UnidyeUtils {
         }
         int j = (color & 0xFF0000) >> 16;
         int k = (color & 0xFF00) >> 8;
-        int l = (color & 0xFF) >> 0;
+        int l = (color & 0xFF);
         return new float[]{(float) j / 255.0f, (float) k / 255.0f, (float) l / 255.0f};
     }
     public static String getMaterialType(Item dyeableItem) {
@@ -286,7 +286,7 @@ public class UnidyeUtils {
     public static float[] getColorArray(int n) {
         int j = (n & 0xFF0000) >> 16;
         int k = (n & 0xFF00) >> 8;
-        int l = (n & 0xFF) >> 0;
+        int l = (n & 0xFF);
         return new float[]{(float) j / 255.0f, (float) k / 255.0f, (float) l / 255.0f};
     }
 }

@@ -120,8 +120,7 @@ public class DyeableShulkerBoxBlockEntity extends LootableContainerBlockEntity
         if (list.isEmpty()) {
             return;
         }
-        for (int i = 0; i < list.size(); ++i) {
-            Entity entity = list.get(i);
+        for (Entity entity : list) {
             if (entity.getPistonBehavior() == PistonBehavior.IGNORE) continue;
             entity.move(MovementType.SHULKER_BOX, new Vec3d((box.getXLength() + 0.01) * (double) direction.getOffsetX(), (box.getYLength() + 0.01) * (double) direction.getOffsetY(), (box.getZLength() + 0.01) * (double) direction.getOffsetZ()));
         }
@@ -160,10 +159,12 @@ public class DyeableShulkerBoxBlockEntity extends LootableContainerBlockEntity
                 this.viewerCount = 0;
             }
             ++this.viewerCount;
-            this.world.addSyncedBlockEvent(this.pos, this.getCachedState().getBlock(), 1, this.viewerCount);
-            if (this.viewerCount == 1) {
-                this.world.emitGameEvent((Entity) player, GameEvent.CONTAINER_OPEN, this.pos);
-                this.world.playSound(null, this.pos, SoundEvents.BLOCK_SHULKER_BOX_OPEN, SoundCategory.BLOCKS, 0.5f, this.world.random.nextFloat() * 0.1f + 0.9f);
+            if(this.world != null) {
+                this.world.addSyncedBlockEvent(this.pos, this.getCachedState().getBlock(), 1, this.viewerCount);
+                if (this.viewerCount == 1) {
+                    this.world.emitGameEvent(player, GameEvent.CONTAINER_OPEN, this.pos);
+                    this.world.playSound(null, this.pos, SoundEvents.BLOCK_SHULKER_BOX_OPEN, SoundCategory.BLOCKS, 0.5f, this.world.random.nextFloat() * 0.1f + 0.9f);
+                }
             }
         }
     }
@@ -172,10 +173,12 @@ public class DyeableShulkerBoxBlockEntity extends LootableContainerBlockEntity
     public void onClose(PlayerEntity player) {
         if (!this.removed && !player.isSpectator()) {
             --this.viewerCount;
-            this.world.addSyncedBlockEvent(this.pos, this.getCachedState().getBlock(), 1, this.viewerCount);
-            if (this.viewerCount <= 0) {
-                this.world.emitGameEvent((Entity) player, GameEvent.CONTAINER_CLOSE, this.pos);
-                this.world.playSound(null, this.pos, SoundEvents.BLOCK_SHULKER_BOX_CLOSE, SoundCategory.BLOCKS, 0.5f, this.world.random.nextFloat() * 0.1f + 0.9f);
+            if(this.world != null) {
+                this.world.addSyncedBlockEvent(this.pos, this.getCachedState().getBlock(), 1, this.viewerCount);
+                if (this.viewerCount <= 0) {
+                    this.world.emitGameEvent(player, GameEvent.CONTAINER_CLOSE, this.pos);
+                    this.world.playSound(null, this.pos, SoundEvents.BLOCK_SHULKER_BOX_CLOSE, SoundCategory.BLOCKS, 0.5f, this.world.random.nextFloat() * 0.1f + 0.9f);
+                }
             }
         }
     }
@@ -266,6 +269,6 @@ public class DyeableShulkerBoxBlockEntity extends LootableContainerBlockEntity
         CLOSED,
         OPENING,
         OPENED,
-        CLOSING;
+        CLOSING
     }
 }
