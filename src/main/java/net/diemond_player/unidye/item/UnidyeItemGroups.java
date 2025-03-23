@@ -30,12 +30,11 @@ public class UnidyeItemGroups {
                     UnidyeBlocks.CUSTOM_CANDLE,
                     UnidyeItems.CUSTOM_BANNER);
 
+    @SuppressWarnings("unused")
     public static final ItemGroup UNIDYE_GROUP = Registry.register(Registries.ITEM_GROUP,
             new Identifier(Unidye.MOD_ID, "unidye"),
             FabricItemGroup.builder().displayName(Text.translatable("itemgroup.unidye"))
-                    .icon(() -> new ItemStack(UnidyeItems.CUSTOM_DYE)).entries((displayContext, entries) -> {
-                        UNIDYE_ITEM_GROUP_ITEMS.forEach(entries::add);
-                    }).build());
+                    .icon(() -> new ItemStack(UnidyeItems.CUSTOM_DYE)).entries((displayContext, entries) -> UNIDYE_ITEM_GROUP_ITEMS.forEach(entries::add)).build());
 
     public static void registerItemGroups() {
         //Unidye.LOGGER.info("Registering Item Groups for" + Unidye.MOD_ID);

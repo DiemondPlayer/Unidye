@@ -30,7 +30,6 @@ public class DyeableBannerItem extends BannerItem implements DyeableItem {
 
     @Override
     public ActionResult place(ItemPlacementContext context) {
-        BlockState blockstate = context.getWorld().getBlockState(context.getBlockPos());
         ActionResult result = super.place(context);
         BlockEntity blockEntity = context.getWorld().getBlockEntity(context.getBlockPos());
         if(result.isAccepted()) {

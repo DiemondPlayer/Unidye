@@ -80,7 +80,7 @@ public class DyeableBannerBlockEntity extends BlockEntity implements Nameable, I
         return this.customName;
     }
 
-    public void setCustomName(Text customName) {
+    public void setCustomName(@Nullable Text customName) {
         this.customName = customName;
     }
 
@@ -157,6 +157,7 @@ public class DyeableBannerBlockEntity extends BlockEntity implements Nameable, I
         return list;
     }
 
+    @SuppressWarnings("unused")
     public static List<Pair<RegistryEntry<BannerPattern>, ?>> getPatternsFromNbt(DyeColor color, @Nullable NbtList patternListNbt) {
         ArrayList<Pair<RegistryEntry<BannerPattern>, ?>> list = Lists.newArrayList();
         list.add(Pair.of(Registries.BANNER_PATTERN.entryOf(BannerPatterns.BASE), color));

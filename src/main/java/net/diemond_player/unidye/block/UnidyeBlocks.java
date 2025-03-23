@@ -14,10 +14,10 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.function.BiFunction;
 
+@SuppressWarnings("unused")
 public class UnidyeBlocks {
     public static final Block CUSTOM_WOOL = registerBlock(Unidye.MOD_ID, "custom_wool",
             new DyeableWoolBlock(FabricBlockSettings.copyOf(Blocks.WHITE_WOOL)),

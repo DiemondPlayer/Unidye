@@ -17,7 +17,6 @@ import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class CustomCircleDyeingRecipe extends SpecialCraftingRecipe {
 

@@ -35,7 +35,7 @@ public class CustomBannerDuplicateRecipe extends SpecialCraftingRecipe {
                 return false;
             }
             int j = DyeableBannerBlockEntity.getPatternCount(itemStack3);
-            if (j > 6) {
+            if (j > DyeableBannerBlockEntity.MAX_PATTERN_COUNT) {
                 return false;
             }
             if (j > 0) {
@@ -59,7 +59,7 @@ public class CustomBannerDuplicateRecipe extends SpecialCraftingRecipe {
             ItemStack itemStack = recipeInputInventory.getStack(i);
             if (!itemStack.isEmpty()) {
                 int j = DyeableBannerBlockEntity.getPatternCount(itemStack);
-                if (j > 0 && j <= 6) {
+                if (j > 0 && j <= DyeableBannerBlockEntity.MAX_PATTERN_COUNT) {
                     return itemStack.copyWithCount(1);
                 }
             }

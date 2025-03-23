@@ -1,6 +1,5 @@
 package net.diemond_player.unidye.block.custom;
 
-import net.diemond_player.unidye.block.entity.DyeableBlockEntity;
 import net.diemond_player.unidye.block.entity.IDyeableBlockEntity;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.StairsBlock;
@@ -8,6 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
 
+@SuppressWarnings("unused")
 //Isn't used by Unidye, but may be useful for compat
 public class DyeableStairsBlock extends StairsBlock implements IDyeableBlock {
 

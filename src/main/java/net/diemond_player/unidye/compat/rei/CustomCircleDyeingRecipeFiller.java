@@ -32,6 +32,7 @@ public class CustomCircleDyeingRecipeFiller implements CraftingRecipeFiller<Cust
         this.acceptedItems = null;
     }
 
+    @SuppressWarnings("unused")
     public CustomCircleDyeingRecipeFiller(ArrayList<Item> acceptedItems, ItemConvertible itemOutput) {
         this.itemOutput = itemOutput;
         this.itemTag = null;

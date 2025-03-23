@@ -5,20 +5,18 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.command.CommandRegistryAccess;
-import net.minecraft.command.argument.ItemStackArgument;
 import net.minecraft.entity.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.command.CommandManager;
-import net.minecraft.server.command.GiveCommand;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.Text;
 
 public class UnidyeDyesCommand {
+
+    @SuppressWarnings("unused")
     public static void register(CommandDispatcher<ServerCommandSource> serverCommandSourceCommandDispatcher,
                                 CommandRegistryAccess commandRegistryAccess,
                                 CommandManager.RegistrationEnvironment registrationEnvironment) {
@@ -26,7 +24,7 @@ public class UnidyeDyesCommand {
                 .then(CommandManager.literal("dyes").requires(source -> source.hasPermissionLevel(4)).executes(UnidyeDyesCommand::run)));
     }
 
-    public static int run(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
+    public static int run(CommandContext<ServerCommandSource> context) {
         for (Item item : UnidyeUtils.DYES.keySet()) {
             ItemStack itemStack = new ItemStack(item, 64);
             ServerPlayerEntity serverPlayerEntity = context.getSource().getPlayer();

@@ -12,9 +12,7 @@ import net.diemond_player.unidye.util.UnidyeCauldronBehaviors;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.block.Block;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemConvertible;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

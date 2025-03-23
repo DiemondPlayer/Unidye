@@ -26,7 +26,7 @@ public class DyeableShulkerBoxBlockEntityRenderer
     private final DyeableShulkerEntityModel<?> model;
 
     public DyeableShulkerBoxBlockEntityRenderer(BlockEntityRendererFactory.Context ctx) {
-        this.model = new DyeableShulkerEntityModel(ctx.getLayerModelPart(UnidyeModelLayers.CUSTOM_SHULKER));
+        this.model = new DyeableShulkerEntityModel<>(ctx.getLayerModelPart(UnidyeModelLayers.CUSTOM_SHULKER));
     }
 
     @Override
@@ -40,7 +40,7 @@ public class DyeableShulkerBoxBlockEntityRenderer
         matrixStack.push();
         matrixStack.translate(0.5f, 0.5f, 0.5f);
         float g = 0.9995f;
-        matrixStack.scale(0.9995f, 0.9995f, 0.9995f);
+        matrixStack.scale(g, g, g);
         matrixStack.multiply(direction.getRotationQuaternion());
         matrixStack.scale(1.0f, -1.0f, -1.0f);
         matrixStack.translate(0.0f, -1.0f, 0.0f);

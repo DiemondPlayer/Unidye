@@ -1,9 +1,6 @@
 package net.diemond_player.unidye.mixin;
 
-import com.google.common.collect.Lists;
 import net.diemond_player.unidye.Unidye;
-import net.diemond_player.unidye.block.UnidyeBlocks;
-import net.minecraft.block.Block;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.gui.screen.ingame.StonecutterScreen;
 import net.minecraft.entity.player.PlayerInventory;
@@ -13,8 +10,6 @@ import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
-
-import java.util.ArrayList;
 
 @Mixin(StonecutterScreen.class)
 public abstract class StonecutterScreenMixin extends HandledScreen<StonecutterScreenHandler> {

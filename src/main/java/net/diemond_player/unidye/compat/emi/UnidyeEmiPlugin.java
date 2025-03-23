@@ -34,13 +34,10 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+@SuppressWarnings("SameParameterValue")
 public class UnidyeEmiPlugin implements EmiPlugin {
     @Override
     public void register(EmiRegistry registry) {
-        Set<Item> hiddenItems = Stream.concat(
-                EmiUtil.values(TagKey.of(EmiPort.getItemRegistry().getKey(), EmiTags.HIDDEN_FROM_RECIPE_VIEWERS)).map(RegistryEntry::value),
-                EmiPort.getDisabledItems()
-        ).collect(Collectors.toSet());
 
         for (CraftingRecipe recipe : getRecipes(registry, RecipeType.CRAFTING)) {
             Identifier id = EmiPort.getId(recipe);

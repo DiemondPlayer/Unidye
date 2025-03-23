@@ -6,13 +6,11 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.command.CommandRegistryAccess;
-import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.command.argument.ItemStackArgument;
 import net.minecraft.command.argument.ItemStackArgumentType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.item.DyeItem;
 import net.minecraft.item.DyeableItem;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
@@ -21,11 +19,11 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import org.spongepowered.include.com.google.common.collect.Lists;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
 public class UnidyeRandomCommand {
+    @SuppressWarnings("unused")
     public static void register(CommandDispatcher<ServerCommandSource> serverCommandSourceCommandDispatcher,
                                 CommandRegistryAccess commandRegistryAccess,
                                 CommandManager.RegistrationEnvironment registrationEnvironment) {
@@ -44,7 +42,7 @@ public class UnidyeRandomCommand {
                         IntegerArgumentType.getInteger(context, "amount_of_entries")))))))));
     }
 
-    public static int run(CommandContext<ServerCommandSource> context, ItemStackArgument item, int min_amount, int max_amount, int amount_of_entries) throws CommandSyntaxException {
+    public static int run(CommandContext<ServerCommandSource> context, ItemStackArgument item, int min_amount, int max_amount, int amount_of_entries) {
         if(!(item.getItem() instanceof DyeableItem)){
             return 0;
         }
