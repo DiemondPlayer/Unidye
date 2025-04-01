@@ -83,3 +83,4 @@ The changelog posted on Modrinth/Curseforge would be without those minor changes
 • Added a check if blocks item is AIR in the Client registering color methods
 • Added less (?) cancerous override for onStateReplaced for DyeableConcretePowderBlock
 • Added experimental rerendering packets
+• Added /unidye vanillify and /unidye colorize commands

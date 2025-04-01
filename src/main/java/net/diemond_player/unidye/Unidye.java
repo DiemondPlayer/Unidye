@@ -3,8 +3,10 @@ package net.diemond_player.unidye;
 import com.google.common.collect.Lists;
 import net.diemond_player.unidye.block.UnidyeBlocks;
 import net.diemond_player.unidye.block.entity.UnidyeBlockEntities;
+import net.diemond_player.unidye.command.UnidyeColorizeCommand;
 import net.diemond_player.unidye.command.UnidyeDyesCommand;
 import net.diemond_player.unidye.command.UnidyeRandomCommand;
+import net.diemond_player.unidye.command.UnidyeVanillifyCommand;
 import net.diemond_player.unidye.item.UnidyeItemGroups;
 import net.diemond_player.unidye.item.UnidyeItems;
 import net.diemond_player.unidye.recipes.UnidyeSpecialRecipes;
@@ -39,5 +41,7 @@ public class Unidye implements ModInitializer {
 
         CommandRegistrationCallback.EVENT.register(UnidyeDyesCommand::register);
         CommandRegistrationCallback.EVENT.register(UnidyeRandomCommand::register);
+        CommandRegistrationCallback.EVENT.register(UnidyeColorizeCommand::register);
+        CommandRegistrationCallback.EVENT.register(UnidyeVanillifyCommand::register);
     }
 }
