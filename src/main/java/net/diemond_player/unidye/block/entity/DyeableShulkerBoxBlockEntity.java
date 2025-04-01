@@ -259,6 +259,7 @@ public class DyeableShulkerBoxBlockEntity extends LootableContainerBlockEntity
     @Override
     public void setColor(int color) {
         this.color = color;
+        this.markDirty();
     }
 
     public boolean suffocates() {

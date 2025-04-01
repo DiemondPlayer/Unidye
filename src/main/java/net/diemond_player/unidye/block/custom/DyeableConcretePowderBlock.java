@@ -1,5 +1,6 @@
 package net.diemond_player.unidye.block.custom;
 
+import net.diemond_player.unidye.block.UnidyeBlocks;
 import net.diemond_player.unidye.block.entity.DyeableBlockEntity;
 import net.diemond_player.unidye.block.entity.IDyeableBlockEntity;
 import net.diemond_player.unidye.block.entity.UnidyeBlockEntities;
@@ -8,6 +9,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ConcretePowderBlock;
 import net.minecraft.block.FallingBlock;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
@@ -57,8 +59,10 @@ public class DyeableConcretePowderBlock extends ConcretePowderBlock implements I
         }
     }
 
-
     @Override
     public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
+        if(!newState.isOf(UnidyeBlocks.CUSTOM_CONCRETE)){
+            super.onStateReplaced(state, world, pos, newState, moved);
+        }
     }
 }

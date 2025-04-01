@@ -14,6 +14,7 @@ import net.diemond_player.unidye.item.UnidyeItems;
 import net.diemond_player.unidye.util.UnidyeModelPredicateProvider;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
@@ -22,6 +23,10 @@ import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
 import net.minecraft.item.DyeableItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.Items;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.WorldEvents;
 
 import java.util.HashMap;
 
@@ -29,6 +34,8 @@ public class UnidyeClient implements ClientModInitializer {
     public static final HashMap<Block, Integer> DYEABLE_BLOCKS_ADJUST = new HashMap<>() {{
             put(UnidyeBlocks.CUSTOM_CONCRETE_POWDER, 15);
     }};
+
+    public static final Identifier RERENDER_BLOCK_PACKET_ID = new Identifier(Unidye.MOD_ID, "rerender_block");
 
     @Override
     public void onInitializeClient() {
@@ -63,23 +70,38 @@ public class UnidyeClient implements ClientModInitializer {
         });
 
         UnidyeModelPredicateProvider.registerModModels();
+
+        ClientPlayNetworking.registerGlobalReceiver(RERENDER_BLOCK_PACKET_ID, (client, handler, buf, responseSender) -> {
+            BlockPos blockPos = buf.readBlockPos();
+            client.execute(() -> {
+//                client.worldRenderer.scheduleBlockRenders(blockPos.getX(), blockPos.getY(), blockPos.getZ(), blockPos.getX(), blockPos.getY(), blockPos.getZ());
+                client.world.updateListeners(blockPos, client.world.getBlockState(blockPos), client.world.getBlockState(blockPos), Block.NOTIFY_ALL);
+                Unidye.LOGGER.info("I JUST TOLD THIS CLIENT TO NOTIFY_ALL");
+                Unidye.LOGGER.info(client.world.getBlockState(blockPos).toString());
+                Unidye.LOGGER.info(blockPos.toString());
+            });
+        });
     }
 
-    private static void registerItemColor(Item item) {
+    public static void registerItemColor(Item item) {
         ColorProviderRegistry.ITEM.register((stack, tintIndex) -> tintIndex > 0 ? -1 : ((DyeableItem) stack.getItem()).getColor(stack), item);
     }
 
-    private static void registerItemColor(Item item, int adjust) {
+    public static void registerItemColor(Item item, int adjust) {
         ColorProviderRegistry.ITEM.register((stack, tintIndex) -> tintIndex > 0 ? -1 : adjust(((DyeableItem) stack.getItem()).getColor(stack), adjust), item);
     }
 
     public static void registerBlockColor(Block block) {
-        registerItemColor(block.asItem());
+        if(block.asItem() != Items.AIR) {
+            registerItemColor(block.asItem());
+        }
         ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) -> IDyeableBlockEntity.getColor(world, pos), block);
     }
 
     public static void registerBlockColor(Block block, int adjust) {
-        registerItemColor(block.asItem(), adjust);
+        if(block.asItem() != Items.AIR) {
+            registerItemColor(block.asItem(), adjust);
+        }
         ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) -> adjust(IDyeableBlockEntity.getColor(world, pos), adjust), block);
     }
 

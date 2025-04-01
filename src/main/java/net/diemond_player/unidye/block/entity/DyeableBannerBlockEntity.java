@@ -222,5 +222,6 @@ public class DyeableBannerBlockEntity extends BlockEntity implements Nameable, I
     @Override
     public void setColor(int color) {
         this.color = color;
+        this.markDirty();
     }
 }

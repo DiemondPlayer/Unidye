@@ -68,5 +68,6 @@ public class DyeableLeatheryBlockEntity extends BlockEntity implements IDyeableB
     @Override
     public void setColor(int color) {
         this.color = color;
+        this.markDirty();
     }
 }

@@ -29,22 +29,6 @@ public class DyeableSlabBlock extends SlabBlock implements IDyeableBlock {
 
     @Override
     public boolean canReplace(BlockState state, ItemPlacementContext context) {
-        ItemStack itemStack = context.getStack();
-        SlabType slabType = state.get(TYPE);
-        if (slabType != SlabType.DOUBLE && itemStack.isOf(this.asItem()) && UnidyeUtils.getColor(itemStack) == IDyeableBlockEntity.getColor(context.getWorld(), context.getBlockPos())) {
-            if (context.canReplaceExisting()) {
-                boolean bl = context.getHitPos().y - (double) context.getBlockPos().getY() > 0.5;
-                Direction direction = context.getSide();
-                if (slabType == SlabType.BOTTOM) {
-                    return direction == Direction.UP || bl && direction.getAxis().isHorizontal();
-                } else {
-                    return direction == Direction.DOWN || !bl && direction.getAxis().isHorizontal();
-                }
-            } else {
-                return true;
-            }
-        } else {
-            return false;
-        }
+        return super.canReplace(state, context) && UnidyeUtils.getColor(context.getStack()) == IDyeableBlockEntity.getColor(context.getWorld(), context.getBlockPos());
     }
 }
