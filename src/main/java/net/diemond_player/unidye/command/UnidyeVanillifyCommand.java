@@ -40,7 +40,7 @@ public class UnidyeVanillifyCommand {
         if(!(item.getItem() instanceof DyeableItem)){
             return 0;
         }
-        for (DyeItem dyeItem : UnidyeUtils.DYES.keySet().stream().map(i -> (DyeItem) i).toList()) {
+        for (DyeItem dyeItem : UnidyeUtils.BASE_DYE_ITEMS) {
             ServerPlayerEntity serverPlayerEntity = context.getSource().getPlayer();
 
             if (serverPlayerEntity != null) {

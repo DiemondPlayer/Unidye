@@ -4,6 +4,7 @@ import net.diemond_player.unidye.block.entity.UnidyeBlockEntities;
 import net.diemond_player.unidye.item.UnidyeItems;
 import net.diemond_player.unidye.item.custom.CustomDyeItem;
 import net.diemond_player.unidye.item.custom.DyeableBannerItem;
+import net.diemond_player.unidye.util.UnidyeMaterialTypes;
 import net.minecraft.block.entity.BannerPattern;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.BannerItem;
@@ -77,7 +78,7 @@ public abstract class LoomScreenHandlerMixin extends ScreenHandler {
                 NbtCompound nbtCompound2 = new NbtCompound();
                 nbtCompound2.putString("Pattern", pattern.value().getId());
                 if (itemStack2.getItem() instanceof CustomDyeItem) {
-                    nbtCompound2.putInt("Color", CustomDyeItem.getMaterialColor(itemStack2, "leather"));
+                    nbtCompound2.putInt("Color", CustomDyeItem.getMaterialColor(itemStack2, UnidyeMaterialTypes.LEATHER));
                 } else {
                     nbtCompound2.putInt("Color", ((DyeItem) itemStack2.getItem()).getColor().getId());
                 }
@@ -110,7 +111,7 @@ public abstract class LoomScreenHandlerMixin extends ScreenHandler {
                 }
                 NbtCompound nbtCompound2 = new NbtCompound();
                 nbtCompound2.putString("Pattern", pattern.value().getId());
-                nbtCompound2.putInt("Color", CustomDyeItem.getMaterialColor(itemStack2, "leather"));
+                nbtCompound2.putInt("Color", CustomDyeItem.getMaterialColor(itemStack2, UnidyeMaterialTypes.LEATHER));
                 nbtList.add(nbtCompound2);
                 BlockItem.setBlockEntityNbt(itemStack3, UnidyeBlockEntities.DYEABLE_BANNER_BE, nbtCompound);
             }

@@ -26,12 +26,12 @@ public interface IDyeableBlockEntity {
 //            ServerPlayNetworking.send(player, UnidyeClient.RERENDER_BLOCK_PACKET_ID, buf);
 //        }
 //    }
-    default void setColorAndRerender(int color, BlockPos blockPos, ServerPlayerEntity player){
-        this.setColor(color);
-        PacketByteBuf buf = PacketByteBufs.create();
-        buf.writeBlockPos(blockPos);
-        ServerPlayNetworking.send(player, UnidyeClient.RERENDER_BLOCK_PACKET_ID, buf);
-    }
+//    default void setColorAndRerender(int color, BlockPos blockPos, ServerPlayerEntity player){
+//        this.setColor(color);
+//        PacketByteBuf buf = PacketByteBufs.create();
+//        buf.writeBlockPos(blockPos);
+//        ServerPlayNetworking.send(player, UnidyeClient.RERENDER_BLOCK_PACKET_ID, buf);
+//    }
     static int getColor(BlockView world, BlockPos pos) {
         if (world == null) {
             return DEFAULT_WHITE_COLOR;

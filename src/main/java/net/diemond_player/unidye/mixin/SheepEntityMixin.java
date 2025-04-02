@@ -3,7 +3,8 @@ package net.diemond_player.unidye.mixin;
 import net.diemond_player.unidye.block.UnidyeBlocks;
 import net.diemond_player.unidye.item.custom.DyeableLeatheryBlockItem;
 import net.diemond_player.unidye.util.UnidyeAccessor;
-import net.diemond_player.unidye.util.UnidyeColor;
+import net.diemond_player.unidye.util.UnidyeMaterialTypes;
+import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.data.DataTracker;
@@ -108,7 +109,7 @@ public abstract class SheepEntityMixin implements UnidyeAccessor {
                 int green1 = (customColor1 >> 8 & 0xFF);
                 int blue1 = (customColor1 & 0xFF);
                 SheepEntity second = (SheepEntity) entity;
-                float[] customColor2 = UnidyeColor.byId(second.getColor().getId()).getColorComponents("leather");
+                float[] customColor2 = UnidyeUtils.getColorArray(UnidyeMaterialTypes.LEATHER.getColor(second.getColor()));
                 customColor2[0] = customColor2[0] * 255.0f;
                 customColor2[1] = customColor2[1] * 255.0f;
                 customColor2[2] = customColor2[2] * 255.0f;
@@ -124,7 +125,7 @@ public abstract class SheepEntityMixin implements UnidyeAccessor {
                 int red11 = (customColor11 >> 16 & 0xFF);
                 int green11 = (customColor11 >> 8 & 0xFF);
                 int blue11 = (customColor11 & 0xFF);
-                float[] customColor22 = UnidyeColor.byId(second.getColor().getId()).getColorComponents("wool");
+                float[] customColor22 = UnidyeUtils.getColorArray(UnidyeMaterialTypes.WOOL.getColor(second.getColor()));
                 customColor22[0] = customColor22[0] * 255.0f;
                 customColor22[1] = customColor22[1] * 255.0f;
                 customColor22[2] = customColor22[2] * 255.0f;
@@ -143,7 +144,7 @@ public abstract class SheepEntityMixin implements UnidyeAccessor {
                 int green1 = (customColor1 >> 8 & 0xFF);
                 int blue1 = (customColor1 & 0xFF);
                 SheepEntity first = (SheepEntity) ((SheepEntity) (Object) this);
-                float[] customColor2 = UnidyeColor.byId(first.getColor().getId()).getColorComponents("leather");
+                float[] customColor2 = UnidyeUtils.getColorArray(UnidyeMaterialTypes.LEATHER.getColor(first.getColor()));
                 customColor2[0] = customColor2[0] * 255.0f;
                 customColor2[1] = customColor2[1] * 255.0f;
                 customColor2[2] = customColor2[2] * 255.0f;
@@ -159,7 +160,7 @@ public abstract class SheepEntityMixin implements UnidyeAccessor {
                 int red11 = (customColor11 >> 16 & 0xFF);
                 int green11 = (customColor11 >> 8 & 0xFF);
                 int blue11 = (customColor11 & 0xFF);
-                float[] customColor22 = UnidyeColor.byId(first.getColor().getId()).getColorComponents("wool");
+                float[] customColor22 = UnidyeUtils.getColorArray(UnidyeMaterialTypes.WOOL.getColor(first.getColor()));
                 customColor22[0] = customColor22[0] * 255.0f;
                 customColor22[1] = customColor22[1] * 255.0f;
                 customColor22[2] = customColor22[2] * 255.0f;

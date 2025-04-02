@@ -52,11 +52,11 @@ public class UnidyeRandomCommand {
             Random random = new Random();
             if(max_amount != min_amount) {
                 for (int j = 0; j < random.nextInt(min_amount, max_amount+1); j++) {
-                    dyeItems.add((DyeItem) UnidyeUtils.DYES.keySet().stream().toList().get(random.nextInt(0, UnidyeUtils.DYES.size())));
+                    dyeItems.add(UnidyeUtils.BASE_DYE_ITEMS.get(random.nextInt(0, UnidyeUtils.BASE_DYE_ITEMS.size())));
                 }
             }else{
                 for (int j = 0; j < min_amount; j++) {
-                    dyeItems.add((DyeItem) UnidyeUtils.DYES.keySet().stream().toList().get(random.nextInt(0, UnidyeUtils.DYES.size())));
+                    dyeItems.add(UnidyeUtils.BASE_DYE_ITEMS.get(random.nextInt(0, UnidyeUtils.BASE_DYE_ITEMS.size())));
                 }
             }
             itemStack = UnidyeUtils.blendAndSetColor(itemStack, dyeItems, Lists.newArrayList());

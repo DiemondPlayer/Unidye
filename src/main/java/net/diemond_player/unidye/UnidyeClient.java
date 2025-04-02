@@ -35,7 +35,7 @@ public class UnidyeClient implements ClientModInitializer {
             put(UnidyeBlocks.CUSTOM_CONCRETE_POWDER, 15);
     }};
 
-    public static final Identifier RERENDER_BLOCK_PACKET_ID = new Identifier(Unidye.MOD_ID, "rerender_block");
+//    public static final Identifier RERENDER_BLOCK_PACKET_ID = new Identifier(Unidye.MOD_ID, "rerender_block");
 
     @Override
     public void onInitializeClient() {
@@ -71,16 +71,16 @@ public class UnidyeClient implements ClientModInitializer {
 
         UnidyeModelPredicateProvider.registerModModels();
 
-        ClientPlayNetworking.registerGlobalReceiver(RERENDER_BLOCK_PACKET_ID, (client, handler, buf, responseSender) -> {
-            BlockPos blockPos = buf.readBlockPos();
-            client.execute(() -> {
-//                client.worldRenderer.scheduleBlockRenders(blockPos.getX(), blockPos.getY(), blockPos.getZ(), blockPos.getX(), blockPos.getY(), blockPos.getZ());
-                client.world.updateListeners(blockPos, client.world.getBlockState(blockPos), client.world.getBlockState(blockPos), Block.NOTIFY_ALL);
-                Unidye.LOGGER.info("I JUST TOLD THIS CLIENT TO NOTIFY_ALL");
-                Unidye.LOGGER.info(client.world.getBlockState(blockPos).toString());
-                Unidye.LOGGER.info(blockPos.toString());
-            });
-        });
+//        ClientPlayNetworking.registerGlobalReceiver(RERENDER_BLOCK_PACKET_ID, (client, handler, buf, responseSender) -> {
+//            BlockPos blockPos = buf.readBlockPos();
+//            client.execute(() -> {
+////                client.worldRenderer.scheduleBlockRenders(blockPos.getX(), blockPos.getY(), blockPos.getZ(), blockPos.getX(), blockPos.getY(), blockPos.getZ());
+//                client.world.updateListeners(blockPos, client.world.getBlockState(blockPos), client.world.getBlockState(blockPos), Block.NOTIFY_ALL);
+//                Unidye.LOGGER.info("I JUST TOLD THIS CLIENT TO NOTIFY_ALL");
+//                Unidye.LOGGER.info(client.world.getBlockState(blockPos).toString());
+//                Unidye.LOGGER.info(blockPos.toString());
+//            });
+//        });
     }
 
     public static void registerItemColor(Item item) {

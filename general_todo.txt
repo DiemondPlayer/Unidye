@@ -24,4 +24,8 @@
         general rewrite todos and fixmes
     TODO MERGE leathery stuff with regular dyeable block entity stuff, making this more versatile
     FIXME REI compat gives way too many example displays?
+    TODO REI compat automatic?
     TODO warns and errors through LOGGER would be useful
+
+    FIXME NO SIGN AND FIREWORK TOOLTIP ??????
+    TODO conversion...

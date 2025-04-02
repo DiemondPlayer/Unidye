@@ -2,6 +2,7 @@ package net.diemond_player.unidye.mixin;
 
 import net.diemond_player.unidye.item.custom.CustomDyeItem;
 import net.diemond_player.unidye.util.UnidyeAccessor;
+import net.diemond_player.unidye.util.UnidyeMaterialTypes;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
@@ -73,7 +74,7 @@ public abstract class WolfEntityMixin implements UnidyeAccessor {
         if (!(((WolfEntity) (Object) this).getWorld().isClient)) {
             if (((WolfEntity) (Object) this).isTamed()) {
                 if (item instanceof CustomDyeItem && ((WolfEntity) (Object) this).isOwner(player)) {
-                    wolf.unidye$setCustomColor(CustomDyeItem.getMaterialColor(itemStack, "leather"));
+                    wolf.unidye$setCustomColor(CustomDyeItem.getMaterialColor(itemStack, UnidyeMaterialTypes.LEATHER));
                     if (!player.getAbilities().creativeMode) {
                         itemStack.decrement(1);
                     }

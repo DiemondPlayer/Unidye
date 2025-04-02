@@ -3,6 +3,7 @@ package net.diemond_player.unidye.recipes;
 import net.diemond_player.unidye.block.UnidyeBlocks;
 import net.diemond_player.unidye.item.UnidyeItems;
 import net.diemond_player.unidye.item.custom.CustomDyeItem;
+import net.diemond_player.unidye.util.UnidyeMaterialTypes;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.inventory.RecipeInputInventory;
 import net.minecraft.item.Item;
@@ -51,7 +52,7 @@ public class CustomConcretePowderRecipe extends SpecialCraftingRecipe {
             }
         }
         ItemStack itemStack1 = new ItemStack(UnidyeBlocks.CUSTOM_CONCRETE_POWDER.asItem());
-        UnidyeUtils.setColor(itemStack1, CustomDyeItem.getMaterialColor(itemStack, "concrete"));
+        UnidyeUtils.setColor(itemStack1, CustomDyeItem.getMaterialColor(itemStack, UnidyeMaterialTypes.CONCRETE));
         itemStack1.setCount(8);
         return itemStack1;
     }
