@@ -58,8 +58,12 @@ public class CustomDyeItem extends DyeItem implements SignChangingItem, DyeableI
 
     public static Integer getMaterialColor(ItemStack stack, UnidyeMaterialType materialType) {
         NbtCompound nbtCompound = stack.getNbt();
+        //This if statement converts old nbt keys to new ones so that world made before 2.0.0 don't get corrupted
         if (nbtCompound != null && nbtCompound.contains(materialType.getId().getPath(), NbtElement.NUMBER_TYPE)){
-            return nbtCompound.getInt(materialType.getId().getPath());
+            int n = nbtCompound.getInt(materialType.getId().getPath());
+            setMaterialColor(stack, n, materialType);
+            stack.getNbt().remove(materialType.getId().getPath());
+            return n;
         }
         if (nbtCompound != null && nbtCompound.contains(materialType.getId().toString(), NbtElement.NUMBER_TYPE)) {
             return nbtCompound.getInt(materialType.getId().toString());
