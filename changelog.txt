@@ -84,3 +84,5 @@ The changelog posted on Modrinth/Curseforge would be without those minor changes
 • Added less (?) cancerous override for onStateReplaced for DyeableConcretePowderBlock
 • Added experimental rerendering packets (removed now)
 • Added /unidye vanillify and /unidye colorize commands
+• Made material types registrable (rewrote like everything)
+• Made missing entries of dye colors redirect to Leather material type

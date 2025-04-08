@@ -30,6 +30,7 @@ public class UnidyeMaterialType {
     }
 
     public int getColor(DyeColor dyeColor){
-        return materialColors.get(dyeColor).getColor();
+        UnidyeMaterialColor materialColor = materialColors.getOrDefault(dyeColor, UnidyeMaterialTypes.LEATHER.materialColors.get(dyeColor));
+        return materialColor.getColor();
     }
 }

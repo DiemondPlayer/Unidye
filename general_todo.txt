@@ -27,5 +27,5 @@
     TODO REI compat automatic?
     TODO warns and errors through LOGGER would be useful
 
-    FIXME NO SIGN AND FIREWORK TOOLTIP ??????
-    TODO conversion...
+    TODO conversion... looks fine to me rn
+    TODO check if the colors are right after transitioning

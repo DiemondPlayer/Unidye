@@ -199,7 +199,7 @@ public class UnidyeMaterialTypes {
 
     }
 
-//    public static final UnidyeMaterialType PATTERN = registerMaterialType("pattern", new UnidyeMaterialType(new HashMap<>(){{
+//    public static final UnidyeMaterialType PATTERN = registerMaterialType("pattern", new HashMap<>(){{
 //        put(DyeColor.WHITE, );
 //        put(DyeColor.LIGHT_GRAY, );
 //        put(DyeColor.GRAY, );
@@ -216,5 +216,5 @@ public class UnidyeMaterialTypes {
 //        put(DyeColor.PURPLE, );
 //        put(DyeColor.MAGENTA, );
 //        put(DyeColor.PINK, );
-//    }}));
+//    }});
 }
