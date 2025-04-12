@@ -4,7 +4,7 @@ import net.diemond_player.unidye.registry.UnidyeBlockEntities;
 import net.diemond_player.unidye.registry.UnidyeItems;
 import net.diemond_player.unidye.item.CustomDyeItem;
 import net.diemond_player.unidye.item.DyeableBannerItem;
-import net.diemond_player.unidye.util.UnidyeMaterialTypes;
+import net.diemond_player.unidye.registry.UnidyeMaterialTypes;
 import net.minecraft.block.entity.BannerPattern;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.BannerItem;

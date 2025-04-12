@@ -2,7 +2,7 @@ package net.diemond_player.unidye.mixin;
 
 import net.diemond_player.unidye.item.CustomDyeItem;
 import net.diemond_player.unidye.util.UnidyeMaterialType;
-import net.diemond_player.unidye.util.UnidyeMaterialTypes;
+import net.diemond_player.unidye.registry.UnidyeMaterialTypes;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.item.DyeItem;

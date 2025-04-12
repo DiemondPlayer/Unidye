@@ -3,6 +3,7 @@ package net.diemond_player.unidye.util;
 import net.diemond_player.unidye.registry.UnidyeBlocks;
 import net.diemond_player.unidye.item.CustomDyeItem;
 import net.diemond_player.unidye.item.DyeableLeatheryBlockItem;
+import net.diemond_player.unidye.registry.UnidyeMaterialTypes;
 import net.minecraft.item.*;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;

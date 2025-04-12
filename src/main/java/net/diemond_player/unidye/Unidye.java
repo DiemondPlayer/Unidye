@@ -11,7 +11,7 @@ import net.diemond_player.unidye.registry.UnidyeItemGroups;
 import net.diemond_player.unidye.registry.UnidyeItems;
 import net.diemond_player.unidye.registry.UnidyeSpecialRecipes;
 import net.diemond_player.unidye.registry.UnidyeCauldronBehaviors;
-import net.diemond_player.unidye.util.UnidyeMaterialTypes;
+import net.diemond_player.unidye.registry.UnidyeMaterialTypes;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.loader.api.FabricLoader;

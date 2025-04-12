@@ -1,6 +1,8 @@
-package net.diemond_player.unidye.util;
+package net.diemond_player.unidye.registry;
 
 import net.diemond_player.unidye.Unidye;
+import net.diemond_player.unidye.util.UnidyeMaterialType;
+import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.item.Item;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;

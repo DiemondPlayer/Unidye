@@ -1,12 +1,11 @@
 package net.diemond_player.unidye.util;
 
+import net.diemond_player.unidye.registry.UnidyeMaterialTypes;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class UnidyeMaterialType {
 

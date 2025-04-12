@@ -4,7 +4,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import net.diemond_player.unidye.item.CustomDyeItem;
 import net.diemond_player.unidye.registry.UnidyeSpecialRecipes;
-import net.diemond_player.unidye.util.UnidyeMaterialTypes;
+import net.diemond_player.unidye.registry.UnidyeMaterialTypes;
 import net.minecraft.inventory.RecipeInputInventory;
 import net.minecraft.item.*;
 import net.minecraft.nbt.NbtCompound;
