@@ -1,6 +1,7 @@
 package net.diemond_player.unidye.block.entity;
 
-import net.diemond_player.unidye.block.custom.DyeableShulkerBoxBlock;
+import net.diemond_player.unidye.block.DyeableShulkerBoxBlock;
+import net.diemond_player.unidye.registry.UnidyeBlockEntities;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.LootableContainerBlockEntity;
@@ -32,7 +33,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import static net.diemond_player.unidye.item.custom.CustomDyeItem.DEFAULT_WHITE_COLOR;
+import static net.diemond_player.unidye.item.CustomDyeItem.DEFAULT_WHITE_COLOR;
 
 public class DyeableShulkerBoxBlockEntity extends LootableContainerBlockEntity
         implements SidedInventory, IDyeableBlockEntity {

@@ -7,8 +7,8 @@ import dev.emi.emi.api.stack.EmiStack;
 import dev.emi.emi.api.widget.GeneratedSlotWidget;
 import dev.emi.emi.api.widget.SlotWidget;
 import net.diemond_player.unidye.Unidye;
-import net.diemond_player.unidye.item.UnidyeItems;
-import net.diemond_player.unidye.item.custom.CustomDyeItem;
+import net.diemond_player.unidye.registry.UnidyeItems;
+import net.diemond_player.unidye.item.CustomDyeItem;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.item.DyeItem;
 import net.minecraft.item.Item;
@@ -58,7 +58,7 @@ public class EmiCustomCircleDyeingRecipe extends EmiPatternCraftingRecipe {
             } else if (acceptedItems != null) {
                 return new SlotWidget(EmiIngredient.of(acceptedItems.stream().map(EmiStack::of).toList()), x, y);
             }
-            Unidye.LOGGER.warn("Error loading EMI special recipe display for {} in ({}, {}) slot", this.id, x/18 + 1, y/18 + 1);
+            Unidye.LOGGER.warn("Error loading EMI special recipe display for {} in slot ({})", this.id, slot);
             return new SlotWidget(EmiStack.of(ItemStack.EMPTY), x, y);
         }
     }

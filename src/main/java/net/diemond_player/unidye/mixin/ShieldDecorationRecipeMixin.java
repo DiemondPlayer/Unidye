@@ -2,7 +2,7 @@ package net.diemond_player.unidye.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.sugar.Local;
-import net.diemond_player.unidye.item.custom.DyeableBannerItem;
+import net.diemond_player.unidye.item.DyeableBannerItem;
 import net.minecraft.inventory.RecipeInputInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

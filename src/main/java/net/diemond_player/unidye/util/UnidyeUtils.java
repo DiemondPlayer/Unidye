@@ -1,22 +1,17 @@
 package net.diemond_player.unidye.util;
 
-import net.diemond_player.unidye.block.UnidyeBlocks;
-import net.diemond_player.unidye.item.UnidyeItems;
-import net.diemond_player.unidye.item.custom.CustomDyeItem;
-import net.diemond_player.unidye.item.custom.DyeableLeatheryBlockItem;
+import net.diemond_player.unidye.registry.UnidyeBlocks;
+import net.diemond_player.unidye.item.CustomDyeItem;
+import net.diemond_player.unidye.item.DyeableLeatheryBlockItem;
 import net.minecraft.item.*;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.DyeColor;
-import net.minecraft.util.Identifier;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 
-import static net.diemond_player.unidye.item.custom.CustomDyeItem.*;
+import static net.diemond_player.unidye.item.CustomDyeItem.*;
 import static net.minecraft.item.DyeableItem.COLOR_KEY;
 import static net.minecraft.item.DyeableItem.DISPLAY_KEY;
 

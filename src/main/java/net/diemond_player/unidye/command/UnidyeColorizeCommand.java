@@ -1,15 +1,11 @@
 package net.diemond_player.unidye.command;
 
 import com.mojang.brigadier.CommandDispatcher;
-import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.context.CommandContext;
-import net.diemond_player.unidye.item.UnidyeItemGroups;
-import net.diemond_player.unidye.item.UnidyeItems;
-import net.diemond_player.unidye.item.custom.CustomDyeItem;
+import net.diemond_player.unidye.registry.UnidyeItemGroups;
+import net.diemond_player.unidye.registry.UnidyeItems;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.command.CommandRegistryAccess;
-import net.minecraft.command.argument.ItemStackArgument;
-import net.minecraft.command.argument.ItemStackArgumentType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.item.*;
 import net.minecraft.server.command.CommandManager;
@@ -20,7 +16,6 @@ import net.minecraft.sound.SoundEvents;
 import org.spongepowered.include.com.google.common.collect.Lists;
 
 import java.util.List;
-import java.util.Random;
 
 public class UnidyeColorizeCommand {
     @SuppressWarnings("unused")

@@ -1,9 +1,9 @@
 package net.diemond_player.unidye.mixin;
 
 import com.llamalad7.mixinextras.sugar.Local;
-import net.diemond_player.unidye.block.custom.DyeableGlassBlock;
-import net.diemond_player.unidye.block.custom.DyeablePaneBlock;
-import net.diemond_player.unidye.block.entity.UnidyeBlockEntities;
+import net.diemond_player.unidye.block.DyeableGlassBlock;
+import net.diemond_player.unidye.block.DyeablePaneBlock;
+import net.diemond_player.unidye.registry.UnidyeBlockEntities;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

@@ -1,7 +1,7 @@
 package net.diemond_player.unidye.mixin;
 
-import net.diemond_player.unidye.block.UnidyeBlocks;
-import net.diemond_player.unidye.item.custom.DyeableLeatheryBlockItem;
+import net.diemond_player.unidye.registry.UnidyeBlocks;
+import net.diemond_player.unidye.item.DyeableLeatheryBlockItem;
 import net.diemond_player.unidye.util.UnidyeAccessor;
 import net.diemond_player.unidye.util.UnidyeMaterialTypes;
 import net.diemond_player.unidye.util.UnidyeUtils;

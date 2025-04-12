@@ -2,7 +2,8 @@ package net.diemond_player.unidye.block.entity;
 
 import com.google.common.collect.Lists;
 import com.mojang.datafixers.util.Pair;
-import net.diemond_player.unidye.block.UnidyeBlocks;
+import net.diemond_player.unidye.registry.UnidyeBlockEntities;
+import net.diemond_player.unidye.registry.UnidyeBlocks;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BannerBlockEntity;
 import net.minecraft.block.entity.BannerPattern;
@@ -25,7 +26,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-import static net.diemond_player.unidye.item.custom.CustomDyeItem.DEFAULT_WHITE_COLOR;
+import static net.diemond_player.unidye.item.CustomDyeItem.DEFAULT_WHITE_COLOR;
 
 public class DyeableBannerBlockEntity extends BlockEntity implements Nameable, IDyeableBlockEntity {
     public static final int MAX_PATTERN_COUNT = 6;

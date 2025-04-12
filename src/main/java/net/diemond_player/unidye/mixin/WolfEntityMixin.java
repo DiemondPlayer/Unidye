@@ -1,6 +1,6 @@
 package net.diemond_player.unidye.mixin;
 
-import net.diemond_player.unidye.item.custom.CustomDyeItem;
+import net.diemond_player.unidye.item.CustomDyeItem;
 import net.diemond_player.unidye.util.UnidyeAccessor;
 import net.diemond_player.unidye.util.UnidyeMaterialTypes;
 import net.minecraft.entity.data.DataTracker;

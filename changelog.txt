@@ -86,3 +86,7 @@ The changelog posted on Modrinth/Curseforge would be without those minor changes
 • Added /unidye vanillify and /unidye colorize commands
 • Made material types registrable (rewrote like everything)
 • Made missing entries of dye colors redirect to Leather material type
+• Moved bunch of classes around
+• Added a lower bound to adjust in the UnidyeClient
+• Cleaned the code in UnidyeClient and Unidye
+• Fixed EMI warn slot int

@@ -1,10 +1,10 @@
 package net.diemond_player.unidye.entity.client.renderer;
 
 import com.mojang.datafixers.util.Pair;
-import net.diemond_player.unidye.block.custom.DyeableBannerBlock;
-import net.diemond_player.unidye.block.custom.DyeableWallBannerBlock;
+import net.diemond_player.unidye.block.DyeableBannerBlock;
+import net.diemond_player.unidye.block.DyeableWallBannerBlock;
 import net.diemond_player.unidye.block.entity.DyeableBannerBlockEntity;
-import net.diemond_player.unidye.entity.layer.UnidyeModelLayers;
+import net.diemond_player.unidye.registry.UnidyeModelLayers;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;

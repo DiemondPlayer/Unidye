@@ -1,6 +1,6 @@
 package net.diemond_player.unidye.datagen;
 
-import net.diemond_player.unidye.block.UnidyeBlocks;
+import net.diemond_player.unidye.registry.UnidyeBlocks;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.fabricmc.fabric.api.tag.convention.v1.ConventionalItemTags;

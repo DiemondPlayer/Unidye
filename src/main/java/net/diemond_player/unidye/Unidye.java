@@ -1,16 +1,16 @@
 package net.diemond_player.unidye;
 
 import com.google.common.collect.Lists;
-import net.diemond_player.unidye.block.UnidyeBlocks;
-import net.diemond_player.unidye.block.entity.UnidyeBlockEntities;
+import net.diemond_player.unidye.registry.UnidyeBlocks;
+import net.diemond_player.unidye.registry.UnidyeBlockEntities;
 import net.diemond_player.unidye.command.UnidyeColorizeCommand;
 import net.diemond_player.unidye.command.UnidyeDyesCommand;
 import net.diemond_player.unidye.command.UnidyeRandomCommand;
 import net.diemond_player.unidye.command.UnidyeVanillifyCommand;
-import net.diemond_player.unidye.item.UnidyeItemGroups;
-import net.diemond_player.unidye.item.UnidyeItems;
-import net.diemond_player.unidye.recipes.UnidyeSpecialRecipes;
-import net.diemond_player.unidye.util.UnidyeCauldronBehaviors;
+import net.diemond_player.unidye.registry.UnidyeItemGroups;
+import net.diemond_player.unidye.registry.UnidyeItems;
+import net.diemond_player.unidye.registry.UnidyeSpecialRecipes;
+import net.diemond_player.unidye.registry.UnidyeCauldronBehaviors;
 import net.diemond_player.unidye.util.UnidyeMaterialTypes;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
@@ -20,6 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+
 
 public class Unidye implements ModInitializer {
 
@@ -40,7 +41,11 @@ public class Unidye implements ModInitializer {
         UnidyeCauldronBehaviors.registerCauldronBehaviors();
         UnidyeSpecialRecipes.registerSpecialRecipes();
         UnidyeMaterialTypes.registerMaterialTypes();
+        addItemsToMaterialTypes();
+        registerCommands();
+    }
 
+    private void addItemsToMaterialTypes() {
         UnidyeMaterialTypes.addItemToMaterialType(UnidyeBlocks.CUSTOM_WOOL.asItem(), UnidyeMaterialTypes.WOOL);
         UnidyeMaterialTypes.addItemToMaterialType(UnidyeBlocks.CUSTOM_CARPET.asItem(), UnidyeMaterialTypes.WOOL);
         UnidyeMaterialTypes.addItemToMaterialType(UnidyeBlocks.CUSTOM_TERRACOTTA.asItem(), UnidyeMaterialTypes.TERRACOTTA);
@@ -51,7 +56,9 @@ public class Unidye implements ModInitializer {
         UnidyeMaterialTypes.addItemToMaterialType(UnidyeItems.CUSTOM_DYE, UnidyeMaterialTypes.DYE);
         UnidyeMaterialTypes.addItemToMaterialType(UnidyeBlocks.CUSTOM_SHULKER_BOX.asItem(), UnidyeMaterialTypes.SHULKER_BOX);
         UnidyeMaterialTypes.addItemToMaterialType(UnidyeBlocks.CUSTOM_CANDLE.asItem(), UnidyeMaterialTypes.CANDLE);
+    }
 
+    private void registerCommands(){
         CommandRegistrationCallback.EVENT.register(UnidyeDyesCommand::register);
         CommandRegistrationCallback.EVENT.register(UnidyeRandomCommand::register);
         CommandRegistrationCallback.EVENT.register(UnidyeColorizeCommand::register);
