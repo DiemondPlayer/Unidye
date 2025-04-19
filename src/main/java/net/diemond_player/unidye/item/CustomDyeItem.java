@@ -1,5 +1,6 @@
 package net.diemond_player.unidye.item;
 
+import net.diemond_player.unidye.registry.UnidyeBlocks;
 import net.diemond_player.unidye.util.UnidyeAccessor;
 import net.diemond_player.unidye.util.UnidyeMaterialType;
 import net.diemond_player.unidye.registry.UnidyeMaterialTypes;
@@ -24,12 +25,35 @@ import net.minecraft.util.*;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class CustomDyeItem extends DyeItem implements SignChangingItem, DyeableItem {
 
+    public static final HashMap<String, Float> DYE_NAME_TO_FLOAT = new HashMap<>() {{
+        put("white", 0.0000f);
+        put("orange", 0.0001f);
+        put("magenta", 0.0002f);
+        put("light_blue", 0.0003f);
+        put("yellow", 0.0004f);
+        put("lime", 0.0005f);
+        put("pink", 0.0006f);
+        put("gray", 0.0007f);
+        put("light_gray", 0.0008f);
+        put("cyan", 0.0009f);
+        put("purple", 0.0010f);
+        put("blue", 0.0011f);
+        put("brown", 0.0012f);
+        put("green", 0.0013f);
+        put("red", 0.0014f);
+        put("black", 0.0015f);
+    }};
+
+    //no longer used but used to convert to a new key
     public static final String CLOSEST_VANILLA_DYE_ID_KEY = "closest_vanilla_dye_id";
+    //this is where the dye stores its shape now, and it's not an int, it's a string
+    public static final String DYE_SHAPE = "dye_shape";
     public static final int DEFAULT_WHITE_COLOR = 16777215;
 
     public CustomDyeItem(Settings settings) {
@@ -45,15 +69,18 @@ public class CustomDyeItem extends DyeItem implements SignChangingItem, DyeableI
         return DEFAULT_WHITE_COLOR;
     }
 
-    public static float getClosestVanillaDyeId(ItemStack stack) {
+    public static float getDyeShapeAsFloat(ItemStack stack) {
         NbtCompound nbtCompound = stack.getOrCreateNbt();
-        float id;
-        if (nbtCompound.contains(CLOSEST_VANILLA_DYE_ID_KEY, NbtElement.NUMBER_TYPE)) {
-            id = nbtCompound.getInt(CLOSEST_VANILLA_DYE_ID_KEY);
-        } else {
-            return 0;
+        String name = "white";
+        //This if statement converts old nbt keys to new ones so that world made before 2.0.0 don't get corrupted
+        if (nbtCompound != null && nbtCompound.contains(CLOSEST_VANILLA_DYE_ID_KEY, NbtElement.NUMBER_TYPE)){
+            name = DyeColor.byId(nbtCompound.getInt(CLOSEST_VANILLA_DYE_ID_KEY)).getName();
+            nbtCompound.remove(CLOSEST_VANILLA_DYE_ID_KEY);
+            nbtCompound.putString(DYE_SHAPE, name);
+        } else if (nbtCompound.contains(DYE_SHAPE, NbtElement.STRING_TYPE)) {
+            name = nbtCompound.getString(DYE_SHAPE);
         }
-        return id / 15;
+        return DYE_NAME_TO_FLOAT.getOrDefault(name, 0f);
     }
 
     public static Integer getMaterialColor(ItemStack stack, UnidyeMaterialType materialType) {
@@ -62,7 +89,7 @@ public class CustomDyeItem extends DyeItem implements SignChangingItem, DyeableI
         if (nbtCompound != null && nbtCompound.contains(materialType.getId().getPath(), NbtElement.NUMBER_TYPE)){
             int n = nbtCompound.getInt(materialType.getId().getPath());
             setMaterialColor(stack, n, materialType);
-            stack.getNbt().remove(materialType.getId().getPath());
+            nbtCompound.remove(materialType.getId().getPath());
             return n;
         }
         if (nbtCompound != null && nbtCompound.contains(materialType.getId().toString(), NbtElement.NUMBER_TYPE)) {

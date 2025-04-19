@@ -4,12 +4,14 @@ import net.diemond_player.unidye.registry.UnidyeBlocks;
 import net.diemond_player.unidye.item.CustomDyeItem;
 import net.diemond_player.unidye.item.DyeableLeatheryBlockItem;
 import net.diemond_player.unidye.registry.UnidyeMaterialTypes;
+import net.minecraft.block.Block;
 import net.minecraft.item.*;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.DyeColor;
 
+import java.util.HashMap;
 import java.util.List;
 
 import static net.diemond_player.unidye.item.CustomDyeItem.*;
@@ -17,6 +19,26 @@ import static net.minecraft.item.DyeableItem.COLOR_KEY;
 import static net.minecraft.item.DyeableItem.DISPLAY_KEY;
 
 public class UnidyeUtils {
+
+    public static final HashMap<DyeColor, String> DYE_COLOR_TO_NAME = new HashMap<>() {{
+        put(DyeColor.WHITE, "white");
+        put(DyeColor.LIGHT_GRAY, "light_gray");
+        put(DyeColor.GRAY, "gray");
+        put(DyeColor.BLACK, "black");
+        put(DyeColor.BROWN, "brown");
+        put(DyeColor.RED, "red");
+        put(DyeColor.ORANGE, "orange");
+        put(DyeColor.YELLOW, "yellow");
+        put(DyeColor.LIME, "lime");
+        put(DyeColor.GREEN, "green");
+        put(DyeColor.CYAN, "cyan");
+        put(DyeColor.LIGHT_BLUE, "light_blue");
+        put(DyeColor.BLUE, "blue");
+        put(DyeColor.PURPLE, "purple");
+        put(DyeColor.MAGENTA, "magenta");
+        put(DyeColor.PINK, "pink");
+    }};
+
 //    public static Map<Item, UnidyeColor> DYES = new HashMap<>() {{
 //        put(Items.WHITE_DYE, UnidyeColor.WHITE);
 //        put(Items.LIGHT_GRAY_DYE, UnidyeColor.LIGHT_GRAY);
@@ -48,8 +70,6 @@ public class UnidyeUtils {
 //        put(UnidyeBlocks.CUSTOM_SHULKER_BOX.asItem(), "shulker_box");
 //        put(UnidyeBlocks.CUSTOM_CANDLE.asItem(), "candle");
 //    }};
-
-    public static final List<DyeItem> BASE_DYE_ITEMS = Registries.ITEM.stream().filter(i -> i instanceof DyeItem && !(i instanceof CustomDyeItem)).map(i -> (DyeItem) i).toList();
 
     public static void setColor(ItemStack stack, int color) {
         stack.getOrCreateSubNbt(DISPLAY_KEY).putInt(COLOR_KEY, color);
@@ -190,17 +210,17 @@ public class UnidyeUtils {
         float[] customColorArray = getCustomColorArray(UnidyeMaterialTypes.DYE, itemStack);
         double distance;
         double minDistance = -1;
-        int id = -1;
-        for (DyeItem dyeItem : UnidyeUtils.BASE_DYE_ITEMS) {
+        String name = "white";
+        for (DyeItem dyeItem : Registries.ITEM.stream().filter(i -> i instanceof DyeItem && !(i instanceof CustomDyeItem)).map(i -> (DyeItem) i).toList()) {
             float[] colorArray = UnidyeUtils.getColorArray(UnidyeMaterialTypes.DYE.getColor(dyeItem.getColor()));
             distance = Math.pow(customColorArray[0] - colorArray[0], 2)
                     + Math.pow(customColorArray[1] - colorArray[1], 2) + Math.pow(customColorArray[2] - colorArray[2], 2);
             if (distance < minDistance || minDistance == -1) {
                 minDistance = distance;
-                id = dyeItem.getColor().getId();
+                name = DYE_COLOR_TO_NAME.getOrDefault(dyeItem.getColor(), "white");
             }
         }
-        itemStack.getOrCreateNbt().putInt("closest_vanilla_dye_id", id);
+        itemStack.getOrCreateNbt().putString(DYE_SHAPE, name);
     }
 
 

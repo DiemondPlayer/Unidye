@@ -3,6 +3,7 @@ package net.diemond_player.unidye.command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.context.CommandContext;
+import net.diemond_player.unidye.item.CustomDyeItem;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.command.argument.ItemStackArgument;
@@ -12,6 +13,7 @@ import net.minecraft.item.DyeItem;
 import net.minecraft.item.DyeableItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.Registries;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -40,7 +42,8 @@ public class UnidyeVanillifyCommand {
         if(!(item.getItem() instanceof DyeableItem)){
             return 0;
         }
-        for (DyeItem dyeItem : UnidyeUtils.BASE_DYE_ITEMS) {
+        List<DyeItem> allRegisteredDyeItems = Registries.ITEM.stream().filter(item2 -> item2 instanceof DyeItem && !(item2 instanceof CustomDyeItem)).map(item2 -> (DyeItem) item2).toList();
+        for (DyeItem dyeItem : allRegisteredDyeItems) {
             ServerPlayerEntity serverPlayerEntity = context.getSource().getPlayer();
 
             if (serverPlayerEntity != null) {

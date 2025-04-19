@@ -1,6 +1,7 @@
 package net.diemond_player.unidye;
 
 import com.google.common.collect.Lists;
+import net.diemond_player.unidye.item.CustomDyeItem;
 import net.diemond_player.unidye.registry.UnidyeBlocks;
 import net.diemond_player.unidye.registry.UnidyeBlockEntities;
 import net.diemond_player.unidye.command.UnidyeColorizeCommand;
@@ -12,10 +13,13 @@ import net.diemond_player.unidye.registry.UnidyeItems;
 import net.diemond_player.unidye.registry.UnidyeSpecialRecipes;
 import net.diemond_player.unidye.registry.UnidyeCauldronBehaviors;
 import net.diemond_player.unidye.registry.UnidyeMaterialTypes;
+import net.diemond_player.unidye.util.UnidyeUtils;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.item.DyeItem;
 import net.minecraft.item.Item;
+import net.minecraft.registry.Registries;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,8 +30,8 @@ public class Unidye implements ModInitializer {
 
     public static final ArrayList<Item> STONECUTTER_PRESERVE_COLOR = Lists.newArrayList();
 
-    public static final boolean POLYMORPH = FabricLoader.getInstance().isModLoaded("polymorph");
-    public static final boolean SIMPLE_CONCRETE = FabricLoader.getInstance().isModLoaded("simpleconcrete");
+    public static final boolean POLYMORPH = isModLoaded("polymorph");
+    public static final boolean SIMPLE_CONCRETE = isModLoaded("simpleconcrete");
     public static final String MOD_ID = "unidye";
 
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
@@ -63,5 +67,9 @@ public class Unidye implements ModInitializer {
         CommandRegistrationCallback.EVENT.register(UnidyeRandomCommand::register);
         CommandRegistrationCallback.EVENT.register(UnidyeColorizeCommand::register);
         CommandRegistrationCallback.EVENT.register(UnidyeVanillifyCommand::register);
+    }
+
+    public static boolean isModLoaded(String id) {
+        return FabricLoader.getInstance().isModLoaded(id);
     }
 }

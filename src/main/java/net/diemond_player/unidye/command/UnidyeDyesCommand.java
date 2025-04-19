@@ -2,6 +2,7 @@ package net.diemond_player.unidye.command;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
+import net.diemond_player.unidye.item.CustomDyeItem;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.fabricmc.fabric.api.tag.convention.v1.ConventionalItemTags;
 import net.minecraft.command.CommandRegistryAccess;
@@ -29,7 +30,7 @@ public class UnidyeDyesCommand {
     }
 
     public static int run(CommandContext<ServerCommandSource> context) {
-        for (Item item : UnidyeUtils.BASE_DYE_ITEMS) {
+        for (Item item : Registries.ITEM.stream().filter(i -> i instanceof DyeItem && !(i instanceof CustomDyeItem)).map(i -> (DyeItem) i).toList()) {
             ItemStack itemStack = new ItemStack(item, 64);
             ServerPlayerEntity serverPlayerEntity = context.getSource().getPlayer();
 

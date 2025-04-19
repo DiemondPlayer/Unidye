@@ -90,3 +90,10 @@ The changelog posted on Modrinth/Curseforge would be without those minor changes
 • Added a lower bound to adjust in the UnidyeClient
 • Cleaned the code in UnidyeClient and Unidye
 • Fixed EMI warn slot int
+• Added isModLoaded to Unidye
+• Completely disabled datagen because it got annoying, here is a chunk of code for me to slep whenever ineed to enable it back:
+"fabric-datagen": [
+   "net.diemond_player.unidye.UnidyeDataGenerator"
+],
+• Rewrote the shape logic for dyes, hopefully allowing for modded dyes to join
+• Fixed dye commands not recognizing the modded dyes
