@@ -27,6 +27,8 @@
     TODO REI compat automatic?
     TODO warns and errors through LOGGER would be useful
     TODO BLOCK ENTITY WITHOUT LEVEL RENDERING
+    TODO datapack recipes for compat
+    TODO smth with shapes cause i dont like them spamming logs
 
     TODO conversion... looks fine to me rn
     TODO check if the colors are right after transitioning
@@ -34,6 +36,4 @@
     TODO check every class to see if there are any stupid mistakes you left
     TODO REMOVE COMMENTS or ADD THEM before releasing this version
     TODO throw warn every time someone checks DyeColor of my blocks
-    TODO ay these commands dont love delicate dyes
-    TODO recipes in the textbook
     TODO candle overlay because ugly
