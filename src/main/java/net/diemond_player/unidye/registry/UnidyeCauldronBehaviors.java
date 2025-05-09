@@ -3,7 +3,6 @@ package net.diemond_player.unidye.registry;
 import com.google.common.collect.Lists;
 import net.diemond_player.unidye.Unidye;
 import net.diemond_player.unidye.block.DyeableShulkerBoxBlock;
-import net.diemond_player.unidye.block.entity.DyeableBannerBlockEntity;
 import net.diemond_player.unidye.component.CustomBannerPatternsComponent;
 import net.diemond_player.unidye.component.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.util.UnidyeUtils;
@@ -22,13 +21,11 @@ import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.stat.Stats;
-import net.minecraft.util.ActionResult;
 import net.minecraft.util.ItemActionResult;
 
 import java.util.ArrayList;
 
 import static net.minecraft.block.cauldron.CauldronBehavior.WATER_CAULDRON_BEHAVIOR;
-import static net.minecraft.block.cauldron.CauldronBehavior.registerBucketBehavior;
 
 public class UnidyeCauldronBehaviors {
 

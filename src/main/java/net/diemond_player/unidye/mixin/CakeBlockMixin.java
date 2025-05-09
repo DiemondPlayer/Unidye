@@ -1,7 +1,6 @@
 package net.diemond_player.unidye.mixin;
 
 import net.diemond_player.unidye.block.DyeableCandleBlock;
-import net.diemond_player.unidye.block.entity.DyeableBlockEntity;
 import net.diemond_player.unidye.registry.UnidyeBlockEntities;
 import net.diemond_player.unidye.registry.UnidyeBlocks;
 import net.diemond_player.unidye.util.UnidyeUtils;
@@ -9,7 +8,6 @@ import net.minecraft.block.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ItemActionResult;
 import net.minecraft.util.hit.BlockHitResult;

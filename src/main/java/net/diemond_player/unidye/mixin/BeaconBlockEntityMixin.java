@@ -4,10 +4,8 @@ import com.llamalad7.mixinextras.sugar.Local;
 import net.diemond_player.unidye.block.DyeableGlassBlock;
 import net.diemond_player.unidye.block.DyeablePaneBlock;
 import net.diemond_player.unidye.registry.UnidyeBlockEntities;
-import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Stainable;
 import net.minecraft.block.entity.BeaconBlockEntity;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.BlockPos;
@@ -15,7 +13,6 @@ import net.minecraft.util.math.ColorHelper;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(BeaconBlockEntity.class)

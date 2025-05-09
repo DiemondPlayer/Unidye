@@ -4,7 +4,6 @@ import net.diemond_player.unidye.block.DyeableShulkerBoxBlock;
 import net.diemond_player.unidye.block.entity.DyeableShulkerBoxBlockEntity;
 import net.diemond_player.unidye.entity.client.model.DyeableShulkerEntityModel;
 import net.diemond_player.unidye.registry.UnidyeModelLayers;
-import net.diemond_player.unidye.util.UnidyeUtils;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;

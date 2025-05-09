@@ -1,6 +1,5 @@
 package net.diemond_player.unidye.mixin;
 
-import com.mojang.datafixers.util.Pair;
 import net.diemond_player.unidye.block.DyeableBannerBlock;
 import net.diemond_player.unidye.block.DyeableBedBlock;
 import net.diemond_player.unidye.block.DyeableShulkerBoxBlock;
@@ -10,12 +9,9 @@ import net.diemond_player.unidye.block.entity.DyeableBedBlockEntity;
 import net.diemond_player.unidye.block.entity.DyeableShulkerBoxBlockEntity;
 import net.diemond_player.unidye.component.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.entity.client.renderer.DyeableBannerBlockEntityRenderer;
-import net.diemond_player.unidye.item.DyeableBannerItem;
-import net.diemond_player.unidye.item.DyeableBlockItem;
 import net.diemond_player.unidye.registry.UnidyeBlocks;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.block.Block;
-import net.minecraft.block.entity.BannerPattern;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
@@ -31,14 +27,11 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.math.BlockPos;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import java.util.List;
 
 @Mixin(BuiltinModelItemRenderer.class)
 public abstract class BuiltinModelItemRendererMixin {

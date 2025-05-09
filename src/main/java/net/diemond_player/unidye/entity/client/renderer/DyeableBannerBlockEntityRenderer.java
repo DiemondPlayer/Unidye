@@ -1,16 +1,13 @@
 package net.diemond_player.unidye.entity.client.renderer;
 
-import com.mojang.datafixers.util.Pair;
 import net.diemond_player.unidye.block.DyeableBannerBlock;
 import net.diemond_player.unidye.block.DyeableWallBannerBlock;
 import net.diemond_player.unidye.block.entity.DyeableBannerBlockEntity;
 import net.diemond_player.unidye.component.CustomBannerPatternsComponent;
 import net.diemond_player.unidye.registry.UnidyeModelLayers;
-import net.diemond_player.unidye.util.UnidyeUtils;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BannerPattern;
 import net.minecraft.client.model.*;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.TexturedRenderLayers;
@@ -21,11 +18,7 @@ import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.client.render.model.ModelLoader;
 import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.*;
-
-import java.util.List;
 
 @Environment(value = EnvType.CLIENT)
 public class DyeableBannerBlockEntityRenderer

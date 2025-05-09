@@ -3,7 +3,6 @@ package net.diemond_player.unidye.mixin;
 import net.diemond_player.unidye.item.DyeableBannerItem;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.item.BannerItem;
-import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ShieldItem;
 import net.minecraft.text.Text;

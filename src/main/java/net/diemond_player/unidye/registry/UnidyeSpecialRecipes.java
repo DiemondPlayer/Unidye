@@ -16,7 +16,6 @@ import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 
 import java.util.ArrayList;
-import java.util.function.BiFunction;
 import java.util.function.Function;
 
 @SuppressWarnings({"unchecked", "unused"})
