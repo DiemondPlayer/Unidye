@@ -1,19 +1,12 @@
 package net.diemond_player.unidye;
 
-import net.diemond_player.unidye.block.UnidyeBlocks;
-import net.diemond_player.unidye.block.entity.DyeableBlockEntity;
-import net.diemond_player.unidye.block.entity.DyeableLeatheryBlockEntity;
-import net.diemond_player.unidye.block.entity.DyeableShulkerBoxBlockEntity;
-import net.diemond_player.unidye.block.entity.UnidyeBlockEntities;
-import net.diemond_player.unidye.entity.UnidyeEntities;
+import net.diemond_player.unidye.block.entity.IDyeableBlockEntity;
 import net.diemond_player.unidye.entity.client.model.DyeableShulkerEntityModel;
 import net.diemond_player.unidye.entity.client.renderer.DyeableBannerBlockEntityRenderer;
 import net.diemond_player.unidye.entity.client.renderer.DyeableBedBlockEntityRenderer;
 import net.diemond_player.unidye.entity.client.renderer.DyeableFallingBlockEntityRenderer;
 import net.diemond_player.unidye.entity.client.renderer.DyeableShulkerBoxBlockEntityRenderer;
-import net.diemond_player.unidye.entity.layer.UnidyeModelLayers;
-import net.diemond_player.unidye.item.UnidyeItems;
-import net.diemond_player.unidye.util.UnidyeModelPredicateProvider;
+import net.diemond_player.unidye.registry.*;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
@@ -24,41 +17,54 @@ import net.minecraft.block.Block;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
 import net.minecraft.item.Item;
+import net.minecraft.item.Items;
 import net.minecraft.util.math.ColorHelper;
 
 import java.util.HashMap;
 
 public class UnidyeClient implements ClientModInitializer {
-
     public static final HashMap<Block, Integer> DYEABLE_BLOCKS_ADJUST = new HashMap<>() {{
-        put(UnidyeBlocks.CUSTOM_CONCRETE_POWDER, 15);
+            put(UnidyeBlocks.CUSTOM_CONCRETE_POWDER, 15);
     }};
+
+//    public static final Identifier RERENDER_BLOCK_PACKET_ID = Identifier.of(Unidye.MOD_ID, "rerender_block");
 
     @Override
     public void onInitializeClient() {
+        registerEntityRenderers();
+        registerBlockEntityRenderers();
+        registerEntityModelLayers();
+        registerBlockRenderLayers();
+        registerItemColors();
+        registerBlockColors();
+        registerModelPredicates();
 
-        EntityRendererRegistry.register(UnidyeEntities.DYEABLE_FALLING_BLOCK_ENTITY, DyeableFallingBlockEntityRenderer::new);
+//        ClientPlayNetworking.registerGlobalReceiver(RERENDER_BLOCK_PACKET_ID, (client, handler, buf, responseSender) -> {
+//            BlockPos blockPos = buf.readBlockPos();
+//            client.execute(() -> {
+////                client.worldRenderer.scheduleBlockRenders(blockPos.getX(), blockPos.getY(), blockPos.getZ(), blockPos.getX(), blockPos.getY(), blockPos.getZ());
+//                client.world.updateListeners(blockPos, client.world.getBlockState(blockPos), client.world.getBlockState(blockPos), Block.NOTIFY_ALL);
+//                Unidye.LOGGER.info("I JUST TOLD THIS CLIENT TO NOTIFY_ALL");
+//                Unidye.LOGGER.info(client.world.getBlockState(blockPos).toString());
+//                Unidye.LOGGER.info(blockPos.toString());
+//            });
+//        });
+    }
 
-        BlockEntityRendererFactories.register(UnidyeBlockEntities.DYEABLE_SHULKER_BOX_BE, DyeableShulkerBoxBlockEntityRenderer::new);
-        BlockEntityRendererFactories.register(UnidyeBlockEntities.DYEABLE_BED_BE, DyeableBedBlockEntityRenderer::new);
-        BlockEntityRendererFactories.register(UnidyeBlockEntities.DYEABLE_BANNER_BE, DyeableBannerBlockEntityRenderer::new);
+    private void registerModelPredicates() {
+        UnidyeModelPredicates.registerModModels();
+    }
 
-        EntityModelLayerRegistry.registerModelLayer(UnidyeModelLayers.CUSTOM_SHULKER, DyeableShulkerEntityModel::getTexturedModelData);
-        EntityModelLayerRegistry.registerModelLayer(UnidyeModelLayers.CUSTOM_BED_HEAD, DyeableBedBlockEntityRenderer::getHeadTexturedModelData);
-        EntityModelLayerRegistry.registerModelLayer(UnidyeModelLayers.CUSTOM_BED_FOOT, DyeableBedBlockEntityRenderer::getFootTexturedModelData);
-        EntityModelLayerRegistry.registerModelLayer(UnidyeModelLayers.CUSTOM_BANNER, DyeableBannerBlockEntityRenderer::getTexturedModelData);
-
-        BlockRenderLayerMap.INSTANCE.putBlock(UnidyeBlocks.CUSTOM_STAINED_GLASS, RenderLayer.getTranslucent());
-        BlockRenderLayerMap.INSTANCE.putBlock(UnidyeBlocks.CUSTOM_STAINED_GLASS_PANE, RenderLayer.getTranslucent());
-
-
+    private void registerItemColors() {
         registerItemColor(UnidyeItems.CUSTOM_DYE);
         registerItemColor(UnidyeBlocks.CUSTOM_BANNER.asItem());
+    }
 
-        registerLeatheryBlockColor(UnidyeBlocks.CUSTOM_WOOL);
-        registerLeatheryBlockColor(UnidyeBlocks.CUSTOM_STAINED_GLASS);
-        registerLeatheryBlockColor(UnidyeBlocks.CUSTOM_STAINED_GLASS_PANE);
-        registerCustomShulkerBoxColor(UnidyeBlocks.CUSTOM_SHULKER_BOX);
+    private void registerBlockColors() {
+        registerBlockColor(UnidyeBlocks.CUSTOM_WOOL);
+        registerBlockColor(UnidyeBlocks.CUSTOM_STAINED_GLASS);
+        registerBlockColor(UnidyeBlocks.CUSTOM_STAINED_GLASS_PANE);
+        registerBlockColor(UnidyeBlocks.CUSTOM_SHULKER_BOX);
 
         UnidyeBlockEntities.DYEABLE_BE_BLOCKS.forEach(block -> {
             if (DYEABLE_BLOCKS_ADJUST.containsKey(block)){
@@ -67,43 +73,56 @@ public class UnidyeClient implements ClientModInitializer {
                 registerBlockColor(block);
             }
         });
-
-        UnidyeModelPredicateProvider.registerModModels();
-
     }
 
-    private void registerItemColor(Item item) {
+    private void registerBlockRenderLayers() {
+        BlockRenderLayerMap.INSTANCE.putBlock(UnidyeBlocks.CUSTOM_STAINED_GLASS, RenderLayer.getTranslucent());
+        BlockRenderLayerMap.INSTANCE.putBlock(UnidyeBlocks.CUSTOM_STAINED_GLASS_PANE, RenderLayer.getTranslucent());
+    }
+
+    private void registerEntityModelLayers() {
+        EntityModelLayerRegistry.registerModelLayer(UnidyeModelLayers.CUSTOM_SHULKER, DyeableShulkerEntityModel::getTexturedModelData);
+        EntityModelLayerRegistry.registerModelLayer(UnidyeModelLayers.CUSTOM_BED_HEAD, DyeableBedBlockEntityRenderer::getHeadTexturedModelData);
+        EntityModelLayerRegistry.registerModelLayer(UnidyeModelLayers.CUSTOM_BED_FOOT, DyeableBedBlockEntityRenderer::getFootTexturedModelData);
+        EntityModelLayerRegistry.registerModelLayer(UnidyeModelLayers.CUSTOM_BANNER, DyeableBannerBlockEntityRenderer::getTexturedModelData);
+    }
+
+    private void registerBlockEntityRenderers() {
+        BlockEntityRendererFactories.register(UnidyeBlockEntities.DYEABLE_SHULKER_BOX_BE, DyeableShulkerBoxBlockEntityRenderer::new);
+        BlockEntityRendererFactories.register(UnidyeBlockEntities.DYEABLE_BED_BE, DyeableBedBlockEntityRenderer::new);
+        BlockEntityRendererFactories.register(UnidyeBlockEntities.DYEABLE_BANNER_BE, DyeableBannerBlockEntityRenderer::new);
+    }
+
+    private void registerEntityRenderers() {
+        EntityRendererRegistry.register(UnidyeEntities.DYEABLE_FALLING_BLOCK_ENTITY, DyeableFallingBlockEntityRenderer::new);
+    }
+
+    public static void registerItemColor(Item item) {
         ColorProviderRegistry.ITEM.register((stack, tintIndex) -> tintIndex > 0 ? -1 : ColorHelper.Argb.fullAlpha(UnidyeUtils.getColor(stack)), item);
     }
 
-    private void registerItemColor(Item item, int adjust) {
+    public static void registerItemColor(Item item, int adjust) {
         ColorProviderRegistry.ITEM.register((stack, tintIndex) -> tintIndex > 0 ? -1 : ColorHelper.Argb.fullAlpha(adjust(UnidyeUtils.getColor(stack), adjust)), item);
     }
 
-    private void registerBlockColor(Block block) {
-        registerItemColor(block.asItem());
-        ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) -> DyeableBlockEntity.getColor(world, pos), block);
+    public static void registerBlockColor(Block block) {
+        if(block.asItem() != Items.AIR) {
+            registerItemColor(block.asItem());
+        }
+        ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) -> IDyeableBlockEntity.getColor(world, pos), block);
     }
 
-    private void registerCustomShulkerBoxColor(Block block) {
-        registerItemColor(block.asItem());
-        ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) -> DyeableShulkerBoxBlockEntity.getColor(world, pos), block);
-    }
-
-    private void registerLeatheryBlockColor(Block block) {
-        registerItemColor(block.asItem());
-        ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) -> DyeableLeatheryBlockEntity.getColor(world, pos), block);
-    }
-
-    private void registerBlockColor(Block block, int adjust) {
-        registerItemColor(block.asItem(), adjust);
-        ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) -> adjust(DyeableBlockEntity.getColor(world, pos), adjust), block);
+    public static void registerBlockColor(Block block, int adjust) {
+        if(block.asItem() != Items.AIR) {
+            registerItemColor(block.asItem(), adjust);
+        }
+        ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) -> adjust(IDyeableBlockEntity.getColor(world, pos), adjust), block);
     }
 
     public static int adjust(int color, int i) {
-        int j = Math.min(((color & 0xFF0000) >> 16) + i, 255);
-        int k = Math.min(((color & 0xFF00) >> 8) + i, 255);
-        int l = Math.min(((color & 0xFF)) + i, 255);
+        int j = Math.max(Math.min(((color & 0xFF0000) >> 16) + i, 255), 0);
+        int k = Math.max(Math.min(((color & 0xFF00) >> 8) + i, 255), 0);
+        int l = Math.max(Math.min(((color & 0xFF)) + i, 255), 0);
         int res = j;
         res = (res << 8) + k;
         res = (res << 8) + l;

@@ -85,7 +85,8 @@ dependencies {
 	modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:$rei_version"
 
 	modCompileOnly "dev.emi:emi-fabric:${emi_version}:api"
-	modCompileOnly "dev.emi:emi-fabric:${emi_version}"
+	//modCompileOnly "dev.emi:emi-fabric:${emi_version}"
+	modImplementation "dev.emi:emi-fabric:${emi_version}"
 
 	//modImplementation "curse.maven:cloth-config-348521:4973440"
 	//modImplementation "curse.maven:forge-config-api-port-fabric-547434:4583000"
@@ -126,7 +127,6 @@ processResources {
 	Map<String, ?> properties = Map.of(
 			"version", version,
 			"fabric_loader_version", loader_version,
-			"create_version", create_version,
 			"minecraft_version", minecraft_version
 	)
 

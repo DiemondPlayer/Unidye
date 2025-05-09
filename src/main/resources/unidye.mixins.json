@@ -3,6 +3,7 @@
   "package": "net.diemond_player.unidye.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "AbstractCauldronBlockMixin",
     "ArmorDyeRecipeMixin",
     "BannerDuplicationRecipeMixin",
     "BeaconBlockEntityMixin",
@@ -23,6 +24,7 @@
     "ShulkerBoxColoringRecipeMixin",
     "SignBlockEntityMixin",
     "SignTextMixin",
+    "StonecutterScreenHandlerMixin",
     "WolfEntityMixin"
   ],
   "injectors": {
@@ -34,10 +36,12 @@
     "BlockModelRendererMixin",
     "BuiltinModelItemRendererMixin",
     "CatCollarFeatureRendererMixin",
+    "ItemMixin",
     "LoomScreenMixin",
     "ModelPartMixin",
     "SheepWoolFeatureRendererMixin",
     "SignBlockEntityRendererMixin",
+    "StonecutterScreenMixin",
     "WolfCollarFeatureRendererMixin"
   ]
 }

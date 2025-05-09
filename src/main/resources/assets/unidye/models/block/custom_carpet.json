@@ -1,5 +1,5 @@
 {
-  "parent": "unidye:block/tintable_thin_block",
+  "parent": "unidye:block/templates/template_tintable_carpet_block",
   "textures": {
     "tint": "unidye:block/custom_wool"
   }

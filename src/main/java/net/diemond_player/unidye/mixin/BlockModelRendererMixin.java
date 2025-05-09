@@ -17,7 +17,6 @@ import net.minecraft.util.crash.CrashReportSection;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.Vec3i;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.BlockRenderView;
 import org.jetbrains.annotations.Nullable;
@@ -32,8 +31,9 @@ import static net.minecraft.client.render.WorldRenderer.DIRECTIONS;
 
 @Mixin(BlockModelRenderer.class)
 public abstract class BlockModelRendererMixin implements UnidyeAccessor {
+    @SuppressWarnings("target")
     @Shadow
-    private void getQuadDimensions(BlockRenderView world, BlockState state, BlockPos pos, int[] vertexData, Direction face, @Nullable float[] box, BitSet flags) {
+    private void getQuadDimensions(BlockRenderView world, BlockState state, BlockPos pos, int[] vertexData, Direction face, float @Nullable [] box, BitSet flags){
 
     }
 
@@ -62,7 +62,7 @@ public abstract class BlockModelRendererMixin implements UnidyeAccessor {
             random.setSeed(seed);
             List<BakedQuad> list = model.getQuads(state, direction, random);
             if (list.isEmpty()) continue;
-            mutable.set((Vec3i) pos, direction);
+            mutable.set(pos, direction);
             if (cull && !Block.shouldDrawSide(state, world, pos, direction, mutable)) continue;
             int i = WorldRenderer.getLightmapCoordinates(world, state, mutable);
             this.unidye$renderQuadsFlat(world, state, pos, i, overlay, false, matrices, vertexConsumer, list, bitSet, color);
@@ -87,6 +87,7 @@ public abstract class BlockModelRendererMixin implements UnidyeAccessor {
         }
     }
 
+    @SuppressWarnings("unused")
     @Unique
     private void unidye$renderQuad(BlockRenderView world, BlockState state, BlockPos pos, VertexConsumer vertexConsumer, MatrixStack.Entry matrixEntry, BakedQuad quad, float brightness0, float brightness1, float brightness2, float brightness3, int light0, int light1, int light2, int light3, int overlay, int color) {
         float[] fs = UnidyeUtils.getColorArray(color);

@@ -1,5 +1,6 @@
 package net.diemond_player.unidye.block.entity;
 
+import net.diemond_player.unidye.registry.UnidyeBlockEntities;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.component.ComponentMap;
@@ -15,21 +16,21 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
 import org.jetbrains.annotations.Nullable;
 
-public class DyeableLeatheryBlockEntity extends BlockEntity {
+import static net.diemond_player.unidye.item.CustomDyeItem.DEFAULT_WHITE_COLOR;
+
+public class DyeableLeatheryBlockEntity extends BlockEntity implements IDyeableBlockEntity{
     public DyeableLeatheryBlockEntity(BlockPos pos, BlockState state) {
         super(UnidyeBlockEntities.DYEABLE_LEATHERY_BE, pos, state);
     }
-
-    public static final int DEFAULT_COLOR = 16777215;
-    public int color = DEFAULT_COLOR;
-    public int leatherColor = DEFAULT_COLOR;
+    private int color = DEFAULT_WHITE_COLOR;
+    public int leatherColor = DEFAULT_WHITE_COLOR;
 
     @Override
     protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-        if (color != DEFAULT_COLOR) {
+        if (color != DEFAULT_WHITE_COLOR) {
             nbt.putInt("color", color);
         }
-        if (leatherColor != DEFAULT_COLOR) {
+        if (leatherColor != DEFAULT_WHITE_COLOR) {
             nbt.putInt("leather", leatherColor);
         }
         super.writeNbt(nbt, registryLookup);
@@ -38,17 +39,16 @@ public class DyeableLeatheryBlockEntity extends BlockEntity {
     @Override
     protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
         if (nbt.getInt("leather") == 0) {
-            leatherColor = DEFAULT_COLOR;
+            leatherColor = DEFAULT_WHITE_COLOR;
         } else {
             leatherColor = nbt.getInt("leather");
         }
         if (nbt.getInt("color") == 0) {
-            color = DEFAULT_COLOR;
+            color = DEFAULT_WHITE_COLOR;
         } else {
             color = nbt.getInt("color");
         }
     }
-
     @Override
     public void markDirty() {
         if (this.world != null) {
@@ -69,14 +69,25 @@ public class DyeableLeatheryBlockEntity extends BlockEntity {
 
     public static int getColor(BlockView world, BlockPos pos) {
         if (world == null) {
-            return DyeableBlockEntity.DEFAULT_COLOR;
+            return DEFAULT_WHITE_COLOR;
         }
         BlockEntity blockEntity = world.getBlockEntity(pos);
         if (blockEntity instanceof DyeableLeatheryBlockEntity dyeableBlockEntity) {
             return dyeableBlockEntity.color;
         } else {
-            return DyeableBlockEntity.DEFAULT_COLOR;
+            return DEFAULT_WHITE_COLOR;
         }
+    }
+
+    @Override
+    public int getColor() {
+        return color;
+    }
+
+    @Override
+    public void setColor(int color) {
+        this.color = color;
+        this.markDirty();
     }
 
     @Override
@@ -94,10 +105,4 @@ public class DyeableLeatheryBlockEntity extends BlockEntity {
         nbtCompound.putInt("leather", leatherColor);
         componentMapBuilder.add(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(nbtCompound));
     }
-
-//    @Override
-//    public void removeFromCopiedStackNbt(NbtCompound nbt) {
-//        nbt.remove("color");
-//        nbt.remove("leather");
-//    }
 }

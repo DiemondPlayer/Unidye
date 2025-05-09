@@ -17,9 +17,6 @@
     "main": [
       "net.diemond_player.unidye.Unidye"
     ],
-    "fabric-datagen": [
-      "net.diemond_player.unidye.UnidyeDataGenerator"
-    ],
     "client": [
       "net.diemond_player.unidye.UnidyeClient"
     ],

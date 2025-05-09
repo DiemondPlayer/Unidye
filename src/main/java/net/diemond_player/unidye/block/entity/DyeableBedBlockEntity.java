@@ -1,5 +1,6 @@
 package net.diemond_player.unidye.block.entity;
 
+import net.diemond_player.unidye.registry.UnidyeBlockEntities;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.component.ComponentMap;
@@ -14,9 +15,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
 import org.jetbrains.annotations.Nullable;
 
-public class DyeableBedBlockEntity extends BlockEntity {
-    public static final int DEFAULT_COLOR = 16777215;
-    public int color = DEFAULT_COLOR;
+import static net.diemond_player.unidye.item.CustomDyeItem.DEFAULT_WHITE_COLOR;
+
+public class DyeableBedBlockEntity extends BlockEntity implements IDyeableBlockEntity {
+    private int color = DEFAULT_WHITE_COLOR;
 
     public DyeableBedBlockEntity(BlockPos pos, BlockState state) {
         super(UnidyeBlockEntities.DYEABLE_BED_BE, pos, state);
@@ -24,7 +26,7 @@ public class DyeableBedBlockEntity extends BlockEntity {
 
     @Override
     protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-        if (color != DEFAULT_COLOR) {
+        if (color != DEFAULT_WHITE_COLOR) {
             nbt.putInt("color", color);
         }
         super.writeNbt(nbt, registryLookup);
@@ -34,7 +36,7 @@ public class DyeableBedBlockEntity extends BlockEntity {
     protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
         super.readNbt(nbt, registryLookup);
         if (nbt.getInt("color") == 0) {
-            color = DEFAULT_COLOR;
+            color = DEFAULT_WHITE_COLOR;
         } else {
             color = nbt.getInt("color");
         }
@@ -61,14 +63,25 @@ public class DyeableBedBlockEntity extends BlockEntity {
 
     public static int getColor(BlockView world, BlockPos pos) {
         if (world == null) {
-            return DyeableBedBlockEntity.DEFAULT_COLOR;
+            return DEFAULT_WHITE_COLOR;
         }
         BlockEntity blockEntity = world.getBlockEntity(pos);
         if (blockEntity instanceof DyeableBedBlockEntity dyeableBlockEntity) {
             return dyeableBlockEntity.color;
         } else {
-            return DyeableBedBlockEntity.DEFAULT_COLOR;
+            return DEFAULT_WHITE_COLOR;
         }
+    }
+
+    @Override
+    public int getColor() {
+        return color;
+    }
+
+    @Override
+    public void setColor(int color) {
+        this.color = color;
+        this.markDirty();
     }
 
     @Override
@@ -82,9 +95,4 @@ public class DyeableBedBlockEntity extends BlockEntity {
         super.addComponents(componentMapBuilder);
         componentMapBuilder.add(DataComponentTypes.DYED_COLOR, new DyedColorComponent(color, true));
     }
-
-//    @Override
-//    public void removeFromCopiedStackNbt(NbtCompound nbt) {
-//        nbt.remove("color");
-//    }
 }

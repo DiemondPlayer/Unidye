@@ -1,17 +1,21 @@
 package net.diemond_player.unidye.mixin;
 
-import net.diemond_player.unidye.block.UnidyeBlocks;
-import net.diemond_player.unidye.block.custom.DyeableBannerBlock;
-import net.diemond_player.unidye.block.custom.DyeableBedBlock;
-import net.diemond_player.unidye.block.custom.DyeableShulkerBoxBlock;
-import net.diemond_player.unidye.block.custom.DyeableWallBannerBlock;
+import com.mojang.datafixers.util.Pair;
+import net.diemond_player.unidye.block.DyeableBannerBlock;
+import net.diemond_player.unidye.block.DyeableBedBlock;
+import net.diemond_player.unidye.block.DyeableShulkerBoxBlock;
+import net.diemond_player.unidye.block.DyeableWallBannerBlock;
 import net.diemond_player.unidye.block.entity.DyeableBannerBlockEntity;
 import net.diemond_player.unidye.block.entity.DyeableBedBlockEntity;
 import net.diemond_player.unidye.block.entity.DyeableShulkerBoxBlockEntity;
 import net.diemond_player.unidye.component.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.entity.client.renderer.DyeableBannerBlockEntityRenderer;
+import net.diemond_player.unidye.item.DyeableBannerItem;
+import net.diemond_player.unidye.item.DyeableBlockItem;
+import net.diemond_player.unidye.registry.UnidyeBlocks;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.block.Block;
+import net.minecraft.block.entity.BannerPattern;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
@@ -27,11 +31,14 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.math.BlockPos;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import java.util.List;
 
 @Mixin(BuiltinModelItemRenderer.class)
 public abstract class BuiltinModelItemRendererMixin {
@@ -58,17 +65,17 @@ public abstract class BuiltinModelItemRendererMixin {
         if (item instanceof BlockItem) {
             Block block = ((BlockItem) item).getBlock();
             if (block instanceof DyeableBedBlock) {
-                this.renderDyeableBed.color = UnidyeUtils.getColor(stack);
+                this.renderDyeableBed.setColor(UnidyeUtils.getColor(stack));
                 this.blockEntityRenderDispatcher.renderEntity(this.renderDyeableBed, matrices, vertexConsumers, light, overlay);
                 ci.cancel();
             }
             if (block instanceof DyeableShulkerBoxBlock) {
-                this.RENDER_DYEABLE_SHULKER_BOX.color = UnidyeUtils.getColor(stack);
+                this.RENDER_DYEABLE_SHULKER_BOX.setColor(UnidyeUtils.getColor(stack));
                 this.blockEntityRenderDispatcher.renderEntity(this.RENDER_DYEABLE_SHULKER_BOX, matrices, vertexConsumers, light, overlay);
                 ci.cancel();
             }
             if (block instanceof DyeableBannerBlock || block instanceof DyeableWallBannerBlock) {
-                this.renderDyeableBanner.color = UnidyeUtils.getColor(stack);
+                this.renderDyeableBanner.setColor(UnidyeUtils.getColor(stack));
                 this.renderDyeableBanner.readFrom(stack);
                 this.blockEntityRenderDispatcher.renderEntity(this.renderDyeableBanner, matrices, vertexConsumers, light, overlay);
                 ci.cancel();

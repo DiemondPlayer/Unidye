@@ -1,14 +1,12 @@
 package net.diemond_player.unidye.block.entity;
 
-import net.diemond_player.unidye.block.custom.DyeableShulkerBoxBlock;
+import net.diemond_player.unidye.block.DyeableShulkerBoxBlock;
+import net.diemond_player.unidye.registry.UnidyeBlockEntities;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.LootableContainerBlockEntity;
 import net.minecraft.block.piston.PistonBehavior;
-import net.minecraft.component.ComponentMap;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.DyedColorComponent;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MovementType;
 import net.minecraft.entity.mob.ShulkerEntity;
@@ -38,10 +36,12 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import static net.diemond_player.unidye.item.CustomDyeItem.DEFAULT_WHITE_COLOR;
+
 public class DyeableShulkerBoxBlockEntity extends LootableContainerBlockEntity
-        implements SidedInventory {
-    public static final int DEFAULT_COLOR = 16777215;
-    public int color = DEFAULT_COLOR;
+        implements SidedInventory, IDyeableBlockEntity {
+    private int color = DEFAULT_WHITE_COLOR;
+    public static final String ITEMS_KEY = "Items";
     private static final int[] AVAILABLE_SLOTS = IntStream.range(0, 27).toArray();
     private DefaultedList<ItemStack> inventory = DefaultedList.ofSize(27, ItemStack.EMPTY);
     private int viewerCount;
@@ -206,13 +206,13 @@ public class DyeableShulkerBoxBlockEntity extends LootableContainerBlockEntity
 
     public static int getColor(BlockView world, BlockPos pos) {
         if (world == null) {
-            return DyeableShulkerBoxBlockEntity.DEFAULT_COLOR;
+            return DEFAULT_WHITE_COLOR;
         }
         BlockEntity blockEntity = world.getBlockEntity(pos);
         if (blockEntity instanceof DyeableShulkerBoxBlockEntity dyeableBlockEntity) {
             return dyeableBlockEntity.color;
         } else {
-            return DyeableShulkerBoxBlockEntity.DEFAULT_COLOR;
+            return DEFAULT_WHITE_COLOR;
         }
     }
 
@@ -221,7 +221,7 @@ public class DyeableShulkerBoxBlockEntity extends LootableContainerBlockEntity
         super.readNbt(nbt, registryLookup);
         this.readInventoryNbt(nbt, registryLookup);
         if (nbt.getInt("color") == 0) {
-            color = DEFAULT_COLOR;
+            color = DEFAULT_WHITE_COLOR;
         } else {
             color = nbt.getInt("color");
         }
@@ -233,7 +233,7 @@ public class DyeableShulkerBoxBlockEntity extends LootableContainerBlockEntity
         if (!this.writeLootTable(nbt)) {
             Inventories.writeNbt(nbt, this.inventory, false, registryLookup);
         }
-        if (color != DEFAULT_COLOR) {
+        if (color != DEFAULT_WHITE_COLOR) {
             nbt.putInt("color", color);
         }
     }
@@ -269,6 +269,17 @@ public class DyeableShulkerBoxBlockEntity extends LootableContainerBlockEntity
         return new ShulkerBoxScreenHandler(syncId, playerInventory, this);
     }
 
+    @Override
+    public int getColor() {
+        return color;
+    }
+
+    @Override
+    public void setColor(int color) {
+        this.color = color;
+        this.markDirty();
+    }
+
     public boolean suffocates() {
         return this.animationStage == DyeableShulkerBoxBlockEntity.AnimationStage.CLOSED;
     }
@@ -278,17 +289,5 @@ public class DyeableShulkerBoxBlockEntity extends LootableContainerBlockEntity
         OPENING,
         OPENED,
         CLOSING
-    }
-
-    @Override
-    protected void readComponents(BlockEntity.ComponentsAccess components) {
-        super.readComponents(components);
-        this.color = components.getOrDefault(DataComponentTypes.DYED_COLOR, new DyedColorComponent(DyedColorComponent.DEFAULT_COLOR, true)).rgb();
-    }
-
-    @Override
-    protected void addComponents(ComponentMap.Builder componentMapBuilder) {
-        super.addComponents(componentMapBuilder);
-        componentMapBuilder.add(DataComponentTypes.DYED_COLOR, new DyedColorComponent(color, true));
     }
 }

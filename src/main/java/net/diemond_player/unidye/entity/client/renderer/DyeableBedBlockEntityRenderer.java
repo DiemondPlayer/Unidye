@@ -1,11 +1,11 @@
 package net.diemond_player.unidye.entity.client.renderer;
 
-import it.unimi.dsi.fastutil.ints.Int2IntFunction;
-import net.diemond_player.unidye.block.custom.DyeableBedBlock;
+import net.diemond_player.unidye.block.DyeableBedBlock;
 import net.diemond_player.unidye.block.entity.DyeableBedBlockEntity;
-import net.diemond_player.unidye.block.entity.UnidyeBlockEntities;
-import net.diemond_player.unidye.entity.layer.UnidyeModelLayers;
+import net.diemond_player.unidye.registry.UnidyeBlockEntities;
+import net.diemond_player.unidye.registry.UnidyeModelLayers;
 import net.diemond_player.unidye.util.UnidyeAccessor;
+import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ChestBlock;
 import net.minecraft.block.DoubleBlockProperties;
@@ -65,7 +65,7 @@ public class DyeableBedBlockEntityRenderer
         if (world2 != null) {
             BlockState blockState = bedBlockEntity.getCachedState();
             DoubleBlockProperties.PropertySource<DyeableBedBlockEntity> propertySource = DoubleBlockProperties.toPropertySource(UnidyeBlockEntities.DYEABLE_BED_BE, DyeableBedBlock::getBedPart, DyeableBedBlock::getOppositePartDirection, ChestBlock.FACING, blockState, world2, bedBlockEntity.getPos(), (world, pos) -> false);
-            int k = ((Int2IntFunction) propertySource.apply(new LightmapCoordinatesRetriever())).get(i);
+            int k = propertySource.apply(new LightmapCoordinatesRetriever<>()).get(i);
             this.renderPart(matrixStack, vertexConsumerProvider, blockState.get(DyeableBedBlock.PART) == BedPart.HEAD ? this.bedHead : this.bedFoot, blockState.get(DyeableBedBlock.FACING), spriteIdentifier, k, j, false, bedBlockEntity);
         } else {
             this.renderPart(matrixStack, vertexConsumerProvider, this.bedHead, Direction.SOUTH, spriteIdentifier, i, j, false, bedBlockEntity);
@@ -81,7 +81,7 @@ public class DyeableBedBlockEntityRenderer
         matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(180.0f + direction.asRotation()));
         matrices.translate(-0.5f, -0.5f, -0.5f);
         VertexConsumer vertexConsumer = sprite.getVertexConsumer(vertexConsumers, RenderLayer::getEntitySolid);
-        ((UnidyeAccessor) (Object) part).unidye$renderCustomBed(matrices, vertexConsumer, light, overlay, dyeableBedBlockEntity.color);
+        ((UnidyeAccessor) (Object) part).unidye$renderCustomBed(matrices, vertexConsumer, light, overlay, dyeableBedBlockEntity.getColor());
         matrices.pop();
     }
 }

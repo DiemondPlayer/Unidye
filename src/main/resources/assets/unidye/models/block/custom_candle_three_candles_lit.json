@@ -1,5 +1,5 @@
 {
-  "parent": "unidye:block/template_three_candles",
+  "parent": "unidye:block/templates/template_tintable_three_candles",
   "textures": {
     "all": "unidye:block/custom_candle_lit",
     "particle": "unidye:block/custom_candle_lit"

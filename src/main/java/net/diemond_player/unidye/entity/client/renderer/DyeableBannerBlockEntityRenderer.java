@@ -1,13 +1,16 @@
 package net.diemond_player.unidye.entity.client.renderer;
 
-import net.diemond_player.unidye.block.custom.DyeableBannerBlock;
-import net.diemond_player.unidye.block.custom.DyeableWallBannerBlock;
+import com.mojang.datafixers.util.Pair;
+import net.diemond_player.unidye.block.DyeableBannerBlock;
+import net.diemond_player.unidye.block.DyeableWallBannerBlock;
 import net.diemond_player.unidye.block.entity.DyeableBannerBlockEntity;
 import net.diemond_player.unidye.component.CustomBannerPatternsComponent;
-import net.diemond_player.unidye.entity.layer.UnidyeModelLayers;
+import net.diemond_player.unidye.registry.UnidyeModelLayers;
+import net.diemond_player.unidye.util.UnidyeUtils;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.entity.BannerPattern;
 import net.minecraft.client.model.*;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.TexturedRenderLayers;
@@ -18,7 +21,11 @@ import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.client.render.model.ModelLoader;
 import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.*;
+
+import java.util.List;
 
 @Environment(value = EnvType.CLIENT)
 public class DyeableBannerBlockEntityRenderer
@@ -48,10 +55,9 @@ public class DyeableBannerBlockEntityRenderer
 
     @Override
     public void render(DyeableBannerBlockEntity bannerBlockEntity, float f, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, int j) {
-        float g = 0.6666667F;
+        long l;
         boolean bl = bannerBlockEntity.getWorld() == null;
         matrixStack.push();
-        long l;
         if (bl) {
             l = 0L;
             matrixStack.translate(0.5F, 0.5F, 0.5F);
@@ -83,7 +89,7 @@ public class DyeableBannerBlockEntityRenderer
         this.banner.pitch = (-0.0125F + 0.01F * MathHelper.cos((float) (Math.PI * 2) * k)) * (float) Math.PI;
         this.banner.pivotY = -32.0F;
         renderCanvas(
-                matrixStack, vertexConsumerProvider, i, j, this.banner, ModelLoader.BANNER_BASE, true, bannerBlockEntity.color, bannerBlockEntity.getPatterns()
+                matrixStack, vertexConsumerProvider, i, j, this.banner, ModelLoader.BANNER_BASE, true, bannerBlockEntity.getColor(), bannerBlockEntity.getPatterns()
         );
         matrixStack.pop();
         matrixStack.pop();

@@ -1,57 +1,82 @@
 package net.diemond_player.unidye.util;
 
-import net.diemond_player.unidye.block.UnidyeBlocks;
-import net.diemond_player.unidye.item.UnidyeItems;
-import net.diemond_player.unidye.item.custom.CustomDyeItem;
-import net.diemond_player.unidye.item.custom.DyeableLeatheryBlockItem;
+import net.diemond_player.unidye.item.CustomDyeItem;
+import net.diemond_player.unidye.item.DyeableLeatheryBlockItem;
+import net.diemond_player.unidye.registry.UnidyeBlocks;
+import net.diemond_player.unidye.registry.UnidyeMaterialTypes;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.DyedColorComponent;
 import net.minecraft.component.type.NbtComponent;
 import net.minecraft.item.DyeItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
+import net.minecraft.registry.Registries;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.ColorHelper;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Optional;
 
-import static net.diemond_player.unidye.item.custom.CustomDyeItem.*;
+import static net.diemond_player.unidye.item.CustomDyeItem.*;
+import static net.diemond_player.unidye.registry.UnidyeMaterialTypes.getMaterialType;
 
 public class UnidyeUtils {
-    public static final Map<Item, UnidyeColor> DYES = new HashMap<>() {{
-        put(Items.WHITE_DYE, UnidyeColor.WHITE);
-        put(Items.ORANGE_DYE, UnidyeColor.ORANGE);
-        put(Items.YELLOW_DYE, UnidyeColor.YELLOW);
-        put(Items.LIGHT_GRAY_DYE, UnidyeColor.LIGHT_GRAY);
-        put(Items.CYAN_DYE, UnidyeColor.CYAN);
-        put(Items.BLUE_DYE, UnidyeColor.BLUE);
-        put(Items.BROWN_DYE, UnidyeColor.BROWN);
-        put(Items.GREEN_DYE, UnidyeColor.GREEN);
-        put(Items.RED_DYE, UnidyeColor.RED);
-        put(Items.BLACK_DYE, UnidyeColor.BLACK);
-        put(Items.LIGHT_BLUE_DYE, UnidyeColor.LIGHT_BLUE);
-        put(Items.MAGENTA_DYE, UnidyeColor.MAGENTA);
-        put(Items.LIME_DYE, UnidyeColor.LIME);
-        put(Items.PINK_DYE, UnidyeColor.PINK);
-        put(Items.GRAY_DYE, UnidyeColor.GRAY);
-        put(Items.PURPLE_DYE, UnidyeColor.PURPLE);
-//        put(ElsDyeModItems.MINT_DYE, UnidyeColor.ELL_MINT);
+
+    public static final HashMap<DyeColor, String> DYE_COLOR_TO_NAME = new HashMap<>() {{
+        put(DyeColor.WHITE, "white");
+        put(DyeColor.LIGHT_GRAY, "light_gray");
+        put(DyeColor.GRAY, "gray");
+        put(DyeColor.BLACK, "black");
+        put(DyeColor.BROWN, "brown");
+        put(DyeColor.RED, "red");
+        put(DyeColor.ORANGE, "orange");
+        put(DyeColor.YELLOW, "yellow");
+        put(DyeColor.LIME, "lime");
+        put(DyeColor.GREEN, "green");
+        put(DyeColor.CYAN, "cyan");
+        put(DyeColor.LIGHT_BLUE, "light_blue");
+        put(DyeColor.BLUE, "blue");
+        put(DyeColor.PURPLE, "purple");
+        put(DyeColor.MAGENTA, "magenta");
+        put(DyeColor.PINK, "pink");
     }};
-    public static final Map<Item, String> MATERIAL_TYPES = new HashMap<>() {{
-        put(UnidyeBlocks.CUSTOM_WOOL.asItem(), "wool");
-        put(UnidyeBlocks.CUSTOM_CARPET.asItem(), "wool");
-        put(UnidyeBlocks.CUSTOM_TERRACOTTA.asItem(), "terracotta");
-        put(UnidyeBlocks.CUSTOM_CONCRETE.asItem(), "concrete");
-        put(UnidyeBlocks.CUSTOM_CONCRETE_POWDER.asItem(), "concrete");
-        put(UnidyeBlocks.CUSTOM_STAINED_GLASS.asItem(), "glass");
-        put(UnidyeBlocks.CUSTOM_STAINED_GLASS_PANE.asItem(), "glass");
-        put(UnidyeItems.CUSTOM_DYE, "dye");
-        put(UnidyeBlocks.CUSTOM_SHULKER_BOX.asItem(), "shulker_box");
-        put(UnidyeBlocks.CUSTOM_CANDLE.asItem(), "candle");
-    }};
+
+//    public static Map<Item, UnidyeColor> DYES = new HashMap<>() {{
+//        put(Items.WHITE_DYE, UnidyeColor.WHITE);
+//        put(Items.LIGHT_GRAY_DYE, UnidyeColor.LIGHT_GRAY);
+//        put(Items.GRAY_DYE, UnidyeColor.GRAY);
+//        put(Items.BLACK_DYE, UnidyeColor.BLACK);
+//        put(Items.BROWN_DYE, UnidyeColor.BROWN);
+//        put(Items.RED_DYE, UnidyeColor.RED);
+//        put(Items.ORANGE_DYE, UnidyeColor.ORANGE);
+//        put(Items.YELLOW_DYE, UnidyeColor.YELLOW);
+//        put(Items.LIME_DYE, UnidyeColor.LIME);
+//        put(Items.GREEN_DYE, UnidyeColor.GREEN);
+//        put(Items.CYAN_DYE, UnidyeColor.CYAN);
+//        put(Items.LIGHT_BLUE_DYE, UnidyeColor.LIGHT_BLUE);
+//        put(Items.BLUE_DYE, UnidyeColor.BLUE);
+//        put(Items.PURPLE_DYE, UnidyeColor.PURPLE);
+//        put(Items.MAGENTA_DYE, UnidyeColor.MAGENTA);
+//        put(Items.PINK_DYE, UnidyeColor.PINK);
+////        put(ElsDyeModItems.MINT_DYE, UnidyeColor.ELL_MINT);
+//    }};
+//    public static Map<Item, String> MATERIAL_TYPES = new HashMap<>() {{
+//        put(UnidyeBlocks.CUSTOM_WOOL.asItem(), "wool");
+//        put(UnidyeBlocks.CUSTOM_CARPET.asItem(), "wool");
+//        put(UnidyeBlocks.CUSTOM_TERRACOTTA.asItem(), "terracotta");
+//        put(UnidyeBlocks.CUSTOM_CONCRETE.asItem(), "concrete");
+//        put(UnidyeBlocks.CUSTOM_CONCRETE_POWDER.asItem(), "concrete");
+//        put(UnidyeBlocks.CUSTOM_STAINED_GLASS.asItem(), "glass");
+//        put(UnidyeBlocks.CUSTOM_STAINED_GLASS_PANE.asItem(), "glass");
+//        put(UnidyeItems.CUSTOM_DYE, "dye");
+//        put(UnidyeBlocks.CUSTOM_SHULKER_BOX.asItem(), "shulker_box");
+//        put(UnidyeBlocks.CUSTOM_CANDLE.asItem(), "candle");
+//    }};
 
     public static void setColor(ItemStack stack, int color) {
         stack.set(DataComponentTypes.DYED_COLOR, new DyedColorComponent(color, true));
@@ -60,14 +85,13 @@ public class UnidyeUtils {
     public static int getColor(ItemStack stack) {
         if(stack.get(DataComponentTypes.DYED_COLOR) != null) {
             return stack.get(DataComponentTypes.DYED_COLOR).rgb();
-        } else {
-            return DEFAULT_COLOR;
         }
+        return DEFAULT_WHITE_COLOR;
     }
 
     public static boolean hasColor(ItemStack stack) {
         if(stack.get(DataComponentTypes.DYED_COLOR) != null) {
-            return stack.get(DataComponentTypes.DYED_COLOR).rgb() != DEFAULT_COLOR;
+            return stack.get(DataComponentTypes.DYED_COLOR).rgb() != DEFAULT_WHITE_COLOR;
         } else {
             return false;
         }
@@ -149,7 +173,7 @@ public class UnidyeUtils {
             ++j;
         }
         for (DyeItem dyeItem : colors) {
-            float[] fs = getColorArray("leather", dyeItem);
+            float[] fs = getColorArray(UnidyeMaterialTypes.LEATHER, dyeItem);
             int l = (int) (fs[0] * 255.0f * fs[0] * 255.0f);
             int m = (int) (fs[1] * 255.0f * fs[1] * 255.0f);
             n = (int) (fs[2] * 255.0f * fs[2] * 255.0f);
@@ -159,7 +183,7 @@ public class UnidyeUtils {
             ++j;
         }
         for (ItemStack customDye : customColors) {
-            float[] fs = getCustomColorArray("leather", customDye);
+            float[] fs = getCustomColorArray(UnidyeMaterialTypes.LEATHER, customDye);
             int l = (int) (fs[0] * 255.0f * fs[0] * 255.0f);
             int m = (int) (fs[1] * 255.0f * fs[1] * 255.0f);
             n = (int) (fs[2] * 255.0f * fs[2] * 255.0f);
@@ -178,41 +202,37 @@ public class UnidyeUtils {
 
     public static ItemStack blendAndSetCustomDyeColor(ItemStack stack, List<DyeItem> colors, List<ItemStack> customColors) {
         ItemStack itemStack = stack.copyWithCount(1);
-        blendAndSetMaterialColor(stack, itemStack, colors, customColors, "leather");
-        blendAndSetMaterialColor(stack, itemStack, colors, customColors, "wool");
-        blendAndSetMaterialColor(stack, itemStack, colors, customColors, "concrete");
-        blendAndSetMaterialColor(stack, itemStack, colors, customColors, "terracotta");
-        blendAndSetMaterialColor(stack, itemStack, colors, customColors, "glass");
-        blendAndSetMaterialColor(stack, itemStack, colors, customColors, "sign");
-        blendAndSetMaterialColor(stack, itemStack, colors, customColors, "firework");
-        blendAndSetMaterialColor(stack, itemStack, colors, customColors, "shulker_box");
-        blendAndSetMaterialColor(stack, itemStack, colors, customColors, "candle");
+        for(UnidyeMaterialType type : UnidyeMaterialTypes.MATERIAL_TYPES.values()){
+            if(type != UnidyeMaterialTypes.DYE) {
+                blendAndSetMaterialColor(stack, itemStack, colors, customColors, type);
+            }
+        }
         return itemStack;
     }
 
     public static void defineClosestVanillaDye(ItemStack itemStack) {
-        float[] customColorArray = getCustomColorArray("dye", itemStack);
+        float[] customColorArray = getCustomColorArray(UnidyeMaterialTypes.DYE, itemStack);
         double distance;
         double minDistance = -1;
-        int id = -1;
-        for (Map.Entry<Item, UnidyeColor> entry : DYES.entrySet()) {
-            float[] colorArray = entry.getValue().getColorComponents("dye");
+        String name = "white";
+        for (DyeItem dyeItem : Registries.ITEM.stream().filter(i -> i instanceof DyeItem && !(i instanceof CustomDyeItem)).map(i -> (DyeItem) i).toList()) {
+            float[] colorArray = UnidyeUtils.getColorArray(UnidyeMaterialTypes.DYE.getColor(dyeItem.getColor()));
             distance = Math.pow(customColorArray[0] - colorArray[0], 2)
                     + Math.pow(customColorArray[1] - colorArray[1], 2) + Math.pow(customColorArray[2] - colorArray[2], 2);
             if (distance < minDistance || minDistance == -1) {
                 minDistance = distance;
-                id = entry.getValue().getId();
+                name = DYE_COLOR_TO_NAME.getOrDefault(dyeItem.getColor(), "white");
             }
         }
         NbtComponent nbtComponent = itemStack.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(new NbtCompound()));
         NbtCompound nbtCompound = nbtComponent.copyNbt();
-        nbtCompound.putInt("closest_vanilla_dye_id", id);
+        nbtCompound.putString(DYE_SHAPE, name);
         itemStack.set(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(nbtCompound));
     }
 
 
     public static void blendAndSetMaterialColor(ItemStack stack, ItemStack itemStack, List<DyeItem> colors,
-                                                List<ItemStack> customColors, String materialType) {
+                                         List<ItemStack> customColors, UnidyeMaterialType materialType) {
         int n;
         int[] is = new int[3];
         int j = 0;
@@ -253,26 +273,20 @@ public class UnidyeUtils {
         setMaterialColor(itemStack, n, materialType);
     }
 
-    public static float[] getColorArray(String materialType, Item dyeItem) {
-        if (DYES.containsKey(dyeItem)) {
-            return DYES.get(dyeItem).getColorComponents(materialType);
-        } else {
-            DyeColor dyeColor = ((DyeItem) dyeItem).getColor();
-            if (Objects.equals(materialType, "sign")) {
-                return getColorArray(dyeColor.getSignColor());
-            } else if (Objects.equals(materialType, "firework")) {
-                return getColorArray(dyeColor.getFireworkColor());
-            } else {
-                return getColorArray(ColorHelper.Argb.withAlpha(0, dyeColor.getEntityColor()));
-            }
+    public static float[] getColorArray(UnidyeMaterialType type, DyeItem dyeItem) {
+        DyeColor dyeColor = dyeItem.getColor();
+        if(type.materialColors.containsKey(dyeColor)){
+            return getColorArray(type.getColor(dyeColor));
+        }else{
+            return getColorArray(UnidyeMaterialTypes.LEATHER.getColor(dyeColor));
         }
     }
 
-    public static float[] getCustomColorArray(String materialType, ItemStack itemStack) {
+    public static float[] getCustomColorArray(UnidyeMaterialType materialType, ItemStack itemStack) {
         int color;
-        if (Objects.equals(materialType, "dye")) {
+        if(materialType == UnidyeMaterialTypes.DYE){
             color = getColor(itemStack);
-        } else {
+        }else {
             color = getMaterialColor(itemStack, materialType);
         }
         int j = (color & 0xFF0000) >> 16;
@@ -281,15 +295,19 @@ public class UnidyeUtils {
         return new float[]{(float) j / 255.0f, (float) k / 255.0f, (float) l / 255.0f};
     }
 
-    public static String getMaterialType(Item dyeableItem) {
-        return MATERIAL_TYPES.getOrDefault(dyeableItem, "leather");
-    }
 
     public static float[] getColorArray(int n) {
         int j = (n & 0xFF0000) >> 16;
         int k = (n & 0xFF00) >> 8;
         int l = (n & 0xFF);
         return new float[]{(float) j / 255.0f, (float) k / 255.0f, (float) l / 255.0f};
+    }
+
+    public static int getColorByColorArray(float[] fs){
+        int n = (int) (fs[0]*255.0f);
+        n = (n << 8) + (int) (fs[1]*255.0f);
+        n = (n << 8) + (int) (fs[2]*255.0f);
+        return n;
     }
 
     public static Optional<DyeColor> findDyeColorByLeatherColor(int leatherColor){

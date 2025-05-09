@@ -1,14 +1,15 @@
 package net.diemond_player.unidye.mixin;
 
-import net.diemond_player.unidye.block.UnidyeBlocks;
-import net.diemond_player.unidye.block.custom.DyeableCandleBlock;
+import net.diemond_player.unidye.block.DyeableCandleBlock;
 import net.diemond_player.unidye.block.entity.DyeableBlockEntity;
-import net.diemond_player.unidye.block.entity.UnidyeBlockEntities;
+import net.diemond_player.unidye.registry.UnidyeBlockEntities;
+import net.diemond_player.unidye.registry.UnidyeBlocks;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.block.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ItemActionResult;
 import net.minecraft.util.hit.BlockHitResult;
@@ -27,7 +28,7 @@ public abstract class CakeBlockMixin {
         if (itemStack.isOf(UnidyeBlocks.CUSTOM_CANDLE.asItem())) {
             ((DyeableCandleBlock) ((BlockItem) itemStack.getItem()).getBlock()).createBlockEntity(pos, CandleCakeBlock.getCandleCakeFromCandle((CandleBlock) Block.getBlockFromItem(itemStack.getItem())));
             if(world.getBlockEntity(pos, UnidyeBlockEntities.DYEABLE_BE).isPresent()) {
-                world.getBlockEntity(pos, UnidyeBlockEntities.DYEABLE_BE).get().color = UnidyeUtils.getColor(itemStack);
+                world.getBlockEntity(pos, UnidyeBlockEntities.DYEABLE_BE).get().setColor(UnidyeUtils.getColor(itemStack));
             }
         }
     }

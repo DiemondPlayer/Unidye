@@ -1,8 +1,9 @@
 package net.diemond_player.unidye.mixin;
 
-import net.diemond_player.unidye.item.custom.DyeableBannerItem;
+import net.diemond_player.unidye.item.DyeableBannerItem;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.item.BannerItem;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ShieldItem;
 import net.minecraft.text.Text;
@@ -16,7 +17,7 @@ import java.util.List;
 
 @Mixin(ShieldItem.class)
 public abstract class ShieldItemMixin {
-    @Inject(method = "getTranslationKey", at = @At(value = "HEAD"), cancellable = true)
+    @Inject(method = "getTranslationKey", at = @At(value = "RETURN", ordinal = 0), cancellable = true)
     private void unidye$getTranslationKey(ItemStack stack, CallbackInfoReturnable<String> cir) {
         if(stack.contains(DataComponentTypes.DYED_COLOR)) {
             cir.setReturnValue("item.unidye.shield_custom_color");

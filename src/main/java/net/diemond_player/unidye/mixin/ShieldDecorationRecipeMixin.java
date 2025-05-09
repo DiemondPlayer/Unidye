@@ -3,8 +3,9 @@ package net.diemond_player.unidye.mixin;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.diemond_player.unidye.component.UnidyeDataComponentTypes;
-import net.diemond_player.unidye.item.custom.DyeableBannerItem;
+import net.diemond_player.unidye.item.DyeableBannerItem;
 import net.minecraft.component.DataComponentTypes;
+import net.minecraft.inventory.RecipeInputInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.ShieldDecorationRecipe;
@@ -37,7 +38,7 @@ public abstract class ShieldDecorationRecipeMixin {
         return original;
     }
 
-        @Unique
+    @Unique
     private boolean checkForUnidyeItems(CraftingRecipeInput recipeInputInventory, World world) {
         for (int i = 0; i < recipeInputInventory.getSize(); ++i) {
             ItemStack itemStack3 = recipeInputInventory.getStackInSlot(i);

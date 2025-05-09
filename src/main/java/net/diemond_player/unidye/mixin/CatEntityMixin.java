@@ -1,6 +1,7 @@
 package net.diemond_player.unidye.mixin;
 
-import net.diemond_player.unidye.item.custom.CustomDyeItem;
+import net.diemond_player.unidye.item.CustomDyeItem;
+import net.diemond_player.unidye.registry.UnidyeMaterialTypes;
 import net.diemond_player.unidye.util.UnidyeAccessor;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
@@ -81,7 +82,7 @@ public abstract class CatEntityMixin implements UnidyeAccessor {
         if (!(((CatEntity) (Object) this).getWorld().isClient)) {
             if (((CatEntity) (Object) this).isTamed()) {
                 if (item instanceof CustomDyeItem && ((CatEntity) (Object) this).isOwner(player)) {
-                    cat.unidye$setCustomColor(CustomDyeItem.getMaterialColor(itemStack, "leather"));
+                    cat.unidye$setCustomColor(CustomDyeItem.getMaterialColor(itemStack, UnidyeMaterialTypes.LEATHER));
                     if (!player.getAbilities().creativeMode) {
                         itemStack.decrement(1);
                     }

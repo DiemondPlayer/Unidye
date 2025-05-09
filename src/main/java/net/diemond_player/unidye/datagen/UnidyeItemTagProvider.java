@@ -1,9 +1,9 @@
 package net.diemond_player.unidye.datagen;
 
-import net.diemond_player.unidye.block.UnidyeBlocks;
-import net.diemond_player.unidye.item.UnidyeItems;
+import net.diemond_player.unidye.registry.UnidyeBlocks;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.ItemTags;
 
@@ -29,24 +29,11 @@ public class UnidyeItemTagProvider extends FabricTagProvider.ItemTagProvider {
                 .add(UnidyeBlocks.CUSTOM_BED.asItem());
         getOrCreateTagBuilder(ItemTags.WOOL_CARPETS)
                 .add(UnidyeBlocks.CUSTOM_CARPET.asItem());
-        getOrCreateTagBuilder(net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags.GLASS_BLOCKS)
+        getOrCreateTagBuilder(ConventionalItemTags.GLASS_BLOCKS)
                 .add(UnidyeBlocks.CUSTOM_STAINED_GLASS.asItem());
-        getOrCreateTagBuilder(net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags.GLASS_PANES)
+        getOrCreateTagBuilder(ConventionalItemTags.GLASS_PANES)
                 .add(UnidyeBlocks.CUSTOM_STAINED_GLASS_PANE.asItem());
-        getOrCreateTagBuilder(net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags.SHULKER_BOXES)
+        getOrCreateTagBuilder(ConventionalItemTags.SHULKER_BOXES)
                 .add(UnidyeBlocks.CUSTOM_SHULKER_BOX.asItem());
-        getOrCreateTagBuilder(ItemTags.DYEABLE)
-                .add(UnidyeBlocks.CUSTOM_SHULKER_BOX.asItem())
-                .add(UnidyeBlocks.CUSTOM_CONCRETE_POWDER.asItem())
-                .add(UnidyeBlocks.CUSTOM_CONCRETE.asItem())
-                .add(UnidyeBlocks.CUSTOM_STAINED_GLASS.asItem())
-                .add(UnidyeBlocks.CUSTOM_STAINED_GLASS_PANE.asItem())
-                .add(UnidyeBlocks.CUSTOM_TERRACOTTA.asItem())
-                .add(UnidyeBlocks.CUSTOM_CANDLE.asItem())
-                .add(UnidyeBlocks.CUSTOM_CARPET.asItem())
-                .add(UnidyeBlocks.CUSTOM_WOOL.asItem())
-                .add(UnidyeItems.CUSTOM_BANNER)
-                .add(UnidyeItems.CUSTOM_DYE)
-                .add(UnidyeBlocks.CUSTOM_BED.asItem());
     }
 }

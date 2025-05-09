@@ -1,34 +1,49 @@
 package net.diemond_player.unidye.block.entity;
 
+import com.google.common.collect.Lists;
+import com.mojang.datafixers.util.Pair;
 import com.mojang.logging.LogUtils;
-import net.diemond_player.unidye.block.UnidyeBlocks;
 import net.diemond_player.unidye.component.CustomBannerPatternsComponent;
 import net.diemond_player.unidye.component.UnidyeDataComponentTypes;
+import net.diemond_player.unidye.registry.UnidyeBlockEntities;
+import net.diemond_player.unidye.registry.UnidyeBlocks;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.entity.BannerBlockEntity;
+import net.minecraft.block.entity.BannerPattern;
+import net.minecraft.block.entity.BannerPatterns;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.component.ComponentMap;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.DyedColorComponent;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
+import net.minecraft.nbt.NbtList;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
+import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.text.Text;
+import net.minecraft.util.DyeColor;
 import net.minecraft.util.Nameable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
-public class DyeableBannerBlockEntity extends BlockEntity implements Nameable {
+import java.util.ArrayList;
+import java.util.List;
+
+import static net.diemond_player.unidye.item.CustomDyeItem.DEFAULT_WHITE_COLOR;
+
+public class DyeableBannerBlockEntity extends BlockEntity implements Nameable, IDyeableBlockEntity {
     private static final Logger LOGGER = LogUtils.getLogger();
     @Nullable
     private Text customName;
     private CustomBannerPatternsComponent patterns = CustomBannerPatternsComponent.DEFAULT;
-    public static final int DEFAULT_COLOR = 16777215;
-    public int color = DEFAULT_COLOR;
+    public int color = DEFAULT_WHITE_COLOR;
 
     public DyeableBannerBlockEntity(BlockPos pos, BlockState state) {
         super(UnidyeBlockEntities.DYEABLE_BANNER_BE, pos, state);
@@ -43,13 +58,13 @@ public class DyeableBannerBlockEntity extends BlockEntity implements Nameable {
 
     public static int getColor(BlockView world, BlockPos pos) {
         if (world == null) {
-            return DyeableBannerBlockEntity.DEFAULT_COLOR;
+            return DEFAULT_WHITE_COLOR;
         }
         BlockEntity blockEntity = world.getBlockEntity(pos);
         if (blockEntity instanceof DyeableBannerBlockEntity dyeableBlockEntity) {
             return dyeableBlockEntity.color;
         } else {
-            return DyeableBannerBlockEntity.DEFAULT_COLOR;
+            return DEFAULT_WHITE_COLOR;
         }
     }
 
@@ -80,7 +95,7 @@ public class DyeableBannerBlockEntity extends BlockEntity implements Nameable {
         if (this.customName != null) {
             nbt.putString("CustomName", Text.Serialization.toJsonString(this.customName, registryLookup));
         }
-        if (color != DEFAULT_COLOR) {
+        if (color != DEFAULT_WHITE_COLOR) {
             nbt.putInt("color", color);
         }
     }
@@ -99,7 +114,7 @@ public class DyeableBannerBlockEntity extends BlockEntity implements Nameable {
                     .ifPresent(patterns -> this.patterns = patterns);
         }
         if (nbt.getInt("color") == 0) {
-            color = DEFAULT_COLOR;
+            color = DEFAULT_WHITE_COLOR;
         } else {
             color = nbt.getInt("color");
         }
@@ -122,12 +137,23 @@ public class DyeableBannerBlockEntity extends BlockEntity implements Nameable {
         ItemStack itemStack = new ItemStack(UnidyeBlocks.CUSTOM_BANNER);
         itemStack.applyComponentsFrom(this.createComponentMap());
         DyeableBannerBlockEntity blockEntity = UnidyeBlockEntities.DYEABLE_BANNER_BE.get(world, pos);
-        int color = DyeableBannerBlockEntity.DEFAULT_COLOR;
+        int color = DEFAULT_WHITE_COLOR;
         if (blockEntity != null) {
             color = blockEntity.color;
         }
         itemStack.set(DataComponentTypes.DYED_COLOR, new DyedColorComponent(color, true));
         return itemStack;
+    }
+
+    @Override
+    public int getColor() {
+        return color;
+    }
+
+    @Override
+    public void setColor(int color) {
+        this.color = color;
+        this.markDirty();
     }
 
     @Override
@@ -143,10 +169,4 @@ public class DyeableBannerBlockEntity extends BlockEntity implements Nameable {
         componentMapBuilder.add(UnidyeDataComponentTypes.CUSTOM_BANNER_PATTERNS, this.patterns);
         componentMapBuilder.add(DataComponentTypes.CUSTOM_NAME, this.customName);
     }
-
-//    @Override
-//    public void removeFromCopiedStackNbt(NbtCompound nbt) {
-//        nbt.remove("patterns");
-//        nbt.remove("CustomName");
-//    }
 }

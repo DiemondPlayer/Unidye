@@ -1,9 +1,10 @@
 package net.diemond_player.unidye.entity.client.renderer;
 
-import net.diemond_player.unidye.block.custom.DyeableShulkerBoxBlock;
+import net.diemond_player.unidye.block.DyeableShulkerBoxBlock;
 import net.diemond_player.unidye.block.entity.DyeableShulkerBoxBlockEntity;
 import net.diemond_player.unidye.entity.client.model.DyeableShulkerEntityModel;
-import net.diemond_player.unidye.entity.layer.UnidyeModelLayers;
+import net.diemond_player.unidye.registry.UnidyeModelLayers;
+import net.diemond_player.unidye.util.UnidyeUtils;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
@@ -26,7 +27,7 @@ public class DyeableShulkerBoxBlockEntityRenderer
     private final DyeableShulkerEntityModel<?> model;
 
     public DyeableShulkerBoxBlockEntityRenderer(BlockEntityRendererFactory.Context ctx) {
-        this.model = new DyeableShulkerEntityModel(ctx.getLayerModelPart(UnidyeModelLayers.CUSTOM_SHULKER));
+        this.model = new DyeableShulkerEntityModel<>(ctx.getLayerModelPart(UnidyeModelLayers.CUSTOM_SHULKER));
     }
 
     @Override
@@ -40,7 +41,7 @@ public class DyeableShulkerBoxBlockEntityRenderer
         matrixStack.push();
         matrixStack.translate(0.5f, 0.5f, 0.5f);
         float g = 0.9995f;
-        matrixStack.scale(0.9995f, 0.9995f, 0.9995f);
+        matrixStack.scale(g, g, g);
         matrixStack.multiply(direction.getRotationQuaternion());
         matrixStack.scale(1.0f, -1.0f, -1.0f);
         matrixStack.translate(0.0f, -1.0f, 0.0f);
@@ -48,7 +49,7 @@ public class DyeableShulkerBoxBlockEntityRenderer
         modelPart.setPivot(0.0f, 24.0f - shulkerBoxBlockEntity.getAnimationProgress(f) * 0.5f * 16.0f, 0.0f);
         modelPart.yaw = 270.0f * shulkerBoxBlockEntity.getAnimationProgress(f) * ((float) Math.PI / 180);
         VertexConsumer vertexConsumer = spriteIdentifier.getVertexConsumer(vertexConsumerProvider, RenderLayer::getEntityCutoutNoCull);
-        this.model.render(matrixStack, vertexConsumer, i, j, ColorHelper.Argb.fullAlpha(shulkerBoxBlockEntity.color));
+        this.model.render(matrixStack, vertexConsumer, i, j, ColorHelper.Argb.fullAlpha(shulkerBoxBlockEntity.getColor()));
         matrixStack.pop();
     }
 }
