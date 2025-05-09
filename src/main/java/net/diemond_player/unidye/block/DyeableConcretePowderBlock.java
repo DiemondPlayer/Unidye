@@ -1,10 +1,10 @@
 package net.diemond_player.unidye.block;
 
-import net.diemond_player.unidye.registry.UnidyeBlocks;
 import net.diemond_player.unidye.block.entity.DyeableBlockEntity;
 import net.diemond_player.unidye.block.entity.IDyeableBlockEntity;
-import net.diemond_player.unidye.registry.UnidyeBlockEntities;
 import net.diemond_player.unidye.entity.DyeableFallingBlockEntity;
+import net.diemond_player.unidye.registry.UnidyeBlockEntities;
+import net.diemond_player.unidye.registry.UnidyeBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ConcretePowderBlock;

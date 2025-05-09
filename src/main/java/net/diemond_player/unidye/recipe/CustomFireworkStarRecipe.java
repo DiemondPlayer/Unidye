@@ -2,8 +2,8 @@ package net.diemond_player.unidye.recipe;
 
 import com.google.common.collect.Lists;
 import net.diemond_player.unidye.item.CustomDyeItem;
-import net.diemond_player.unidye.registry.UnidyeSpecialRecipes;
 import net.diemond_player.unidye.registry.UnidyeMaterialTypes;
+import net.diemond_player.unidye.registry.UnidyeSpecialRecipes;
 import net.minecraft.inventory.RecipeInputInventory;
 import net.minecraft.item.DyeItem;
 import net.minecraft.item.Item;

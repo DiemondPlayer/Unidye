@@ -1,7 +1,6 @@
 package net.diemond_player.unidye.mixin;
 
 import com.mojang.datafixers.util.Pair;
-import net.diemond_player.unidye.registry.UnidyeBlocks;
 import net.diemond_player.unidye.block.DyeableBannerBlock;
 import net.diemond_player.unidye.block.DyeableBedBlock;
 import net.diemond_player.unidye.block.DyeableShulkerBoxBlock;
@@ -12,6 +11,7 @@ import net.diemond_player.unidye.block.entity.DyeableShulkerBoxBlockEntity;
 import net.diemond_player.unidye.entity.client.renderer.DyeableBannerBlockEntityRenderer;
 import net.diemond_player.unidye.item.DyeableBannerItem;
 import net.diemond_player.unidye.item.DyeableBlockItem;
+import net.diemond_player.unidye.registry.UnidyeBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BannerPattern;
 import net.minecraft.client.render.VertexConsumerProvider;

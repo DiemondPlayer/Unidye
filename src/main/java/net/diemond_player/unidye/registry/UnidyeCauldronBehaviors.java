@@ -1,167 +1,77 @@
 package net.diemond_player.unidye.registry;
 
+import com.google.common.collect.Lists;
 import net.diemond_player.unidye.Unidye;
 import net.diemond_player.unidye.block.DyeableShulkerBoxBlock;
 import net.diemond_player.unidye.block.entity.DyeableBannerBlockEntity;
 import net.diemond_player.unidye.util.UnidyeUtils;
+import net.fabricmc.fabric.api.tag.convention.v1.ConventionalItemTags;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.LeveledCauldronBlock;
 import net.minecraft.block.cauldron.CauldronBehavior;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.registry.tag.ItemTags;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.ActionResult;
 
+import java.util.ArrayList;
+
 import static net.minecraft.block.cauldron.CauldronBehavior.WATER_CAULDRON_BEHAVIOR;
+import static net.minecraft.block.cauldron.CauldronBehavior.registerBucketBehavior;
 
 public class UnidyeCauldronBehaviors {
+
+    public static final ArrayList<Runnable> COMPAT_CAULDRON_BEHAVIOURS = Lists.newArrayList();
+
     public static void registerCauldronBehaviors() {
+
+//        COMPAT_CAULDRON_BEHAVIOURS.add(() -> registerUndyeingBehavior(ItemTags.AXES, Items.DIAMOND_AXE));
+
         WATER_CAULDRON_BEHAVIOR.put(UnidyeItems.CUSTOM_BANNER, CLEAN_CUSTOM_BANNER);
 
         WATER_CAULDRON_BEHAVIOR.put(UnidyeBlocks.CUSTOM_SHULKER_BOX.asItem(), CLEAN_CUSTOM_SHULKER_BOX);
 
-        WATER_CAULDRON_BEHAVIOR.put(UnidyeBlocks.CUSTOM_TERRACOTTA.asItem(), CLEAN_TERRACOTTA);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.BLACK_TERRACOTTA.asItem(), CLEAN_TERRACOTTA);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.BROWN_TERRACOTTA.asItem(), CLEAN_TERRACOTTA);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.RED_TERRACOTTA.asItem(), CLEAN_TERRACOTTA);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.BLUE_TERRACOTTA.asItem(), CLEAN_TERRACOTTA);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.YELLOW_TERRACOTTA.asItem(), CLEAN_TERRACOTTA);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.WHITE_TERRACOTTA.asItem(), CLEAN_TERRACOTTA);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.LIGHT_GRAY_TERRACOTTA.asItem(), CLEAN_TERRACOTTA);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.GRAY_TERRACOTTA.asItem(), CLEAN_TERRACOTTA);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.PINK_TERRACOTTA.asItem(), CLEAN_TERRACOTTA);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.MAGENTA_TERRACOTTA.asItem(), CLEAN_TERRACOTTA);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.PURPLE_TERRACOTTA.asItem(), CLEAN_TERRACOTTA);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.LIGHT_BLUE_TERRACOTTA.asItem(), CLEAN_TERRACOTTA);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.CYAN_TERRACOTTA.asItem(), CLEAN_TERRACOTTA);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.ORANGE_TERRACOTTA.asItem(), CLEAN_TERRACOTTA);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.GREEN_TERRACOTTA.asItem(), CLEAN_TERRACOTTA);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.LIME_TERRACOTTA.asItem(), CLEAN_TERRACOTTA);
+        registerUndyeingBehavior(ItemTags.TERRACOTTA, Blocks.TERRACOTTA);
 
-        WATER_CAULDRON_BEHAVIOR.put(UnidyeBlocks.CUSTOM_WOOL.asItem(), CLEAN_WOOL);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.BLACK_WOOL.asItem(), CLEAN_WOOL);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.BROWN_WOOL.asItem(), CLEAN_WOOL);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.RED_WOOL.asItem(), CLEAN_WOOL);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.BLUE_WOOL.asItem(), CLEAN_WOOL);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.YELLOW_WOOL.asItem(), CLEAN_WOOL);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.LIGHT_GRAY_WOOL.asItem(), CLEAN_WOOL);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.GRAY_WOOL.asItem(), CLEAN_WOOL);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.PINK_WOOL.asItem(), CLEAN_WOOL);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.MAGENTA_WOOL.asItem(), CLEAN_WOOL);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.PURPLE_WOOL.asItem(), CLEAN_WOOL);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.LIGHT_BLUE_WOOL.asItem(), CLEAN_WOOL);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.CYAN_WOOL.asItem(), CLEAN_WOOL);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.ORANGE_WOOL.asItem(), CLEAN_WOOL);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.GREEN_WOOL.asItem(), CLEAN_WOOL);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.LIME_WOOL.asItem(), CLEAN_WOOL);
+        registerUndyeingBehavior(ItemTags.WOOL, Blocks.WHITE_WOOL);
 
-        WATER_CAULDRON_BEHAVIOR.put(UnidyeBlocks.CUSTOM_STAINED_GLASS.asItem(), CLEAN_GLASS);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.BLACK_STAINED_GLASS.asItem(), CLEAN_GLASS);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.BROWN_STAINED_GLASS.asItem(), CLEAN_GLASS);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.RED_STAINED_GLASS.asItem(), CLEAN_GLASS);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.BLUE_STAINED_GLASS.asItem(), CLEAN_GLASS);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.YELLOW_STAINED_GLASS.asItem(), CLEAN_GLASS);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.WHITE_STAINED_GLASS.asItem(), CLEAN_GLASS);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.LIGHT_GRAY_STAINED_GLASS.asItem(), CLEAN_GLASS);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.GRAY_STAINED_GLASS.asItem(), CLEAN_GLASS);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.PINK_STAINED_GLASS.asItem(), CLEAN_GLASS);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.MAGENTA_STAINED_GLASS.asItem(), CLEAN_GLASS);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.PURPLE_STAINED_GLASS.asItem(), CLEAN_GLASS);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.LIGHT_BLUE_STAINED_GLASS.asItem(), CLEAN_GLASS);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.CYAN_STAINED_GLASS.asItem(), CLEAN_GLASS);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.ORANGE_STAINED_GLASS.asItem(), CLEAN_GLASS);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.GREEN_STAINED_GLASS.asItem(), CLEAN_GLASS);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.LIME_STAINED_GLASS.asItem(), CLEAN_GLASS);
+        registerUndyeingBehavior(ConventionalItemTags.GLASS_BLOCKS, Blocks.GLASS);
 
-        WATER_CAULDRON_BEHAVIOR.put(UnidyeBlocks.CUSTOM_STAINED_GLASS_PANE.asItem(), CLEAN_GLASS_PANE);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.BLACK_STAINED_GLASS_PANE.asItem(), CLEAN_GLASS_PANE);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.BROWN_STAINED_GLASS_PANE.asItem(), CLEAN_GLASS_PANE);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.RED_STAINED_GLASS_PANE.asItem(), CLEAN_GLASS_PANE);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.BLUE_STAINED_GLASS_PANE.asItem(), CLEAN_GLASS_PANE);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.YELLOW_STAINED_GLASS_PANE.asItem(), CLEAN_GLASS_PANE);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.WHITE_STAINED_GLASS_PANE.asItem(), CLEAN_GLASS_PANE);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.LIGHT_GRAY_STAINED_GLASS_PANE.asItem(), CLEAN_GLASS_PANE);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.GRAY_STAINED_GLASS_PANE.asItem(), CLEAN_GLASS_PANE);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.PINK_STAINED_GLASS_PANE.asItem(), CLEAN_GLASS_PANE);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.MAGENTA_STAINED_GLASS_PANE.asItem(), CLEAN_GLASS_PANE);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.PURPLE_STAINED_GLASS_PANE.asItem(), CLEAN_GLASS_PANE);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.LIGHT_BLUE_STAINED_GLASS_PANE.asItem(), CLEAN_GLASS_PANE);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.CYAN_STAINED_GLASS_PANE.asItem(), CLEAN_GLASS_PANE);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.ORANGE_STAINED_GLASS_PANE.asItem(), CLEAN_GLASS_PANE);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.GREEN_STAINED_GLASS_PANE.asItem(), CLEAN_GLASS_PANE);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.LIME_STAINED_GLASS_PANE.asItem(), CLEAN_GLASS_PANE);
+        registerUndyeingBehavior(ConventionalItemTags.GLASS_PANES, Blocks.GLASS_PANE);
 
-        WATER_CAULDRON_BEHAVIOR.put(UnidyeBlocks.CUSTOM_CARPET.asItem(), CLEAN_CARPET);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.BLACK_CARPET.asItem(), CLEAN_CARPET);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.BROWN_CARPET.asItem(), CLEAN_CARPET);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.RED_CARPET.asItem(), CLEAN_CARPET);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.BLUE_CARPET.asItem(), CLEAN_CARPET);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.YELLOW_CARPET.asItem(), CLEAN_CARPET);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.LIGHT_GRAY_CARPET.asItem(), CLEAN_CARPET);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.GRAY_CARPET.asItem(), CLEAN_CARPET);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.PINK_CARPET.asItem(), CLEAN_CARPET);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.MAGENTA_CARPET.asItem(), CLEAN_CARPET);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.PURPLE_CARPET.asItem(), CLEAN_CARPET);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.LIGHT_BLUE_CARPET.asItem(), CLEAN_CARPET);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.CYAN_CARPET.asItem(), CLEAN_CARPET);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.ORANGE_CARPET.asItem(), CLEAN_CARPET);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.GREEN_CARPET.asItem(), CLEAN_CARPET);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.LIME_CARPET.asItem(), CLEAN_CARPET);
+        registerUndyeingBehavior(ItemTags.WOOL_CARPETS, Blocks.WHITE_CARPET);
 
-        WATER_CAULDRON_BEHAVIOR.put(UnidyeBlocks.CUSTOM_CANDLE.asItem(), CLEAN_CANDLE);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.BLACK_CANDLE.asItem(), CLEAN_CANDLE);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.BROWN_CANDLE.asItem(), CLEAN_CANDLE);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.RED_CANDLE.asItem(), CLEAN_CANDLE);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.BLUE_CANDLE.asItem(), CLEAN_CANDLE);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.YELLOW_CANDLE.asItem(), CLEAN_CANDLE);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.WHITE_CANDLE.asItem(), CLEAN_CANDLE);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.LIGHT_GRAY_CANDLE.asItem(), CLEAN_CANDLE);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.GRAY_CANDLE.asItem(), CLEAN_CANDLE);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.PINK_CANDLE.asItem(), CLEAN_CANDLE);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.MAGENTA_CANDLE.asItem(), CLEAN_CANDLE);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.PURPLE_CANDLE.asItem(), CLEAN_CANDLE);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.LIGHT_BLUE_CANDLE.asItem(), CLEAN_CANDLE);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.CYAN_CANDLE.asItem(), CLEAN_CANDLE);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.ORANGE_CANDLE.asItem(), CLEAN_CANDLE);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.GREEN_CANDLE.asItem(), CLEAN_CANDLE);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.LIME_CANDLE.asItem(), CLEAN_CANDLE);
+        registerUndyeingBehavior(ItemTags.CANDLES, Items.CANDLE);
 
-        WATER_CAULDRON_BEHAVIOR.put(UnidyeBlocks.CUSTOM_CONCRETE.asItem(), CLEAN_CONCRETE);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.BLACK_CONCRETE.asItem(), CLEAN_CONCRETE);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.BROWN_CONCRETE.asItem(), CLEAN_CONCRETE);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.RED_CONCRETE.asItem(), CLEAN_CONCRETE);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.BLUE_CONCRETE.asItem(), CLEAN_CONCRETE);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.YELLOW_CONCRETE.asItem(), CLEAN_CONCRETE);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.LIGHT_GRAY_CONCRETE.asItem(), CLEAN_CONCRETE);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.GRAY_CONCRETE.asItem(), CLEAN_CONCRETE);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.PINK_CONCRETE.asItem(), CLEAN_CONCRETE);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.MAGENTA_CONCRETE.asItem(), CLEAN_CONCRETE);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.PURPLE_CONCRETE.asItem(), CLEAN_CONCRETE);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.LIGHT_BLUE_CONCRETE.asItem(), CLEAN_CONCRETE);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.CYAN_CONCRETE.asItem(), CLEAN_CONCRETE);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.ORANGE_CONCRETE.asItem(), CLEAN_CONCRETE);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.GREEN_CONCRETE.asItem(), CLEAN_CONCRETE);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.LIME_CONCRETE.asItem(), CLEAN_CONCRETE);
+        registerUndyeingBehavior(
+                Lists.newArrayList(UnidyeBlocks.CUSTOM_CONCRETE.asItem(),
+                        Blocks.BLACK_CONCRETE.asItem(), Blocks.BROWN_CONCRETE.asItem(),
+                        Blocks.RED_CONCRETE.asItem(), Blocks.BLUE_CONCRETE.asItem(),
+                        Blocks.YELLOW_CONCRETE.asItem(), Blocks.LIGHT_GRAY_CONCRETE.asItem(),
+                        Blocks.GRAY_CONCRETE.asItem(), Blocks.PINK_CONCRETE.asItem(),
+                        Blocks.MAGENTA_CONCRETE.asItem(), Blocks.PURPLE_CONCRETE.asItem(),
+                        Blocks.LIGHT_BLUE_CONCRETE.asItem(), Blocks.CYAN_CONCRETE.asItem(),
+                        Blocks.ORANGE_CONCRETE.asItem(), Blocks.GREEN_CONCRETE.asItem(),
+                        Blocks.LIME_CONCRETE.asItem()
+                ), Blocks.WHITE_CONCRETE);
 
-        WATER_CAULDRON_BEHAVIOR.put(UnidyeBlocks.CUSTOM_BED.asItem(), CLEAN_BED);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.BLACK_BED.asItem(), CLEAN_BED);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.BROWN_BED.asItem(), CLEAN_BED);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.RED_BED.asItem(), CLEAN_BED);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.BLUE_BED.asItem(), CLEAN_BED);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.YELLOW_BED.asItem(), CLEAN_BED);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.LIGHT_GRAY_BED.asItem(), CLEAN_BED);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.GRAY_BED.asItem(), CLEAN_BED);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.PINK_BED.asItem(), CLEAN_BED);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.MAGENTA_BED.asItem(), CLEAN_BED);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.PURPLE_BED.asItem(), CLEAN_BED);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.LIGHT_BLUE_BED.asItem(), CLEAN_BED);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.CYAN_BED.asItem(), CLEAN_BED);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.ORANGE_BED.asItem(), CLEAN_BED);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.GREEN_BED.asItem(), CLEAN_BED);
-        WATER_CAULDRON_BEHAVIOR.put(Blocks.LIME_BED.asItem(), CLEAN_BED);
+        registerUndyeingBehavior(ItemTags.BEDS, Blocks.WHITE_BED);
 
-        if(Unidye.SIMPLE_CONCRETE){
+        if (Unidye.SIMPLE_CONCRETE) {
             WATER_CAULDRON_BEHAVIOR.put(UnidyeBlocks.CUSTOM_CONCRETE_POWDER.asItem(), HARDEN_CUSTOM_CONCRETE_POWDER);
+        }
+
+        WATER_CAULDRON_BEHAVIOR.remove(Items.TINTED_GLASS);
+
+        for(Runnable r : COMPAT_CAULDRON_BEHAVIOURS){
+            r.run();
         }
     }
 
@@ -207,93 +117,6 @@ public class UnidyeCauldronBehaviors {
         return ActionResult.success(world.isClient);
     };
 
-    public static final CauldronBehavior CLEAN_TERRACOTTA = (state, world, pos, player, hand, stack) -> {
-        if (!world.isClient) {
-            ItemStack itemStack = new ItemStack(Blocks.TERRACOTTA);
-            itemStack.setCount(stack.getCount());
-            player.setStackInHand(hand, itemStack);
-            player.incrementStat(Stats.USE_CAULDRON);
-            LeveledCauldronBlock.decrementFluidLevel(state, world, pos);
-        }
-        return ActionResult.success(world.isClient);
-    };
-
-    public static final CauldronBehavior CLEAN_WOOL = (state, world, pos, player, hand, stack) -> {
-        if (!world.isClient) {
-            ItemStack itemStack = new ItemStack(Blocks.WHITE_WOOL);
-            itemStack.setCount(stack.getCount());
-            player.setStackInHand(hand, itemStack);
-            player.incrementStat(Stats.USE_CAULDRON);
-            LeveledCauldronBlock.decrementFluidLevel(state, world, pos);
-        }
-        return ActionResult.success(world.isClient);
-    };
-
-    public static final CauldronBehavior CLEAN_GLASS = (state, world, pos, player, hand, stack) -> {
-        if (!world.isClient) {
-            ItemStack itemStack = new ItemStack(Blocks.GLASS);
-            itemStack.setCount(stack.getCount());
-            player.setStackInHand(hand, itemStack);
-            player.incrementStat(Stats.USE_CAULDRON);
-            LeveledCauldronBlock.decrementFluidLevel(state, world, pos);
-        }
-        return ActionResult.success(world.isClient);
-    };
-
-    public static final CauldronBehavior CLEAN_GLASS_PANE = (state, world, pos, player, hand, stack) -> {
-        if (!world.isClient) {
-            ItemStack itemStack = new ItemStack(Blocks.GLASS_PANE);
-            itemStack.setCount(stack.getCount());
-            player.setStackInHand(hand, itemStack);
-            player.incrementStat(Stats.USE_CAULDRON);
-            LeveledCauldronBlock.decrementFluidLevel(state, world, pos);
-        }
-        return ActionResult.success(world.isClient);
-    };
-
-    public static final CauldronBehavior CLEAN_CARPET = (state, world, pos, player, hand, stack) -> {
-        if (!world.isClient) {
-            ItemStack itemStack = new ItemStack(Blocks.WHITE_CARPET);
-            itemStack.setCount(stack.getCount());
-            player.setStackInHand(hand, itemStack);
-            player.incrementStat(Stats.USE_CAULDRON);
-            LeveledCauldronBlock.decrementFluidLevel(state, world, pos);
-        }
-        return ActionResult.success(world.isClient);
-    };
-
-    public static final CauldronBehavior CLEAN_CANDLE = (state, world, pos, player, hand, stack) -> {
-        if (!world.isClient) {
-            ItemStack itemStack = new ItemStack(Blocks.CANDLE);
-            itemStack.setCount(stack.getCount());
-            player.setStackInHand(hand, itemStack);
-            player.incrementStat(Stats.USE_CAULDRON);
-            LeveledCauldronBlock.decrementFluidLevel(state, world, pos);
-        }
-        return ActionResult.success(world.isClient);
-    };
-
-    public static final CauldronBehavior CLEAN_CONCRETE = (state, world, pos, player, hand, stack) -> {
-        if (!world.isClient) {
-            ItemStack itemStack = new ItemStack(Blocks.WHITE_CONCRETE);
-            itemStack.setCount(stack.getCount());
-            player.setStackInHand(hand, itemStack);
-            player.incrementStat(Stats.USE_CAULDRON);
-            LeveledCauldronBlock.decrementFluidLevel(state, world, pos);
-        }
-        return ActionResult.success(world.isClient);
-    };
-
-    public static final CauldronBehavior CLEAN_BED = (state, world, pos, player, hand, stack) -> {
-        if (!world.isClient) {
-            ItemStack itemStack = new ItemStack(Blocks.WHITE_BED);
-            player.setStackInHand(hand, itemStack);
-            player.incrementStat(Stats.USE_CAULDRON);
-            LeveledCauldronBlock.decrementFluidLevel(state, world, pos);
-        }
-        return ActionResult.success(world.isClient);
-    };
-
     public static final CauldronBehavior HARDEN_CUSTOM_CONCRETE_POWDER = (state, world, pos, player, hand, stack) -> {
         if (!world.isClient) {
             ItemStack itemStack = new ItemStack(UnidyeBlocks.CUSTOM_CONCRETE);
@@ -305,4 +128,25 @@ public class UnidyeCauldronBehaviors {
         }
         return ActionResult.success(world.isClient);
     };
+
+    public static void registerUndyeingBehavior(ArrayList<Item> acceptedItems, ItemConvertible outputItem) {
+        for (Item item : acceptedItems) {
+            if (item == outputItem.asItem()) continue;
+            WATER_CAULDRON_BEHAVIOR.put(item, (state, world, pos, player, hand, stack) -> {
+                if (!world.isClient) {
+                    ItemStack itemStack = new ItemStack(outputItem);
+                    itemStack.setCount(stack.getCount());
+                    player.setStackInHand(hand, itemStack);
+                    player.incrementStat(Stats.USE_CAULDRON);
+                    LeveledCauldronBlock.decrementFluidLevel(state, world, pos);
+                }
+                return ActionResult.success(world.isClient);
+            });
+        }
+    }
+
+    public static void registerUndyeingBehavior(TagKey<Item> tag, ItemConvertible outputItem) {
+        ArrayList<Item> acceptedItems = new ArrayList<>(Registries.ITEM.getOrCreateEntryList(tag).stream().map(RegistryEntry::value).toList());
+        registerUndyeingBehavior(acceptedItems, outputItem);
+    }
 }

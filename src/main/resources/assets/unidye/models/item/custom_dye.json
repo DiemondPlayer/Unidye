@@ -96,6 +96,54 @@
         "unidye:dye_id": 0.0015
       },
       "model": "unidye:item/custom_black_dye"
+    },
+    {
+      "predicate": {
+        "unidye:dye_id": 0.0100
+      },
+      "model": "delicate_dyes:item/custom_coral_dye"
+    },
+    {
+      "predicate": {
+        "unidye:dye_id": 0.0101
+      },
+      "model": "delicate_dyes:item/custom_canary_dye"
+    },
+    {
+      "predicate": {
+        "unidye:dye_id": 0.0102
+      },
+      "model": "delicate_dyes:item/custom_wasabi_dye"
+    },
+    {
+      "predicate": {
+        "unidye:dye_id": 0.0103
+      },
+      "model": "delicate_dyes:item/custom_sacramento_dye"
+    },
+    {
+      "predicate": {
+        "unidye:dye_id": 0.0104
+      },
+      "model": "delicate_dyes:item/custom_sky_dye"
+    },
+    {
+      "predicate": {
+        "unidye:dye_id": 0.0105
+      },
+      "model": "delicate_dyes:item/custom_blurple_dye"
+    },
+    {
+      "predicate": {
+        "unidye:dye_id": 0.0106
+      },
+      "model": "delicate_dyes:item/custom_sangria_dye"
+    },
+    {
+      "predicate": {
+        "unidye:dye_id": 0.0107
+      },
+      "model": "delicate_dyes:item/custom_rose_dye"
     }
   ]
 }

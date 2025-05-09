@@ -1,7 +1,7 @@
 package net.diemond_player.unidye.block;
 
-import net.diemond_player.unidye.registry.UnidyeBlocks;
 import net.diemond_player.unidye.block.entity.IDyeableBlockEntity;
+import net.diemond_player.unidye.registry.UnidyeBlocks;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

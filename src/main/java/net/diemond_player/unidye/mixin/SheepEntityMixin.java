@@ -1,9 +1,9 @@
 package net.diemond_player.unidye.mixin;
 
-import net.diemond_player.unidye.registry.UnidyeBlocks;
 import net.diemond_player.unidye.item.DyeableLeatheryBlockItem;
-import net.diemond_player.unidye.util.UnidyeAccessor;
+import net.diemond_player.unidye.registry.UnidyeBlocks;
 import net.diemond_player.unidye.registry.UnidyeMaterialTypes;
+import net.diemond_player.unidye.util.UnidyeAccessor;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;

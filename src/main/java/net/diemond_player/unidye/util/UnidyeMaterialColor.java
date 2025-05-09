@@ -2,9 +2,6 @@ package net.diemond_player.unidye.util;
 
 import net.minecraft.util.DyeColor;
 
-import java.util.List;
-import java.util.Objects;
-
 public class UnidyeMaterialColor {
     private int color;
     private UnidyeMaterialType materialType;

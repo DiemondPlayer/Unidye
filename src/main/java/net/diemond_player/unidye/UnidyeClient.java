@@ -1,17 +1,12 @@
 package net.diemond_player.unidye;
 
-import net.diemond_player.unidye.registry.UnidyeBlocks;
 import net.diemond_player.unidye.block.entity.IDyeableBlockEntity;
-import net.diemond_player.unidye.registry.UnidyeBlockEntities;
-import net.diemond_player.unidye.registry.UnidyeEntities;
 import net.diemond_player.unidye.entity.client.model.DyeableShulkerEntityModel;
 import net.diemond_player.unidye.entity.client.renderer.DyeableBannerBlockEntityRenderer;
 import net.diemond_player.unidye.entity.client.renderer.DyeableBedBlockEntityRenderer;
 import net.diemond_player.unidye.entity.client.renderer.DyeableFallingBlockEntityRenderer;
 import net.diemond_player.unidye.entity.client.renderer.DyeableShulkerBoxBlockEntityRenderer;
-import net.diemond_player.unidye.registry.UnidyeModelLayers;
-import net.diemond_player.unidye.registry.UnidyeItems;
-import net.diemond_player.unidye.registry.UnidyeModelPredicates;
+import net.diemond_player.unidye.registry.*;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;

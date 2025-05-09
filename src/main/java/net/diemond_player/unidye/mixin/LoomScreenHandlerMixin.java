@@ -1,9 +1,9 @@
 package net.diemond_player.unidye.mixin;
 
-import net.diemond_player.unidye.registry.UnidyeBlockEntities;
-import net.diemond_player.unidye.registry.UnidyeItems;
 import net.diemond_player.unidye.item.CustomDyeItem;
 import net.diemond_player.unidye.item.DyeableBannerItem;
+import net.diemond_player.unidye.registry.UnidyeBlockEntities;
+import net.diemond_player.unidye.registry.UnidyeItems;
 import net.diemond_player.unidye.registry.UnidyeMaterialTypes;
 import net.minecraft.block.entity.BannerPattern;
 import net.minecraft.inventory.Inventory;

@@ -1,9 +1,9 @@
 package net.diemond_player.unidye.entity;
 
 import com.mojang.logging.LogUtils;
-import net.diemond_player.unidye.registry.UnidyeBlocks;
 import net.diemond_player.unidye.block.DyeableConcretePowderBlock;
 import net.diemond_player.unidye.block.entity.DyeableBlockEntity;
+import net.diemond_player.unidye.registry.UnidyeBlocks;
 import net.diemond_player.unidye.registry.UnidyeEntities;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.block.*;

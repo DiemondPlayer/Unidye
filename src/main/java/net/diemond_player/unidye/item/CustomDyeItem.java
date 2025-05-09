@@ -1,9 +1,9 @@
 package net.diemond_player.unidye.item;
 
-import net.diemond_player.unidye.registry.UnidyeBlocks;
+import net.diemond_player.unidye.registry.UnidyeCauldronBehaviors;
+import net.diemond_player.unidye.registry.UnidyeMaterialTypes;
 import net.diemond_player.unidye.util.UnidyeAccessor;
 import net.diemond_player.unidye.util.UnidyeMaterialType;
-import net.diemond_player.unidye.registry.UnidyeMaterialTypes;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.SignBlockEntity;
 import net.minecraft.client.gui.screen.Screen;

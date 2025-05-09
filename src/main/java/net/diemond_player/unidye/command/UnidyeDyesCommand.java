@@ -3,8 +3,6 @@ package net.diemond_player.unidye.command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import net.diemond_player.unidye.item.CustomDyeItem;
-import net.diemond_player.unidye.util.UnidyeUtils;
-import net.fabricmc.fabric.api.tag.convention.v1.ConventionalItemTags;
 import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.item.DyeItem;
@@ -16,8 +14,6 @@ import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
-
-import java.rmi.registry.Registry;
 
 public class UnidyeDyesCommand {
 

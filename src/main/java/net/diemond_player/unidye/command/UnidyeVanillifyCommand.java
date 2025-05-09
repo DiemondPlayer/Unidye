@@ -1,7 +1,6 @@
 package net.diemond_player.unidye.command;
 
 import com.mojang.brigadier.CommandDispatcher;
-import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import net.diemond_player.unidye.item.CustomDyeItem;
 import net.diemond_player.unidye.util.UnidyeUtils;
@@ -11,7 +10,6 @@ import net.minecraft.command.argument.ItemStackArgumentType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.item.DyeItem;
 import net.minecraft.item.DyeableItem;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.server.command.CommandManager;
@@ -22,7 +20,6 @@ import net.minecraft.sound.SoundEvents;
 import org.spongepowered.include.com.google.common.collect.Lists;
 
 import java.util.List;
-import java.util.Random;
 
 public class UnidyeVanillifyCommand {
     @SuppressWarnings("unused")

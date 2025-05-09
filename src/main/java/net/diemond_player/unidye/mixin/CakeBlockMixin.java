@@ -1,8 +1,8 @@
 package net.diemond_player.unidye.mixin;
 
-import net.diemond_player.unidye.registry.UnidyeBlocks;
 import net.diemond_player.unidye.block.DyeableCandleBlock;
 import net.diemond_player.unidye.block.entity.DyeableBlockEntity;
+import net.diemond_player.unidye.registry.UnidyeBlocks;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CakeBlock;

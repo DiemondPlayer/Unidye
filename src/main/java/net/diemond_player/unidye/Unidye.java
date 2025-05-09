@@ -1,25 +1,15 @@
 package net.diemond_player.unidye;
 
 import com.google.common.collect.Lists;
-import net.diemond_player.unidye.item.CustomDyeItem;
-import net.diemond_player.unidye.registry.UnidyeBlocks;
-import net.diemond_player.unidye.registry.UnidyeBlockEntities;
 import net.diemond_player.unidye.command.UnidyeColorizeCommand;
 import net.diemond_player.unidye.command.UnidyeDyesCommand;
 import net.diemond_player.unidye.command.UnidyeRandomCommand;
 import net.diemond_player.unidye.command.UnidyeVanillifyCommand;
-import net.diemond_player.unidye.registry.UnidyeItemGroups;
-import net.diemond_player.unidye.registry.UnidyeItems;
-import net.diemond_player.unidye.registry.UnidyeSpecialRecipes;
-import net.diemond_player.unidye.registry.UnidyeCauldronBehaviors;
-import net.diemond_player.unidye.registry.UnidyeMaterialTypes;
-import net.diemond_player.unidye.util.UnidyeUtils;
+import net.diemond_player.unidye.registry.*;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.item.DyeItem;
 import net.minecraft.item.Item;
-import net.minecraft.registry.Registries;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,7 +32,7 @@ public class Unidye implements ModInitializer {
         UnidyeItemGroups.registerItemGroups();
         UnidyeBlocks.registerModBlocks();
         UnidyeBlockEntities.registerBlockEntities();
-        UnidyeCauldronBehaviors.registerCauldronBehaviors();
+//        UnidyeCauldronBehaviors.registerCauldronBehaviors();
         UnidyeSpecialRecipes.registerSpecialRecipes();
         UnidyeMaterialTypes.registerMaterialTypes();
         addItemsToMaterialTypes();

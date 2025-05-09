@@ -1,7 +1,7 @@
 package net.diemond_player.unidye.recipe;
 
-import net.diemond_player.unidye.registry.UnidyeBlocks;
 import net.diemond_player.unidye.item.DyeableLeatheryBlockItem;
+import net.diemond_player.unidye.registry.UnidyeBlocks;
 import net.diemond_player.unidye.registry.UnidyeSpecialRecipes;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.inventory.RecipeInputInventory;
