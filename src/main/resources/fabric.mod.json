@@ -10,7 +10,7 @@
   "contact": {
     "sources": "https://github.com/DiemondPlayer/Unidye"
   },
-  "license": "MIT",
+  "license": "ARR",
   "icon": "assets/unidye/icon.png",
   "environment": "*",
   "entrypoints": {
