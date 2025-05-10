@@ -12,6 +12,7 @@
     "CatEntityMixin",
     "DyedColorComponentMixin",
     "DyeItemMixin",
+    "FilledMapItemMixin",
     "FireworkExplosionComponentMixin",
     "FireworkStarFadeRecipeMixin",
     "FireworkStarRecipeMixin",
@@ -31,7 +32,6 @@
     "defaultRequire": 1
   },
   "client": [
-    "ItemMixin",
     "AbstractSignEditScreenMixin",
     "BlockModelRendererMixin",
     "BuiltinModelItemRendererMixin",
