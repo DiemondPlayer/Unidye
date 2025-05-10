@@ -4,7 +4,6 @@ import com.google.common.collect.Lists;
 import net.diemond_player.unidye.Unidye;
 import net.diemond_player.unidye.block.DyeableShulkerBoxBlock;
 import net.diemond_player.unidye.component.CustomBannerPatternsComponent;
-import net.diemond_player.unidye.component.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 import net.minecraft.block.Block;

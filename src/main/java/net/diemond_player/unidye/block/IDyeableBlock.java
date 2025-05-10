@@ -1,5 +1,8 @@
 package net.diemond_player.unidye.block;
 
+// Mostly taken with permission from Hecco's Bountiful Fares mod back when Unidye was still indev for 1.20.1
+// Source: https://github.com/Heccology/Bountiful-Fares/blob/1.20.1/src/main/java/net/hecco/bountifulfares/block/interfaces/DyeableCeramicBlockInterface.java
+
 import net.diemond_player.unidye.block.entity.DyeableBlockEntity;
 import net.diemond_player.unidye.block.entity.IDyeableBlockEntity;
 import net.minecraft.block.BlockEntityProvider;

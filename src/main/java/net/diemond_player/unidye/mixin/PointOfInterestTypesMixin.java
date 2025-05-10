@@ -1,5 +1,10 @@
 package net.diemond_player.unidye.mixin;
 
+// Taken from El and L's Dyes mod with permission, which has the following source cited:
+// Sources:
+// Wisp Forest - https://github.com/wisp-forest/gelatin/blob/bdcbd97addb00be29580e36cd5f827322809b0a3/dye-entries/src/main/java/io/wispforest/gelatin/dye_entries/mixins/PointOfInterestTypesMixin.java#L19
+//
+
 import net.diemond_player.unidye.registry.UnidyeBlocks;
 import net.minecraft.block.BedBlock;
 import net.minecraft.block.Block;

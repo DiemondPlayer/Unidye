@@ -2,7 +2,7 @@ package net.diemond_player.unidye.mixin;
 
 import com.llamalad7.mixinextras.sugar.Local;
 import net.diemond_player.unidye.component.CustomBannerPatternsComponent;
-import net.diemond_player.unidye.component.UnidyeDataComponentTypes;
+import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.entity.client.renderer.DyeableBannerBlockEntityRenderer;
 import net.diemond_player.unidye.registry.UnidyeItems;
 import net.diemond_player.unidye.util.UnidyeUtils;

@@ -2,7 +2,7 @@ package net.diemond_player.unidye.block.entity;
 
 import com.mojang.logging.LogUtils;
 import net.diemond_player.unidye.component.CustomBannerPatternsComponent;
-import net.diemond_player.unidye.component.UnidyeDataComponentTypes;
+import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.registry.UnidyeBlockEntities;
 import net.diemond_player.unidye.registry.UnidyeBlocks;
 import net.minecraft.block.BlockState;

@@ -5,7 +5,7 @@ import net.diemond_player.unidye.command.UnidyeColorizeCommand;
 import net.diemond_player.unidye.command.UnidyeDyesCommand;
 import net.diemond_player.unidye.command.UnidyeRandomCommand;
 import net.diemond_player.unidye.command.UnidyeVanillifyCommand;
-import net.diemond_player.unidye.component.UnidyeDataComponentTypes;
+import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.registry.*;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;

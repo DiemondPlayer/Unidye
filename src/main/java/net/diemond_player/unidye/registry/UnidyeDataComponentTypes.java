@@ -1,6 +1,7 @@
-package net.diemond_player.unidye.component;
+package net.diemond_player.unidye.registry;
 
 import net.diemond_player.unidye.Unidye;
+import net.diemond_player.unidye.component.CustomBannerPatternsComponent;
 import net.minecraft.component.ComponentType;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
