@@ -1,10 +1,7 @@
 package net.diemond_player.unidye;
 
 import com.google.common.collect.Lists;
-import net.diemond_player.unidye.command.UnidyeColorizeCommand;
-import net.diemond_player.unidye.command.UnidyeDyesCommand;
-import net.diemond_player.unidye.command.UnidyeRandomCommand;
-import net.diemond_player.unidye.command.UnidyeVanillifyCommand;
+import net.diemond_player.unidye.command.*;
 import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.registry.*;
 import net.fabricmc.api.ModInitializer;
@@ -59,6 +56,7 @@ public class Unidye implements ModInitializer {
         CommandRegistrationCallback.EVENT.register(UnidyeRandomCommand::register);
         CommandRegistrationCallback.EVENT.register(UnidyeColorizeCommand::register);
         CommandRegistrationCallback.EVENT.register(UnidyeVanillifyCommand::register);
+        CommandRegistrationCallback.EVENT.register(UnidyeNameCommand::register);
     }
 
     public static boolean isModLoaded(String id) {

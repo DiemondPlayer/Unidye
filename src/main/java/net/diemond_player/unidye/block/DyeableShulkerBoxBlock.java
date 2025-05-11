@@ -1,6 +1,7 @@
 package net.diemond_player.unidye.block;
 
 import com.google.common.collect.Maps;
+import net.diemond_player.unidye.Unidye;
 import net.diemond_player.unidye.block.entity.DyeableShulkerBoxBlockEntity;
 import net.diemond_player.unidye.block.entity.IDyeableBlockEntity;
 import net.diemond_player.unidye.registry.UnidyeBlockEntities;
@@ -59,7 +60,7 @@ public class DyeableShulkerBoxBlock extends ShulkerBoxBlock implements IDyeableB
     public static final Identifier CONTENTS_DYNAMIC_DROP_ID = Identifier.of("minecraft", "contents");
 
     public DyeableShulkerBoxBlock(AbstractBlock.Settings settings) {
-        super(DyeColor.CYAN, settings);
+        super(DyeColor.WHITE, settings);
     }
 
     @Override
@@ -173,5 +174,14 @@ public class DyeableShulkerBoxBlock extends ShulkerBoxBlock implements IDyeableB
             return pickBlock(world, pos, itemStack);
         }
         return itemStack;
+    }
+
+    @Override
+    public DyeColor getColor() {
+        try {
+            Unidye.LOGGER.warn("{} returns DyeColor.WHITE as a requirement rather than an actual color, calling the {} method is not recommended.", this.getClass().getName(), this.getClass().getMethod("getColor").getName());
+        } catch (NoSuchMethodException ignored) {
+        }
+        return super.getColor();
     }
 }

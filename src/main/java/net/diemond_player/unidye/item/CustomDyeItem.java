@@ -1,5 +1,6 @@
 package net.diemond_player.unidye.item;
 
+import net.diemond_player.unidye.Unidye;
 import net.diemond_player.unidye.registry.UnidyeMaterialTypes;
 import net.diemond_player.unidye.util.UnidyeAccessor;
 import net.diemond_player.unidye.util.UnidyeMaterialType;
@@ -154,5 +155,14 @@ public class CustomDyeItem extends DyeItem implements SignChangingItem{
             return true;
         }
         return false;
+    }
+
+    @Override
+    public DyeColor getColor() {
+        try {
+            Unidye.LOGGER.warn("{} returns DyeColor.WHITE as a requirement rather than an actual color, calling the {} method is not recommended.", this.getClass().getName(), this.getClass().getMethod("getColor").getName());
+        } catch (NoSuchMethodException ignored) {
+        }
+        return super.getColor();
     }
 }

@@ -1,5 +1,6 @@
 package net.diemond_player.unidye.item;
 
+import net.diemond_player.unidye.Unidye;
 import net.diemond_player.unidye.block.entity.DyeableBannerBlockEntity;
 import net.diemond_player.unidye.component.CustomBannerPatternsComponent;
 import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
@@ -13,6 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.DyeColor;
 
 import java.util.List;
 
@@ -49,5 +51,14 @@ public class DyeableBannerItem extends BannerItem {
     @Override
     public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType type) {
         DyeableBannerItem.appendBannerTooltip(stack, tooltip);
+    }
+
+    @Override
+    public DyeColor getColor() {
+        try {
+            Unidye.LOGGER.warn("{} returns DyeColor.WHITE as a requirement rather than an actual color, calling the {} method is not recommended.", this.getClass().getName(), this.getClass().getMethod("getColor").getName());
+        } catch (NoSuchMethodException ignored) {
+        }
+        return super.getColor();
     }
 }

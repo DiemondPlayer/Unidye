@@ -1,5 +1,6 @@
 package net.diemond_player.unidye.block;
 
+import net.diemond_player.unidye.Unidye;
 import net.diemond_player.unidye.block.entity.DyeableLeatheryBlockEntity;
 import net.diemond_player.unidye.block.entity.IDyeableBlockEntity;
 import net.diemond_player.unidye.registry.UnidyeBlockEntities;
@@ -57,6 +58,10 @@ public class DyeablePaneBlock extends PaneBlock implements IDyeableBlock, Staina
 
     @Override
     public DyeColor getColor() {
-        return DyeColor.CYAN;
+        try {
+            Unidye.LOGGER.warn("{} returns DyeColor.WHITE as a requirement rather than an actual color, calling the {} method is not recommended.", this.getClass().getName(), this.getClass().getMethod("getColor").getName());
+        } catch (NoSuchMethodException ignored) {
+        }
+        return DyeColor.WHITE;
     }
 }

@@ -2,6 +2,7 @@ package net.diemond_player.unidye.block;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import net.diemond_player.unidye.Unidye;
 import net.diemond_player.unidye.block.entity.DyeableBannerBlockEntity;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
@@ -27,7 +28,7 @@ public class DyeableWallBannerBlock extends WallBannerBlock {
     private static final Map<Direction, VoxelShape> FACING_TO_SHAPE = Maps.newEnumMap(ImmutableMap.of(Direction.NORTH, Block.createCuboidShape(0.0, 0.0, 14.0, 16.0, 12.5, 16.0), Direction.SOUTH, Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 12.5, 2.0), Direction.WEST, Block.createCuboidShape(14.0, 0.0, 0.0, 16.0, 12.5, 16.0), Direction.EAST, Block.createCuboidShape(0.0, 0.0, 0.0, 2.0, 12.5, 16.0)));
 
     public DyeableWallBannerBlock(AbstractBlock.Settings settings) {
-        super(DyeColor.CYAN, settings);
+        super(DyeColor.WHITE, settings);
         this.setDefaultState(this.stateManager.getDefaultState().with(FACING, Direction.NORTH));
     }
 
@@ -85,5 +86,14 @@ public class DyeableWallBannerBlock extends WallBannerBlock {
             return ((DyeableBannerBlockEntity) blockEntity).getPickStack();
         }
         return super.getPickStack(world, pos, state);
+    }
+
+    @Override
+    public DyeColor getColor() {
+        try {
+            Unidye.LOGGER.warn("{} returns DyeColor.WHITE as a requirement rather than an actual color, calling the {} method is not recommended.", this.getClass().getName(), this.getClass().getMethod("getColor").getName());
+        } catch (NoSuchMethodException ignored) {
+        }
+        return super.getColor();
     }
 }

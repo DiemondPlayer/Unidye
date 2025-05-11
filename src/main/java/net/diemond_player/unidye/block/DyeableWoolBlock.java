@@ -1,5 +1,6 @@
 package net.diemond_player.unidye.block;
 
+import net.diemond_player.unidye.Unidye;
 import net.diemond_player.unidye.block.entity.DyeableLeatheryBlockEntity;
 import net.diemond_player.unidye.block.entity.IDyeableBlockEntity;
 import net.diemond_player.unidye.registry.UnidyeBlockEntities;
@@ -10,6 +11,7 @@ import net.minecraft.component.type.DyedColorComponent;
 import net.minecraft.component.type.NbtComponent;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.WorldView;

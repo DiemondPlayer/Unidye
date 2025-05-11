@@ -96,5 +96,8 @@ The changelog posted on Modrinth/Curseforge would be without those minor changes
    "net.diemond_player.unidye.UnidyeDataGenerator"
 ],
 • Rewrote the shape logic for dyes, hopefully allowing for modded dyes to join
-• Fixed dye commands not recognizing the modded dyes
+• Fixed dye commands not recognizing modded dyes
 • Rewrote the way cauldron behaviors are registered, now they support tags yay!
+• Unidyeable Blocks will now use the closest map color instead of white (thanks to Hecco)
+• Added a naming system for dyes via /unidye name (still experimental)
+• Added warns when getColor() is called where it is not meant to be called (unidye block & item classes)

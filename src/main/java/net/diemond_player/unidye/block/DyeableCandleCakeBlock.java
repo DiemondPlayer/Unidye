@@ -1,5 +1,6 @@
 package net.diemond_player.unidye.block;
 
+import net.diemond_player.unidye.Unidye;
 import net.diemond_player.unidye.block.entity.IDyeableBlockEntity;
 import net.diemond_player.unidye.registry.UnidyeBlocks;
 import net.diemond_player.unidye.util.UnidyeUtils;
@@ -11,6 +12,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.DyeColor;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;

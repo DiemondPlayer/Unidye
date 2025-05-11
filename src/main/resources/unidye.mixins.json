@@ -10,6 +10,7 @@
     "BlockMixin",
     "CakeBlockMixin",
     "CatEntityMixin",
+    "CraftingScreenHandlerMixin",
     "DyedColorComponentMixin",
     "DyeItemMixin",
     "FilledMapItemMixin",

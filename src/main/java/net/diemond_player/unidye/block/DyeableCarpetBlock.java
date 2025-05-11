@@ -1,9 +1,11 @@
 package net.diemond_player.unidye.block;
 
+import net.diemond_player.unidye.Unidye;
 import net.diemond_player.unidye.block.entity.IDyeableBlockEntity;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CarpetBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.WorldView;
 

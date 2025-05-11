@@ -1,5 +1,6 @@
 package net.diemond_player.unidye.block;
 
+import net.diemond_player.unidye.Unidye;
 import net.diemond_player.unidye.block.entity.DyeableBannerBlockEntity;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
@@ -24,7 +25,7 @@ public class DyeableBannerBlock extends BannerBlock {
     private static final VoxelShape SHAPE = Block.createCuboidShape(4.0, 0.0, 4.0, 12.0, 16.0, 12.0);
 
     public DyeableBannerBlock(AbstractBlock.Settings settings) {
-        super(DyeColor.CYAN, settings);
+        super(DyeColor.WHITE, settings);
         this.setDefaultState(this.stateManager.getDefaultState().with(ROTATION, 0));
     }
 
@@ -40,6 +41,15 @@ public class DyeableBannerBlock extends BannerBlock {
             return ((DyeableBannerBlockEntity) blockEntity).getPickStack();
         }
         return super.getPickStack(world, pos, state);
+    }
+
+    @Override
+    public DyeColor getColor() {
+        try {
+            Unidye.LOGGER.warn("{} returns DyeColor.WHITE as a requirement rather than an actual color, calling the {} method is not recommended.", this.getClass().getName(), this.getClass().getMethod("getColor").getName());
+        } catch (NoSuchMethodException ignored) {
+        }
+        return super.getColor();
     }
 
 
