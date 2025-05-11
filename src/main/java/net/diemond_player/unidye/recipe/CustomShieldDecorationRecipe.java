@@ -14,7 +14,10 @@ import net.minecraft.recipe.SpecialCraftingRecipe;
 import net.minecraft.recipe.book.CraftingRecipeCategory;
 import net.minecraft.recipe.input.CraftingRecipeInput;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.util.DyeColor;
 import net.minecraft.world.World;
+
+import java.util.Optional;
 
 public class CustomShieldDecorationRecipe extends SpecialCraftingRecipe {
     public CustomShieldDecorationRecipe(CraftingRecipeCategory category) {
@@ -75,7 +78,8 @@ public class CustomShieldDecorationRecipe extends SpecialCraftingRecipe {
 
         if (!itemStack2.isEmpty()) {
             itemStack2.set(UnidyeDataComponentTypes.CUSTOM_BANNER_PATTERNS, new CustomBannerPatternsComponent(itemStack.getOrDefault(UnidyeDataComponentTypes.CUSTOM_BANNER_PATTERNS, CustomBannerPatternsComponent.DEFAULT).layers()));
-            itemStack2.set(DataComponentTypes.DYED_COLOR, new DyedColorComponent(UnidyeUtils.getColor(itemStack), true));
+            Optional<DyeColor> dyeColor = UnidyeUtils.findDyeColorByLeatherColor(UnidyeUtils.getColor(itemStack));
+            itemStack2.set(DataComponentTypes.DYED_COLOR, new DyedColorComponent(UnidyeUtils.getColor(itemStack), dyeColor.isEmpty()));
             if(itemStack2.contains(DataComponentTypes.BASE_COLOR)) {
                 itemStack2.remove(DataComponentTypes.BASE_COLOR);
             }

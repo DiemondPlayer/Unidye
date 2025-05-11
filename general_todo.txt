@@ -36,3 +36,5 @@
     TODO check every class to see if there are any stupid mistakes you left
     TODO REMOVE COMMENTS or ADD THEM before releasing this version
     TODO candle overlay because ugly
+    FIXME CONCRETE POWDER AGAIN
+    TODO consider actually looking at just the main color in the database

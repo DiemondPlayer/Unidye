@@ -39,12 +39,6 @@ public abstract class BuiltinModelItemRendererMixin {
     @Final
     @Shadow
     private final BlockEntityRenderDispatcher blockEntityRenderDispatcher;
-    @Unique
-    private final DyeableBedBlockEntity renderDyeableBed = new DyeableBedBlockEntity(BlockPos.ORIGIN, UnidyeBlocks.CUSTOM_BED.getDefaultState());
-    @Unique
-    private final DyeableShulkerBoxBlockEntity RENDER_DYEABLE_SHULKER_BOX = new DyeableShulkerBoxBlockEntity(BlockPos.ORIGIN, UnidyeBlocks.CUSTOM_SHULKER_BOX.getDefaultState());
-    @Unique
-    private final DyeableBannerBlockEntity renderDyeableBanner = new DyeableBannerBlockEntity(BlockPos.ORIGIN, UnidyeBlocks.CUSTOM_BANNER.getDefaultState());
     @Shadow
     private ShieldEntityModel modelShield;
 
@@ -55,25 +49,6 @@ public abstract class BuiltinModelItemRendererMixin {
     @Inject(method = "render", at = @At(value = "HEAD"), cancellable = true)
     private void unidye$render(ItemStack stack, ModelTransformationMode mode, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, CallbackInfo ci) {
         Item item = stack.getItem();
-        if (item instanceof BlockItem) {
-            Block block = ((BlockItem) item).getBlock();
-            if (block instanceof DyeableBedBlock) {
-                this.renderDyeableBed.setColor(UnidyeUtils.getColor(stack));
-                this.blockEntityRenderDispatcher.renderEntity(this.renderDyeableBed, matrices, vertexConsumers, light, overlay);
-                ci.cancel();
-            }
-            if (block instanceof DyeableShulkerBoxBlock) {
-                this.RENDER_DYEABLE_SHULKER_BOX.setColor(UnidyeUtils.getColor(stack));
-                this.blockEntityRenderDispatcher.renderEntity(this.RENDER_DYEABLE_SHULKER_BOX, matrices, vertexConsumers, light, overlay);
-                ci.cancel();
-            }
-            if (block instanceof DyeableBannerBlock || block instanceof DyeableWallBannerBlock) {
-                this.renderDyeableBanner.setColor(UnidyeUtils.getColor(stack));
-                this.renderDyeableBanner.readFrom(stack);
-                this.blockEntityRenderDispatcher.renderEntity(this.renderDyeableBanner, matrices, vertexConsumers, light, overlay);
-                ci.cancel();
-            }
-        }
         if (item == Items.SHIELD) {
             if(stack.contains(UnidyeDataComponentTypes.CUSTOM_BANNER_PATTERNS)
                     && stack.contains(DataComponentTypes.DYED_COLOR)) {

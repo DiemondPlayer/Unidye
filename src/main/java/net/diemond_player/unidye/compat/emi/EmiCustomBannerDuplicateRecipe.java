@@ -17,6 +17,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.ColorHelper;
 
 import java.util.List;
 import java.util.Random;
@@ -80,6 +81,6 @@ public class EmiCustomBannerDuplicateRecipe extends EmiPatternCraftingRecipe {
     public static CustomBannerPatternsComponent addRandomBanner(CustomBannerPatternsComponent patterns, Random random) {
         var bannerRegistry = MinecraftClient.getInstance().world.getRegistryManager().get(RegistryKeys.BANNER_PATTERN);
         return new CustomBannerPatternsComponent.Builder().addAll(patterns).add(bannerRegistry.getEntry(random.nextInt(bannerRegistry.size())).get(),
-                DyeColor.values()[random.nextInt(DyeColor.values().length)].getEntityColor()).build();
+                ColorHelper.Argb.withAlpha(0, DyeColor.values()[random.nextInt(DyeColor.values().length)].getEntityColor())).build();
     }
 }

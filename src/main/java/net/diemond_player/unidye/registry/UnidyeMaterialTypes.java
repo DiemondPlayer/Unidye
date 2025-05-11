@@ -5,6 +5,7 @@ import net.diemond_player.unidye.util.UnidyeMaterialType;
 import net.minecraft.item.Item;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.ColorHelper;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -150,7 +151,7 @@ public class UnidyeMaterialTypes {
 
     public static final UnidyeMaterialType LEATHER = registerMaterialType("leather", new HashMap<>(){{
         for(DyeColor dyeColor : DyeColor.values()){
-            put(dyeColor, dyeColor.getEntityColor());
+            put(dyeColor, ColorHelper.Argb.withAlpha(0, dyeColor.getEntityColor()));
         }
     }});
 

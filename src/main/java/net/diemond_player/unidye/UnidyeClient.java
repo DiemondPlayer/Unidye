@@ -2,14 +2,12 @@ package net.diemond_player.unidye;
 
 import net.diemond_player.unidye.block.entity.IDyeableBlockEntity;
 import net.diemond_player.unidye.entity.client.model.DyeableShulkerEntityModel;
-import net.diemond_player.unidye.entity.client.renderer.DyeableBannerBlockEntityRenderer;
-import net.diemond_player.unidye.entity.client.renderer.DyeableBedBlockEntityRenderer;
-import net.diemond_player.unidye.entity.client.renderer.DyeableFallingBlockEntityRenderer;
-import net.diemond_player.unidye.entity.client.renderer.DyeableShulkerBoxBlockEntityRenderer;
+import net.diemond_player.unidye.entity.client.renderer.*;
 import net.diemond_player.unidye.registry.*;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
+import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
@@ -38,6 +36,7 @@ public class UnidyeClient implements ClientModInitializer {
         registerItemColors();
         registerBlockColors();
         registerModelPredicates();
+        registerBuiltinItemRenderer();
 
 //        ClientPlayNetworking.registerGlobalReceiver(RERENDER_BLOCK_PACKET_ID, (client, handler, buf, responseSender) -> {
 //            BlockPos blockPos = buf.readBlockPos();
@@ -49,6 +48,14 @@ public class UnidyeClient implements ClientModInitializer {
 //                Unidye.LOGGER.info(blockPos.toString());
 //            });
 //        });
+    }
+
+    private void registerBuiltinItemRenderer() {
+        UnidyeBuiltinModelItemRenderer unidyeBuiltinModelItemRenderer = new UnidyeBuiltinModelItemRenderer();
+        BuiltinItemRendererRegistry.INSTANCE.register(UnidyeBlocks.CUSTOM_BED, unidyeBuiltinModelItemRenderer::render);
+        BuiltinItemRendererRegistry.INSTANCE.register(UnidyeBlocks.CUSTOM_SHULKER_BOX, unidyeBuiltinModelItemRenderer::render);
+        BuiltinItemRendererRegistry.INSTANCE.register(UnidyeItems.CUSTOM_BANNER, unidyeBuiltinModelItemRenderer::render);
+        BuiltinItemRendererRegistry.INSTANCE.register(Items.SHIELD, unidyeBuiltinModelItemRenderer::render);
     }
 
     private void registerModelPredicates() {

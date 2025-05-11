@@ -20,6 +20,7 @@ import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.util.DyeColor;
+import net.minecraft.util.math.ColorHelper;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -78,7 +79,7 @@ public abstract class LoomScreenHandlerMixin extends ScreenHandler {
                     itemStack3.apply(
                             UnidyeDataComponentTypes.CUSTOM_BANNER_PATTERNS,
                             CustomBannerPatternsComponent.DEFAULT,
-                            component -> new CustomBannerPatternsComponent.Builder().addAll(component).add(pattern, ((BannerItem) itemStack.getItem()).getColor().getEntityColor()).build()
+                            component -> new CustomBannerPatternsComponent.Builder().addAll(component).add(pattern, ColorHelper.Argb.withAlpha(0, dyeColor.getEntityColor())).build()
                     );
                 }
             }
@@ -88,12 +89,13 @@ public abstract class LoomScreenHandlerMixin extends ScreenHandler {
             ci.cancel();
         } else if (itemStack2.getItem() instanceof CustomDyeItem) {
             ItemStack itemStack3 = new ItemStack(UnidyeItems.CUSTOM_BANNER, 1);
-            itemStack3.set(DataComponentTypes.DYED_COLOR, new DyedColorComponent(((BannerItem) itemStack.getItem()).getColor().getEntityColor(), true));
+            itemStack3.set(DataComponentTypes.DYED_COLOR, new DyedColorComponent(ColorHelper.Argb.withAlpha(0, ((BannerItem) itemStack.getItem()).getColor().getEntityColor()), false));
+            itemStack3.set(DataComponentTypes.ITEM_NAME, itemStack.getName());
             for (BannerPatternsComponent.Layer layer : itemStack.get(DataComponentTypes.BANNER_PATTERNS).layers()) {
                 itemStack3.apply(
                         UnidyeDataComponentTypes.CUSTOM_BANNER_PATTERNS,
                         CustomBannerPatternsComponent.DEFAULT,
-                        component -> new CustomBannerPatternsComponent.Builder().addAll(component).add(layer.pattern(), ((BannerItem) itemStack.getItem()).getColor().getEntityColor()).build()
+                        component -> new CustomBannerPatternsComponent.Builder().addAll(component).add(layer.pattern(), ColorHelper.Argb.withAlpha(0, ((BannerItem) itemStack.getItem()).getColor().getEntityColor())).build()
                 );
             }
             if (!itemStack.isEmpty() && !itemStack2.isEmpty()) {

@@ -55,10 +55,10 @@ public class DyeableBannerItem extends BannerItem {
 
     @Override
     public DyeColor getColor() {
-        try {
-            Unidye.LOGGER.warn("{} returns DyeColor.WHITE as a requirement rather than an actual color, calling the {} method is not recommended.", this.getClass().getName(), this.getClass().getMethod("getColor").getName());
-        } catch (NoSuchMethodException ignored) {
-        }
+        //try {
+//            Unidye.LOGGER.warn("{} returns DyeColor.WHITE as a requirement rather than an actual color, calling the {} method is not recommended.", this.getClass().getName(), this.getClass().getMethod("getColor").getName());
+//       } catch (NoSuchMethodException ignored) {
+//     }
         return super.getColor();
     }
 }

@@ -16,6 +16,7 @@ import net.minecraft.component.type.BannerPatternsComponent;
 import net.minecraft.item.BannerItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DyeColor;
+import net.minecraft.util.math.ColorHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -42,7 +43,7 @@ public abstract class LoomScreenMixin {
         if (banner.isOf(UnidyeItems.CUSTOM_BANNER)) {
             DyeableBannerBlockEntityRenderer.renderCanvas(matrices, vertexConsumers, light, overlay, canvas, baseSprite, isBanner, UnidyeUtils.getColor(banner), bannerPatterns);
         } else if (dye.isOf(UnidyeItems.CUSTOM_DYE)) {
-            DyeableBannerBlockEntityRenderer.renderCanvas(matrices, vertexConsumers, light, overlay, canvas, baseSprite, isBanner, ((BannerItem)banner.getItem()).getColor().getEntityColor(), bannerPatterns);
+            DyeableBannerBlockEntityRenderer.renderCanvas(matrices, vertexConsumers, light, overlay, canvas, baseSprite, isBanner, ColorHelper.Argb.withAlpha(0, ((BannerItem)banner.getItem()).getColor().getEntityColor()), bannerPatterns);
         } else {
             BannerBlockEntityRenderer.renderCanvas(matrices, vertexConsumers, light, overlay, canvas, baseSprite, isBanner, color, patterns);
         }
