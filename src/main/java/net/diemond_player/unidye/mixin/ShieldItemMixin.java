@@ -7,7 +7,6 @@ import net.minecraft.item.BannerItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ShieldItem;
-import net.minecraft.registry.Registries;
 import net.minecraft.text.Text;
 import net.minecraft.util.DyeColor;
 import org.spongepowered.asm.mixin.Mixin;
@@ -26,7 +25,7 @@ public abstract class ShieldItemMixin extends Item {
         super(settings);
     }
 
-    @Inject(method = "getTranslationKey", at = @At(value = "RETURN", ordinal = 0), cancellable = true)
+    @Inject(method = "getTranslationKey", at = @At(value = "HEAD"), cancellable = true)
     private void unidye$getTranslationKey(ItemStack stack, CallbackInfoReturnable<String> cir) {
         if(stack.contains(DataComponentTypes.DYED_COLOR)) {
             Optional<DyeColor> dyeColor = UnidyeUtils.findDyeColorByLeatherColor(stack.get(DataComponentTypes.DYED_COLOR).rgb());
@@ -35,9 +34,6 @@ public abstract class ShieldItemMixin extends Item {
             }else {
                 cir.setReturnValue("item.unidye.shield_custom_color");
             }
-        }
-        if(stack.contains(DataComponentTypes.DYED_COLOR)) {
-            cir.setReturnValue("item.unidye.shield_custom_color");
         }
     }
 

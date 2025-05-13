@@ -7,30 +7,19 @@ import net.diemond_player.unidye.block.DyeableWallBannerBlock;
 import net.diemond_player.unidye.block.entity.DyeableBannerBlockEntity;
 import net.diemond_player.unidye.block.entity.DyeableBedBlockEntity;
 import net.diemond_player.unidye.block.entity.DyeableShulkerBoxBlockEntity;
-import net.diemond_player.unidye.item.DyeableBlockItem;
 import net.diemond_player.unidye.registry.UnidyeBlocks;
-import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
-import net.minecraft.client.render.entity.model.EntityModelLayers;
-import net.minecraft.client.render.entity.model.EntityModelLoader;
-import net.minecraft.client.render.entity.model.ShieldEntityModel;
 import net.minecraft.client.render.item.BuiltinModelItemRenderer;
-import net.minecraft.client.render.item.ItemRenderer;
-import net.minecraft.client.render.model.ModelLoader;
 import net.minecraft.client.render.model.json.ModelTransformationMode;
-import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.component.DataComponentTypes;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.resource.SynchronousResourceReloader;
 import net.minecraft.util.math.BlockPos;
 
@@ -68,5 +57,23 @@ public class UnidyeBuiltinModelItemRenderer extends BuiltinModelItemRenderer imp
             }
             blockEntityRenderDispatcher.renderEntity((BlockEntity) blockEntity, matrices, vertexConsumers, light, overlay);
         }
+//        else if (item instanceof CustomDyeItem) {
+//            RenderLayer renderLayer = RenderLayers.getItemLayer(stack, true);
+//            VertexConsumer vertexConsumer;
+//            if (usesDynamicDisplay(stack) && stack.hasGlint()) {
+//                MatrixStack.Entry entry = matrices.peek().copy();
+//                if (mode == ModelTransformationMode.GUI) {
+//                    MatrixUtil.scale(entry.getPositionMatrix(), 0.5F);
+//                } else if (mode.isFirstPerson()) {
+//                    MatrixUtil.scale(entry.getPositionMatrix(), 0.75F);
+//                }
+//
+//                vertexConsumer = getDynamicDisplayGlintConsumer(vertexConsumers, renderLayer, entry);
+//            } else {
+//                vertexConsumer = getDirectItemGlintConsumer(vertexConsumers, renderLayer, true, stack.hasGlint());
+//            }
+//
+//            ItemRenderer.renderBakedItemModel(model, stack, light, overlay, matrices, vertexConsumer);
+//        }
     }
 }

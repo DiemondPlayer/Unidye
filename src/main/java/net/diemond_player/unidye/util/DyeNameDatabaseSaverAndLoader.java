@@ -2,10 +2,7 @@ package net.diemond_player.unidye.util;
 
 import net.diemond_player.unidye.Unidye;
 import net.minecraft.component.type.NbtComponent;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
-import net.minecraft.nbt.visitor.StringNbtWriter;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.PersistentState;
@@ -15,8 +12,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Objects;
-import java.util.UUID;
 
 public class DyeNameDatabaseSaverAndLoader extends PersistentState {
 

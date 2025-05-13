@@ -2,7 +2,6 @@ package net.diemond_player.unidye;
 
 import com.google.common.collect.Lists;
 import net.diemond_player.unidye.command.*;
-import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.registry.*;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;

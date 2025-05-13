@@ -55,7 +55,6 @@ public class UnidyeClient implements ClientModInitializer {
         BuiltinItemRendererRegistry.INSTANCE.register(UnidyeBlocks.CUSTOM_BED, unidyeBuiltinModelItemRenderer::render);
         BuiltinItemRendererRegistry.INSTANCE.register(UnidyeBlocks.CUSTOM_SHULKER_BOX, unidyeBuiltinModelItemRenderer::render);
         BuiltinItemRendererRegistry.INSTANCE.register(UnidyeItems.CUSTOM_BANNER, unidyeBuiltinModelItemRenderer::render);
-        BuiltinItemRendererRegistry.INSTANCE.register(Items.SHIELD, unidyeBuiltinModelItemRenderer::render);
     }
 
     private void registerModelPredicates() {

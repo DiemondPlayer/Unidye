@@ -25,7 +25,6 @@
     FIXME REI compat gives way too many example displays?
     TODO REI compat automatic?
     TODO warns and errors through LOGGER would be useful
-    TODO BLOCK ENTITY WITHOUT LEVEL RENDERING
     TODO special resource-pack assets for unidye dyes
     TODO datapack recipes for compat
     TODO smth with shapes cause i dont like them spamming logs

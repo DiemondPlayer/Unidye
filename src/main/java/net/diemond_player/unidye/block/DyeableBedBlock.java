@@ -1,6 +1,5 @@
 package net.diemond_player.unidye.block;
 
-import net.diemond_player.unidye.Unidye;
 import net.diemond_player.unidye.block.entity.DyeableBedBlockEntity;
 import net.diemond_player.unidye.block.entity.IDyeableBlockEntity;
 import net.minecraft.block.AbstractBlock;

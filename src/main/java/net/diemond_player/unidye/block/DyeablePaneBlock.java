@@ -1,6 +1,5 @@
 package net.diemond_player.unidye.block;
 
-import net.diemond_player.unidye.Unidye;
 import net.diemond_player.unidye.block.entity.DyeableLeatheryBlockEntity;
 import net.diemond_player.unidye.block.entity.IDyeableBlockEntity;
 import net.diemond_player.unidye.registry.UnidyeBlockEntities;

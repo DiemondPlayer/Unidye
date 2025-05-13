@@ -1,6 +1,5 @@
 package net.diemond_player.unidye.item;
 
-import net.diemond_player.unidye.Unidye;
 import net.diemond_player.unidye.registry.UnidyeMaterialTypes;
 import net.diemond_player.unidye.util.UnidyeAccessor;
 import net.diemond_player.unidye.util.UnidyeMaterialType;

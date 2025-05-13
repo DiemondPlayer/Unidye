@@ -4,7 +4,6 @@ package net.diemond_player.unidye.mixin;
 //Source: https://github.com/Heccology/Bountiful-Fares/blob/1.21/src/main/java/net/hecco/bountifulfares/mixin/render/FilledMapItemMixin.java
 
 import net.diemond_player.unidye.block.entity.IDyeableBlockEntity;
-import net.diemond_player.unidye.registry.UnidyeItemGroups;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.MapColor;
 import net.minecraft.block.entity.BlockEntity;
