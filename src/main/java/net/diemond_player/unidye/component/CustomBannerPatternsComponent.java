@@ -87,12 +87,12 @@ public record CustomBannerPatternsComponent(List<CustomBannerPatternsComponent.L
         public MutableText getTooltipText() {
             String string = this.pattern.value().translationKey();
             Optional<DyeColor> dyeColor = UnidyeUtils.findDyeColorByLeatherColor(this.color);
+            MutableText mutableText = Text.literal("■ ");
+            mutableText.setStyle(mutableText.getStyle().withColor(this.color));
             if (dyeColor.isEmpty()) {
-                MutableText mutableText = Text.literal("■ ");
-                mutableText.setStyle(mutableText.getStyle().withColor(this.color));
                 return mutableText.append(Text.literal("§7#" + Integer.toString(this.color, 16).toUpperCase() + " ").append(Text.translatable(string).formatted(Formatting.GRAY)));
             } else {
-                return Text.translatable(string + "." + dyeColor.get().getName()).formatted(Formatting.GRAY);
+                return mutableText.append(Text.translatable(string + "." + dyeColor.get().getName()).formatted(Formatting.GRAY));
             }
         }
     }
