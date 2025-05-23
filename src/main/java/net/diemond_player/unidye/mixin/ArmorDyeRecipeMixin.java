@@ -1,7 +1,9 @@
 package net.diemond_player.unidye.mixin;
 
 import com.google.common.collect.Lists;
+import net.diemond_player.unidye.component.RecipeStacksComponent;
 import net.diemond_player.unidye.item.CustomDyeItem;
+import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.registry.UnidyeItems;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.item.DyeItem;
@@ -16,6 +18,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 @Mixin(ArmorDyeRecipe.class)
 public abstract class ArmorDyeRecipeMixin {
@@ -97,6 +100,7 @@ public abstract class ArmorDyeRecipeMixin {
         if (itemStack1.isOf(UnidyeItems.CUSTOM_DYE)) {
             itemStack1.setCount(list.size() + customColors.size() + 1);
         }
+        itemStack1.set(UnidyeDataComponentTypes.RECIPE_STACKS, RecipeStacksComponent.fromItemStacks(recipeInputInventory.getStacks(), true));
         return itemStack1;
     }
 }

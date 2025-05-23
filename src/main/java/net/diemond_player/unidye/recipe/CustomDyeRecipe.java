@@ -2,7 +2,9 @@ package net.diemond_player.unidye.recipe;
 
 import com.google.common.collect.Lists;
 import net.diemond_player.unidye.Unidye;
+import net.diemond_player.unidye.component.RecipeStacksComponent;
 import net.diemond_player.unidye.item.CustomDyeItem;
+import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.registry.UnidyeItems;
 import net.diemond_player.unidye.registry.UnidyeSpecialRecipes;
 import net.diemond_player.unidye.util.UnidyeUtils;
@@ -19,6 +21,8 @@ import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 
 public class CustomDyeRecipe extends SpecialCraftingRecipe {
     public CustomDyeRecipe(CraftingRecipeCategory category) {
@@ -83,6 +87,7 @@ public class CustomDyeRecipe extends SpecialCraftingRecipe {
         }
         ItemStack itemStack = UnidyeUtils.blendAndSetColor(new ItemStack(UnidyeItems.CUSTOM_DYE), list, customList);
         itemStack.setCount(list.size() + customList.size());
+        itemStack.set(UnidyeDataComponentTypes.RECIPE_STACKS, RecipeStacksComponent.fromItemStacks(inventory.getStacks(), true));
         return itemStack;
     }
 

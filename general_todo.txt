@@ -37,3 +37,9 @@
     TODO candle overlay because ugly
     FIXME CONCRETE POWDER AGAIN
     TODO consider actually looking at just the main color in the database
+
+    TODO JEI compat again
+
+    TODO EMI cauldron washing recipes automatic?
+    TODO EMI delete cauldron washing recipes that arent actually there
+    TODO EMI recipe tree broken?

@@ -103,3 +103,4 @@ The changelog posted on Modrinth/Curseforge would be without those minor changes
 • Added warns when getColor() is called where it is not meant to be called (unidye block & item classes)
 • Now custom banners will try to check if their color is identical to an existing dye color and if it is they will be named "_ Banner" instead of "Custom Banner". Same goes for shields
 • Now vanilla banners and custom banners (and shields) will always have a square colored with a color of a banner pattern to visualise the banner colors better
+• not finished but: first recipe saving system implemented (via EMI)

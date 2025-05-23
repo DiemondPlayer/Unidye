@@ -35,7 +35,7 @@ public abstract class CraftingScreenHandlerMixin {
                 nbtCompound.remove("dye_shape");
                 NbtComponent nbtComponent = NbtComponent.of(nbtCompound);
                 DyeNameDatabaseSaverAndLoader serverState = DyeNameDatabaseSaverAndLoader.getServerState(((ServerWorld)world).getServer());
-                Unidye.LOGGER.info(serverState.database.toString());
+//                Unidye.LOGGER.info(serverState.database.toString());
                 if (serverState.database.containsKey(nbtComponent)) {
                     itemStack.set(DataComponentTypes.ITEM_NAME, Text.literal(serverState.database.get(nbtComponent)));
                 }
