@@ -1,7 +1,9 @@
 package net.diemond_player.unidye.recipe;
 
+import net.diemond_player.unidye.component.RecipeStacksComponent;
 import net.diemond_player.unidye.item.DyeableLeatheryBlockItem;
 import net.diemond_player.unidye.registry.UnidyeBlocks;
+import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.registry.UnidyeSpecialRecipes;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.item.ItemStack;
@@ -49,6 +51,7 @@ public class CustomBannerRecipe extends SpecialCraftingRecipe {
     public ItemStack craft(CraftingRecipeInput inventory, RegistryWrapper.WrapperLookup lookup) {
         ItemStack itemStack1 = new ItemStack(UnidyeBlocks.CUSTOM_BANNER.asItem());
         UnidyeUtils.setColor(itemStack1, DyeableLeatheryBlockItem.getLeatherColor(inventory.getStackInSlot(0)));
+        itemStack1.set(UnidyeDataComponentTypes.RECIPE_STACKS, RecipeStacksComponent.fromItemStacks(inventory.getStacks(), itemStack1.getCount()));
         return itemStack1;
     }
 

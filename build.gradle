@@ -75,18 +75,18 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	//modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:$rei_version"
-	// REI API for Architectury Common
-	//modCompileOnly "me.shedaniel:RoughlyEnoughItems-api:$rei_version"
-	//modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin:$rei_version"
 
-	// REI API for Fabric
+	//REI
 	modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:$rei_version"
 	modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:$rei_version"
+	// modCompileOnly "me.shedaniel:RoughlyEnoughItems-fabric:$rei_version"
+	modImplementation "me.shedaniel:RoughlyEnoughItems-fabric:$rei_version"
 
+	//EMI
+	modCompileOnly "dev.emi:emi-fabric:${emi_version}"
+	//modImplementation "dev.emi:emi-fabric:${emi_version}"
 	modCompileOnly "dev.emi:emi-fabric:${emi_version}:api"
-	//modCompileOnly "dev.emi:emi-fabric:${emi_version}"
-	modImplementation "dev.emi:emi-fabric:${emi_version}"
+
 
 	//modImplementation "curse.maven:cloth-config-348521:4973440"
 	//modImplementation "curse.maven:forge-config-api-port-fabric-547434:4583000"

@@ -9,15 +9,16 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.model.*;
-import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.TexturedRenderLayers;
-import net.minecraft.client.render.VertexConsumer;
-import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.*;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
+import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.render.model.ModelLoader;
+import net.minecraft.client.render.model.json.ModelTransformationMode;
 import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.util.math.*;
 
 @Environment(value = EnvType.CLIENT)
@@ -29,12 +30,14 @@ public class DyeableBannerBlockEntityRenderer
     private final ModelPart banner;
     private final ModelPart pillar;
     private final ModelPart crossbar;
+    private final ItemRenderer itemRenderer;
 
     public DyeableBannerBlockEntityRenderer(BlockEntityRendererFactory.Context ctx) {
         ModelPart modelPart = ctx.getLayerModelPart(UnidyeModelLayers.CUSTOM_BANNER);
         this.banner = modelPart.getChild(BANNER);
         this.pillar = modelPart.getChild(PILLAR);
         this.crossbar = modelPart.getChild(CROSSBAR);
+        this.itemRenderer = ctx.getItemRenderer();
     }
 
     public static TexturedModelData getTexturedModelData() {
@@ -81,6 +84,25 @@ public class DyeableBannerBlockEntityRenderer
         float k = ((float)Math.floorMod(blockPos.getX() * 7L + blockPos.getY() * 9L + blockPos.getZ() * 13L + l, 100L) + f) / 100.0F;
         this.banner.pitch = (-0.0125F + 0.01F * MathHelper.cos((float) (Math.PI * 2) * k)) * (float) Math.PI;
         this.banner.pivotY = -32.0F;
+//        SpriteIdentifier spriteIdentifier = ModelLoader.SHIELD_BASE_NO_PATTERN;
+//        if(bannerBlockEntity.getColor() != 0xFFFFFF) {
+//            String hexCode = String.format("%06X", (0xFFFFFF & bannerBlockEntity.getColor())).toLowerCase();
+//            SpriteIdentifier spriteIdentifier2 = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, Identifier.of("unidye", "item/" + hexCode));
+//            if(spriteIdentifier2.getSprite() != null){
+//                spriteIdentifier = spriteIdentifier2;
+//            }
+//        }
+        this.itemRenderer
+                .renderItem(
+                        new ItemStack(Items.DIAMOND),
+                        ModelTransformationMode.FIXED,
+                        255,
+                        OverlayTexture.DEFAULT_UV,
+                        matrixStack,
+                        vertexConsumerProvider,
+                        bannerBlockEntity.getWorld(),
+                        0
+                );
         renderCanvas(
                 matrixStack, vertexConsumerProvider, i, j, this.banner, ModelLoader.BANNER_BASE, true, bannerBlockEntity.getColor(), bannerBlockEntity.getPatterns()
         );
@@ -116,7 +138,6 @@ public class DyeableBannerBlockEntityRenderer
     ) {
         canvas.render(matrices, baseSprite.getVertexConsumer(vertexConsumers, RenderLayer::getEntitySolid, glint), light, overlay);
         renderLayer(matrices, vertexConsumers, light, overlay, canvas, isBanner ? TexturedRenderLayers.BANNER_BASE : TexturedRenderLayers.SHIELD_BASE, color);
-
         for (int i = 0; i < 16 && i < patterns.layers().size(); i++) {
             CustomBannerPatternsComponent.Layer layer = patterns.layers().get(i);
             SpriteIdentifier spriteIdentifier = isBanner

@@ -8,7 +8,6 @@
         post-1.0
     TODO jeb_ dye
     TODO dye naming system (?)
-    TODO dye recipe saving system (?)
     TODO add Llama carpets
     TODO add Glazed Terracotta
     TODO integration with:
@@ -23,7 +22,6 @@
         general rewrite todos and fixmes
     TODO MERGE leathery stuff with regular dyeable block entity stuff, making this more versatile
     FIXME REI compat gives way too many example displays?
-    TODO REI compat automatic?
     TODO warns and errors through LOGGER would be useful
     TODO special resource-pack assets for unidye dyes
     TODO datapack recipes for compat
@@ -39,7 +37,8 @@
     TODO consider actually looking at just the main color in the database
 
     TODO JEI compat again
+    TODO native usage of recipe saving
 
     TODO EMI cauldron washing recipes automatic?
-    TODO EMI delete cauldron washing recipes that arent actually there
-    TODO EMI recipe tree broken?
+    FIXME EMI delete cauldron washing recipes that arent actually there
+    FIXME EMI recipe tree broken?

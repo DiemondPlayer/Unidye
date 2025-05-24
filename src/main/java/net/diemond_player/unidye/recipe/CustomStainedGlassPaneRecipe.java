@@ -1,7 +1,9 @@
 package net.diemond_player.unidye.recipe;
 
+import net.diemond_player.unidye.component.RecipeStacksComponent;
 import net.diemond_player.unidye.item.DyeableLeatheryBlockItem;
 import net.diemond_player.unidye.registry.UnidyeBlocks;
+import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.registry.UnidyeSpecialRecipes;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.item.ItemStack;
@@ -57,6 +59,7 @@ public class CustomStainedGlassPaneRecipe extends SpecialCraftingRecipe {
         UnidyeUtils.setColor(itemStack1, UnidyeUtils.getColor(itemStack));
         DyeableLeatheryBlockItem.setLeatherColor(itemStack1, DyeableLeatheryBlockItem.getLeatherColor(itemStack));
         itemStack1.setCount(16);
+        itemStack1.set(UnidyeDataComponentTypes.RECIPE_STACKS, RecipeStacksComponent.fromItemStacks(inventory.getStacks(), itemStack1.getCount()));
         return itemStack1;
     }
 

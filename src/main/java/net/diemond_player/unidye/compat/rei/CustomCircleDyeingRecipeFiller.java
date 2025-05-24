@@ -44,7 +44,7 @@ public class CustomCircleDyeingRecipeFiller implements CraftingRecipeFiller<Cust
     public Collection<Display> apply(RecipeEntry<CustomCircleDyeingRecipe> recipe) {
         List<Display> displays = new ArrayList<>();
         DyeColor[] colors = DyeColor.values();
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < 3; i++) {
             int dyes = new Random().nextInt(2) + 2;
             List<EntryIngredient> inputs = new ArrayList<>();
             List<DyeItem> dyeItems = new ArrayList<>();

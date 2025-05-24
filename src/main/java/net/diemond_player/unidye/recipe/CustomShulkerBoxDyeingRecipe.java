@@ -1,8 +1,10 @@
 package net.diemond_player.unidye.recipe;
 
 import com.google.common.collect.Lists;
+import net.diemond_player.unidye.component.RecipeStacksComponent;
 import net.diemond_player.unidye.item.CustomDyeItem;
 import net.diemond_player.unidye.registry.UnidyeBlocks;
+import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.registry.UnidyeSpecialRecipes;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.item.DyeItem;
@@ -93,7 +95,9 @@ public class CustomShulkerBoxDyeingRecipe extends SpecialCraftingRecipe {
             return ItemStack.EMPTY;
         }
         ItemStack itemStack1 = itemStack.copyComponentsToNewStack(UnidyeBlocks.CUSTOM_SHULKER_BOX, 1);
-        return UnidyeUtils.blendAndSetColor(itemStack1, dyeList, customDyeList);
+        itemStack1 = UnidyeUtils.blendAndSetColor(itemStack1, dyeList, customDyeList);
+        itemStack1.set(UnidyeDataComponentTypes.RECIPE_STACKS, RecipeStacksComponent.fromItemStacks(inventory.getStacks(), itemStack1.getCount(), true));
+        return itemStack1;
     }
 
     @Override

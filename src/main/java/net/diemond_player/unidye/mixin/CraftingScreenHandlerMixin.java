@@ -1,6 +1,5 @@
 package net.diemond_player.unidye.mixin;
 
-import net.diemond_player.unidye.Unidye;
 import net.diemond_player.unidye.registry.UnidyeItems;
 import net.diemond_player.unidye.util.DyeNameDatabaseSaverAndLoader;
 import net.minecraft.component.DataComponentTypes;

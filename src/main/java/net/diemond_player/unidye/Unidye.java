@@ -1,12 +1,17 @@
 package net.diemond_player.unidye;
 
 import com.google.common.collect.Lists;
+import com.ibm.icu.impl.Pair;
 import net.diemond_player.unidye.command.*;
 import net.diemond_player.unidye.registry.*;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemConvertible;
+import net.minecraft.registry.tag.ItemTags;
+import net.minecraft.registry.tag.TagKey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,6 +21,15 @@ import java.util.ArrayList;
 public class Unidye implements ModInitializer {
 
     public static final ArrayList<Item> STONECUTTER_PRESERVE_COLOR = Lists.newArrayList();
+    public static final ArrayList<Pair<ArrayList<Item>, ItemConvertible>> REI_ARRAY_DRIVEN_CIRCLE_DYEING_RECIPE_PARAMETERS = Lists.newArrayList();
+    public static final ArrayList<Pair<TagKey<Item>, ItemConvertible>> REI_TAG_DRIVEN_CIRCLE_DYEING_RECIPE_PARAMETERS = Lists.newArrayList(
+            Pair.of(ConventionalItemTags.GLASS_BLOCKS, UnidyeBlocks.CUSTOM_STAINED_GLASS),
+            Pair.of(ConventionalItemTags.GLASS_PANES, UnidyeBlocks.CUSTOM_STAINED_GLASS_PANE),
+            Pair.of(ItemTags.CANDLES, UnidyeBlocks.CUSTOM_CANDLE),
+            Pair.of(ItemTags.WOOL_CARPETS, UnidyeBlocks.CUSTOM_CARPET),
+            Pair.of(ItemTags.WOOL, UnidyeBlocks.CUSTOM_WOOL),
+            Pair.of(ItemTags.TERRACOTTA, UnidyeBlocks.CUSTOM_TERRACOTTA)
+    );
 
     public static final boolean POLYMORPH = isModLoaded("polymorph");
     public static final boolean SIMPLE_CONCRETE = isModLoaded("simpleconcrete");
@@ -33,6 +47,7 @@ public class Unidye implements ModInitializer {
         UnidyeSpecialRecipes.registerSpecialRecipes();
         UnidyeMaterialTypes.registerMaterialTypes();
         UnidyeDataComponentTypes.registerModDataComponentTypes();
+
         addItemsToMaterialTypes();
         registerCommands();
     }

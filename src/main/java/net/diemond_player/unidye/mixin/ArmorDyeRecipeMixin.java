@@ -18,7 +18,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 
 @Mixin(ArmorDyeRecipe.class)
 public abstract class ArmorDyeRecipeMixin {
@@ -100,7 +99,7 @@ public abstract class ArmorDyeRecipeMixin {
         if (itemStack1.isOf(UnidyeItems.CUSTOM_DYE)) {
             itemStack1.setCount(list.size() + customColors.size() + 1);
         }
-        itemStack1.set(UnidyeDataComponentTypes.RECIPE_STACKS, RecipeStacksComponent.fromItemStacks(recipeInputInventory.getStacks(), true));
+        itemStack1.set(UnidyeDataComponentTypes.RECIPE_STACKS, RecipeStacksComponent.fromItemStacks(recipeInputInventory.getStacks(), itemStack1.getCount(), true));
         return itemStack1;
     }
 }

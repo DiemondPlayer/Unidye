@@ -1,6 +1,8 @@
 package net.diemond_player.unidye.recipe;
 
 import com.google.common.collect.Lists;
+import net.diemond_player.unidye.component.RecipeStacksComponent;
+import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.registry.UnidyeItems;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.item.Item;
@@ -70,6 +72,7 @@ public class CustomCircleDyeingRecipe extends SpecialCraftingRecipe {
             add(inventory.getStackInSlot(4));
         }});
         itemStack1.setCount(8);
+        itemStack1.set(UnidyeDataComponentTypes.RECIPE_STACKS, RecipeStacksComponent.fromItemStacks(inventory.getStacks(), itemStack1.getCount()));
         return itemStack1;
     }
 

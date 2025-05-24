@@ -21,8 +21,6 @@ import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
 
 public class CustomDyeRecipe extends SpecialCraftingRecipe {
     public CustomDyeRecipe(CraftingRecipeCategory category) {
@@ -87,7 +85,7 @@ public class CustomDyeRecipe extends SpecialCraftingRecipe {
         }
         ItemStack itemStack = UnidyeUtils.blendAndSetColor(new ItemStack(UnidyeItems.CUSTOM_DYE), list, customList);
         itemStack.setCount(list.size() + customList.size());
-        itemStack.set(UnidyeDataComponentTypes.RECIPE_STACKS, RecipeStacksComponent.fromItemStacks(inventory.getStacks(), true));
+        itemStack.set(UnidyeDataComponentTypes.RECIPE_STACKS, RecipeStacksComponent.fromItemStacks(inventory.getStacks(), itemStack.getCount(), true));
         return itemStack;
     }
 
