@@ -25,8 +25,8 @@
 - **TODO** candle overlay
 - **TODO** if the "two-layered dyeable blocks" system is implemented, utilise it
 
-
 ### Compat (Main Mod):
+- **FIXME** mixins that cannot find their target are spamming logs abt it
 - **TODO** built-in datapack system for recipe, advancements, etc.
 - **TODO** use the former mentioned datapack system to add new shapes when other dye mods are present
 - **TODO** JEI proper compat
