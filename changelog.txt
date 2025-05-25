@@ -111,3 +111,4 @@ The changelog posted on Modrinth/Curseforge would be without those minor changes
 • general_todo.txt got repurposed as general_todo.md and got reformatted
 • Block particles when sprinting and falling are dyed correctly
 • Added splashes!
+• Sheep now drop custom wool on death

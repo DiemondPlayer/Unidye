@@ -1,12 +1,12 @@
-# TODOs and FIXMEs
+## TODOs and FIXMEs
 
 ### Gameplay:
+- **TODO** check when the recipe component is messing with the itemstacks not being able to stack
 - **TODO** native usage of recipe saving system
 - **TODO** finish the naming system (add exclusions, prefixes, etc.) 
 - **TODO** add Llama carpets
 - **TODO** add Glazed Terracotta
 - **FIXME** concrete powder color issue
-- **FIXME** sheep do not drop custom wool on death
 - **FIXME** middlemouse+ctrl does not pick unidye blocks like intended
 - **FIXME** dyed map markers; check MapIcon.Type, FilledMapItem, map_icons, MapRenderer
 - **unlikely TODO** add jeb_ dye

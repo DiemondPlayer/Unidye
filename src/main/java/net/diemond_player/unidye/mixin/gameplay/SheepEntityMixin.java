@@ -5,11 +5,14 @@ import net.diemond_player.unidye.registry.UnidyeBlocks;
 import net.diemond_player.unidye.registry.UnidyeMaterialTypes;
 import net.diemond_player.unidye.util.UnidyeAccessor;
 import net.diemond_player.unidye.util.UnidyeUtils;
+import net.fabricmc.fabric.api.event.Event;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
+import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.passive.SheepEntity;
 import net.minecraft.item.ItemStack;
@@ -18,7 +21,9 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -26,11 +31,32 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(SheepEntity.class)
-public abstract class SheepEntityMixin implements UnidyeAccessor {
+public abstract class SheepEntityMixin extends AnimalEntity implements UnidyeAccessor {
+    @Shadow public abstract boolean isSheared();
+
     @Unique
     private static final TrackedData<Integer> CUSTOM_COLOR = DataTracker.registerData(SheepEntity.class, TrackedDataHandlerRegistry.INTEGER);
     @Unique
     private static final TrackedData<Integer> SECONDARY_CUSTOM_COLOR = DataTracker.registerData(SheepEntity.class, TrackedDataHandlerRegistry.INTEGER);
+
+    protected SheepEntityMixin(EntityType<? extends AnimalEntity> entityType, World world) {
+        super(entityType, world);
+    }
+
+    @Override
+    public void onDeath(DamageSource damageSource) {
+        super.onDeath(damageSource);
+        if (this.getWorld() instanceof ServerWorld serverWorld) {
+            UnidyeAccessor sheep = (UnidyeAccessor) this;
+            if (sheep.unidye$getCustomColor() != 0xFFFFFF && !this.isSheared()) {
+                this.drop(serverWorld, damageSource);
+                ItemStack itemStack = UnidyeBlocks.CUSTOM_WOOL.asItem().getDefaultStack();
+                UnidyeUtils.setColor(itemStack, sheep.unidye$getSecondaryCustomColor());
+                DyeableLeatheryBlockItem.setLeatherColor(itemStack, sheep.unidye$getCustomColor());
+                ItemEntity itemEntity = ((SheepEntity) (Object) this).dropStack(itemStack);
+            }
+        }
+    }
 
     @Inject(method = "writeCustomDataToNbt", at = @At("HEAD"))
     private void unidye$writeCustomDataToNbt(NbtCompound nbt, CallbackInfo ci) {
