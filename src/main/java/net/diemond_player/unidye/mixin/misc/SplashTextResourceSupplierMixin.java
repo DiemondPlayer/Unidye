@@ -52,7 +52,7 @@ public abstract class SplashTextResourceSupplierMixin {
                 bufferedReader.close();
             }
 
-            List<String> complete = Lists.newArrayList();
+            List<String> complete = original;
             boolean worked = complete.addAll(splashTexts);
 
             if (worked)
