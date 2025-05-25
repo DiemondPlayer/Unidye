@@ -1,34 +1,30 @@
 package net.diemond_player.unidye.mixin;
 
-//Taken with permission from Hecco's Bountiful Fares
-//Source: https://github.com/Heccology/Bountiful-Fares/blob/1.21/src/main/java/net/hecco/bountifulfares/mixin/render/FilledMapItemMixin.java
-
 import net.diemond_player.unidye.block.entity.IDyeableBlockEntity;
-import net.minecraft.block.BlockState;
+import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.MapColor;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.item.FilledMapItem;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(FilledMapItem.class)
-public abstract class FilledMapItemMixin {
+@Mixin(AbstractBlock.AbstractBlockState.class)
+public abstract class AbstractBlockStateMixin {
 
-    @Redirect(method = "updateColors", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/BlockState;getMapColor(Lnet/minecraft/world/BlockView;Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/block/MapColor;"))
-    private MapColor unidye$updateColors(BlockState state, BlockView world, BlockPos pos) {
+    @Inject(method = "getMapColor", at = @At(value = "HEAD"), cancellable = true)
+    private void unidye$getMapColor(BlockView world, BlockPos pos, CallbackInfoReturnable<MapColor> cir) {
         BlockEntity blockEntity = world.getBlockEntity(pos);
         if (blockEntity instanceof IDyeableBlockEntity) {
-            return findNearestMapColor(Integer.parseInt(String.format("%06X", IDyeableBlockEntity.getColor(world, pos)).substring(0, 6), 16));
+            cir.setReturnValue(unidye$findNearestMapColor(Integer.parseInt(String.format("%06X", IDyeableBlockEntity.getColor(world, pos)).substring(0, 6), 16)));
         }
-        return state.getMapColor(world, pos);
     }
 
     @Unique
-    private static MapColor findNearestMapColor(int color) {
+    private static MapColor unidye$findNearestMapColor(int color) {
         int r1 = (color >> 16) & 255;
         int g1 = (color >> 8) & 255;
         int b1 = color & 255;
