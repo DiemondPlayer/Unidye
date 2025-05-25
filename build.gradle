@@ -75,12 +75,19 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
+	//compileOnly files("build/libs/jei-1.21.1-fabric-19.21.0.246.jar")
+
+	// compile against the JEI API but do not include it at runtime
+	modCompileOnlyApi ("curse.maven:jei-238222:6075246")
+
+//	// at runtime, use the full JEI jar for Fabric
+	modRuntimeOnly ("curse.maven:jei-238222:6075246")
 
 	//REI
 	modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:$rei_version"
 	modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:$rei_version"
-	// modCompileOnly "me.shedaniel:RoughlyEnoughItems-fabric:$rei_version"
-	modImplementation "me.shedaniel:RoughlyEnoughItems-fabric:$rei_version"
+	modCompileOnly "me.shedaniel:RoughlyEnoughItems-fabric:$rei_version"
+	// modImplementation "me.shedaniel:RoughlyEnoughItems-fabric:$rei_version"
 
 	//EMI
 	modCompileOnly "dev.emi:emi-fabric:${emi_version}"

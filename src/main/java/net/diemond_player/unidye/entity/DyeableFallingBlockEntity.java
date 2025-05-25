@@ -141,7 +141,6 @@ public class DyeableFallingBlockEntity extends FallingBlockEntity {
                                 }
 
                                 if (this.getWorld().setBlockState(blockPos, this.block, Block.NOTIFY_ALL)) {
-                                    //TODO idk how to fix this: the powder takes the color but doesnt display it unless updated. Updating the block doesnt help
                                     ((ServerWorld)this.getWorld())
                                             .getChunkManager()
                                             .chunkLoadingManager

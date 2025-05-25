@@ -45,7 +45,6 @@ public abstract class EmiApiMixin {
         return null;
     }
 
-    //FIXME EMI knows no diff between custom dyes
     @Inject(method = "setPages", at = @At(value = "INVOKE", target = "Ldev/emi/emi/runtime/EmiSidebars;lookup(Ldev/emi/emi/api/stack/EmiIngredient;)V"))
     private static void unidye$displayRecipes(Map<EmiRecipeCategory, List<EmiRecipe>> recipes, EmiIngredient stack, CallbackInfo ci) {
         EmiStack zero = stack.getEmiStacks().get(0);

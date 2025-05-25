@@ -106,3 +106,6 @@ The changelog posted on Modrinth/Curseforge would be without those minor changes
 • not finished but: first recipe saving system implemented (via EMI)
 • compat addons can now add circle dyeing recipes to REI without having rei as a dependency
 • Recipe saving system is usable by REI
+• Added zh_cn (Credit: Surbenii)
+• Fixed JEI info tooltips
+• general_todo.txt got repurposed as general_todo.md and got reformatted
