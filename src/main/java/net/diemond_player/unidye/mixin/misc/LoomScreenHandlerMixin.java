@@ -1,4 +1,4 @@
-package net.diemond_player.unidye.mixin.gameplay;
+package net.diemond_player.unidye.mixin.misc;
 
 import net.diemond_player.unidye.component.CustomBannerPatternsComponent;
 import net.diemond_player.unidye.item.CustomDyeItem;

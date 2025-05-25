@@ -1,4 +1,4 @@
-package net.diemond_player.unidye.mixin.util;
+package net.diemond_player.unidye.mixin.misc;
 
 // Taken from El and L's Dyes mod with permission, which has the following source cited:
 // Sources:

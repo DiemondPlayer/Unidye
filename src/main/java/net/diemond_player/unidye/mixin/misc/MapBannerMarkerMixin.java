@@ -1,4 +1,4 @@
-package net.diemond_player.unidye.mixin.render;
+package net.diemond_player.unidye.mixin.misc;
 
 import net.diemond_player.unidye.block.entity.DyeableBannerBlockEntity;
 import net.minecraft.block.entity.BlockEntity;

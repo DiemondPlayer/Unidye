@@ -1,4 +1,4 @@
-package net.diemond_player.unidye.mixin.gameplay;
+package net.diemond_player.unidye.mixin.misc;
 
 import com.llamalad7.mixinextras.sugar.Local;
 import net.diemond_player.unidye.Unidye;

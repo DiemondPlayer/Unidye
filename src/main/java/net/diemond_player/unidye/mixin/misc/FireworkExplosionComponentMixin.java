@@ -1,4 +1,4 @@
-package net.diemond_player.unidye.mixin.util;
+package net.diemond_player.unidye.mixin.misc;
 
 import net.minecraft.component.type.FireworkExplosionComponent;
 import net.minecraft.text.MutableText;

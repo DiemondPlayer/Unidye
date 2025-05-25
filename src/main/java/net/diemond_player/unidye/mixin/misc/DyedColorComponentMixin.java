@@ -1,4 +1,4 @@
-package net.diemond_player.unidye.mixin.util;
+package net.diemond_player.unidye.mixin.misc;
 
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.component.type.DyedColorComponent;
