@@ -5,6 +5,7 @@ import com.ibm.icu.impl.Pair;
 import net.diemond_player.unidye.command.*;
 import net.diemond_player.unidye.registry.*;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.client.particle.v1.ParticleRenderEvents;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 import net.fabricmc.loader.api.FabricLoader;

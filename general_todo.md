@@ -7,10 +7,10 @@
 - **TODO** add Glazed Terracotta
 - **FIXME** concrete powder color issue
 - **FIXME** sheep do not drop custom wool on death
-- **FIXME** when falling/running on blocks the block particles are not dyed
 - **FIXME** middlemouse+ctrl does not pick unidye blocks like intended
 - **FIXME** dyed map markers; check MapIcon.Type, FilledMapItem, map_icons, MapRenderer
 - **unlikely TODO** add jeb_ dye
+- **TODO** add splash texts!
 
 ### Code:
 - **TODO** create a system for two-layered dyeable blocks that support translucent textures
@@ -20,6 +20,7 @@
 - **TODO** add/adapt a component for non-dye items to use
 - **TODO** name saving database saving just the main dye color
 - **consider TODO** component for saved name prefix
+- **TODO** use accessors when possible
 
 ### Assets:
 - **TODO** candle overlay
@@ -39,7 +40,6 @@
 
 ### Misc:
 - **TODO** final world conversion check
-- **TODO** sort mixins into folders
 - **TODO** check every class for warns, errors
 - **TODO** cleanup/add comments
 - **TODO** add warns/errors through LOGGER where it is needed
