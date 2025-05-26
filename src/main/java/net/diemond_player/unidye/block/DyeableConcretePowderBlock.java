@@ -9,9 +9,11 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ConcretePowderBlock;
 import net.minecraft.block.FallingBlock;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ColorHelper;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
@@ -40,9 +42,10 @@ public class DyeableConcretePowderBlock extends ConcretePowderBlock implements I
         if (!FallingBlock.canFallThrough(world.getBlockState(pos.down())) || pos.getY() < world.getBottomY()) {
             return;
         }
-        int color = IDyeableBlockEntity.getColor(world, pos);
-        DyeableFallingBlockEntity dyeableFallingBlockEntity = DyeableFallingBlockEntity.spawnFromBlock(world, pos, state);
-        this.configureFallingBlockEntity(dyeableFallingBlockEntity, color);
+        return;
+//        int color = IDyeableBlockEntity.getColor(world, pos);
+//        DyeableFallingBlockEntity dyeableFallingBlockEntity = DyeableFallingBlockEntity.spawnFromBlock(world, pos, state);
+//        this.configureFallingBlockEntity(dyeableFallingBlockEntity, color);
     }
 
     protected void configureFallingBlockEntity(DyeableFallingBlockEntity entity, int color) {
@@ -51,9 +54,9 @@ public class DyeableConcretePowderBlock extends ConcretePowderBlock implements I
 
     @Override
     public int getColor(BlockState state, BlockView world, BlockPos pos) {
-        DyeableBlockEntity blockEntity = UnidyeBlockEntities.DYEABLE_BE.get(world, pos);
-        if(blockEntity != null) {
-            return blockEntity.getColor();
+        BlockEntity blockEntity = world.getBlockEntity(pos);
+        if(blockEntity instanceof IDyeableBlockEntity dyeableBlockEntity) {
+            return ColorHelper.Argb.fullAlpha(dyeableBlockEntity.getColor());
         } else {
             return DEFAULT_WHITE_COLOR;
         }

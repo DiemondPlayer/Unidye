@@ -6,7 +6,7 @@
 - **TODO** finish the naming system (add exclusions, prefixes, etc.) 
 - **TODO** add Llama carpets
 - **TODO** add Glazed Terracotta
-- **FIXME** concrete powder color issue
+- **FIXME** concrete powder dust particle issue
 - **FIXME** middlemouse+ctrl does not pick unidye blocks like intended
 - **FIXME** dyed map markers; check MapIcon.Type, FilledMapItem, map_icons, MapRenderer
 - **unlikely TODO** add jeb_ dye
@@ -26,7 +26,6 @@
 - **TODO** if the "two-layered dyeable blocks" system is implemented, utilise it
 
 ### Compat (Main Mod):
-- **FIXME** mixins that cannot find their target are spamming logs abt it
 - **TODO** built-in datapack system for recipe, advancements, etc.
 - **TODO** use the former mentioned datapack system to add new shapes when other dye mods are present
 - **TODO** JEI proper compat

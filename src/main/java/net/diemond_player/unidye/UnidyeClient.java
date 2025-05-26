@@ -1,21 +1,27 @@
 package net.diemond_player.unidye;
 
+import net.diemond_player.unidye.block.entity.DyeableBlockEntity;
 import net.diemond_player.unidye.block.entity.IDyeableBlockEntity;
 import net.diemond_player.unidye.entity.client.model.DyeableShulkerEntityModel;
 import net.diemond_player.unidye.entity.client.renderer.*;
+import net.diemond_player.unidye.payload.SetColorAndRerenderBlockPacket;
 import net.diemond_player.unidye.registry.*;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.minecraft.block.Block;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ColorHelper;
 
 import java.util.HashMap;
@@ -24,8 +30,6 @@ public class UnidyeClient implements ClientModInitializer {
     public static final HashMap<Block, Integer> DYEABLE_BLOCKS_ADJUST = new HashMap<>() {{
             put(UnidyeBlocks.CUSTOM_CONCRETE_POWDER, 15);
     }};
-
-//    public static final Identifier RERENDER_BLOCK_PACKET_ID = Identifier.of(Unidye.MOD_ID, "rerender_block");
 
     @Override
     public void onInitializeClient() {
@@ -37,17 +41,21 @@ public class UnidyeClient implements ClientModInitializer {
         registerBlockColors();
         registerModelPredicates();
         registerBuiltinItemRenderer();
+        registerNetworking();
+    }
 
-//        ClientPlayNetworking.registerGlobalReceiver(RERENDER_BLOCK_PACKET_ID, (client, handler, buf, responseSender) -> {
-//            BlockPos blockPos = buf.readBlockPos();
-//            client.execute(() -> {
-////                client.worldRenderer.scheduleBlockRenders(blockPos.getX(), blockPos.getY(), blockPos.getZ(), blockPos.getX(), blockPos.getY(), blockPos.getZ());
-//                client.world.updateListeners(blockPos, client.world.getBlockState(blockPos), client.world.getBlockState(blockPos), Block.NOTIFY_ALL);
-//                Unidye.LOGGER.info("I JUST TOLD THIS CLIENT TO NOTIFY_ALL");
-//                Unidye.LOGGER.info(client.world.getBlockState(blockPos).toString());
-//                Unidye.LOGGER.info(blockPos.toString());
-//            });
-//        });
+    private void registerNetworking() {
+        ClientPlayNetworking.registerGlobalReceiver(SetColorAndRerenderBlockPacket.ID, (payload, context) -> {
+            context.client().execute(() -> {
+                ClientWorld world = context.client().world;
+                BlockPos pos = payload.pos();
+                BlockEntity blockEntity = world.getBlockEntity(pos);
+                if (blockEntity instanceof DyeableBlockEntity dyeableBlockEntity) {
+                    dyeableBlockEntity.setColor(payload.color());
+                }
+                world.updateListeners(pos, world.getBlockState(pos), world.getBlockState(pos), Block.REDRAW_ON_MAIN_THREAD);
+            });
+        });
     }
 
     private void registerBuiltinItemRenderer() {

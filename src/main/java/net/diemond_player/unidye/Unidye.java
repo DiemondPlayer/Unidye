@@ -3,16 +3,18 @@ package net.diemond_player.unidye;
 import com.google.common.collect.Lists;
 import com.ibm.icu.impl.Pair;
 import net.diemond_player.unidye.command.*;
+import net.diemond_player.unidye.payload.SetColorAndRerenderBlockPacket;
 import net.diemond_player.unidye.registry.*;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.client.particle.v1.ParticleRenderEvents;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.registry.tag.TagKey;
+import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,6 +33,8 @@ public class Unidye implements ModInitializer {
             Pair.of(ItemTags.WOOL, UnidyeBlocks.CUSTOM_WOOL),
             Pair.of(ItemTags.TERRACOTTA, UnidyeBlocks.CUSTOM_TERRACOTTA)
     );
+
+    public static final Identifier SET_COLOR_AND_RERENDER_BLOCK_PACKET_ID = Identifier.of(Unidye.MOD_ID, "set_color_and_rerender_block");
 
     public static final boolean POLYMORPH = isModLoaded("polymorph");
     public static final boolean SIMPLE_CONCRETE = isModLoaded("simpleconcrete");
@@ -51,6 +55,11 @@ public class Unidye implements ModInitializer {
 
         addItemsToMaterialTypes();
         registerCommands();
+        registerNetworking();
+    }
+
+    private void registerNetworking() {
+        PayloadTypeRegistry.playS2C().register(SetColorAndRerenderBlockPacket.ID, SetColorAndRerenderBlockPacket.CODEC);
     }
 
     private void addItemsToMaterialTypes() {

@@ -113,3 +113,4 @@ The changelog posted on Modrinth/Curseforge would be without those minor changes
 • Added splashes!
 • Sheep now drop custom wool on death
 • Candle retextures
+• Fixed concrete powder issues

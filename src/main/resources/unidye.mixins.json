@@ -17,6 +17,7 @@
     "misc.AbstractCauldronBlockMixin",
     "misc.CraftingScreenHandlerMixin",
     "misc.DyedColorComponentMixin",
+    "misc.FallingBlockEntityAccessor",
     "misc.FireworkExplosionComponentMixin",
     "misc.LoomScreenHandlerMixin",
     "misc.MapBannerMarkerMixin",
