@@ -112,3 +112,4 @@ The changelog posted on Modrinth/Curseforge would be without those minor changes
 • Block particles when sprinting and falling are dyed correctly
 • Added splashes!
 • Sheep now drop custom wool on death
+• Candle retextures

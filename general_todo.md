@@ -12,6 +12,7 @@
 - **unlikely TODO** add jeb_ dye
 
 ### Code:
+- **TODO** recipe stacks component being saved in block entities
 - **TODO** create a system for two-layered dyeable blocks that support translucent textures
 - **TODO** create a system for special resource-pack assets (for dyes, llama carpets, glazed terracotta, etc.)
 - **TODO** merge leathery stuff with regular dyeable block entity stuff, making this more versatile
@@ -22,7 +23,6 @@
 - **TODO** use accessors when possible
 
 ### Assets:
-- **TODO** candle overlay
 - **TODO** if the "two-layered dyeable blocks" system is implemented, utilise it
 
 ### Compat (Main Mod):
