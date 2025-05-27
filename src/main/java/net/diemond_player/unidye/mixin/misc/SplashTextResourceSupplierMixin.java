@@ -1,7 +1,7 @@
 package net.diemond_player.unidye.mixin.misc;
 
 //Taken with permission from Artyrian's Frontiers
-//Source: currently unreleased
+//Source (currently private): https://github.com/TheArtyrian/frontiers-fabric/blob/master/src/main/java/net/artyrian/frontiers/mixin/misc/SplashMixin.java
 
 import com.google.common.collect.Lists;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
