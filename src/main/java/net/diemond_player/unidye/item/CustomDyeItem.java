@@ -1,5 +1,7 @@
 package net.diemond_player.unidye.item;
 
+import net.diemond_player.unidye.component.ItemNamePrefixComponent;
+import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.registry.UnidyeMaterialTypes;
 import net.diemond_player.unidye.util.UnidyeAccessor;
 import net.diemond_player.unidye.util.UnidyeMaterialType;
@@ -118,6 +120,7 @@ public class CustomDyeItem extends DyeItem implements SignChangingItem{
         } else {
             tooltip.add(Text.translatable("tooltip.unidye.press_shift"));
         }
+        tooltip.add(stack.getOrDefault(UnidyeDataComponentTypes.ITEM_NAME_PREFIX, ItemNamePrefixComponent.DEFAULT).toText());
     }
 
     @Override
@@ -157,11 +160,29 @@ public class CustomDyeItem extends DyeItem implements SignChangingItem{
     }
 
     @Override
+    public void onCraft(ItemStack itemStack, World world) {
+        ItemNamePrefixComponent.updateCustomDyePrefix(itemStack, world);
+        super.onCraft(itemStack, world);
+    }
+
+    @Override
+    public void onCraftByPlayer(ItemStack itemStack, World world, PlayerEntity player) {
+        ItemNamePrefixComponent.updateCustomDyePrefix(itemStack, world);
+        super.onCraftByPlayer(itemStack, world, player);
+    }
+
+    @Override
     public DyeColor getColor() {
         //try {
 //            Unidye.LOGGER.warn("{} returns DyeColor.WHITE as a requirement rather than an actual color, calling the {} method is not recommended.", this.getClass().getName(), this.getClass().getMethod("getColor").getName());
 //       } catch (NoSuchMethodException ignored) {
 //     }
         return super.getColor();
+    }
+
+    @Override
+    public Text getName(ItemStack stack) {
+        Text text = ItemNamePrefixComponent.getName(stack, this.getTranslationKey());
+        return text != null ? text : super.getName(stack);
     }
 }

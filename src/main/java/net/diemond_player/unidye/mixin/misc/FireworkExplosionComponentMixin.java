@@ -15,10 +15,12 @@ public abstract class FireworkExplosionComponentMixin {
     @Inject(method = "getColorText", at = @At(value = "HEAD"), cancellable = true)
     private static void unidye$getColorText(int color, CallbackInfoReturnable<Text> cir) {
         DyeColor dyeColor = DyeColor.byFireworkColor(color);
+        MutableText mutableText = Text.literal("■ ");
+        mutableText.setStyle(mutableText.getStyle().withColor(color));
         if (dyeColor == null) {
-            MutableText mutableText = Text.literal("■ ");
-            mutableText.setStyle(mutableText.getStyle().withColor(color));
             cir.setReturnValue(mutableText.append(Text.literal(String.format("#%06X", (0xFFFFFF & color))).formatted(Formatting.GRAY)));
+        } else {
+            cir.setReturnValue(mutableText.append(Text.translatable("item.minecraft.firework_star." + dyeColor.getName()).formatted(Formatting.GRAY)));
         }
     }
 }

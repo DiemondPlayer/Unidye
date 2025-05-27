@@ -2,10 +2,13 @@ package net.diemond_player.unidye.registry;
 
 import net.diemond_player.unidye.Unidye;
 import net.diemond_player.unidye.component.CustomBannerPatternsComponent;
+import net.diemond_player.unidye.component.ItemNamePrefixComponent;
 import net.diemond_player.unidye.component.RecipeStacksComponent;
 import net.minecraft.component.ComponentType;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.text.Text;
+import net.minecraft.text.TextCodecs;
 import net.minecraft.util.Identifier;
 
 import java.util.function.UnaryOperator;
@@ -20,6 +23,9 @@ public class UnidyeDataComponentTypes {
             "recipe_stacks", builder -> builder.codec(RecipeStacksComponent.CODEC).packetCodec(RecipeStacksComponent.PACKET_CODEC).cache()
     );
 
+    public static final ComponentType<ItemNamePrefixComponent> ITEM_NAME_PREFIX = register(
+            "item_name_prefix", builder -> builder.codec(ItemNamePrefixComponent.CODEC).packetCodec(ItemNamePrefixComponent.PACKET_CODEC).cache()
+    );
 
     private static <T> ComponentType<T> register(String name, UnaryOperator<ComponentType.Builder<T>> builderOperator) {
         return Registry.register(Registries.DATA_COMPONENT_TYPE, Identifier.of(Unidye.MOD_ID, name),

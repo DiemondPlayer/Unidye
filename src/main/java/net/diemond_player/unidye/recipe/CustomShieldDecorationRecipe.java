@@ -80,6 +80,9 @@ public class CustomShieldDecorationRecipe extends SpecialCraftingRecipe {
             itemStack2.set(UnidyeDataComponentTypes.CUSTOM_BANNER_PATTERNS, new CustomBannerPatternsComponent(itemStack.getOrDefault(UnidyeDataComponentTypes.CUSTOM_BANNER_PATTERNS, CustomBannerPatternsComponent.DEFAULT).layers()));
             Optional<DyeColor> dyeColor = UnidyeUtils.findDyeColorByLeatherColor(UnidyeUtils.getColor(itemStack));
             itemStack2.set(DataComponentTypes.DYED_COLOR, new DyedColorComponent(UnidyeUtils.getColor(itemStack), dyeColor.isEmpty()));
+            if(itemStack.contains(UnidyeDataComponentTypes.ITEM_NAME_PREFIX)){
+                itemStack2.set(UnidyeDataComponentTypes.ITEM_NAME_PREFIX, itemStack.get(UnidyeDataComponentTypes.ITEM_NAME_PREFIX));
+            }
             if(itemStack2.contains(DataComponentTypes.BASE_COLOR)) {
                 itemStack2.remove(DataComponentTypes.BASE_COLOR);
             }

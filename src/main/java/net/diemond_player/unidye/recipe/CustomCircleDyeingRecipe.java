@@ -68,11 +68,15 @@ public class CustomCircleDyeingRecipe extends SpecialCraftingRecipe {
 
     @Override
     public ItemStack craft(CraftingRecipeInput inventory, RegistryWrapper.WrapperLookup lookup) {
+        ItemStack customDyeStack = inventory.getStackInSlot(4);
         ItemStack itemStack1 = UnidyeUtils.blendAndSetColor(new ItemStack(outputItem), Lists.newArrayList(), new ArrayList<>(){{
-            add(inventory.getStackInSlot(4));
+            add(customDyeStack);
         }});
         itemStack1.setCount(8);
         itemStack1.set(UnidyeDataComponentTypes.RECIPE_STACKS, RecipeStacksComponent.fromItemStacks(inventory.getStacks(), itemStack1.getCount()));
+        if(customDyeStack.contains(UnidyeDataComponentTypes.ITEM_NAME_PREFIX)){
+            itemStack1.set(UnidyeDataComponentTypes.ITEM_NAME_PREFIX, customDyeStack.get(UnidyeDataComponentTypes.ITEM_NAME_PREFIX));
+        }
         return itemStack1;
     }
 

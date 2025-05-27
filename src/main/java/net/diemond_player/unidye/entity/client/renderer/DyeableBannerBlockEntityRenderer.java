@@ -74,7 +74,6 @@ public class DyeableBannerBlockEntityRenderer
                 this.pillar.visible = false;
             }
         }
-
         matrixStack.push();
         matrixStack.scale(0.6666667F, -0.6666667F, -0.6666667F);
         VertexConsumer vertexConsumer = ModelLoader.BANNER_BASE.getVertexConsumer(vertexConsumerProvider, RenderLayer::getEntitySolid);
@@ -84,25 +83,6 @@ public class DyeableBannerBlockEntityRenderer
         float k = ((float)Math.floorMod(blockPos.getX() * 7L + blockPos.getY() * 9L + blockPos.getZ() * 13L + l, 100L) + f) / 100.0F;
         this.banner.pitch = (-0.0125F + 0.01F * MathHelper.cos((float) (Math.PI * 2) * k)) * (float) Math.PI;
         this.banner.pivotY = -32.0F;
-//        SpriteIdentifier spriteIdentifier = ModelLoader.SHIELD_BASE_NO_PATTERN;
-//        if(bannerBlockEntity.getColor() != 0xFFFFFF) {
-//            String hexCode = String.format("%06X", (0xFFFFFF & bannerBlockEntity.getColor())).toLowerCase();
-//            SpriteIdentifier spriteIdentifier2 = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, Identifier.of("unidye", "item/" + hexCode));
-//            if(spriteIdentifier2.getSprite() != null){
-//                spriteIdentifier = spriteIdentifier2;
-//            }
-//        }
-        this.itemRenderer
-                .renderItem(
-                        new ItemStack(Items.DIAMOND),
-                        ModelTransformationMode.FIXED,
-                        255,
-                        OverlayTexture.DEFAULT_UV,
-                        matrixStack,
-                        vertexConsumerProvider,
-                        bannerBlockEntity.getWorld(),
-                        0
-                );
         renderCanvas(
                 matrixStack, vertexConsumerProvider, i, j, this.banner, ModelLoader.BANNER_BASE, true, bannerBlockEntity.getColor(), bannerBlockEntity.getPatterns()
         );

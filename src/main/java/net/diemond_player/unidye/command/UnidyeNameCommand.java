@@ -3,10 +3,13 @@ package net.diemond_player.unidye.command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
+import net.diemond_player.unidye.component.ItemNamePrefixComponent;
+import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.registry.UnidyeItems;
 import net.diemond_player.unidye.util.DyeNameDatabaseSaverAndLoader;
 import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.DyedColorComponent;
 import net.minecraft.component.type.NbtComponent;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -31,19 +34,22 @@ public class UnidyeNameCommand {
 
         if (serverPlayerEntity != null) {
             ItemStack itemStack = serverPlayerEntity.getMainHandStack();
-            if(itemStack.isOf(UnidyeItems.CUSTOM_DYE)) {
-                itemStack.set(DataComponentTypes.ITEM_NAME, Text.literal(name));
+            if(itemStack.contains(UnidyeDataComponentTypes.ITEM_NAME_PREFIX)) {
+                ItemNamePrefixComponent itemNamePrefixComponent = itemStack.get(UnidyeDataComponentTypes.ITEM_NAME_PREFIX);
+                int color = itemNamePrefixComponent.sourceCustomDyeColor();
+                itemStack.set(UnidyeDataComponentTypes.ITEM_NAME_PREFIX, new ItemNamePrefixComponent(Text.literal(name), color));
+
+//            NbtCompound nbtCompound = itemStack.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT).copyNbt();
+//            nbtCompound.remove("dye_shape");
+//            NbtComponent nbtComponent = NbtComponent.of(nbtCompound);
+                DyeNameDatabaseSaverAndLoader serverState = DyeNameDatabaseSaverAndLoader.getServerState(context.getSource().getWorld().getServer());
+                if (!serverState.database.containsKey(color)) {
+                    serverState.database.put(color, name);
+                } else {
+                    serverState.database.replace(color, name);
+                }
+                serverState.markDirty();
             }
-            NbtCompound nbtCompound = itemStack.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT).copyNbt();
-            nbtCompound.remove("dye_shape");
-            NbtComponent nbtComponent = NbtComponent.of(nbtCompound);
-            DyeNameDatabaseSaverAndLoader serverState = DyeNameDatabaseSaverAndLoader.getServerState(context.getSource().getWorld().getServer());
-            if (!serverState.database.containsKey(nbtComponent)) {
-                serverState.database.put(nbtComponent, name);
-            }else{
-                serverState.database.replace(nbtComponent, name);
-            }
-            serverState.markDirty();
         }
         return 1;
     }

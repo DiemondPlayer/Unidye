@@ -1,8 +1,10 @@
 package net.diemond_player.unidye.util;
 
+import net.diemond_player.unidye.component.ItemNamePrefixComponent;
 import net.diemond_player.unidye.item.CustomDyeItem;
 import net.diemond_player.unidye.item.DyeableLeatheryBlockItem;
 import net.diemond_player.unidye.registry.UnidyeBlocks;
+import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.registry.UnidyeMaterialTypes;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.DyedColorComponent;
@@ -96,13 +98,52 @@ public class UnidyeUtils {
         }
     }
 
+    public static void updateSourceCustomDyeColor(ItemStack stack, List<DyeItem> colors,
+                                                       List<ItemStack> customColors) {
+        int n;
+        int[] is = new int[3];
+        int j = 0;
+
+        if (stack.contains(UnidyeDataComponentTypes.ITEM_NAME_PREFIX)) {
+            if (stack.get(UnidyeDataComponentTypes.ITEM_NAME_PREFIX).sourceCustomDyeColor() != 0xFFFFFF) {
+                int k = stack.get(UnidyeDataComponentTypes.ITEM_NAME_PREFIX).sourceCustomDyeColor();
+                float f = (float) (k >> 16 & 0xFF);
+                float g = (float) (k >> 8 & 0xFF);
+                float h = (float) (k & 0xFF);
+                is[0] = is[0] + (int) (f * f);
+                is[1] = is[1] + (int) (g * g);
+                is[2] = is[2] + (int) (h * h);
+                ++j;
+            }
+        }
+        for (DyeItem dyeItem : colors) {
+            float[] fs = getColorArray(UnidyeMaterialTypes.DYE, dyeItem);
+            int l = (int) (fs[0] * 255.0f * fs[0] * 255.0f);
+            int m = (int) (fs[1] * 255.0f * fs[1] * 255.0f);
+            n = (int) (fs[2] * 255.0f * fs[2] * 255.0f);
+            is[0] = is[0] + l;
+            is[1] = is[1] + m;
+            is[2] = is[2] + n;
+            ++j;
+        }
+        for (ItemStack customDye : customColors) {
+            float[] fs = getCustomColorArray(UnidyeMaterialTypes.DYE, customDye);
+            int l = (int) (fs[0] * 255.0f * fs[0] * 255.0f);
+            int m = (int) (fs[1] * 255.0f * fs[1] * 255.0f);
+            n = (int) (fs[2] * 255.0f * fs[2] * 255.0f);
+            is[0] = is[0] + l;
+            is[1] = is[1] + m;
+            is[2] = is[2] + n;
+            ++j;
+        }
+        int k = (int) Math.sqrt((double) is[0] / j);
+        int o = (int) Math.sqrt((double) is[1] / j);
+        int p = (int) Math.sqrt((double) is[2] / j);
+        n = ColorHelper.Argb.getArgb(0, k, o, p);
+        stack.set(UnidyeDataComponentTypes.ITEM_NAME_PREFIX, ItemNamePrefixComponent.noPrefix(n));
+    }
+
     public static ItemStack blendAndSetColor(ItemStack stack, List<DyeItem> colors, List<ItemStack> customColors) {
-        if (stack.getItem() instanceof CustomDyeItem) {
-            stack = blendAndSetCustomDyeColor(stack, colors, customColors);
-        }
-        if (stack.isOf(UnidyeBlocks.CUSTOM_WOOL.asItem()) || stack.isOf(UnidyeBlocks.CUSTOM_STAINED_GLASS.asItem()) || stack.isOf(UnidyeBlocks.CUSTOM_STAINED_GLASS_PANE.asItem())) {
-            stack = blendAndSetLeatherColor(stack, colors, customColors);
-        }
         ItemStack itemStack = ItemStack.EMPTY;
         int n;
         int[] is = new int[3];
@@ -110,6 +151,13 @@ public class UnidyeUtils {
         Item item = stack.getItem();
         if (stack.isIn(ItemTags.DYEABLE)) {
             itemStack = stack.copyWithCount(1);
+            if (itemStack.getItem() instanceof CustomDyeItem) {
+                blendAndSetCustomDyeColor(itemStack, colors, customColors);
+            }
+            if (itemStack.isOf(UnidyeBlocks.CUSTOM_WOOL.asItem()) || itemStack.isOf(UnidyeBlocks.CUSTOM_STAINED_GLASS.asItem()) || itemStack.isOf(UnidyeBlocks.CUSTOM_STAINED_GLASS_PANE.asItem())) {
+                blendAndSetLeatherColor(itemStack, colors, customColors);
+            }
+            updateSourceCustomDyeColor(itemStack, colors, customColors);
             if (UnidyeUtils.hasColor(stack)) {
                 int k = UnidyeUtils.getColor(itemStack);
                 float f = (float) (k >> 16 & 0xFF) / 255.0f;
@@ -156,13 +204,12 @@ public class UnidyeUtils {
     }
 
 
-    public static ItemStack blendAndSetLeatherColor(ItemStack stack, List<DyeItem> colors, List<ItemStack> customColors) {
-        ItemStack itemStack = stack.copyWithCount(1);
+    public static void blendAndSetLeatherColor(ItemStack stack, List<DyeItem> colors, List<ItemStack> customColors) {
         int n;
         int[] is = new int[3];
         int j = 0;
         if (UnidyeUtils.hasColor(stack)) {
-            int k = DyeableLeatheryBlockItem.getLeatherColor(itemStack);
+            int k = DyeableLeatheryBlockItem.getLeatherColor(stack);
             float f = (float) (k >> 16 & 0xFF);
             float g = (float) (k >> 8 & 0xFF);
             float h = (float) (k & 0xFF);
@@ -195,18 +242,15 @@ public class UnidyeUtils {
         int o = (int) Math.sqrt((double) is[1] / j);
         int p = (int) Math.sqrt((double) is[2] / j);
         n = ColorHelper.Argb.getArgb(0, k, o, p);
-        DyeableLeatheryBlockItem.setLeatherColor(itemStack, n);
-        return itemStack;
+        DyeableLeatheryBlockItem.setLeatherColor(stack, n);
     }
 
-    public static ItemStack blendAndSetCustomDyeColor(ItemStack stack, List<DyeItem> colors, List<ItemStack> customColors) {
-        ItemStack itemStack = stack.copyWithCount(1);
+    public static void blendAndSetCustomDyeColor(ItemStack stack, List<DyeItem> colors, List<ItemStack> customColors) {
         for(UnidyeMaterialType type : UnidyeMaterialTypes.MATERIAL_TYPES.values()){
             if(type != UnidyeMaterialTypes.DYE) {
-                blendAndSetMaterialColor(stack, itemStack, colors, customColors, type);
+                blendAndSetMaterialColor(stack, colors, customColors, type);
             }
         }
-        return itemStack;
     }
 
     public static void defineClosestVanillaDye(ItemStack itemStack) {
@@ -230,13 +274,13 @@ public class UnidyeUtils {
     }
 
 
-    public static void blendAndSetMaterialColor(ItemStack stack, ItemStack itemStack, List<DyeItem> colors,
+    public static void blendAndSetMaterialColor(ItemStack stack, List<DyeItem> colors,
                                          List<ItemStack> customColors, UnidyeMaterialType materialType) {
         int n;
         int[] is = new int[3];
         int j = 0;
         if (UnidyeUtils.hasColor(stack)) {
-            int k = getMaterialColor(itemStack, materialType);
+            int k = getMaterialColor(stack, materialType);
             float f = (float) (k >> 16 & 0xFF);
             float g = (float) (k >> 8 & 0xFF);
             float h = (float) (k & 0xFF);
@@ -269,7 +313,7 @@ public class UnidyeUtils {
         int o = (int) Math.sqrt((double) is[1] / j);
         int p = (int) Math.sqrt((double) is[2] / j);
         n = ColorHelper.Argb.getArgb(0, k, o, p);
-        setMaterialColor(itemStack, n, materialType);
+        setMaterialColor(stack, n, materialType);
     }
 
     public static float[] getColorArray(UnidyeMaterialType type, DyeItem dyeItem) {

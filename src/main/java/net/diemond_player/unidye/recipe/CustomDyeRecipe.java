@@ -85,7 +85,7 @@ public class CustomDyeRecipe extends SpecialCraftingRecipe {
         }
         ItemStack itemStack = UnidyeUtils.blendAndSetColor(new ItemStack(UnidyeItems.CUSTOM_DYE), list, customList);
         itemStack.setCount(list.size() + customList.size());
-        itemStack.set(UnidyeDataComponentTypes.RECIPE_STACKS, RecipeStacksComponent.fromItemStacks(inventory.getStacks(), itemStack.getCount(), true));
+        itemStack.set(UnidyeDataComponentTypes.RECIPE_STACKS, RecipeStacksComponent.fromItemStacks(inventory.getStacks(), itemStack.getCount(), true).optimizeRecipeStacks());
         return itemStack;
     }
 

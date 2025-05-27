@@ -81,17 +81,17 @@ dependencies {
 	modCompileOnlyApi ("curse.maven:jei-238222:6075246")
 
 //	// at runtime, use the full JEI jar for Fabric
-	modRuntimeOnly ("curse.maven:jei-238222:6075246")
+	//modRuntimeOnly ("curse.maven:jei-238222:6075246")
 
 	//REI
 	modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:$rei_version"
 	modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:$rei_version"
 	modCompileOnly "me.shedaniel:RoughlyEnoughItems-fabric:$rei_version"
-	// modImplementation "me.shedaniel:RoughlyEnoughItems-fabric:$rei_version"
+	//modImplementation "me.shedaniel:RoughlyEnoughItems-fabric:$rei_version"
 
 	//EMI
-	modCompileOnly "dev.emi:emi-fabric:${emi_version}"
-	//modImplementation "dev.emi:emi-fabric:${emi_version}"
+	//modCompileOnly "dev.emi:emi-fabric:${emi_version}"
+	modImplementation "dev.emi:emi-fabric:${emi_version}"
 	modCompileOnly "dev.emi:emi-fabric:${emi_version}:api"
 
 

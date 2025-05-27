@@ -50,8 +50,12 @@ public class CustomBannerRecipe extends SpecialCraftingRecipe {
     @Override
     public ItemStack craft(CraftingRecipeInput inventory, RegistryWrapper.WrapperLookup lookup) {
         ItemStack itemStack1 = new ItemStack(UnidyeBlocks.CUSTOM_BANNER.asItem());
-        UnidyeUtils.setColor(itemStack1, DyeableLeatheryBlockItem.getLeatherColor(inventory.getStackInSlot(0)));
+        ItemStack itemStack = inventory.getStackInSlot(0);
+        UnidyeUtils.setColor(itemStack1, DyeableLeatheryBlockItem.getLeatherColor(itemStack));
         itemStack1.set(UnidyeDataComponentTypes.RECIPE_STACKS, RecipeStacksComponent.fromItemStacks(inventory.getStacks(), itemStack1.getCount()));
+        if(itemStack.contains(UnidyeDataComponentTypes.ITEM_NAME_PREFIX)){
+            itemStack1.set(UnidyeDataComponentTypes.ITEM_NAME_PREFIX, itemStack.get(UnidyeDataComponentTypes.ITEM_NAME_PREFIX));
+        }
         return itemStack1;
     }
 

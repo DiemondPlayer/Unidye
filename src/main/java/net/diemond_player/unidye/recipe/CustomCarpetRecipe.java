@@ -52,11 +52,15 @@ public class CustomCarpetRecipe extends SpecialCraftingRecipe {
             ItemStack itemStack2 = inventory.getStackInSlot(i);
             if (itemStack2.getItem() == UnidyeBlocks.CUSTOM_WOOL.asItem()) {
                 itemStack = itemStack2;
+                break;
             }
         }
         UnidyeUtils.setColor(itemStack1, UnidyeUtils.getColor(itemStack));
         itemStack1.setCount(3);
         itemStack1.set(UnidyeDataComponentTypes.RECIPE_STACKS, RecipeStacksComponent.fromItemStacks(inventory.getStacks(), itemStack1.getCount()));
+        if(itemStack.contains(UnidyeDataComponentTypes.ITEM_NAME_PREFIX)){
+            itemStack1.set(UnidyeDataComponentTypes.ITEM_NAME_PREFIX, itemStack.get(UnidyeDataComponentTypes.ITEM_NAME_PREFIX));
+        }
         return itemStack1;
     }
 

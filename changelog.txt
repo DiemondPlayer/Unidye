@@ -114,3 +114,5 @@ The changelog posted on Modrinth/Curseforge would be without those minor changes
 • Sheep now drop custom wool on death
 • Candle retextures
 • Fixed concrete powder issues
+• Now vanilla fireworks will always have a square colored with a color of a firework explosion to visualise the firework colors better
+

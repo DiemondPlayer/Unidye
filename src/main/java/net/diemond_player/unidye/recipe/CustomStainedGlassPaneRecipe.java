@@ -54,11 +54,15 @@ public class CustomStainedGlassPaneRecipe extends SpecialCraftingRecipe {
             ItemStack itemStack2 = inventory.getStackInSlot(i);
             if (itemStack2.getItem() == UnidyeBlocks.CUSTOM_STAINED_GLASS.asItem()) {
                 itemStack = itemStack2;
+                break;
             }
         }
         UnidyeUtils.setColor(itemStack1, UnidyeUtils.getColor(itemStack));
         DyeableLeatheryBlockItem.setLeatherColor(itemStack1, DyeableLeatheryBlockItem.getLeatherColor(itemStack));
         itemStack1.setCount(16);
+        if(itemStack.contains(UnidyeDataComponentTypes.ITEM_NAME_PREFIX)){
+            itemStack1.set(UnidyeDataComponentTypes.ITEM_NAME_PREFIX, itemStack.get(UnidyeDataComponentTypes.ITEM_NAME_PREFIX));
+        }
         itemStack1.set(UnidyeDataComponentTypes.RECIPE_STACKS, RecipeStacksComponent.fromItemStacks(inventory.getStacks(), itemStack1.getCount()));
         return itemStack1;
     }

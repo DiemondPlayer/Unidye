@@ -2,6 +2,7 @@ package net.diemond_player.unidye.item;
 
 import net.diemond_player.unidye.block.entity.DyeableBannerBlockEntity;
 import net.diemond_player.unidye.component.CustomBannerPatternsComponent;
+import net.diemond_player.unidye.component.ItemNamePrefixComponent;
 import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.block.Block;
@@ -11,6 +12,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.DyeColor;
@@ -58,5 +60,11 @@ public class DyeableBannerItem extends BannerItem {
 //       } catch (NoSuchMethodException ignored) {
 //     }
         return super.getColor();
+    }
+
+    @Override
+    public Text getName(ItemStack stack) {
+        Text text = ItemNamePrefixComponent.getName(stack, this.getTranslationKey());
+        return text != null ? text : super.getName(stack);
     }
 }

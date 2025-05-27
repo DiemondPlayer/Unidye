@@ -5,11 +5,13 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.component.ComponentChanges;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.RegistryEntry;
+import org.apache.commons.compress.utils.Lists;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -37,11 +39,7 @@ public record RecipeStacksComponent(List<Stack> stacks, int outputAmount, boolea
     );
 
     public List<ItemStack> toItemStacks(){
-        return stacks.stream().map(i -> {
-            ItemStack itemStack1 = new ItemStack(i.item());
-            itemStack1.applyChanges(i.componentChanges());
-            return itemStack1;
-        }).toList();
+        return stacks.stream().map(Stack::toItemStack).toList();
     }
 
     public static RecipeStacksComponent fromItemStacks(List<ItemStack> itemStacks, int outputAmount){
@@ -58,20 +56,65 @@ public record RecipeStacksComponent(List<Stack> stacks, int outputAmount, boolea
         return new RecipeStacksComponent(stackList, outputAmount, shapeless);
     }
 
+    public RecipeStacksComponent optimizeRecipeStacks(){
+        Stack referenceStack = null;
+        int referenceDenominator = 0;
+        int currentDenominator = 0;
+        for (Stack stack : stacks) {
+            if (stack.toItemStack().isOf(Items.STICK)) continue;
+            if (referenceStack == null || (referenceStack.item() == stack.item && referenceStack.componentChanges() == stack.componentChanges)) {
+                referenceStack = stack;
+                currentDenominator++;
+            } else {
+                referenceStack = stack;
+                if (referenceDenominator == 0 || referenceDenominator == currentDenominator) {
+                    referenceDenominator = currentDenominator;
+                } else {
+                    referenceDenominator = 0;
+                    break;
+                }
+                currentDenominator = 1;
+            }
+        }
+        if(referenceDenominator > 1 && outputAmount % referenceDenominator == 0){
+            List<Stack> optimizedStackList = Lists.newArrayList();
+            int run = 0;
+            for (Stack stack : stacks) {
+                if (stack.toItemStack().isOf(Items.STICK)) {
+                    optimizedStackList.add(stack);
+                    continue;
+                }
+                if (run == 0){
+                    optimizedStackList.add(stack);
+                }
+                run++;
+                if(run == referenceDenominator) run = 0;
+            }
+            return new RecipeStacksComponent(optimizedStackList, outputAmount/referenceDenominator, shapeless);
+        }
+        return this;
+    }
+
     public record Stack(RegistryEntry<Item> item, ComponentChanges componentChanges) {
-        public static final Codec<RecipeStacksComponent.Stack> CODEC = RecordCodecBuilder.create(
+        public static final Codec<Stack> CODEC = RecordCodecBuilder.create(
                 instance -> instance.group(
-                                ITEM_CODEC.fieldOf("id").forGetter(RecipeStacksComponent.Stack::item),
-                                ComponentChanges.CODEC.optionalFieldOf("components", ComponentChanges.EMPTY).forGetter(RecipeStacksComponent.Stack::componentChanges)
+                                ITEM_CODEC.fieldOf("id").forGetter(Stack::item),
+                                ComponentChanges.CODEC.optionalFieldOf("components", ComponentChanges.EMPTY).forGetter(Stack::componentChanges)
                         )
-                        .apply(instance, RecipeStacksComponent.Stack::new)
+                        .apply(instance, Stack::new)
         );
-        public static final PacketCodec<RegistryByteBuf, RecipeStacksComponent.Stack> PACKET_CODEC = PacketCodec.tuple(
+        public static final PacketCodec<RegistryByteBuf, Stack> PACKET_CODEC = PacketCodec.tuple(
                 PacketCodecs.registryEntry(RegistryKeys.ITEM),
-                RecipeStacksComponent.Stack::item,
+                Stack::item,
                 ComponentChanges.PACKET_CODEC,
-                RecipeStacksComponent.Stack::componentChanges,
-                RecipeStacksComponent.Stack::new
+                Stack::componentChanges,
+                Stack::new
         );
+
+        public ItemStack toItemStack(){
+            ItemStack itemStack1 = new ItemStack(this.item());
+            itemStack1.applyChanges(this.componentChanges());
+            return itemStack1;
+        }
     }
 }

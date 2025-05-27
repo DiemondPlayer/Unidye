@@ -1,9 +1,9 @@
 {
   "itemgroup.unidye": "Unidye",
-
   "item.unidye.custom_dye": "自定义染料",
   "item.unidye.shield_custom_color": "自定义盾牌",
-
+  "item.unidye.custom_dye.suffix": " Dye",
+  "item.unidye.shield_custom_color.suffix": " Shield",
   "block.unidye.custom_banner": "自定义旗帜",
   "block.unidye.custom_wool": "自定义羊毛",
   "block.unidye.custom_carpet": "自定义地毯",
@@ -15,7 +15,17 @@
   "block.unidye.custom_candle": "自定义蜡烛",
   "block.unidye.custom_shulker_box": "自定义潜影盒",
   "block.unidye.custom_bed": "自定义床",
-
+  "block.unidye.custom_banner.suffix": " Banner",
+  "block.unidye.custom_wool.suffix": " Wool",
+  "block.unidye.custom_carpet.suffix": " Carpet",
+  "block.unidye.custom_concrete.suffix": " Concrete",
+  "block.unidye.custom_concrete_powder.suffix": " Concrete Powder",
+  "block.unidye.custom_terracotta.suffix": " Terracotta",
+  "block.unidye.custom_stained_glass.suffix": " Stained Glass",
+  "block.unidye.custom_stained_glass_pane.suffix": " Stained Glass Pane",
+  "block.unidye.custom_candle.suffix": " Candle",
+  "block.unidye.custom_shulker_box.suffix": " Shulker Box",
+  "block.unidye.custom_bed.suffix": " Bed",
   "tooltip.unidye.dye_color": "染料颜色: ",
   "tooltip.unidye.wool_color": "羊毛颜色: ",
   "tooltip.unidye.glass_color": "玻璃颜色: ",
@@ -28,9 +38,7 @@
   "tooltip.unidye.beacon_color": "信标光束颜色: ",
   "tooltip.unidye.shulker_box_color": "潜影盒颜色: ",
   "tooltip.unidye.candle_color": "蜡烛颜色: ",
-
   "tooltip.unidye.press_shift": "§7按 §fShift§r §7获取更多信息§r",
-
   "block.minecraft.banner.base": "底",
   "block.minecraft.banner.border": "方框边",
   "block.minecraft.banner.bricks": "砖文",
@@ -72,7 +80,6 @@
   "block.minecraft.banner.triangle_top": "顶三角",
   "block.minecraft.banner.triangles_bottom": "底波纹",
   "block.minecraft.banner.triangles_top": "顶波纹",
-
   "jei_description.unidye.custom_dye_polymorph": "在工作台上混合任意染料来制作自定义染料，然后像原版那样使用自定义染料来为方块、烟花火箭、羊、告示牌等染色。",
   "jei_description.unidye.custom_dye": "在工作台上混合任意染料和一个木棍来制作自定义染料，然后像原版那样使用自定义染料来为方块、烟花火箭、羊、告示牌等染色。",
   "jei_description.unidye.custom_wool": "用8个羊毛环绕一个自定义染料合成，可用于制作自定义地毯、床和旗帜。",

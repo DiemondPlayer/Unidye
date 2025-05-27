@@ -20,7 +20,7 @@ public class UnidyeMixinPlugin implements IMixinConfigPlugin {
 
     private static final Map<String, Supplier<Boolean>> CONDITIONS = ImmutableMap.of(
             "net.diemond_player.unidye.mixin.compat.emi.EmiApiMixin", () -> FabricLoader.getInstance().isModLoaded("emi"),
-            "net.diemond_player.unidye.mixin.compat.rei.ClientHelperImplMixin", () -> FabricLoader.getInstance().isModLoaded("rei"),
+            "net.diemond_player.unidye.mixin.compat.rei.ClientHelperImplMixin", () -> FabricLoader.getInstance().isModLoaded("roughlyenoughitems"),
             "net.diemond_player.unidye.mixin.render.BlockDustParticleMixin", () -> !FabricLoader.getInstance().isModLoaded("bountifulfares")
     );
 

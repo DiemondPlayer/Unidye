@@ -1,11 +1,15 @@
 package net.diemond_player.unidye.item;
 
 import net.diemond_player.unidye.block.entity.DyeableBedBlockEntity;
+import net.diemond_player.unidye.component.ItemNamePrefixComponent;
+import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.text.MutableText;
+import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 
 import static net.minecraft.block.HorizontalFacingBlock.FACING;

@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.mojang.logging.LogUtils;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.diemond_player.unidye.Unidye;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.block.entity.BannerPattern;
 import net.minecraft.network.RegistryByteBuf;
@@ -14,6 +15,7 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
+import net.minecraft.text.TextCodecs;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Formatting;
 import org.slf4j.Logger;
@@ -22,7 +24,6 @@ import java.util.List;
 import java.util.Optional;
 
 public record CustomBannerPatternsComponent(List<CustomBannerPatternsComponent.Layer> layers) {
-    static final Logger LOGGER = LogUtils.getLogger();
     public static final CustomBannerPatternsComponent DEFAULT = new CustomBannerPatternsComponent(List.of());
     public static final Codec<CustomBannerPatternsComponent> CODEC = CustomBannerPatternsComponent.Layer.CODEC
             .listOf()
@@ -42,7 +43,7 @@ public record CustomBannerPatternsComponent(List<CustomBannerPatternsComponent.L
         public CustomBannerPatternsComponent.Builder add(RegistryEntryLookup<BannerPattern> patternLookup, RegistryKey<BannerPattern> pattern, int color) {
             Optional<RegistryEntry.Reference<BannerPattern>> optional = patternLookup.getOptional(pattern);
             if (optional.isEmpty()) {
-                CustomBannerPatternsComponent.LOGGER.warn("Unable to find banner pattern with id: '{}'", pattern.getValue());
+                Unidye.LOGGER.warn("Unable to find banner pattern with id: '{}'", pattern.getValue());
                 return this;
             } else {
                 return this.add(optional.get(), color);
@@ -50,7 +51,11 @@ public record CustomBannerPatternsComponent(List<CustomBannerPatternsComponent.L
         }
 
         public CustomBannerPatternsComponent.Builder add(RegistryEntry<BannerPattern> pattern, int color) {
-            return this.add(new CustomBannerPatternsComponent.Layer(pattern, color));
+            return this.add(new CustomBannerPatternsComponent.Layer(pattern, color, Text.empty()));
+        }
+
+        public CustomBannerPatternsComponent.Builder add(RegistryEntry<BannerPattern> pattern, int color, Text colorName) {
+            return this.add(new CustomBannerPatternsComponent.Layer(pattern, color, colorName));
         }
 
         public CustomBannerPatternsComponent.Builder add(CustomBannerPatternsComponent.Layer layer) {
@@ -68,12 +73,13 @@ public record CustomBannerPatternsComponent(List<CustomBannerPatternsComponent.L
         }
     }
 
-    public record Layer(RegistryEntry<BannerPattern> pattern, int color) {
+    public record Layer(RegistryEntry<BannerPattern> pattern, int color, Text colorName) {
         public static final Codec<CustomBannerPatternsComponent.Layer> CODEC = RecordCodecBuilder.create(
                 instance -> instance.group(
                                 BannerPattern.ENTRY_CODEC.fieldOf("pattern").forGetter(CustomBannerPatternsComponent.Layer::pattern),
-                                Codec.intRange(0, 0xFFFFFF).fieldOf("color").forGetter(CustomBannerPatternsComponent.Layer::color)
-                        )
+                                Codec.intRange(0, 0xFFFFFF).fieldOf("color").forGetter(CustomBannerPatternsComponent.Layer::color),
+                                TextCodecs.STRINGIFIED_CODEC.fieldOf("colorName").forGetter(CustomBannerPatternsComponent.Layer::colorName)
+                                )
                         .apply(instance, CustomBannerPatternsComponent.Layer::new)
         );
         public static final PacketCodec<RegistryByteBuf, CustomBannerPatternsComponent.Layer> PACKET_CODEC = PacketCodec.tuple(
@@ -81,6 +87,8 @@ public record CustomBannerPatternsComponent(List<CustomBannerPatternsComponent.L
                 CustomBannerPatternsComponent.Layer::pattern,
                 PacketCodecs.codec(Codec.intRange(0, 0xFFFFFF)),
                 CustomBannerPatternsComponent.Layer::color,
+                TextCodecs.REGISTRY_PACKET_CODEC,
+                CustomBannerPatternsComponent.Layer::colorName,
                 CustomBannerPatternsComponent.Layer::new
         );
 
@@ -90,7 +98,11 @@ public record CustomBannerPatternsComponent(List<CustomBannerPatternsComponent.L
             MutableText mutableText = Text.literal("■ ");
             mutableText.setStyle(mutableText.getStyle().withColor(this.color));
             if (dyeColor.isEmpty()) {
-                return mutableText.append(Text.literal("§7#" + Integer.toString(this.color, 16).toUpperCase() + " ").append(Text.translatable(string).formatted(Formatting.GRAY)));
+                if(this.colorName.equals(Text.empty())){
+                    return mutableText.append(Text.literal("§7#" + Integer.toString(this.color, 16).toUpperCase() + " ").append(Text.translatable(string).formatted(Formatting.GRAY)));
+                }else{
+                    return mutableText.append((this.colorName.copy()).append(" ").append(Text.translatable(string)).formatted(Formatting.GRAY));
+                }
             } else {
                 return mutableText.append(Text.translatable(string + "." + dyeColor.get().getName()).formatted(Formatting.GRAY));
             }

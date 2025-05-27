@@ -2,6 +2,7 @@ package net.diemond_player.unidye.command;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
+import net.diemond_player.unidye.component.ItemNamePrefixComponent;
 import net.diemond_player.unidye.item.CustomDyeItem;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.command.CommandRegistryAccess;
@@ -45,6 +46,7 @@ public class UnidyeVanillifyCommand {
 
             if (serverPlayerEntity != null) {
                 ItemStack itemStack = UnidyeUtils.blendAndSetColor(new ItemStack(item.getItem()), List.of(dyeItem), Lists.newArrayList());
+                ItemNamePrefixComponent.updatePrefix(itemStack, serverPlayerEntity.getWorld());
                 boolean bl = serverPlayerEntity.getInventory().insertStack(itemStack);
                 if (bl && itemStack.isEmpty()) {
                     itemStack.setCount(1);
