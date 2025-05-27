@@ -1,6 +1,7 @@
 package net.diemond_player.unidye.block.entity;
 
 import com.mojang.logging.LogUtils;
+import net.diemond_player.unidye.Unidye;
 import net.diemond_player.unidye.component.CustomBannerPatternsComponent;
 import net.diemond_player.unidye.registry.UnidyeBlockEntities;
 import net.diemond_player.unidye.registry.UnidyeBlocks;
@@ -26,7 +27,7 @@ import org.slf4j.Logger;
 import static net.diemond_player.unidye.item.CustomDyeItem.DEFAULT_WHITE_COLOR;
 
 public class DyeableBannerBlockEntity extends BlockEntity implements Nameable, IDyeableBlockEntity {
-    private static final Logger LOGGER = LogUtils.getLogger();
+
     @Nullable
     private Text customName;
     private CustomBannerPatternsComponent patterns = CustomBannerPatternsComponent.DEFAULT;
@@ -97,7 +98,7 @@ public class DyeableBannerBlockEntity extends BlockEntity implements Nameable, I
         if (nbt.contains("patterns")) {
             CustomBannerPatternsComponent.CODEC
                     .parse(registryLookup.getOps(NbtOps.INSTANCE), nbt.get("patterns"))
-                    .resultOrPartial(patterns -> LOGGER.error("Failed to parse banner patterns: '{}'", patterns))
+                    .resultOrPartial(patterns -> Unidye.LOGGER.error("Failed to parse banner patterns: '{}'", patterns))
                     .ifPresent(patterns -> this.patterns = patterns);
         }
         if (nbt.getInt("color") == 0) {

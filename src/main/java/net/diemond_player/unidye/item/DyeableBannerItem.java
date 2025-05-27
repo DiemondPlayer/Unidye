@@ -18,7 +18,6 @@ import net.minecraft.util.DyeColor;
 import java.util.List;
 
 public class DyeableBannerItem extends BannerItem {
-    private static final String TRANSLATION_KEY_PREFIX = "block.minecraft.banner.";
 
     public DyeableBannerItem(Block bannerBlock, Block wallBannerBlock, Item.Settings settings) {
         super(bannerBlock, wallBannerBlock, settings);

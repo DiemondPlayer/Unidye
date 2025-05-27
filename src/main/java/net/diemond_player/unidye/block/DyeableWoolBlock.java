@@ -3,6 +3,7 @@ package net.diemond_player.unidye.block;
 import net.diemond_player.unidye.block.entity.DyeableLeatheryBlockEntity;
 import net.diemond_player.unidye.block.entity.IDyeableBlockEntity;
 import net.diemond_player.unidye.registry.UnidyeBlockEntities;
+import net.diemond_player.unidye.registry.UnidyeMaterialTypes;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.component.DataComponentTypes;
@@ -42,7 +43,7 @@ public class DyeableWoolBlock extends DyeableBlock{
         }
         stack.set(DataComponentTypes.DYED_COLOR, new DyedColorComponent(color, true));
         NbtCompound nbtCompound = new NbtCompound();
-        nbtCompound.putInt("leather", bannerColor);
+        nbtCompound.putInt(UnidyeMaterialTypes.LEATHER.getId().toString(), bannerColor);
         stack.set(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(nbtCompound));
         return stack;
     }

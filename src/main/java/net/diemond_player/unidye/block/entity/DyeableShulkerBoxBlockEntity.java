@@ -240,7 +240,7 @@ public class DyeableShulkerBoxBlockEntity extends LootableContainerBlockEntity
 
     public void readInventoryNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
         this.inventory = DefaultedList.ofSize(this.size(), ItemStack.EMPTY);
-        if (!this.readLootTable(nbt) && nbt.contains("Items", NbtElement.LIST_TYPE)) {
+        if (!this.readLootTable(nbt) && nbt.contains(ITEMS_KEY, NbtElement.LIST_TYPE)) {
             Inventories.readNbt(nbt, this.inventory, registries);
         }
     }

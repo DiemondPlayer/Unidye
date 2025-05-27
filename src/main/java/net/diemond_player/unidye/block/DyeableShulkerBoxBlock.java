@@ -3,6 +3,7 @@ package net.diemond_player.unidye.block;
 import com.google.common.collect.Maps;
 import net.diemond_player.unidye.block.entity.DyeableShulkerBoxBlockEntity;
 import net.diemond_player.unidye.block.entity.IDyeableBlockEntity;
+import net.diemond_player.unidye.mixin.util.ShulkerBoxBlockAccessor;
 import net.diemond_player.unidye.registry.UnidyeBlockEntities;
 import net.diemond_player.unidye.registry.UnidyeBlocks;
 import net.minecraft.block.*;
@@ -41,22 +42,6 @@ import java.util.Map;
 import static net.diemond_player.unidye.item.CustomDyeItem.DEFAULT_WHITE_COLOR;
 
 public class DyeableShulkerBoxBlock extends ShulkerBoxBlock implements IDyeableBlock {
-    private static final VoxelShape UP_SHAPE = Block.createCuboidShape(0.0, 15.0, 0.0, 16.0, 16.0, 16.0);
-    private static final VoxelShape DOWN_SHAPE = Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 1.0, 16.0);
-    private static final VoxelShape WEST_SHAPE = Block.createCuboidShape(0.0, 0.0, 0.0, 1.0, 16.0, 16.0);
-    private static final VoxelShape EAST_SHAPE = Block.createCuboidShape(15.0, 0.0, 0.0, 16.0, 16.0, 16.0);
-    private static final VoxelShape NORTH_SHAPE = Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 1.0);
-    private static final VoxelShape SOUTH_SHAPE = Block.createCuboidShape(0.0, 0.0, 15.0, 16.0, 16.0, 16.0);
-    private static final Map<Direction, VoxelShape> SIDES_SHAPES = Util.make(Maps.newEnumMap(Direction.class), map -> {
-        map.put(Direction.NORTH, NORTH_SHAPE);
-        map.put(Direction.EAST, EAST_SHAPE);
-        map.put(Direction.SOUTH, SOUTH_SHAPE);
-        map.put(Direction.WEST, WEST_SHAPE);
-        map.put(Direction.UP, UP_SHAPE);
-        map.put(Direction.DOWN, DOWN_SHAPE);
-    });
-    public static final EnumProperty<Direction> FACING = FacingBlock.FACING;
-    public static final Identifier CONTENTS_DYNAMIC_DROP_ID = Identifier.of("minecraft", "contents");
 
     public DyeableShulkerBoxBlock(AbstractBlock.Settings settings) {
         super(DyeColor.WHITE, settings);
@@ -151,7 +136,7 @@ public class DyeableShulkerBoxBlock extends ShulkerBoxBlock implements IDyeableB
     public VoxelShape getSidesShape(BlockState state, BlockView world, BlockPos pos) {
         BlockEntity blockEntity = world.getBlockEntity(pos);
         if (blockEntity instanceof DyeableShulkerBoxBlockEntity && !((DyeableShulkerBoxBlockEntity) blockEntity).suffocates()) {
-            return SIDES_SHAPES.get(state.get(FACING).getOpposite());
+            return ((ShulkerBoxBlockAccessor)this).getSidesShapes().get(state.get(FACING).getOpposite());
         }
         return VoxelShapes.fullCube();
     }

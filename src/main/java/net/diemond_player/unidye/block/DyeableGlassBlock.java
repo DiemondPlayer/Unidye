@@ -3,6 +3,7 @@ package net.diemond_player.unidye.block;
 import net.diemond_player.unidye.block.entity.DyeableLeatheryBlockEntity;
 import net.diemond_player.unidye.block.entity.IDyeableBlockEntity;
 import net.diemond_player.unidye.registry.UnidyeBlockEntities;
+import net.diemond_player.unidye.registry.UnidyeMaterialTypes;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Stainable;
 import net.minecraft.block.TransparentBlock;
@@ -46,7 +47,7 @@ public class DyeableGlassBlock extends TransparentBlock implements IDyeableBlock
         }
         stack.set(DataComponentTypes.DYED_COLOR, new DyedColorComponent(color, true));
         NbtCompound nbtCompound = new NbtCompound();
-        nbtCompound.putInt("leather", beaconColor);
+        nbtCompound.putInt(UnidyeMaterialTypes.LEATHER.getId().toString(), beaconColor);
         stack.set(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(nbtCompound));
         return stack;
     }

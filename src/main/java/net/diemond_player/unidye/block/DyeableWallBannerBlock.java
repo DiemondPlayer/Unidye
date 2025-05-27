@@ -23,14 +23,11 @@ import net.minecraft.world.WorldView;
 import java.util.Map;
 
 public class DyeableWallBannerBlock extends WallBannerBlock {
-    public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
-    private static final Map<Direction, VoxelShape> FACING_TO_SHAPE = Maps.newEnumMap(ImmutableMap.of(Direction.NORTH, Block.createCuboidShape(0.0, 0.0, 14.0, 16.0, 12.5, 16.0), Direction.SOUTH, Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 12.5, 2.0), Direction.WEST, Block.createCuboidShape(14.0, 0.0, 0.0, 16.0, 12.5, 16.0), Direction.EAST, Block.createCuboidShape(0.0, 0.0, 0.0, 2.0, 12.5, 16.0)));
 
     public DyeableWallBannerBlock(AbstractBlock.Settings settings) {
         super(DyeColor.WHITE, settings);
         this.setDefaultState(this.stateManager.getDefaultState().with(FACING, Direction.NORTH));
     }
-
 
     @Override
     public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
@@ -38,11 +35,6 @@ public class DyeableWallBannerBlock extends WallBannerBlock {
             return Blocks.AIR.getDefaultState();
         }
         return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
-    }
-
-    @Override
-    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return FACING_TO_SHAPE.get(state.get(FACING));
     }
 
     @Override
@@ -66,11 +58,6 @@ public class DyeableWallBannerBlock extends WallBannerBlock {
     @Override
     public BlockState mirror(BlockState state, BlockMirror mirror) {
         return state.rotate(mirror.getRotation(state.get(FACING)));
-    }
-
-    @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        builder.add(FACING);
     }
 
     @Override

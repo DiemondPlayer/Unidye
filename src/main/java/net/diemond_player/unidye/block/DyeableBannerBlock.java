@@ -20,8 +20,6 @@ import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 
 public class DyeableBannerBlock extends BannerBlock {
-    public static final IntProperty ROTATION = Properties.ROTATION;
-    private static final VoxelShape SHAPE = Block.createCuboidShape(4.0, 0.0, 4.0, 12.0, 16.0, 12.0);
 
     public DyeableBannerBlock(AbstractBlock.Settings settings) {
         super(DyeColor.WHITE, settings);
@@ -51,12 +49,6 @@ public class DyeableBannerBlock extends BannerBlock {
         return super.getColor();
     }
 
-
-    @Override
-    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return SHAPE;
-    }
-
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
         return this.getDefaultState().with(ROTATION, RotationPropertyHelper.fromYaw(ctx.getPlayerYaw() + 180.0f));
@@ -78,10 +70,5 @@ public class DyeableBannerBlock extends BannerBlock {
     @Override
     public BlockState mirror(BlockState state, BlockMirror mirror) {
         return state.with(ROTATION, mirror.mirror(state.get(ROTATION), 16));
-    }
-
-    @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        builder.add(ROTATION);
     }
 }

@@ -2,6 +2,7 @@ package net.diemond_player.unidye.item;
 
 import net.diemond_player.unidye.block.entity.DyeableLeatheryBlockEntity;
 import net.diemond_player.unidye.registry.UnidyeBlocks;
+import net.diemond_player.unidye.registry.UnidyeMaterialTypes;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
@@ -26,8 +27,8 @@ public class DyeableLeatheryBlockItem extends DyeableBlockItem {
 
     public static int getLeatherColor(ItemStack stack) {
         NbtComponent nbtComponent = stack.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(new NbtCompound()));
-        if (nbtComponent.contains("leather")) {
-            return nbtComponent.copyNbt().getInt("leather");
+        if (nbtComponent.contains(UnidyeMaterialTypes.LEATHER.getId().toString())) {
+            return nbtComponent.copyNbt().getInt(UnidyeMaterialTypes.LEATHER.getId().toString());
         }
         return CustomDyeItem.DEFAULT_WHITE_COLOR;
     }
@@ -40,7 +41,7 @@ public class DyeableLeatheryBlockItem extends DyeableBlockItem {
     public static void setLeatherColor(ItemStack itemStack, int n) {
         NbtComponent nbtComponent = itemStack.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(new NbtCompound()));
         NbtCompound nbtCompound = nbtComponent.copyNbt();
-        nbtCompound.putInt("leather", n);
+        nbtCompound.putInt(UnidyeMaterialTypes.LEATHER.getId().toString(), n);
         itemStack.set(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(nbtCompound));
     }
 

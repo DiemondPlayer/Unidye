@@ -3,7 +3,7 @@ package net.diemond_player.unidye.entity;
 import net.diemond_player.unidye.Unidye;
 import net.diemond_player.unidye.block.DyeableConcretePowderBlock;
 import net.diemond_player.unidye.block.entity.DyeableBlockEntity;
-import net.diemond_player.unidye.mixin.misc.FallingBlockEntityAccessor;
+import net.diemond_player.unidye.mixin.util.FallingBlockEntityAccessor;
 import net.diemond_player.unidye.payload.SetColorAndRerenderBlockPacket;
 import net.diemond_player.unidye.registry.UnidyeEntities;
 import net.diemond_player.unidye.util.UnidyeUtils;

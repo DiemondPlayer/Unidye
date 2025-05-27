@@ -17,7 +17,6 @@
     "misc.AbstractCauldronBlockMixin",
     "misc.CraftingScreenHandlerMixin",
     "misc.DyedColorComponentMixin",
-    "misc.FallingBlockEntityAccessor",
     "misc.FireworkExplosionComponentMixin",
     "misc.LoomScreenHandlerMixin",
     "misc.MapBannerMarkerMixin",
@@ -32,7 +31,9 @@
     "recipe.ShulkerBoxColoringRecipeMixin",
     "render.AbstractBlockStateMixin",
     "render.BeaconBlockEntityMixin",
-    "render.BlockMixin"
+    "render.BlockMixin",
+    "util.FallingBlockEntityAccessor",
+    "util.ShulkerBoxBlockAccessor"
   ],
   "injectors": {
     "defaultRequire": 1
@@ -41,14 +42,10 @@
     "gameplay.ItemMixin",
     "misc.SplashTextResourceSupplierMixin",
     "render.AbstractSignEditScreenMixin",
-    "render.BakedQuadMixin",
-    "render.BasicBakedModelMixin",
     "render.BlockDustParticleMixin",
     "render.BlockModelRendererMixin",
     "render.BuiltinModelItemRendererMixin",
     "render.CatCollarFeatureRendererMixin",
-    "render.ItemModelsMixin",
-    "render.JsonUnbakedModelMixin",
     "render.LoomScreenMixin",
     "render.ModelPartMixin",
     "render.SheepWoolFeatureRendererMixin",

@@ -1,6 +1,7 @@
 package net.diemond_player.unidye.block.entity;
 
 import net.diemond_player.unidye.registry.UnidyeBlockEntities;
+import net.diemond_player.unidye.registry.UnidyeMaterialTypes;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.component.ComponentMap;
@@ -102,7 +103,7 @@ public class DyeableLeatheryBlockEntity extends BlockEntity implements IDyeableB
         super.addComponents(componentMapBuilder);
         componentMapBuilder.add(DataComponentTypes.DYED_COLOR, new DyedColorComponent(color, true));
         NbtCompound nbtCompound = new NbtCompound();
-        nbtCompound.putInt("leather", leatherColor);
+        nbtCompound.putInt(UnidyeMaterialTypes.LEATHER.getId().toString(), leatherColor);
         componentMapBuilder.add(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(nbtCompound));
     }
 }

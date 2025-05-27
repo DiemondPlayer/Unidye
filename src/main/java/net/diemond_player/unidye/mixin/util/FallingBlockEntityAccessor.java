@@ -1,4 +1,4 @@
-package net.diemond_player.unidye.mixin.misc;
+package net.diemond_player.unidye.mixin.util;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.FallingBlockEntity;
