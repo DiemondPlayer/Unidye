@@ -1,6 +1,7 @@
 package net.diemond_player.unidye.mixin.recipe;
 
 import com.google.common.collect.Lists;
+import net.diemond_player.unidye.component.ItemNamePrefixComponent;
 import net.diemond_player.unidye.component.RecipeStacksComponent;
 import net.diemond_player.unidye.item.CustomDyeItem;
 import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
@@ -99,7 +100,8 @@ public abstract class ArmorDyeRecipeMixin {
         if (itemStack1.isOf(UnidyeItems.CUSTOM_DYE)) {
             itemStack1.setCount(list.size() + customColors.size() + 1);
         }
-        itemStack1.set(UnidyeDataComponentTypes.RECIPE_STACKS, RecipeStacksComponent.fromItemStacks(recipeInputInventory.getStacks(), itemStack1.getCount(), true));
+        RecipeStacksComponent recipeStacksComponent = RecipeStacksComponent.fromItemStacks(recipeInputInventory.getStacks(), itemStack1.getCount(), true);
+        itemStack1.set(UnidyeDataComponentTypes.RECIPE_STACKS, itemStack.isOf(UnidyeItems.CUSTOM_DYE) ? recipeStacksComponent.optimizeRecipeStacks() : recipeStacksComponent);
         return itemStack1;
     }
 }

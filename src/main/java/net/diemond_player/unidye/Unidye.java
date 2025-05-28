@@ -3,15 +3,21 @@ package net.diemond_player.unidye;
 import com.google.common.collect.Lists;
 import com.ibm.icu.impl.Pair;
 import net.diemond_player.unidye.command.*;
-import net.diemond_player.unidye.payload.SetColorAndRerenderBlockPacket;
+import net.diemond_player.unidye.payload.DatabasePayload;
+import net.diemond_player.unidye.payload.RequestDatabasePayload;
+import net.diemond_player.unidye.payload.SetColorAndRerenderBlockPayload;
 import net.diemond_player.unidye.registry.*;
+import net.diemond_player.unidye.util.DyeDatabaseSaverAndLoader;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
@@ -35,6 +41,8 @@ public class Unidye implements ModInitializer {
     );
 
     public static final Identifier SET_COLOR_AND_RERENDER_BLOCK_PACKET_ID = Identifier.of(Unidye.MOD_ID, "set_color_and_rerender_block");
+    public static final Identifier REQUEST_DATABASE_PACKET_ID = Identifier.of(Unidye.MOD_ID, "request_database");
+    public static final Identifier DATABASE_PACKET_ID = Identifier.of(Unidye.MOD_ID, "database");
 
     public static final boolean POLYMORPH = isModLoaded("polymorph");
     public static final boolean SIMPLE_CONCRETE = isModLoaded("simpleconcrete");
@@ -56,10 +64,49 @@ public class Unidye implements ModInitializer {
         addItemsToMaterialTypes();
         registerCommands();
         registerNetworking();
+        registerEvents();
+    }
+
+    private void registerEvents() {
+        ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
+            DyeDatabaseSaverAndLoader state = DyeDatabaseSaverAndLoader.getServerState(server);
+            server.execute(() -> {
+                ServerPlayNetworking.send(handler.getPlayer(), new DatabasePayload(state.database));
+            });
+        });
     }
 
     private void registerNetworking() {
-        PayloadTypeRegistry.playS2C().register(SetColorAndRerenderBlockPacket.ID, SetColorAndRerenderBlockPacket.CODEC);
+        PayloadTypeRegistry.playS2C().register(SetColorAndRerenderBlockPayload.ID, SetColorAndRerenderBlockPayload.CODEC);
+
+        PayloadTypeRegistry.playC2S().register(RequestDatabasePayload.ID, RequestDatabasePayload.CODEC);
+        PayloadTypeRegistry.playS2C().register(DatabasePayload.ID, DatabasePayload.CODEC);
+
+        ServerPlayNetworking.registerGlobalReceiver(RequestDatabasePayload.ID, (payload, context) -> context.server().execute(() -> {
+            Unidye.LOGGER.info("received the request");
+            DyeDatabaseSaverAndLoader serverState = DyeDatabaseSaverAndLoader.getServerState(context.server());
+            ServerPlayNetworking.send(context.player(), new DatabasePayload(serverState.database));
+            Unidye.LOGGER.info("sent the database to client");
+        }));
+
+//        PayloadTypeRegistry.playC2S().register(UpdatePrefixPayload.ID, UpdatePrefixPayload.CODEC);
+//        PayloadTypeRegistry.playS2C().register(UpdatePrefixPayload.ID, UpdatePrefixPayload.CODEC);
+//
+//        ServerPlayNetworking.registerGlobalReceiver(UpdatePrefixPayload.ID, (payload, context) -> context.server().execute(() -> {
+//            ItemStack itemStack = payload.itemStack();
+//            int color = itemStack.get(UnidyeDataComponentTypes.ITEM_NAME_PREFIX).sourceCustomDyeColor();
+//            DyeDatabaseSaverAndLoader serverState = DyeDatabaseSaverAndLoader.getServerState(context.server());
+//            //Unidye.LOGGER.info(serverState.database.toString());
+//            if (serverState.database.containsKey(color)) {
+//                Text text = Text.literal(serverState.database.get(color));
+//                if(!itemStack.get(UnidyeDataComponentTypes.ITEM_NAME_PREFIX).prefix().equals(text)) {
+//                    itemStack.set(UnidyeDataComponentTypes.ITEM_NAME_PREFIX, new ItemNamePrefixComponent(text, color));
+//                }
+//            }else{
+//                itemStack.set(UnidyeDataComponentTypes.ITEM_NAME_PREFIX, ItemNamePrefixComponent.noPrefix(color));
+//            }
+//            ServerPlayNetworking.send(context.player(), new UpdatePrefixPayload(itemStack));
+//        }));
     }
 
     private void addItemsToMaterialTypes() {

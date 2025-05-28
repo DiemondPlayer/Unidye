@@ -3,9 +3,7 @@ package net.diemond_player.unidye.component;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
-import net.diemond_player.unidye.util.DyeNameDatabaseSaverAndLoader;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.DyedColorComponent;
+import net.diemond_player.unidye.util.DyeDatabaseSaverAndLoader;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
@@ -36,29 +34,13 @@ public record ItemNamePrefixComponent(Text prefix, int sourceCustomDyeColor) {
         return new ItemNamePrefixComponent(Text.empty(), sourceCustomDyeColor);
     }
 
-    public static void updateCustomDyePrefix(ItemStack itemStack, World world){
-        if(!world.isClient) {
-            int color = itemStack.getOrDefault(DataComponentTypes.DYED_COLOR, new DyedColorComponent(DyedColorComponent.DEFAULT_COLOR, true)).rgb();
-            DyeNameDatabaseSaverAndLoader serverState = DyeNameDatabaseSaverAndLoader.getServerState(((ServerWorld) world).getServer());
-            //Unidye.LOGGER.info(serverState.database.toString());
-            if (serverState.database.containsKey(color)) {
-                Text text = Text.literal(serverState.database.get(color));
-                if(!itemStack.getOrDefault(UnidyeDataComponentTypes.ITEM_NAME_PREFIX, ItemNamePrefixComponent.DEFAULT).prefix().equals(text)) {
-                    itemStack.set(UnidyeDataComponentTypes.ITEM_NAME_PREFIX, new ItemNamePrefixComponent(text, color));
-                }
-            }else{
-                itemStack.set(UnidyeDataComponentTypes.ITEM_NAME_PREFIX, noPrefix(color));
-            }
-        }
-    }
-
     public static void updatePrefix(ItemStack itemStack, World world){
         if(!world.isClient && itemStack.contains(UnidyeDataComponentTypes.ITEM_NAME_PREFIX)) {
             int color = itemStack.get(UnidyeDataComponentTypes.ITEM_NAME_PREFIX).sourceCustomDyeColor();
-            DyeNameDatabaseSaverAndLoader serverState = DyeNameDatabaseSaverAndLoader.getServerState(((ServerWorld) world).getServer());
+            DyeDatabaseSaverAndLoader serverState = DyeDatabaseSaverAndLoader.getServerState(((ServerWorld) world).getServer());
             //Unidye.LOGGER.info(serverState.database.toString());
             if (serverState.database.containsKey(color)) {
-                Text text = Text.literal(serverState.database.get(color));
+                Text text = Text.literal(serverState.database.get(color).getPrefix());
                 if(!itemStack.get(UnidyeDataComponentTypes.ITEM_NAME_PREFIX).prefix().equals(text)) {
                     itemStack.set(UnidyeDataComponentTypes.ITEM_NAME_PREFIX, new ItemNamePrefixComponent(text, color));
                 }

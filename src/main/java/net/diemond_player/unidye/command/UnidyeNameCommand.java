@@ -5,14 +5,10 @@ import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import net.diemond_player.unidye.component.ItemNamePrefixComponent;
 import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
-import net.diemond_player.unidye.registry.UnidyeItems;
-import net.diemond_player.unidye.util.DyeNameDatabaseSaverAndLoader;
+import net.diemond_player.unidye.util.DyeData;
+import net.diemond_player.unidye.util.DyeDatabaseSaverAndLoader;
 import net.minecraft.command.CommandRegistryAccess;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.DyedColorComponent;
-import net.minecraft.component.type.NbtComponent;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -42,11 +38,12 @@ public class UnidyeNameCommand {
 //            NbtCompound nbtCompound = itemStack.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT).copyNbt();
 //            nbtCompound.remove("dye_shape");
 //            NbtComponent nbtComponent = NbtComponent.of(nbtCompound);
-                DyeNameDatabaseSaverAndLoader serverState = DyeNameDatabaseSaverAndLoader.getServerState(context.getSource().getWorld().getServer());
+                DyeDatabaseSaverAndLoader serverState = DyeDatabaseSaverAndLoader.getServerState(context.getSource().getWorld().getServer());
+                DyeData dyeData = new DyeData(name);
                 if (!serverState.database.containsKey(color)) {
-                    serverState.database.put(color, name);
+                    serverState.database.put(color, dyeData);
                 } else {
-                    serverState.database.replace(color, name);
+                    serverState.database.replace(color, dyeData);
                 }
                 serverState.markDirty();
             }

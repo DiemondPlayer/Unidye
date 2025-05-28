@@ -159,17 +159,17 @@ public class CustomDyeItem extends DyeItem implements SignChangingItem{
         return false;
     }
 
-    @Override
-    public void onCraft(ItemStack itemStack, World world) {
-        ItemNamePrefixComponent.updateCustomDyePrefix(itemStack, world);
-        super.onCraft(itemStack, world);
-    }
-
-    @Override
-    public void onCraftByPlayer(ItemStack itemStack, World world, PlayerEntity player) {
-        ItemNamePrefixComponent.updateCustomDyePrefix(itemStack, world);
-        super.onCraftByPlayer(itemStack, world, player);
-    }
+//    @Override
+//    public void onCraft(ItemStack itemStack, World world) {
+//        ItemNamePrefixComponent.updatePrefix(itemStack, world);
+//        super.onCraft(itemStack, world);
+//    }
+//
+//    @Override
+//    public void onCraftByPlayer(ItemStack itemStack, World world, PlayerEntity player) {
+//        ItemNamePrefixComponent.updatePrefix(itemStack, world);
+//        super.onCraftByPlayer(itemStack, world, player);
+//    }
 
     @Override
     public DyeColor getColor() {

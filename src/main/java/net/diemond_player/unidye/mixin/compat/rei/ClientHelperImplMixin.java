@@ -11,18 +11,21 @@ import me.shedaniel.rei.impl.common.entry.TypedEntryStack;
 import me.shedaniel.rei.impl.display.DisplaySpec;
 import me.shedaniel.rei.plugin.client.categories.crafting.DefaultCraftingCategory;
 import me.shedaniel.rei.plugin.common.displays.crafting.DefaultCraftingDisplay;
+import net.diemond_player.unidye.Unidye;
+import net.diemond_player.unidye.UnidyeClient;
+import net.diemond_player.unidye.component.ItemNamePrefixComponent;
 import net.diemond_player.unidye.component.RecipeStacksComponent;
 import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
+import net.diemond_player.unidye.util.DyeData;
 import net.minecraft.item.ItemStack;
+import net.minecraft.recipe.Recipe;
+import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Mixin(value = ClientHelperImpl.class, remap = false)
 public abstract class ClientHelperImplMixin {
@@ -36,10 +39,28 @@ public abstract class ClientHelperImplMixin {
 
                         List<DisplaySpec> craftingDisplays = map.get(new DefaultCraftingCategory());
                         List<EntryIngredient> recipeInputs = new ArrayList<>(List.of());
+                        HashMap<Integer, DyeData> database = UnidyeClient.database;
+                        Unidye.LOGGER.info("tried accessing database");
                         for(ItemStack itemStack1 : recipeStacksComponent.toItemStacks()){
+                            if (database != null) {
+                                if (itemStack1.contains(UnidyeDataComponentTypes.ITEM_NAME_PREFIX)) {
+                                    int color = itemStack1.get(UnidyeDataComponentTypes.ITEM_NAME_PREFIX).sourceCustomDyeColor();
+                                    //Unidye.LOGGER.info(serverState.database.toString());
+                                    if (database.containsKey(color)) {
+                                        Text text = Text.literal(database.get(color).getPrefix());
+                                        if (!itemStack1.get(UnidyeDataComponentTypes.ITEM_NAME_PREFIX).prefix().equals(text)) {
+                                            itemStack1.set(UnidyeDataComponentTypes.ITEM_NAME_PREFIX, new ItemNamePrefixComponent(text, color));
+                                        }
+                                    } else {
+                                        itemStack1.set(UnidyeDataComponentTypes.ITEM_NAME_PREFIX, ItemNamePrefixComponent.noPrefix(color));
+                                    }
+                                }
+                            } else {
+                                Unidye.LOGGER.info("it's null");
+                            }
                             recipeInputs.add(EntryIngredient.of(EntryStack.of(VanillaEntryTypes.ITEM,itemStack1)));
                         }
-                        DefaultCraftingDisplay artificialCraftingRecipe = new DefaultCraftingDisplay<>(recipeInputs, List.of(EntryIngredient.of(EntryStack.of(VanillaEntryTypes.ITEM, itemStack.copyWithCount(recipeStacksComponent.outputAmount())))), Optional.empty()) {
+                        DefaultCraftingDisplay<Recipe<?>> artificialCraftingRecipe = new DefaultCraftingDisplay<>(recipeInputs, List.of(EntryIngredient.of(EntryStack.of(VanillaEntryTypes.ITEM, itemStack.copyWithCount(recipeStacksComponent.outputAmount())))), Optional.empty()) {
                             @Override
                             public boolean isShapeless() {
                                 return recipeStacksComponent.shapeless();

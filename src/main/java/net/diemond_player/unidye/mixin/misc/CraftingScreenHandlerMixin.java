@@ -23,9 +23,7 @@ public abstract class CraftingScreenHandlerMixin {
     @Inject(method = "updateResult", at = @At("TAIL"))
     private static void unidye$updateResult(ScreenHandler handler, World world, PlayerEntity player, RecipeInputInventory craftingInventory, CraftingResultInventory resultInventory, @Nullable RecipeEntry<CraftingRecipe> recipe, CallbackInfo ci) {
         ItemStack itemStack = resultInventory.getStack(0);
-        if(itemStack.isOf(UnidyeItems.CUSTOM_DYE)){
-            ItemNamePrefixComponent.updateCustomDyePrefix(itemStack, world);
-        } else if (itemStack.contains(UnidyeDataComponentTypes.ITEM_NAME_PREFIX)){
+        if (itemStack.contains(UnidyeDataComponentTypes.ITEM_NAME_PREFIX)){
             ItemNamePrefixComponent.updatePrefix(itemStack, world);
         }
     }

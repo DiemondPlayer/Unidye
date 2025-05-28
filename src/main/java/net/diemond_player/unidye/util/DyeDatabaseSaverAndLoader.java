@@ -1,46 +1,77 @@
 package net.diemond_player.unidye.util;
 
 import net.diemond_player.unidye.Unidye;
-import net.minecraft.component.type.NbtComponent;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.PersistentState;
 import net.minecraft.world.PersistentStateManager;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.UUID;
+import java.util.Map;
 
-public class DyeNameDatabaseSaverAndLoader extends PersistentState {
+public class DyeDatabaseSaverAndLoader extends PersistentState {
 
 //    public HashMap<NbtComponent, String> database = new HashMap<>();
-    public HashMap<Integer, String> database = new HashMap<>();
+    public HashMap<Integer, DyeData> database = new HashMap<>();
 
     @Override
     public NbtCompound writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
-        nbt.putString("unidye.dye_name_database", database.toString());
+        NbtCompound nbtCompound = new NbtCompound();
+        int count = 0;
+        for(Map.Entry<Integer, DyeData> entry : database.entrySet()){
+            NbtCompound entryNbt = new NbtCompound();
+            DyeData dyeData = entry.getValue();
+            entryNbt.putInt("color", entry.getKey());
+            entryNbt.putString("prefix", dyeData.getPrefix());
+            //add exclusions
+            nbtCompound.put(String.valueOf(count), entryNbt);
+            count++;
+        }
+        nbt.put("unidye.dye_name_database", nbtCompound);
         return nbt;
     }
 
-    public static DyeNameDatabaseSaverAndLoader createFromNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
-        DyeNameDatabaseSaverAndLoader state = new DyeNameDatabaseSaverAndLoader();
-        String string = tag.getString("unidye.dye_name_database");
-        HashMap<Integer, String> database2 = new HashMap<>();
-        string = string.substring(1, string.length()-1);
-        String[] keyValuePairs = string.split(",");
-        for(String pair : keyValuePairs) {
-            String[] entry = pair.split("=");
-            database2.put(Integer.valueOf(entry[0].trim()), entry[1].trim());
-        }
-        state.database = database2;
+    public static DyeDatabaseSaverAndLoader createFromNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
+        DyeDatabaseSaverAndLoader state = new DyeDatabaseSaverAndLoader();
+        NbtCompound nbtCompound = tag.getCompound("unidye.dye_name_database");
+        nbtCompound.getKeys().forEach(key ->{
+            DyeData dyeData = new DyeData();
+            int color = nbtCompound.getCompound(key).getInt("color");
+            String prefix = nbtCompound.getCompound(key).getString("prefix");
+            dyeData.setPrefix(prefix);
+            //add exclusions
+            state.database.put(color, dyeData);
+        });
         return state;
     }
 
-//    public static DyeNameDatabaseSaverAndLoader createFromNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
-//        DyeNameDatabaseSaverAndLoader state = new DyeNameDatabaseSaverAndLoader();
+    public static DyeData getDyeData(ServerWorld serverWorld, int customDyeColor) {
+        DyeDatabaseSaverAndLoader serverState = getServerState(serverWorld.getServer());
+
+        DyeData dyeData = serverState.database.computeIfAbsent(customDyeColor, color -> new DyeData());
+
+        return dyeData;
+    }
+
+//    public static DyeDatabaseSaverAndLoader createFromNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
+//        DyeDatabaseSaverAndLoader state = new DyeDatabaseSaverAndLoader();
+//        String string = tag.getString("unidye.dye_name_database");
+//        HashMap<Integer, String> database2 = new HashMap<>();
+//        string = string.substring(1, string.length()-1);
+//        String[] keyValuePairs = string.split(",");
+//        for(String pair : keyValuePairs) {
+//            String[] entry = pair.split("=");
+//            database2.put(Integer.valueOf(entry[0].trim()), entry[1].trim());
+//        }
+//        state.database = database2;
+//        return state;
+//    }
+
+//    public static DyeDatabaseSaverAndLoader createFromNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
+//        DyeDatabaseSaverAndLoader state = new DyeDatabaseSaverAndLoader();
 //        String string = tag.getString("unidye.dye_name_database");
 //        HashMap<NbtComponent, String> database2 = new HashMap<>();
 //        string = string.substring(1, string.length()-1);
@@ -99,16 +130,16 @@ public class DyeNameDatabaseSaverAndLoader extends PersistentState {
 //        return keyValuePairs;
 //    }
 
-    private static Type<DyeNameDatabaseSaverAndLoader> type = new Type<>(
-            DyeNameDatabaseSaverAndLoader::new,
-            DyeNameDatabaseSaverAndLoader::createFromNbt,
+    private static Type<DyeDatabaseSaverAndLoader> type = new Type<>(
+            DyeDatabaseSaverAndLoader::new,
+            DyeDatabaseSaverAndLoader::createFromNbt,
             null
     );
 
 
-    public static DyeNameDatabaseSaverAndLoader getServerState(MinecraftServer server) {
+    public static DyeDatabaseSaverAndLoader getServerState(MinecraftServer server) {
         PersistentStateManager persistentStateManager = server.getWorld(World.OVERWORLD).getPersistentStateManager();
-        DyeNameDatabaseSaverAndLoader state = persistentStateManager.getOrCreate(type, Unidye.MOD_ID);
+        DyeDatabaseSaverAndLoader state = persistentStateManager.getOrCreate(type, Unidye.MOD_ID);
         state.markDirty();
         return state;
     }

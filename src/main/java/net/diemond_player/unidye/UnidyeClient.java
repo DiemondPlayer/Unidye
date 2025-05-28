@@ -4,8 +4,11 @@ import net.diemond_player.unidye.block.entity.DyeableBlockEntity;
 import net.diemond_player.unidye.block.entity.IDyeableBlockEntity;
 import net.diemond_player.unidye.entity.client.model.DyeableShulkerEntityModel;
 import net.diemond_player.unidye.entity.client.renderer.*;
-import net.diemond_player.unidye.payload.SetColorAndRerenderBlockPacket;
+import net.diemond_player.unidye.payload.DatabasePayload;
+import net.diemond_player.unidye.payload.SetColorAndRerenderBlockPayload;
 import net.diemond_player.unidye.registry.*;
+import net.diemond_player.unidye.util.DyeData;
+import net.diemond_player.unidye.util.UnidyeAccessor;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
@@ -27,6 +30,9 @@ import net.minecraft.util.math.ColorHelper;
 import java.util.HashMap;
 
 public class UnidyeClient implements ClientModInitializer {
+
+    public static HashMap<Integer, DyeData> database = new HashMap<>();
+
     public static final HashMap<Block, Integer> DYEABLE_BLOCKS_ADJUST = new HashMap<>() {{
             put(UnidyeBlocks.CUSTOM_CONCRETE_POWDER, 15);
     }};
@@ -45,17 +51,26 @@ public class UnidyeClient implements ClientModInitializer {
     }
 
     private void registerNetworking() {
-        ClientPlayNetworking.registerGlobalReceiver(SetColorAndRerenderBlockPacket.ID, (payload, context) -> {
-            context.client().execute(() -> {
-                ClientWorld world = context.client().world;
-                BlockPos pos = payload.pos();
-                BlockEntity blockEntity = world.getBlockEntity(pos);
-                if (blockEntity instanceof DyeableBlockEntity dyeableBlockEntity) {
-                    dyeableBlockEntity.setColor(payload.color());
-                }
-                world.updateListeners(pos, world.getBlockState(pos), world.getBlockState(pos), Block.REDRAW_ON_MAIN_THREAD);
-            });
-        });
+        ClientPlayNetworking.registerGlobalReceiver(SetColorAndRerenderBlockPayload.ID, (payload, context) -> context.client().execute(() -> {
+            ClientWorld world = context.client().world;
+            BlockPos pos = payload.pos();
+            BlockEntity blockEntity = world.getBlockEntity(pos);
+            if (blockEntity instanceof DyeableBlockEntity dyeableBlockEntity) {
+                dyeableBlockEntity.setColor(payload.color());
+            }
+            world.updateListeners(pos, world.getBlockState(pos), world.getBlockState(pos), Block.REDRAW_ON_MAIN_THREAD);
+        }));
+
+        ClientPlayNetworking.registerGlobalReceiver(DatabasePayload.ID, (payload, context) -> context.client().execute(() -> {
+            Unidye.LOGGER.info("received the database on client");
+            database = payload.database();
+            Unidye.LOGGER.info("successfully set the database on client");
+        }));
+
+//        ClientPlayNetworking.registerGlobalReceiver(UpdatePrefixPayload.ID, (payload, context) -> context.client().execute(() -> {
+//            ClientWorld world = context.client().world;
+//            ItemStack itemStack = payload.itemStack();
+//        }));
     }
 
     private void registerBuiltinItemRenderer() {

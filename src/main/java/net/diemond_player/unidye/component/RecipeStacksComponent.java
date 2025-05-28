@@ -2,7 +2,11 @@ package net.diemond_player.unidye.component;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.diemond_player.unidye.Unidye;
+import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.component.ComponentChanges;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -49,20 +53,34 @@ public record RecipeStacksComponent(List<Stack> stacks, int outputAmount, boolea
     public static RecipeStacksComponent fromItemStacks(List<ItemStack> itemStacks, int outputAmount, boolean shapeless){
         List<Stack> stackList = new ArrayList<>(List.of());
         for(ItemStack itemStack : itemStacks){
-            if(itemStack.isEmpty()) continue;
-            stackList.add(new Stack(itemStack.getRegistryEntry(), itemStack.getComponentChanges()));
+            ItemStack itemStackCopy = itemStack.copy();
+            if(itemStackCopy.isEmpty()) continue;
+            if(itemStackCopy.isOf(Items.STICK) && Unidye.POLYMORPH) continue;
+            if(itemStackCopy.contains(UnidyeDataComponentTypes.ITEM_NAME_PREFIX)) {
+                ItemNamePrefixComponent itemNamePrefixComponent = itemStackCopy.get(UnidyeDataComponentTypes.ITEM_NAME_PREFIX);
+                itemStackCopy.set(UnidyeDataComponentTypes.ITEM_NAME_PREFIX, ItemNamePrefixComponent.noPrefix(itemNamePrefixComponent.sourceCustomDyeColor()));
+            }
+            stackList.add(new Stack(itemStackCopy.getRegistryEntry(), itemStackCopy.getComponentChanges()));
         }
-        if (shapeless) stackList.sort(Comparator.comparing(stack -> stack.item().getIdAsString()));
+        if (shapeless) {
+            stackList.sort(Comparator.comparing(stack -> stack.item().getIdAsString()));
+            stackList.sort(Comparator.comparing(stack -> {
+                if(stack.componentChanges.get(DataComponentTypes.DYED_COLOR) == null) return 1;
+                if(stack.componentChanges.get(DataComponentTypes.DYED_COLOR).isEmpty()) return 1;
+                return stack.componentChanges.get(DataComponentTypes.DYED_COLOR).get().rgb();
+            }));
+        }
         return new RecipeStacksComponent(stackList, outputAmount, shapeless);
     }
 
+    //should only be called when recipe stacks are sorted (aka shapeless recipe) and when ...
     public RecipeStacksComponent optimizeRecipeStacks(){
         Stack referenceStack = null;
         int referenceDenominator = 0;
         int currentDenominator = 0;
         for (Stack stack : stacks) {
-            if (stack.toItemStack().isOf(Items.STICK)) continue;
-            if (referenceStack == null || (referenceStack.item() == stack.item && referenceStack.componentChanges() == stack.componentChanges)) {
+            if (stack.item().value() == Items.STICK) continue;
+            if (referenceStack == null || (referenceStack.item() == stack.item && referenceStack.componentChanges().equals(stack.componentChanges))) {
                 referenceStack = stack;
                 currentDenominator++;
             } else {
@@ -80,7 +98,7 @@ public record RecipeStacksComponent(List<Stack> stacks, int outputAmount, boolea
             List<Stack> optimizedStackList = Lists.newArrayList();
             int run = 0;
             for (Stack stack : stacks) {
-                if (stack.toItemStack().isOf(Items.STICK)) {
+                if (stack.item().value() == Items.STICK) {
                     optimizedStackList.add(stack);
                     continue;
                 }

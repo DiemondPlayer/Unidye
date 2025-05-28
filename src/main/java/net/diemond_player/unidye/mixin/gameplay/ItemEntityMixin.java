@@ -16,9 +16,7 @@ public abstract class ItemEntityMixin {
     @ModifyVariable(method = "<init>(Lnet/minecraft/world/World;DDDLnet/minecraft/item/ItemStack;DDD)V", at = @At("HEAD"),
             ordinal = 0, argsOnly = true)
     private static ItemStack unidye$init(ItemStack itemStack, @Local(argsOnly = true) World world) {
-        if (itemStack.isOf(UnidyeItems.CUSTOM_DYE)) {
-            ItemNamePrefixComponent.updateCustomDyePrefix(itemStack, world);
-        } else if (itemStack.contains(UnidyeDataComponentTypes.ITEM_NAME_PREFIX)){
+        if (itemStack.contains(UnidyeDataComponentTypes.ITEM_NAME_PREFIX)){
             ItemNamePrefixComponent.updatePrefix(itemStack, world);
         }
         return itemStack;

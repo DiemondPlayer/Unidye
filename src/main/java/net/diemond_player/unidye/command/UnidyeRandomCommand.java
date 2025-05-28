@@ -4,7 +4,10 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import net.diemond_player.unidye.component.ItemNamePrefixComponent;
+import net.diemond_player.unidye.component.RecipeStacksComponent;
 import net.diemond_player.unidye.item.CustomDyeItem;
+import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
+import net.diemond_player.unidye.registry.UnidyeItems;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.command.argument.ItemStackArgument;
@@ -21,6 +24,7 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import org.spongepowered.include.com.google.common.collect.Lists;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -64,6 +68,12 @@ public class UnidyeRandomCommand {
                 }
             }
             itemStack = UnidyeUtils.blendAndSetColor(itemStack, dyeItems, Lists.newArrayList());
+            List<ItemStack> itemStacks = new ArrayList<>(dyeItems.stream().map(ItemStack::new).toList());
+            if (!itemStack.isOf(UnidyeItems.CUSTOM_DYE)) itemStacks.add(new ItemStack(item.getItem()));
+            if(itemStacks.size() <= 9){
+                RecipeStacksComponent recipeStacksComponent = RecipeStacksComponent.fromItemStacks(itemStacks, dyeItems.size(), true);
+                itemStack.set(UnidyeDataComponentTypes.RECIPE_STACKS, itemStack.isOf(UnidyeItems.CUSTOM_DYE) ? recipeStacksComponent.optimizeRecipeStacks() : recipeStacksComponent);
+            }
 
             if(serverPlayerEntity != null) {
                 ItemNamePrefixComponent.updatePrefix(itemStack, serverPlayerEntity.getWorld());

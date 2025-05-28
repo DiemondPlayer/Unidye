@@ -15,9 +15,7 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 public abstract class CrafterScreenHandlerMixin {
     @ModifyArg(method = "updateResult", at = @At(value = "INVOKE", target = "Lnet/minecraft/inventory/CraftingResultInventory;setStack(ILnet/minecraft/item/ItemStack;)V"), index = 1)
     private ItemStack unidye$updateResult(ItemStack itemStack, @Local World world) {
-        if(itemStack.isOf(UnidyeItems.CUSTOM_DYE)){
-            ItemNamePrefixComponent.updateCustomDyePrefix(itemStack, world);
-        } else if (itemStack.contains(UnidyeDataComponentTypes.ITEM_NAME_PREFIX)){
+        if (itemStack.contains(UnidyeDataComponentTypes.ITEM_NAME_PREFIX)){
             ItemNamePrefixComponent.updatePrefix(itemStack, world);
         }
         return itemStack;

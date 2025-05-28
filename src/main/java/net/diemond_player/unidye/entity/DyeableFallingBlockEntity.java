@@ -4,7 +4,7 @@ import net.diemond_player.unidye.Unidye;
 import net.diemond_player.unidye.block.DyeableConcretePowderBlock;
 import net.diemond_player.unidye.block.entity.DyeableBlockEntity;
 import net.diemond_player.unidye.mixin.util.FallingBlockEntityAccessor;
-import net.diemond_player.unidye.payload.SetColorAndRerenderBlockPacket;
+import net.diemond_player.unidye.payload.SetColorAndRerenderBlockPayload;
 import net.diemond_player.unidye.registry.UnidyeEntities;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
@@ -123,7 +123,7 @@ public class DyeableFallingBlockEntity extends FallingBlockEntity {
                                             .chunkLoadingManager
                                             .sendToOtherNearbyPlayers(this, new BlockUpdateS2CPacket(blockPos, this.getWorld().getBlockState(blockPos)));
                                     for (ServerPlayerEntity player : PlayerLookup.tracking((ServerWorld) this.getWorld(), blockPos)) {
-                                        ServerPlayNetworking.send(player, new SetColorAndRerenderBlockPacket(blockPos, this.getCustomColor()));
+                                        ServerPlayNetworking.send(player, new SetColorAndRerenderBlockPayload(blockPos, this.getCustomColor()));
                                     }
                                     this.discard();
                                     if (block instanceof LandingBlock) {

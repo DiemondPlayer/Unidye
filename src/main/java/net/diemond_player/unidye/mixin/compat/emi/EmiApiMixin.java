@@ -6,10 +6,18 @@ import dev.emi.emi.api.recipe.*;
 import dev.emi.emi.api.stack.EmiIngredient;
 import dev.emi.emi.api.stack.EmiStack;
 import dev.emi.emi.registry.EmiRecipes;
+import net.diemond_player.unidye.Unidye;
+import net.diemond_player.unidye.UnidyeClient;
+import net.diemond_player.unidye.component.ItemNamePrefixComponent;
 import net.diemond_player.unidye.component.RecipeStacksComponent;
+import net.diemond_player.unidye.payload.RequestDatabasePayload;
 import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
+import net.diemond_player.unidye.util.DyeData;
+import net.diemond_player.unidye.util.UnidyeAccessor;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.item.ItemStack;
+import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -17,6 +25,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -52,13 +61,35 @@ public abstract class EmiApiMixin{
                 = mapRecipes(Stream.concat(
                 pruneUses(getRecipeManager().getRecipesByInput(zero), stack).stream(),
                 EmiRecipes.byWorkstation.getOrDefault(zero, List.of()).stream()).distinct().toList());
+//        ClientPlayNetworking.send(new RequestDatabasePayload(true));
+//        Unidye.LOGGER.info("sent a request");
         if(!map.equals(recipes)) {
             ItemStack itemStack = zero.getItemStack();
             RecipeStacksComponent recipeStacksComponent = itemStack.getOrDefault(UnidyeDataComponentTypes.RECIPE_STACKS, RecipeStacksComponent.DEFAULT);
             if (recipeStacksComponent != RecipeStacksComponent.DEFAULT) {
                 push();
                 List<EmiRecipe> craftingRecipeList = recipes.get(VanillaEmiRecipeCategories.CRAFTING);
-                craftingRecipeList.add(0, new EmiCraftingRecipe(recipeStacksComponent.toItemStacks().stream().map(i -> (EmiIngredient) EmiStack.of(i)).collect(Collectors.toList()),
+                List<ItemStack> itemStacks = recipeStacksComponent.toItemStacks();
+                HashMap<Integer, DyeData> database = UnidyeClient.database;
+                Unidye.LOGGER.info("tried accessing database");
+                if (database != null) {
+                    for (ItemStack itemStack1 : itemStacks) {
+                        if (!itemStack1.contains(UnidyeDataComponentTypes.ITEM_NAME_PREFIX)) continue;
+                        int color = itemStack1.get(UnidyeDataComponentTypes.ITEM_NAME_PREFIX).sourceCustomDyeColor();
+                        //Unidye.LOGGER.info(serverState.database.toString());
+                        if (database.containsKey(color)) {
+                            Text text = Text.literal(database.get(color).getPrefix());
+                            if (!itemStack1.get(UnidyeDataComponentTypes.ITEM_NAME_PREFIX).prefix().equals(text)) {
+                                itemStack1.set(UnidyeDataComponentTypes.ITEM_NAME_PREFIX, new ItemNamePrefixComponent(text, color));
+                            }
+                        } else {
+                            itemStack1.set(UnidyeDataComponentTypes.ITEM_NAME_PREFIX, ItemNamePrefixComponent.noPrefix(color));
+                        }
+                    }
+                } else {
+                    Unidye.LOGGER.info("it's null");
+                }
+                craftingRecipeList.add(0, new EmiCraftingRecipe(itemStacks.stream().map(i -> (EmiIngredient) EmiStack.of(i)).collect(Collectors.toList()),
                         EmiStack.of(itemStack, recipeStacksComponent.outputAmount()),
                         EmiPort.id("unidye", "/component_saved_recipe"), recipeStacksComponent.shapeless()));
                 recipes.replace(VanillaEmiRecipeCategories.CRAFTING, craftingRecipeList);
