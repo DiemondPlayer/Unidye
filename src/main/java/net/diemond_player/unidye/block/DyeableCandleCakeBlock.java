@@ -2,11 +2,13 @@ package net.diemond_player.unidye.block;
 
 import net.diemond_player.unidye.block.entity.IDyeableBlockEntity;
 import net.diemond_player.unidye.registry.UnidyeBlocks;
+import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.CandleCakeBlock;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stat.Stats;
@@ -26,12 +28,16 @@ public class DyeableCandleCakeBlock extends CandleCakeBlock implements IDyeableB
 
     @Override
     protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
-        int color = IDyeableBlockEntity.getColor(world, pos);
+        BlockEntity blockEntity = world.getBlockEntity(pos);
         ActionResult actionResult = tryEat(world, pos, Blocks.CAKE.getDefaultState(), player);
         if (actionResult.isAccepted()) {
-            ItemStack itemStack1 = new ItemStack(UnidyeBlocks.CUSTOM_CANDLE);
-            UnidyeUtils.setColor(itemStack1, color);
-            dropStack(world, pos, itemStack1);
+            if (blockEntity instanceof IDyeableBlockEntity dyeableBlockEntity) {
+                ItemStack itemStack1 = new ItemStack(UnidyeBlocks.CUSTOM_CANDLE);
+                UnidyeUtils.setColor(itemStack1, dyeableBlockEntity.getColor());
+                itemStack1.set(UnidyeDataComponentTypes.RECIPE_STACKS, dyeableBlockEntity.getRecipeStacks());
+                itemStack1.set(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, dyeableBlockEntity.getItemNameAffixes());
+                dropStack(world, pos, itemStack1);
+            }
         }
 
         return actionResult;

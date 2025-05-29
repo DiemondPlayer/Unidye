@@ -115,4 +115,4 @@ The changelog posted on Modrinth/Curseforge would be without those minor changes
 • Candle retextures
 • Fixed concrete powder issues
 • Now vanilla fireworks will always have a square colored with a color of a firework explosion to visualise the firework colors better
-
+• Now custom banners will always have the custom banner pattern component

@@ -1,6 +1,10 @@
 package net.diemond_player.unidye.block.entity;
 
+import net.diemond_player.unidye.Unidye;
+import net.diemond_player.unidye.component.ItemNameAffixesComponent;
+import net.diemond_player.unidye.component.RecipeStacksComponent;
 import net.diemond_player.unidye.registry.UnidyeBlockEntities;
+import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.registry.UnidyeMaterialTypes;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -9,6 +13,7 @@ import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.DyedColorComponent;
 import net.minecraft.component.type.NbtComponent;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
@@ -25,6 +30,8 @@ public class DyeableLeatheryBlockEntity extends BlockEntity implements IDyeableB
     }
     private int color = DEFAULT_WHITE_COLOR;
     public int leatherColor = DEFAULT_WHITE_COLOR;
+    private ItemNameAffixesComponent itemNameAffixesComponent = ItemNameAffixesComponent.DEFAULT;
+    private RecipeStacksComponent recipeStacksComponent = RecipeStacksComponent.DEFAULT;
 
     @Override
     protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
@@ -33,6 +40,12 @@ public class DyeableLeatheryBlockEntity extends BlockEntity implements IDyeableB
         }
         if (leatherColor != DEFAULT_WHITE_COLOR) {
             nbt.putInt("leather", leatherColor);
+        }
+        if (!itemNameAffixesComponent.equals(ItemNameAffixesComponent.DEFAULT)) {
+            nbt.put("itemNameAffixes", ItemNameAffixesComponent.CODEC.encodeStart(registryLookup.getOps(NbtOps.INSTANCE), this.itemNameAffixesComponent).getOrThrow());
+        }
+        if (!recipeStacksComponent.equals(RecipeStacksComponent.DEFAULT)) {
+            nbt.put("recipeStacks", RecipeStacksComponent.CODEC.encodeStart(registryLookup.getOps(NbtOps.INSTANCE), this.recipeStacksComponent).getOrThrow());
         }
         super.writeNbt(nbt, registryLookup);
     }
@@ -48,6 +61,18 @@ public class DyeableLeatheryBlockEntity extends BlockEntity implements IDyeableB
             color = DEFAULT_WHITE_COLOR;
         } else {
             color = nbt.getInt("color");
+        }
+        if (nbt.contains("itemNameAffixes")) {
+            ItemNameAffixesComponent.CODEC
+                    .parse(registryLookup.getOps(NbtOps.INSTANCE), nbt.get("itemNameAffixes"))
+                    .resultOrPartial(itemNameAffixes -> Unidye.LOGGER.error("Failed to parse item name affixes: '{}'", itemNameAffixes))
+                    .ifPresent(itemNameAffixesComponent -> this.itemNameAffixesComponent = itemNameAffixesComponent);
+        }
+        if (nbt.contains("recipeStacks")) {
+            RecipeStacksComponent.CODEC
+                    .parse(registryLookup.getOps(NbtOps.INSTANCE), nbt.get("recipeStacks"))
+                    .resultOrPartial(recipeStacks -> Unidye.LOGGER.error("Failed to parse recipe stacks: '{}'", recipeStacks))
+                    .ifPresent(recipeStacksComponent -> this.recipeStacksComponent = recipeStacksComponent);
         }
     }
     @Override
@@ -92,10 +117,33 @@ public class DyeableLeatheryBlockEntity extends BlockEntity implements IDyeableB
     }
 
     @Override
+    public ItemNameAffixesComponent getItemNameAffixes() {
+        return this.itemNameAffixesComponent;
+    }
+
+    @Override
+    public void setItemNameAffixes(ItemNameAffixesComponent itemNameAffixesComponent) {
+        this.itemNameAffixesComponent = itemNameAffixesComponent;
+        this.markDirty();
+    }
+
+    @Override
+    public RecipeStacksComponent getRecipeStacks() {
+        return this.recipeStacksComponent;
+    }
+
+    @Override
+    public void setRecipeStacks(RecipeStacksComponent recipeStacksComponent) {
+        this.recipeStacksComponent = recipeStacksComponent;
+    }
+
+    @Override
     protected void readComponents(ComponentsAccess components) {
         super.readComponents(components);
         this.color = components.getOrDefault(DataComponentTypes.DYED_COLOR, new DyedColorComponent(DyedColorComponent.DEFAULT_COLOR, true)).rgb();
         this.leatherColor = components.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT).copyNbt().getInt("leather");
+        this.recipeStacksComponent = components.getOrDefault(UnidyeDataComponentTypes.RECIPE_STACKS, RecipeStacksComponent.DEFAULT);
+        this.itemNameAffixesComponent = components.getOrDefault(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, ItemNameAffixesComponent.DEFAULT);
     }
 
     @Override
@@ -105,5 +153,7 @@ public class DyeableLeatheryBlockEntity extends BlockEntity implements IDyeableB
         NbtCompound nbtCompound = new NbtCompound();
         nbtCompound.putInt(UnidyeMaterialTypes.LEATHER.getId().toString(), leatherColor);
         componentMapBuilder.add(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(nbtCompound));
+        componentMapBuilder.add(UnidyeDataComponentTypes.RECIPE_STACKS, this.recipeStacksComponent);
+        componentMapBuilder.add(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, this.itemNameAffixesComponent);
     }
 }

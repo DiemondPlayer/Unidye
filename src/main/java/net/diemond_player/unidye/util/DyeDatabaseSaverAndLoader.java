@@ -10,6 +10,7 @@ import net.minecraft.world.World;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class DyeDatabaseSaverAndLoader extends PersistentState {
 
@@ -21,8 +22,9 @@ public class DyeDatabaseSaverAndLoader extends PersistentState {
         NbtCompound nbtCompound = new NbtCompound();
         int count = 0;
         for(Map.Entry<Integer, DyeData> entry : database.entrySet()){
-            NbtCompound entryNbt = new NbtCompound();
             DyeData dyeData = entry.getValue();
+            if(Objects.equals(dyeData.getPrefix(), "") && Objects.equals(dyeData.getSuffix(), "")) continue;
+            NbtCompound entryNbt = new NbtCompound();
             entryNbt.putInt("color", entry.getKey());
             entryNbt.putString("prefix", dyeData.getPrefix());
             entryNbt.putString("suffix", dyeData.getSuffix());

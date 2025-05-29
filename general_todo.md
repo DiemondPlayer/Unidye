@@ -3,8 +3,6 @@
 ### Gameplay:
 - **TODO** native usage of recipe saving system
 - **TODO** add exclusions to naming system
-- **TODO** BEs saving item prefix and dropping it
-- **TODO** BEs saving recipe stacks and dropping them
 - **TODO** recipe stacks should remember tags when possible
 - **unlikely TODO** naming system for fireworks
 - **unlikely TODO** updating naming system for fireworks

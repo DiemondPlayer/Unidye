@@ -17,7 +17,9 @@
               "function": "minecraft:copy_components",
               "include": [
                 "minecraft:dyed_color",
-                "minecraft:custom_data"
+                "minecraft:custom_data",
+                "unidye:recipe_stacks",
+                "unidye:item_name_affixes"
               ],
               "source": "block_entity"
             }

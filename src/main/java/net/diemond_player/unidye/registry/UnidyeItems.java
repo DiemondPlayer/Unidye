@@ -1,6 +1,7 @@
 package net.diemond_player.unidye.registry;
 
 import net.diemond_player.unidye.Unidye;
+import net.diemond_player.unidye.component.CustomBannerPatternsComponent;
 import net.diemond_player.unidye.item.CustomDyeItem;
 import net.diemond_player.unidye.item.DyeableBannerItem;
 import net.minecraft.item.Item;
@@ -14,7 +15,7 @@ public class UnidyeItems {
             new CustomDyeItem(new Item.Settings()));
 
     public static final Item CUSTOM_BANNER = registerItem("custom_banner",
-            new DyeableBannerItem(UnidyeBlocks.CUSTOM_BANNER, UnidyeBlocks.CUSTOM_WALL_BANNER, new Item.Settings().maxCount(16)));
+            new DyeableBannerItem(UnidyeBlocks.CUSTOM_BANNER, UnidyeBlocks.CUSTOM_WALL_BANNER, new Item.Settings().maxCount(16).component(UnidyeDataComponentTypes.CUSTOM_BANNER_PATTERNS, CustomBannerPatternsComponent.DEFAULT)));
 
     private static Item registerItem(String name, Item item) {
         return Registry.register(Registries.ITEM, Identifier.of(Unidye.MOD_ID, name), item);

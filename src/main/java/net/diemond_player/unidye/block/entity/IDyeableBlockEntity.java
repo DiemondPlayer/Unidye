@@ -1,5 +1,7 @@
 package net.diemond_player.unidye.block.entity;
 
+import net.diemond_player.unidye.component.ItemNameAffixesComponent;
+import net.diemond_player.unidye.component.RecipeStacksComponent;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
@@ -10,6 +12,14 @@ public interface IDyeableBlockEntity {
     int getColor();
 
     void setColor(int color);
+
+    ItemNameAffixesComponent getItemNameAffixes();
+
+    void setItemNameAffixes(ItemNameAffixesComponent itemNameAffixesComponent);
+
+    RecipeStacksComponent getRecipeStacks();
+
+    void setRecipeStacks(RecipeStacksComponent recipeStacksComponent);
 
     static int getColor(BlockView world, BlockPos pos) {
         if (world == null) {

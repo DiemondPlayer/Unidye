@@ -19,7 +19,9 @@
                 "minecraft:custom_name",
                 "minecraft:item_name",
                 "minecraft:hide_additional_tooltip",
-                "unidye:custom_banner_patterns"
+                "unidye:custom_banner_patterns",
+                "unidye:recipe_stacks",
+                "unidye:item_name_affixes"
               ],
               "source": "block_entity"
             }

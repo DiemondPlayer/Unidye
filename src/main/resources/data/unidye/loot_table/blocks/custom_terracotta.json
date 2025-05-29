@@ -15,7 +15,9 @@
             {
               "function": "minecraft:copy_components",
               "include": [
-                "minecraft:dyed_color"
+                "minecraft:dyed_color",
+                "unidye:recipe_stacks",
+                "unidye:item_name_affixes"
               ],
               "source": "block_entity"
             }

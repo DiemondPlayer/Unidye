@@ -2,6 +2,8 @@ package net.diemond_player.unidye.block.entity;
 
 import net.diemond_player.unidye.Unidye;
 import net.diemond_player.unidye.component.CustomBannerPatternsComponent;
+import net.diemond_player.unidye.component.ItemNameAffixesComponent;
+import net.diemond_player.unidye.component.RecipeStacksComponent;
 import net.diemond_player.unidye.registry.UnidyeBlockEntities;
 import net.diemond_player.unidye.registry.UnidyeBlocks;
 import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
@@ -30,6 +32,8 @@ public class DyeableBannerBlockEntity extends BlockEntity implements Nameable, I
     private Text customName;
     private CustomBannerPatternsComponent patterns = CustomBannerPatternsComponent.DEFAULT;
     public int color = DEFAULT_WHITE_COLOR;
+    private ItemNameAffixesComponent itemNameAffixesComponent = ItemNameAffixesComponent.DEFAULT;
+    private RecipeStacksComponent recipeStacksComponent = RecipeStacksComponent.DEFAULT;
 
     public DyeableBannerBlockEntity(BlockPos pos, BlockState state) {
         super(UnidyeBlockEntities.DYEABLE_BANNER_BE, pos, state);
@@ -84,6 +88,12 @@ public class DyeableBannerBlockEntity extends BlockEntity implements Nameable, I
         if (color != DEFAULT_WHITE_COLOR) {
             nbt.putInt("color", color);
         }
+        if (!itemNameAffixesComponent.equals(ItemNameAffixesComponent.DEFAULT)) {
+            nbt.put("itemNameAffixes", ItemNameAffixesComponent.CODEC.encodeStart(registryLookup.getOps(NbtOps.INSTANCE), this.itemNameAffixesComponent).getOrThrow());
+        }
+        if (!recipeStacksComponent.equals(RecipeStacksComponent.DEFAULT)) {
+            nbt.put("recipeStacks", RecipeStacksComponent.CODEC.encodeStart(registryLookup.getOps(NbtOps.INSTANCE), this.recipeStacksComponent).getOrThrow());
+        }
     }
 
     @Override
@@ -103,6 +113,18 @@ public class DyeableBannerBlockEntity extends BlockEntity implements Nameable, I
             color = DEFAULT_WHITE_COLOR;
         } else {
             color = nbt.getInt("color");
+        }
+        if (nbt.contains("itemNameAffixes")) {
+            ItemNameAffixesComponent.CODEC
+                    .parse(registryLookup.getOps(NbtOps.INSTANCE), nbt.get("itemNameAffixes"))
+                    .resultOrPartial(itemNameAffixes -> Unidye.LOGGER.error("Failed to parse item name affixes: '{}'", itemNameAffixes))
+                    .ifPresent(itemNameAffixesComponent -> this.itemNameAffixesComponent = itemNameAffixesComponent);
+        }
+        if (nbt.contains("recipeStacks")) {
+            RecipeStacksComponent.CODEC
+                    .parse(registryLookup.getOps(NbtOps.INSTANCE), nbt.get("recipeStacks"))
+                    .resultOrPartial(recipeStacks -> Unidye.LOGGER.error("Failed to parse recipe stacks: '{}'", recipeStacks))
+                    .ifPresent(recipeStacksComponent -> this.recipeStacksComponent = recipeStacksComponent);
         }
     }
 
@@ -143,8 +165,32 @@ public class DyeableBannerBlockEntity extends BlockEntity implements Nameable, I
     }
 
     @Override
+    public ItemNameAffixesComponent getItemNameAffixes() {
+        return this.itemNameAffixesComponent;
+    }
+
+    @Override
+    public void setItemNameAffixes(ItemNameAffixesComponent itemNameAffixesComponent) {
+        this.itemNameAffixesComponent = itemNameAffixesComponent;
+        this.markDirty();
+    }
+
+    @Override
+    public RecipeStacksComponent getRecipeStacks() {
+        return this.recipeStacksComponent;
+    }
+
+    @Override
+    public void setRecipeStacks(RecipeStacksComponent recipeStacksComponent) {
+        this.recipeStacksComponent = recipeStacksComponent;
+    }
+
+
+    @Override
     protected void readComponents(BlockEntity.ComponentsAccess components) {
         super.readComponents(components);
+        this.recipeStacksComponent = components.getOrDefault(UnidyeDataComponentTypes.RECIPE_STACKS, RecipeStacksComponent.DEFAULT);
+        this.itemNameAffixesComponent = components.getOrDefault(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, ItemNameAffixesComponent.DEFAULT);
         this.patterns = components.getOrDefault(UnidyeDataComponentTypes.CUSTOM_BANNER_PATTERNS, CustomBannerPatternsComponent.DEFAULT);
         this.customName = components.get(DataComponentTypes.CUSTOM_NAME);
     }
@@ -154,5 +200,7 @@ public class DyeableBannerBlockEntity extends BlockEntity implements Nameable, I
         super.addComponents(componentMapBuilder);
         componentMapBuilder.add(UnidyeDataComponentTypes.CUSTOM_BANNER_PATTERNS, this.patterns);
         componentMapBuilder.add(DataComponentTypes.CUSTOM_NAME, this.customName);
+        componentMapBuilder.add(UnidyeDataComponentTypes.RECIPE_STACKS, this.recipeStacksComponent);
+        componentMapBuilder.add(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, this.itemNameAffixesComponent);
     }
 }

@@ -1,8 +1,10 @@
 package net.diemond_player.unidye.mixin.gameplay;
 
 import net.diemond_player.unidye.block.DyeableCandleBlock;
+import net.diemond_player.unidye.block.entity.IDyeableBlockEntity;
 import net.diemond_player.unidye.registry.UnidyeBlockEntities;
 import net.diemond_player.unidye.registry.UnidyeBlocks;
+import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.block.*;
 import net.minecraft.entity.player.PlayerEntity;
@@ -26,7 +28,10 @@ public abstract class CakeBlockMixin {
         if (itemStack.isOf(UnidyeBlocks.CUSTOM_CANDLE.asItem())) {
             ((DyeableCandleBlock) ((BlockItem) itemStack.getItem()).getBlock()).createBlockEntity(pos, CandleCakeBlock.getCandleCakeFromCandle((CandleBlock) Block.getBlockFromItem(itemStack.getItem())));
             if(world.getBlockEntity(pos, UnidyeBlockEntities.DYEABLE_BE).isPresent()) {
-                world.getBlockEntity(pos, UnidyeBlockEntities.DYEABLE_BE).get().setColor(UnidyeUtils.getColor(itemStack));
+                IDyeableBlockEntity dyeableBlockEntity = world.getBlockEntity(pos, UnidyeBlockEntities.DYEABLE_BE).get();
+                dyeableBlockEntity.setColor(UnidyeUtils.getColor(itemStack));
+                dyeableBlockEntity.setItemNameAffixes(itemStack.get(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES));
+                dyeableBlockEntity.setRecipeStacks(itemStack.get(UnidyeDataComponentTypes.RECIPE_STACKS));
             }
         }
     }

@@ -14,7 +14,9 @@
                 "minecraft:custom_name",
                 "minecraft:container",
                 "minecraft:lock",
-                "minecraft:container_loot"
+                "minecraft:container_loot",
+                "unidye:recipe_stacks",
+                "unidye:item_name_affixes"
               ],
               "source": "block_entity"
             }
