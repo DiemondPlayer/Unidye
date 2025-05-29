@@ -1,7 +1,7 @@
 package net.diemond_player.unidye.item;
 
 import net.diemond_player.unidye.block.entity.DyeableLeatheryBlockEntity;
-import net.diemond_player.unidye.component.ItemNamePrefixComponent;
+import net.diemond_player.unidye.component.ItemNameAffixesComponent;
 import net.diemond_player.unidye.registry.UnidyeBlocks;
 import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.registry.UnidyeMaterialTypes;
@@ -56,7 +56,7 @@ public class DyeableLeatheryBlockItem extends DyeableBlockItem {
         }else{
             tooltip.add(mutableText.setStyle(mutableText.getStyle().withColor(getLeatherColor(stack))).append(Text.translatable("tooltip.unidye.beacon_color").append(getLeatherHexColor(stack)).formatted(Formatting.GRAY)));
         }
-        tooltip.add(stack.getOrDefault(UnidyeDataComponentTypes.ITEM_NAME_PREFIX, ItemNamePrefixComponent.DEFAULT).toText());
+        tooltip.add(stack.getOrDefault(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, ItemNameAffixesComponent.DEFAULT).toText());
     }
 
     @Override

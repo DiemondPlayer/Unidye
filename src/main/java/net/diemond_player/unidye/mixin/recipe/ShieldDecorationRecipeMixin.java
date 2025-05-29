@@ -33,8 +33,8 @@ public abstract class ShieldDecorationRecipeMixin {
             if(original.contains(DataComponentTypes.DYED_COLOR)) {
                 original.remove(DataComponentTypes.DYED_COLOR);
             }
-            if(original.contains(UnidyeDataComponentTypes.ITEM_NAME_PREFIX)) {
-                original.remove(UnidyeDataComponentTypes.ITEM_NAME_PREFIX);
+            if(original.contains(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES)) {
+                original.remove(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES);
             }
         }
         return original;

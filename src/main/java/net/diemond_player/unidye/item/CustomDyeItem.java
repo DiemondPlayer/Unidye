@@ -1,6 +1,6 @@
 package net.diemond_player.unidye.item;
 
-import net.diemond_player.unidye.component.ItemNamePrefixComponent;
+import net.diemond_player.unidye.component.ItemNameAffixesComponent;
 import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.registry.UnidyeMaterialTypes;
 import net.diemond_player.unidye.util.UnidyeAccessor;
@@ -120,7 +120,7 @@ public class CustomDyeItem extends DyeItem implements SignChangingItem{
         } else {
             tooltip.add(Text.translatable("tooltip.unidye.press_shift"));
         }
-        tooltip.add(stack.getOrDefault(UnidyeDataComponentTypes.ITEM_NAME_PREFIX, ItemNamePrefixComponent.DEFAULT).toText());
+        tooltip.add(stack.getOrDefault(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, ItemNameAffixesComponent.DEFAULT).toText());
     }
 
     @Override
@@ -161,13 +161,13 @@ public class CustomDyeItem extends DyeItem implements SignChangingItem{
 
 //    @Override
 //    public void onCraft(ItemStack itemStack, World world) {
-//        ItemNamePrefixComponent.updatePrefix(itemStack, world);
+//        ItemNameAffixesComponent.updatePrefix(itemStack, world);
 //        super.onCraft(itemStack, world);
 //    }
 //
 //    @Override
 //    public void onCraftByPlayer(ItemStack itemStack, World world, PlayerEntity player) {
-//        ItemNamePrefixComponent.updatePrefix(itemStack, world);
+//        ItemNameAffixesComponent.updatePrefix(itemStack, world);
 //        super.onCraftByPlayer(itemStack, world, player);
 //    }
 
@@ -182,7 +182,7 @@ public class CustomDyeItem extends DyeItem implements SignChangingItem{
 
     @Override
     public Text getName(ItemStack stack) {
-        Text text = ItemNamePrefixComponent.getName(stack, this.getTranslationKey());
+        Text text = ItemNameAffixesComponent.getName(stack, this.getTranslationKey());
         return text != null ? text : super.getName(stack);
     }
 }

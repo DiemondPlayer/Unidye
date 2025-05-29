@@ -74,8 +74,8 @@ public class CustomCircleDyeingRecipe extends SpecialCraftingRecipe {
         }});
         itemStack1.setCount(8);
         itemStack1.set(UnidyeDataComponentTypes.RECIPE_STACKS, RecipeStacksComponent.fromItemStacks(inventory.getStacks(), itemStack1.getCount()));
-        if(customDyeStack.contains(UnidyeDataComponentTypes.ITEM_NAME_PREFIX)){
-            itemStack1.set(UnidyeDataComponentTypes.ITEM_NAME_PREFIX, customDyeStack.get(UnidyeDataComponentTypes.ITEM_NAME_PREFIX));
+        if(customDyeStack.contains(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES)){
+            itemStack1.set(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, customDyeStack.get(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES));
         }
         return itemStack1;
     }

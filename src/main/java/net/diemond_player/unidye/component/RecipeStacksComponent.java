@@ -4,7 +4,6 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.diemond_player.unidye.Unidye;
 import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.component.ComponentChanges;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.item.Item;
@@ -56,9 +55,9 @@ public record RecipeStacksComponent(List<Stack> stacks, int outputAmount, boolea
             ItemStack itemStackCopy = itemStack.copy();
             if(itemStackCopy.isEmpty()) continue;
             if(itemStackCopy.isOf(Items.STICK) && Unidye.POLYMORPH) continue;
-            if(itemStackCopy.contains(UnidyeDataComponentTypes.ITEM_NAME_PREFIX)) {
-                ItemNamePrefixComponent itemNamePrefixComponent = itemStackCopy.get(UnidyeDataComponentTypes.ITEM_NAME_PREFIX);
-                itemStackCopy.set(UnidyeDataComponentTypes.ITEM_NAME_PREFIX, ItemNamePrefixComponent.noPrefix(itemNamePrefixComponent.sourceCustomDyeColor()));
+            if(itemStackCopy.contains(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES)) {
+                ItemNameAffixesComponent itemNamePrefixComponent = itemStackCopy.get(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES);
+                itemStackCopy.set(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, ItemNameAffixesComponent.noAffixes(itemNamePrefixComponent.sourceCustomDyeColor()));
             }
             stackList.add(new Stack(itemStackCopy.getRegistryEntry(), itemStackCopy.getComponentChanges()));
         }

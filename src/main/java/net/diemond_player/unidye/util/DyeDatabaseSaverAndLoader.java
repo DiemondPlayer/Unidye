@@ -26,6 +26,7 @@ public class DyeDatabaseSaverAndLoader extends PersistentState {
             DyeData dyeData = entry.getValue();
             entryNbt.putInt("color", entry.getKey());
             entryNbt.putString("prefix", dyeData.getPrefix());
+            entryNbt.putString("suffix", dyeData.getSuffix());
             //add exclusions
             nbtCompound.put(String.valueOf(count), entryNbt);
             count++;
@@ -38,23 +39,23 @@ public class DyeDatabaseSaverAndLoader extends PersistentState {
         DyeDatabaseSaverAndLoader state = new DyeDatabaseSaverAndLoader();
         NbtCompound nbtCompound = tag.getCompound("unidye.dye_name_database");
         nbtCompound.getKeys().forEach(key ->{
-            DyeData dyeData = new DyeData();
             int color = nbtCompound.getCompound(key).getInt("color");
             String prefix = nbtCompound.getCompound(key).getString("prefix");
-            dyeData.setPrefix(prefix);
+            String suffix = nbtCompound.getCompound(key).getString("suffix");
+            DyeData dyeData = new DyeData(prefix, suffix);
             //add exclusions
             state.database.put(color, dyeData);
         });
         return state;
     }
 
-    public static DyeData getDyeData(ServerWorld serverWorld, int customDyeColor) {
-        DyeDatabaseSaverAndLoader serverState = getServerState(serverWorld.getServer());
-
-        DyeData dyeData = serverState.database.computeIfAbsent(customDyeColor, color -> new DyeData());
-
-        return dyeData;
-    }
+//    public static DyeData getDyeData(ServerWorld serverWorld, int customDyeColor) {
+//        DyeDatabaseSaverAndLoader serverState = getServerState(serverWorld.getServer());
+//
+//        DyeData dyeData = serverState.database.computeIfAbsent(customDyeColor, color -> new DyeData());
+//
+//        return dyeData;
+//    }
 
 //    public static DyeDatabaseSaverAndLoader createFromNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
 //        DyeDatabaseSaverAndLoader state = new DyeDatabaseSaverAndLoader();

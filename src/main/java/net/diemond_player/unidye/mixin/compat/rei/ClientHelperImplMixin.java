@@ -13,7 +13,7 @@ import me.shedaniel.rei.plugin.client.categories.crafting.DefaultCraftingCategor
 import me.shedaniel.rei.plugin.common.displays.crafting.DefaultCraftingDisplay;
 import net.diemond_player.unidye.Unidye;
 import net.diemond_player.unidye.UnidyeClient;
-import net.diemond_player.unidye.component.ItemNamePrefixComponent;
+import net.diemond_player.unidye.component.ItemNameAffixesComponent;
 import net.diemond_player.unidye.component.RecipeStacksComponent;
 import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.util.DyeData;
@@ -43,16 +43,18 @@ public abstract class ClientHelperImplMixin {
                         Unidye.LOGGER.info("tried accessing database");
                         for(ItemStack itemStack1 : recipeStacksComponent.toItemStacks()){
                             if (database != null) {
-                                if (itemStack1.contains(UnidyeDataComponentTypes.ITEM_NAME_PREFIX)) {
-                                    int color = itemStack1.get(UnidyeDataComponentTypes.ITEM_NAME_PREFIX).sourceCustomDyeColor();
+                                if (itemStack1.contains(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES)) {
+                                    int color = itemStack1.get(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES).sourceCustomDyeColor();
                                     //Unidye.LOGGER.info(serverState.database.toString());
                                     if (database.containsKey(color)) {
-                                        Text text = Text.literal(database.get(color).getPrefix());
-                                        if (!itemStack1.get(UnidyeDataComponentTypes.ITEM_NAME_PREFIX).prefix().equals(text)) {
-                                            itemStack1.set(UnidyeDataComponentTypes.ITEM_NAME_PREFIX, new ItemNamePrefixComponent(text, color));
+                                        DyeData dyeData = database.get(color);
+                                        Text prefix = Text.literal(dyeData.getPrefix());
+                                        Text suffix = Text.literal(dyeData.getSuffix());
+                                        if(!itemStack1.get(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES).prefix().equals(prefix) || !itemStack.get(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES).suffix().equals(suffix)) {
+                                            itemStack1.set(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, new ItemNameAffixesComponent(prefix, suffix, color));
                                         }
                                     } else {
-                                        itemStack1.set(UnidyeDataComponentTypes.ITEM_NAME_PREFIX, ItemNamePrefixComponent.noPrefix(color));
+                                        itemStack1.set(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, ItemNameAffixesComponent.noAffixes(color));
                                     }
                                 }
                             } else {

@@ -67,8 +67,8 @@ public class CustomBedRecipe extends SpecialCraftingRecipe {
         }
         UnidyeUtils.setColor(itemStack1, DyeableLeatheryBlockItem.getLeatherColor(itemStack));
         itemStack1.set(UnidyeDataComponentTypes.RECIPE_STACKS, RecipeStacksComponent.fromItemStacks(inventory.getStacks(), itemStack1.getCount()));
-        if(itemStack.contains(UnidyeDataComponentTypes.ITEM_NAME_PREFIX)){
-            itemStack1.set(UnidyeDataComponentTypes.ITEM_NAME_PREFIX, itemStack.get(UnidyeDataComponentTypes.ITEM_NAME_PREFIX));
+        if(itemStack.contains(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES)){
+            itemStack1.set(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, itemStack.get(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES));
         }
         return itemStack1;
     }

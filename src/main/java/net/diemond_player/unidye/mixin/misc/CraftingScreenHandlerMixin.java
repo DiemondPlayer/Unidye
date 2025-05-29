@@ -1,8 +1,7 @@
 package net.diemond_player.unidye.mixin.misc;
 
-import net.diemond_player.unidye.component.ItemNamePrefixComponent;
+import net.diemond_player.unidye.component.ItemNameAffixesComponent;
 import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
-import net.diemond_player.unidye.registry.UnidyeItems;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.CraftingResultInventory;
 import net.minecraft.inventory.RecipeInputInventory;
@@ -23,8 +22,8 @@ public abstract class CraftingScreenHandlerMixin {
     @Inject(method = "updateResult", at = @At("TAIL"))
     private static void unidye$updateResult(ScreenHandler handler, World world, PlayerEntity player, RecipeInputInventory craftingInventory, CraftingResultInventory resultInventory, @Nullable RecipeEntry<CraftingRecipe> recipe, CallbackInfo ci) {
         ItemStack itemStack = resultInventory.getStack(0);
-        if (itemStack.contains(UnidyeDataComponentTypes.ITEM_NAME_PREFIX)){
-            ItemNamePrefixComponent.updatePrefix(itemStack, world);
+        if (itemStack.contains(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES)){
+            ItemNameAffixesComponent.updateAffixes(itemStack, world);
         }
     }
 }

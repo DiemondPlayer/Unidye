@@ -17,7 +17,6 @@ import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
-import net.minecraft.network.PacketByteBuf;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
@@ -100,10 +99,10 @@ public class Unidye implements ModInitializer {
 //            if (serverState.database.containsKey(color)) {
 //                Text text = Text.literal(serverState.database.get(color));
 //                if(!itemStack.get(UnidyeDataComponentTypes.ITEM_NAME_PREFIX).prefix().equals(text)) {
-//                    itemStack.set(UnidyeDataComponentTypes.ITEM_NAME_PREFIX, new ItemNamePrefixComponent(text, color));
+//                    itemStack.set(UnidyeDataComponentTypes.ITEM_NAME_PREFIX, new ItemNameAffixesComponent(text, color));
 //                }
 //            }else{
-//                itemStack.set(UnidyeDataComponentTypes.ITEM_NAME_PREFIX, ItemNamePrefixComponent.noPrefix(color));
+//                itemStack.set(UnidyeDataComponentTypes.ITEM_NAME_PREFIX, ItemNameAffixesComponent.noPrefix(color));
 //            }
 //            ServerPlayNetworking.send(context.player(), new UpdatePrefixPayload(itemStack));
 //        }));
@@ -127,7 +126,10 @@ public class Unidye implements ModInitializer {
         CommandRegistrationCallback.EVENT.register(UnidyeRandomCommand::register);
         CommandRegistrationCallback.EVENT.register(UnidyeColorizeCommand::register);
         CommandRegistrationCallback.EVENT.register(UnidyeVanillifyCommand::register);
-        CommandRegistrationCallback.EVENT.register(UnidyeNameCommand::register);
+        CommandRegistrationCallback.EVENT.register(UnidyeNamePrefixCommand::register);
+        CommandRegistrationCallback.EVENT.register(UnidyeNameSuffixCommand::register);
+        CommandRegistrationCallback.EVENT.register(UnidyeNameRemoveCommand::register);
+        CommandRegistrationCallback.EVENT.register(UnidyeNameRemoveDatabaseCommand::register);
     }
 
     public static boolean isModLoaded(String id) {

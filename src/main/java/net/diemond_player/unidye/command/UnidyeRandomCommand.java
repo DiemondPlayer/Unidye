@@ -3,7 +3,7 @@ package net.diemond_player.unidye.command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.context.CommandContext;
-import net.diemond_player.unidye.component.ItemNamePrefixComponent;
+import net.diemond_player.unidye.component.ItemNameAffixesComponent;
 import net.diemond_player.unidye.component.RecipeStacksComponent;
 import net.diemond_player.unidye.item.CustomDyeItem;
 import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
@@ -76,7 +76,7 @@ public class UnidyeRandomCommand {
             }
 
             if(serverPlayerEntity != null) {
-                ItemNamePrefixComponent.updatePrefix(itemStack, serverPlayerEntity.getWorld());
+                ItemNameAffixesComponent.updateAffixes(itemStack, serverPlayerEntity.getWorld());
                 boolean bl = serverPlayerEntity.getInventory().insertStack(itemStack);
                 if (bl && itemStack.isEmpty()) {
                     itemStack.setCount(1);

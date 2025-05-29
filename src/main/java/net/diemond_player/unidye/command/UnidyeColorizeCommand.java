@@ -2,7 +2,7 @@ package net.diemond_player.unidye.command;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
-import net.diemond_player.unidye.component.ItemNamePrefixComponent;
+import net.diemond_player.unidye.component.ItemNameAffixesComponent;
 import net.diemond_player.unidye.component.RecipeStacksComponent;
 import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.registry.UnidyeItemGroups;
@@ -39,7 +39,7 @@ public class UnidyeColorizeCommand {
 
                 if (serverPlayerEntity != null) {
                     ItemStack itemStack = UnidyeUtils.blendAndSetColor(new ItemStack(item), Lists.newArrayList(), List.of(serverPlayerEntity.getMainHandStack()));
-                    ItemNamePrefixComponent.updatePrefix(itemStack, serverPlayerEntity.getWorld());
+                    ItemNameAffixesComponent.updateAffixes(itemStack, serverPlayerEntity.getWorld());
                     itemStack.set(UnidyeDataComponentTypes.RECIPE_STACKS, RecipeStacksComponent.fromItemStacks(List.of(new ItemStack(item), serverPlayerEntity.getMainHandStack()), 1, true));
                     boolean bl = serverPlayerEntity.getInventory().insertStack(itemStack);
                     if (bl && itemStack.isEmpty()) {

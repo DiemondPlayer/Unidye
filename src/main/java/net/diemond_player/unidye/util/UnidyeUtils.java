@@ -1,6 +1,6 @@
 package net.diemond_player.unidye.util;
 
-import net.diemond_player.unidye.component.ItemNamePrefixComponent;
+import net.diemond_player.unidye.component.ItemNameAffixesComponent;
 import net.diemond_player.unidye.item.CustomDyeItem;
 import net.diemond_player.unidye.item.DyeableLeatheryBlockItem;
 import net.diemond_player.unidye.registry.UnidyeBlocks;
@@ -104,9 +104,9 @@ public class UnidyeUtils {
         int[] is = new int[3];
         int j = 0;
 
-        if (stack.contains(UnidyeDataComponentTypes.ITEM_NAME_PREFIX)) {
-            if (stack.get(UnidyeDataComponentTypes.ITEM_NAME_PREFIX).sourceCustomDyeColor() != 0xFFFFFF) {
-                int k = stack.get(UnidyeDataComponentTypes.ITEM_NAME_PREFIX).sourceCustomDyeColor();
+        if (stack.contains(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES)) {
+            if (stack.get(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES).sourceCustomDyeColor() != 0xFFFFFF) {
+                int k = stack.get(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES).sourceCustomDyeColor();
                 float f = (float) (k >> 16 & 0xFF);
                 float g = (float) (k >> 8 & 0xFF);
                 float h = (float) (k & 0xFF);
@@ -140,7 +140,7 @@ public class UnidyeUtils {
         int o = (int) Math.sqrt((double) is[1] / j);
         int p = (int) Math.sqrt((double) is[2] / j);
         n = ColorHelper.Argb.getArgb(0, k, o, p);
-        stack.set(UnidyeDataComponentTypes.ITEM_NAME_PREFIX, ItemNamePrefixComponent.noPrefix(n));
+        stack.set(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, ItemNameAffixesComponent.noAffixes(n));
     }
 
     public static ItemStack blendAndSetColor(ItemStack stack, List<DyeItem> colors, List<ItemStack> customColors) {

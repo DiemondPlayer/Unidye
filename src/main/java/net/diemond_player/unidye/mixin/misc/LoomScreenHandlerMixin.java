@@ -1,7 +1,7 @@
 package net.diemond_player.unidye.mixin.misc;
 
 import net.diemond_player.unidye.component.CustomBannerPatternsComponent;
-import net.diemond_player.unidye.component.ItemNamePrefixComponent;
+import net.diemond_player.unidye.component.ItemNameAffixesComponent;
 import net.diemond_player.unidye.item.CustomDyeItem;
 import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.registry.UnidyeItems;
@@ -20,7 +20,6 @@ import net.minecraft.screen.Property;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.screen.slot.Slot;
-import net.minecraft.text.Text;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.ColorHelper;
 import org.jetbrains.annotations.Nullable;
@@ -74,7 +73,7 @@ public abstract class LoomScreenHandlerMixin extends ScreenHandler {
                     itemStack3.apply(
                             UnidyeDataComponentTypes.CUSTOM_BANNER_PATTERNS,
                             CustomBannerPatternsComponent.DEFAULT,
-                            component -> new CustomBannerPatternsComponent.Builder().addAll(component).add(pattern, CustomDyeItem.getMaterialColor(itemStack2, UnidyeMaterialTypes.LEATHER), itemStack2.getOrDefault(UnidyeDataComponentTypes.ITEM_NAME_PREFIX, ItemNamePrefixComponent.DEFAULT).prefix()).build()
+                            component -> new CustomBannerPatternsComponent.Builder().addAll(component).add(pattern, CustomDyeItem.getMaterialColor(itemStack2, UnidyeMaterialTypes.LEATHER), itemStack2.getOrDefault(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, ItemNameAffixesComponent.DEFAULT)).build()
                     );
                 } else {
                     DyeColor dyeColor = ((DyeItem) itemStack2.getItem()).getColor();
@@ -104,7 +103,7 @@ public abstract class LoomScreenHandlerMixin extends ScreenHandler {
                 itemStack3.apply(
                         UnidyeDataComponentTypes.CUSTOM_BANNER_PATTERNS,
                         CustomBannerPatternsComponent.DEFAULT,
-                        component -> new CustomBannerPatternsComponent.Builder().addAll(component).add(pattern, CustomDyeItem.getMaterialColor(itemStack2, UnidyeMaterialTypes.LEATHER), itemStack2.getOrDefault(UnidyeDataComponentTypes.ITEM_NAME_PREFIX, ItemNamePrefixComponent.DEFAULT).prefix()).build()
+                        component -> new CustomBannerPatternsComponent.Builder().addAll(component).add(pattern, CustomDyeItem.getMaterialColor(itemStack2, UnidyeMaterialTypes.LEATHER), itemStack2.getOrDefault(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, ItemNameAffixesComponent.DEFAULT)).build()
                 );
             }
 

@@ -8,13 +8,10 @@ import dev.emi.emi.api.stack.EmiStack;
 import dev.emi.emi.registry.EmiRecipes;
 import net.diemond_player.unidye.Unidye;
 import net.diemond_player.unidye.UnidyeClient;
-import net.diemond_player.unidye.component.ItemNamePrefixComponent;
+import net.diemond_player.unidye.component.ItemNameAffixesComponent;
 import net.diemond_player.unidye.component.RecipeStacksComponent;
-import net.diemond_player.unidye.payload.RequestDatabasePayload;
 import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.util.DyeData;
-import net.diemond_player.unidye.util.UnidyeAccessor;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
@@ -74,16 +71,18 @@ public abstract class EmiApiMixin{
                 Unidye.LOGGER.info("tried accessing database");
                 if (database != null) {
                     for (ItemStack itemStack1 : itemStacks) {
-                        if (!itemStack1.contains(UnidyeDataComponentTypes.ITEM_NAME_PREFIX)) continue;
-                        int color = itemStack1.get(UnidyeDataComponentTypes.ITEM_NAME_PREFIX).sourceCustomDyeColor();
+                        if (!itemStack1.contains(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES)) continue;
+                        int color = itemStack1.get(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES).sourceCustomDyeColor();
                         //Unidye.LOGGER.info(serverState.database.toString());
                         if (database.containsKey(color)) {
-                            Text text = Text.literal(database.get(color).getPrefix());
-                            if (!itemStack1.get(UnidyeDataComponentTypes.ITEM_NAME_PREFIX).prefix().equals(text)) {
-                                itemStack1.set(UnidyeDataComponentTypes.ITEM_NAME_PREFIX, new ItemNamePrefixComponent(text, color));
+                            DyeData dyeData = database.get(color);
+                            Text prefix = Text.literal(dyeData.getPrefix());
+                            Text suffix = Text.literal(dyeData.getSuffix());
+                            if(!itemStack1.get(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES).prefix().equals(prefix) || !itemStack.get(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES).suffix().equals(suffix)) {
+                                itemStack1.set(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, new ItemNameAffixesComponent(prefix, suffix, color));
                             }
                         } else {
-                            itemStack1.set(UnidyeDataComponentTypes.ITEM_NAME_PREFIX, ItemNamePrefixComponent.noPrefix(color));
+                            itemStack1.set(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, ItemNameAffixesComponent.noAffixes(color));
                         }
                     }
                 } else {

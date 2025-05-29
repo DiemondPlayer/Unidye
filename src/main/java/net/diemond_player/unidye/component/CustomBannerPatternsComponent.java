@@ -1,10 +1,10 @@
 package net.diemond_player.unidye.component;
 
 import com.google.common.collect.ImmutableList;
-import com.mojang.logging.LogUtils;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.diemond_player.unidye.Unidye;
+import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.block.entity.BannerPattern;
 import net.minecraft.network.RegistryByteBuf;
@@ -18,7 +18,6 @@ import net.minecraft.text.Text;
 import net.minecraft.text.TextCodecs;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Formatting;
-import org.slf4j.Logger;
 
 import java.util.List;
 import java.util.Optional;
@@ -51,11 +50,11 @@ public record CustomBannerPatternsComponent(List<CustomBannerPatternsComponent.L
         }
 
         public CustomBannerPatternsComponent.Builder add(RegistryEntry<BannerPattern> pattern, int color) {
-            return this.add(new CustomBannerPatternsComponent.Layer(pattern, color, Text.empty()));
+            return this.add(new CustomBannerPatternsComponent.Layer(pattern, color, ItemNameAffixesComponent.DEFAULT));
         }
 
-        public CustomBannerPatternsComponent.Builder add(RegistryEntry<BannerPattern> pattern, int color, Text colorName) {
-            return this.add(new CustomBannerPatternsComponent.Layer(pattern, color, colorName));
+        public CustomBannerPatternsComponent.Builder add(RegistryEntry<BannerPattern> pattern, int color, ItemNameAffixesComponent itemNameAffixesComponent) {
+            return this.add(new CustomBannerPatternsComponent.Layer(pattern, color, itemNameAffixesComponent));
         }
 
         public CustomBannerPatternsComponent.Builder add(CustomBannerPatternsComponent.Layer layer) {
@@ -73,12 +72,12 @@ public record CustomBannerPatternsComponent(List<CustomBannerPatternsComponent.L
         }
     }
 
-    public record Layer(RegistryEntry<BannerPattern> pattern, int color, Text colorName) {
+    public record Layer(RegistryEntry<BannerPattern> pattern, int color, ItemNameAffixesComponent itemNameAffixesComponent) {
         public static final Codec<CustomBannerPatternsComponent.Layer> CODEC = RecordCodecBuilder.create(
                 instance -> instance.group(
                                 BannerPattern.ENTRY_CODEC.fieldOf("pattern").forGetter(CustomBannerPatternsComponent.Layer::pattern),
                                 Codec.intRange(0, 0xFFFFFF).fieldOf("color").forGetter(CustomBannerPatternsComponent.Layer::color),
-                                TextCodecs.STRINGIFIED_CODEC.fieldOf("colorName").forGetter(CustomBannerPatternsComponent.Layer::colorName)
+                                ItemNameAffixesComponent.CODEC.fieldOf("itemNameAffixesComponent").forGetter(CustomBannerPatternsComponent.Layer::itemNameAffixesComponent)
                                 )
                         .apply(instance, CustomBannerPatternsComponent.Layer::new)
         );
@@ -87,8 +86,8 @@ public record CustomBannerPatternsComponent(List<CustomBannerPatternsComponent.L
                 CustomBannerPatternsComponent.Layer::pattern,
                 PacketCodecs.codec(Codec.intRange(0, 0xFFFFFF)),
                 CustomBannerPatternsComponent.Layer::color,
-                TextCodecs.REGISTRY_PACKET_CODEC,
-                CustomBannerPatternsComponent.Layer::colorName,
+                ItemNameAffixesComponent.PACKET_CODEC,
+                CustomBannerPatternsComponent.Layer::itemNameAffixesComponent,
                 CustomBannerPatternsComponent.Layer::new
         );
 
@@ -98,11 +97,16 @@ public record CustomBannerPatternsComponent(List<CustomBannerPatternsComponent.L
             MutableText mutableText = Text.literal("■ ");
             mutableText.setStyle(mutableText.getStyle().withColor(this.color));
             if (dyeColor.isEmpty()) {
-                if(this.colorName.equals(Text.empty())){
-                    return mutableText.append(Text.literal("§7#" + Integer.toString(this.color, 16).toUpperCase() + " ").append(Text.translatable(string).formatted(Formatting.GRAY)));
-                }else{
-                    return mutableText.append((this.colorName.copy()).append(" ").append(Text.translatable(string)).formatted(Formatting.GRAY));
-                }
+                MutableText prefix = this.itemNameAffixesComponent().prefix().copy();
+                MutableText suffix = this.itemNameAffixesComponent().suffix().copy();
+                boolean isPrefixEmpty = prefix.equals(Text.empty());
+                boolean isSuffixEmpty = suffix.equals(Text.empty());
+                MutableText name = Text.empty();
+                if(isPrefixEmpty && isSuffixEmpty) return mutableText.append(Text.literal("§7#" + Integer.toString(this.color, 16).toUpperCase() + " ").append(Text.translatable(string).formatted(Formatting.GRAY)));
+                if(!isPrefixEmpty) name.append(prefix).append(Text.literal(" "));
+                name.append(Text.translatable(string));
+                if(!isSuffixEmpty) name.append(Text.literal(" ")).append(suffix);
+                return mutableText.append(name.formatted(Formatting.GRAY));
             } else {
                 return mutableText.append(Text.translatable(string + "." + dyeColor.get().getName()).formatted(Formatting.GRAY));
             }

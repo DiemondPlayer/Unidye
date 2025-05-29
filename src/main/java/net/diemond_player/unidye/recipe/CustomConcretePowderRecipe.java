@@ -56,8 +56,8 @@ public class CustomConcretePowderRecipe extends SpecialCraftingRecipe {
         UnidyeUtils.setColor(itemStack1, CustomDyeItem.getMaterialColor(itemStack, UnidyeMaterialTypes.CONCRETE));
         itemStack1.setCount(8);
         itemStack1.set(UnidyeDataComponentTypes.RECIPE_STACKS, RecipeStacksComponent.fromItemStacks(inventory.getStacks(), itemStack1.getCount(), true));
-        if(itemStack.contains(UnidyeDataComponentTypes.ITEM_NAME_PREFIX)){
-            itemStack1.set(UnidyeDataComponentTypes.ITEM_NAME_PREFIX, itemStack.get(UnidyeDataComponentTypes.ITEM_NAME_PREFIX));
+        if(itemStack.contains(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES)){
+            itemStack1.set(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, itemStack.get(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES));
         }
         return itemStack1;
     }

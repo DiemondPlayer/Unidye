@@ -1,7 +1,6 @@
 package net.diemond_player.unidye.mixin.recipe;
 
 import com.google.common.collect.Lists;
-import net.diemond_player.unidye.component.ItemNamePrefixComponent;
 import net.diemond_player.unidye.component.RecipeStacksComponent;
 import net.diemond_player.unidye.item.CustomDyeItem;
 import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
