@@ -4,7 +4,6 @@ package net.diemond_player.unidye.util;
 //Source: https://github.com/Juuxel/Adorn/blob/bd70a2955640897bc68ff1f4f201fe5e6c10bc32/fabric/src/main/java/juuxel/adorn/AdornMixinPlugin.java
 
 import com.google.common.collect.ImmutableMap;
-import net.diemond_player.unidye.Unidye;
 import net.fabricmc.loader.api.FabricLoader;
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;

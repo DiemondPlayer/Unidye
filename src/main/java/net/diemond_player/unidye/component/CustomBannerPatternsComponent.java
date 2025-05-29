@@ -4,7 +4,6 @@ import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.diemond_player.unidye.Unidye;
-import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.block.entity.BannerPattern;
 import net.minecraft.network.RegistryByteBuf;
@@ -15,7 +14,6 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
-import net.minecraft.text.TextCodecs;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Formatting;
 

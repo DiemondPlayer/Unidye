@@ -2,39 +2,20 @@ package net.diemond_player.unidye.compat.jei;
 
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
-import mezz.jei.api.constants.RecipeTypes;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.helpers.IJeiHelpers;
-import mezz.jei.api.helpers.IStackHelper;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
-import mezz.jei.api.runtime.IIngredientManager;
-import mezz.jei.common.Internal;
 import mezz.jei.common.util.ErrorUtil;
 import mezz.jei.library.plugins.vanilla.crafting.CraftingRecipeCategory;
-import mezz.jei.library.plugins.vanilla.crafting.VanillaRecipes;
-import mezz.jei.library.plugins.vanilla.crafting.replacers.ShieldDecorationRecipeMaker;
-import mezz.jei.library.plugins.vanilla.crafting.replacers.ShulkerBoxColoringRecipeMaker;
-import mezz.jei.library.plugins.vanilla.crafting.replacers.SuspiciousStewRecipeMaker;
-import mezz.jei.library.plugins.vanilla.crafting.replacers.TippedArrowRecipeMaker;
-import mezz.jei.library.recipes.collect.RecipeMap;
 import net.diemond_player.unidye.Unidye;
-import net.diemond_player.unidye.recipe.CustomDyeRecipe;
 import net.diemond_player.unidye.registry.UnidyeBlocks;
 import net.diemond_player.unidye.registry.UnidyeItems;
-import net.minecraft.recipe.*;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.IdentityHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.function.Supplier;
-import java.util.stream.Stream;
 
 @JeiPlugin @SuppressWarnings("unused")
 public class UnidyeJEIPlugin implements IModPlugin {

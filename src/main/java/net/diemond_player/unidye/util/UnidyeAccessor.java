@@ -9,8 +9,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.BlockRenderView;
 
-import java.util.HashMap;
-
 public interface UnidyeAccessor {
 
     int unidye$getCustomColor();

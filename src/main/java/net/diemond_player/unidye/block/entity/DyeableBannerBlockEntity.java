@@ -1,6 +1,5 @@
 package net.diemond_player.unidye.block.entity;
 
-import com.mojang.logging.LogUtils;
 import net.diemond_player.unidye.Unidye;
 import net.diemond_player.unidye.component.CustomBannerPatternsComponent;
 import net.diemond_player.unidye.registry.UnidyeBlockEntities;
@@ -22,7 +21,6 @@ import net.minecraft.util.Nameable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
 import org.jetbrains.annotations.Nullable;
-import org.slf4j.Logger;
 
 import static net.diemond_player.unidye.item.CustomDyeItem.DEFAULT_WHITE_COLOR;
 

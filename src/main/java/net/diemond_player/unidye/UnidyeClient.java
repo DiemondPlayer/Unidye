@@ -8,7 +8,6 @@ import net.diemond_player.unidye.payload.DatabasePayload;
 import net.diemond_player.unidye.payload.SetColorAndRerenderBlockPayload;
 import net.diemond_player.unidye.registry.*;
 import net.diemond_player.unidye.util.DyeData;
-import net.diemond_player.unidye.util.UnidyeAccessor;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
