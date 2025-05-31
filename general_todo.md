@@ -1,6 +1,7 @@
 ## TODOs and FIXMEs
 
 ### Gameplay:
+- **FIXME** shearing a sheep gives a wool with no prefix component
 - **TODO** native usage of recipe saving system
 - **TODO** add exclusions to naming system
 - **TODO** recipe stacks should remember tags when possible

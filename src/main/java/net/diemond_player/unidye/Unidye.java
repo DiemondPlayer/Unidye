@@ -29,15 +29,6 @@ import java.util.ArrayList;
 public class Unidye implements ModInitializer {
 
     public static final ArrayList<Item> STONECUTTER_PRESERVE_COLOR = Lists.newArrayList();
-    public static final ArrayList<Pair<ArrayList<Item>, ItemConvertible>> REI_ARRAY_DRIVEN_CIRCLE_DYEING_RECIPE_PARAMETERS = Lists.newArrayList();
-    public static final ArrayList<Pair<TagKey<Item>, ItemConvertible>> REI_TAG_DRIVEN_CIRCLE_DYEING_RECIPE_PARAMETERS = Lists.newArrayList(
-            Pair.of(ConventionalItemTags.GLASS_BLOCKS, UnidyeBlocks.CUSTOM_STAINED_GLASS),
-            Pair.of(ConventionalItemTags.GLASS_PANES, UnidyeBlocks.CUSTOM_STAINED_GLASS_PANE),
-            Pair.of(ItemTags.CANDLES, UnidyeBlocks.CUSTOM_CANDLE),
-            Pair.of(ItemTags.WOOL_CARPETS, UnidyeBlocks.CUSTOM_CARPET),
-            Pair.of(ItemTags.WOOL, UnidyeBlocks.CUSTOM_WOOL),
-            Pair.of(ItemTags.TERRACOTTA, UnidyeBlocks.CUSTOM_TERRACOTTA)
-    );
 
     public static final Identifier SET_COLOR_AND_RERENDER_BLOCK_PACKET_ID = Identifier.of(Unidye.MOD_ID, "set_color_and_rerender_block");
     public static final Identifier REQUEST_DATABASE_PACKET_ID = Identifier.of(Unidye.MOD_ID, "request_database");
