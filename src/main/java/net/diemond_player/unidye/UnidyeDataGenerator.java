@@ -10,7 +10,7 @@ public class UnidyeDataGenerator implements DataGeneratorEntrypoint {
     @Override
     public void onInitializeDataGenerator(FabricDataGenerator fabricDataGenerator) {
         FabricDataGenerator.Pack pack = fabricDataGenerator.createPack();
-        pack.addProvider(UnidyeRecipeGenerator::new);
+//        pack.addProvider(UnidyeRecipeGenerator::new);
         pack.addProvider(UnidyeBlockTagProvider::new);
         pack.addProvider(UnidyeItemTagProvider::new);
     }

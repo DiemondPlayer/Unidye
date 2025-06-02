@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import net.diemond_player.unidye.Unidye;
 import net.diemond_player.unidye.block.DyeableShulkerBoxBlock;
 import net.diemond_player.unidye.component.CustomBannerPatternsComponent;
+import net.diemond_player.unidye.util.EmiCauldronRecipeData;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 import net.minecraft.block.Block;
@@ -23,16 +24,29 @@ import net.minecraft.stat.Stats;
 import net.minecraft.util.ItemActionResult;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static net.minecraft.block.cauldron.CauldronBehavior.WATER_CAULDRON_BEHAVIOR;
 
 public class UnidyeCauldronBehaviors {
 
     public static final ArrayList<Runnable> COMPAT_CAULDRON_BEHAVIOURS = Lists.newArrayList();
+    public static final ArrayList<EmiCauldronRecipeData> EMI_CAULDRON_RECIPE_DATA = Lists.newArrayList(
+            new EmiCauldronRecipeData("minecraft/wool", ItemTags.WOOL, Blocks.WHITE_WOOL),
+            new EmiCauldronRecipeData("minecraft/candle", ItemTags.CANDLES, Items.CANDLE),
+            new EmiCauldronRecipeData("minecraft/shulker_box", ConventionalItemTags.SHULKER_BOXES, Blocks.SHULKER_BOX),
+            new EmiCauldronRecipeData("minecraft/terracotta", ItemTags.TERRACOTTA, Blocks.TERRACOTTA),
+            new EmiCauldronRecipeData("minecraft/glass", ConventionalItemTags.GLASS_BLOCKS_CHEAP, Blocks.GLASS),
+            new EmiCauldronRecipeData("minecraft/glass_pane", ConventionalItemTags.GLASS_PANES, Blocks.GLASS_PANE),
+            new EmiCauldronRecipeData("minecraft/carpet", ItemTags.WOOL_CARPETS, Blocks.WHITE_CARPET),
+            new EmiCauldronRecipeData("minecraft/concrete", UnidyeTags.CONCRETES, Blocks.WHITE_CONCRETE),
+            new EmiCauldronRecipeData("minecraft/bed", ItemTags.BEDS, Blocks.WHITE_BED)
+            //new EmiCauldronRecipeData("minecraft/axes", ItemTags.AXES, Items.DIAMOND_AXE)
+    );
 
     public static void registerCauldronBehaviors() {
 
-//        COMPAT_CAULDRON_BEHAVIOURS.add(() -> registerUndyeingBehavior(ItemTags.AXES, Items.DIAMOND_AXE));
+        //COMPAT_CAULDRON_BEHAVIOURS.add(() -> registerUndyeingBehavior(ItemTags.AXES, Items.DIAMOND_AXE));
 
         WATER_CAULDRON_BEHAVIOR.map().put(UnidyeItems.CUSTOM_BANNER, CLEAN_CUSTOM_BANNER);
 
@@ -42,7 +56,7 @@ public class UnidyeCauldronBehaviors {
 
         registerUndyeingBehavior(ItemTags.WOOL, Blocks.WHITE_WOOL);
 
-        registerUndyeingBehavior(ConventionalItemTags.GLASS_BLOCKS, Blocks.GLASS);
+        registerUndyeingBehavior(ConventionalItemTags.GLASS_BLOCKS_CHEAP, Blocks.GLASS);
 
         registerUndyeingBehavior(ConventionalItemTags.GLASS_PANES, Blocks.GLASS_PANE);
 
@@ -50,25 +64,13 @@ public class UnidyeCauldronBehaviors {
 
         registerUndyeingBehavior(ItemTags.CANDLES, Items.CANDLE);
 
-        registerUndyeingBehavior(
-                Lists.newArrayList(UnidyeBlocks.CUSTOM_CONCRETE.asItem(),
-                        Blocks.BLACK_CONCRETE.asItem(), Blocks.BROWN_CONCRETE.asItem(),
-                        Blocks.RED_CONCRETE.asItem(), Blocks.BLUE_CONCRETE.asItem(),
-                        Blocks.YELLOW_CONCRETE.asItem(), Blocks.LIGHT_GRAY_CONCRETE.asItem(),
-                        Blocks.GRAY_CONCRETE.asItem(), Blocks.PINK_CONCRETE.asItem(),
-                        Blocks.MAGENTA_CONCRETE.asItem(), Blocks.PURPLE_CONCRETE.asItem(),
-                        Blocks.LIGHT_BLUE_CONCRETE.asItem(), Blocks.CYAN_CONCRETE.asItem(),
-                        Blocks.ORANGE_CONCRETE.asItem(), Blocks.GREEN_CONCRETE.asItem(),
-                        Blocks.LIME_CONCRETE.asItem()
-                ), Blocks.WHITE_CONCRETE);
+        registerUndyeingBehavior(UnidyeTags.CONCRETES, Blocks.WHITE_CONCRETE);
 
         registerUndyeingBehavior(ItemTags.BEDS, Blocks.WHITE_BED);
 
         if (Unidye.SIMPLE_CONCRETE) {
             WATER_CAULDRON_BEHAVIOR.map().put(UnidyeBlocks.CUSTOM_CONCRETE_POWDER.asItem(), HARDEN_CUSTOM_CONCRETE_POWDER);
         }
-
-        WATER_CAULDRON_BEHAVIOR.map().remove(Items.TINTED_GLASS);
 
         for(Runnable r : COMPAT_CAULDRON_BEHAVIOURS){
             r.run();

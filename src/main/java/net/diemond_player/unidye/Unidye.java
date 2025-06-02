@@ -46,7 +46,6 @@ public class Unidye implements ModInitializer {
         UnidyeItemGroups.registerItemGroups();
         UnidyeBlocks.registerModBlocks();
         UnidyeBlockEntities.registerBlockEntities();
-//        UnidyeCauldronBehaviors.registerCauldronBehaviors();
         UnidyeSpecialRecipes.registerSpecialRecipes();
         UnidyeMaterialTypes.registerMaterialTypes();
         UnidyeDataComponentTypes.registerModDataComponentTypes();

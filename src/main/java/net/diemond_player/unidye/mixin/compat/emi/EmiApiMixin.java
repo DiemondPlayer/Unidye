@@ -30,7 +30,6 @@ import java.util.stream.Stream;
 
 @Mixin(value = EmiApi.class, remap = false)
 public abstract class EmiApiMixin{
-    @Shadow @Final private static MinecraftClient client;
 
     @Shadow
     private static void push() {

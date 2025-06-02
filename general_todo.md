@@ -36,8 +36,6 @@
 - **TODO** use the former mentioned datapack system to add new shapes when other dye mods are present
 - **TODO** JEI proper compat
 - **TODO** JEI recipe saving impl
-- **TODO** EMI automatic cauldron washing recipes based on CauldronBehavior
-- **FIXME** EMI disable cauldron washing recipes that aren't actually there
 - **FIXME** EMI recipe tree knows no diff between custom dyes
 - **FIXME** REI compat gives way too many example displays
 - **consider TODO** replace fillers with just 1 display per recipe in REI compat

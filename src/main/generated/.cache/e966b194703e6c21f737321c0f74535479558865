@@ -1,15 +1,14 @@
-// 1.20.5	2025-01-26T17:15:56.0666329	Unidye/Tags for minecraft:block
-e0437d357e4826b7f93ddd01fae08071152d5298 data\minecraft\tags\blocks\banners.json
-d94ae2283653c83aa2e0e721dae61994b8ad05ec data\c\tags\blocks\shulker_boxes.json
-e0437d357e4826b7f93ddd01fae08071152d5298 data\minecraft\tags\blocks\mineable\axe.json
-8c54dac446704a57f3ebbe34192bd2a52ac9ea6a data\c\tags\blocks\glass_blocks.json
-274ff106f1d975a9c3303ce9ccca46a3172c6957 data\minecraft\tags\blocks\wool_carpets.json
-574c38bd41635b29a693fc101ae2ab8b7fefcfd0 data\minecraft\tags\blocks\candle_cakes.json
-4ed925c7fc8bb865f7a13efc4853730b2f2d8f1d data\c\tags\blocks\glass_panes.json
-3ac69242ed55db13dca216626a6b948c96aebd73 data\minecraft\tags\blocks\mineable\shovel.json
-606bce3b0dba3dfc29dc0388a64b12ae4b1187fa data\minecraft\tags\blocks\wool.json
-cdefd46151a108599f1d90c3808af96b757061e9 data\minecraft\tags\blocks\mineable\pickaxe.json
-68d4f474f9b7891a1256fbd00c413f6a10b63503 data\minecraft\tags\blocks\beds.json
-588a175b3a50c2589613bd2862efd35ffcba2f5c data\minecraft\tags\blocks\terracotta.json
-d94ae2283653c83aa2e0e721dae61994b8ad05ec data\minecraft\tags\blocks\shulker_boxes.json
-40a0ecf928c99410ce6033066cb5ba9053c778dd data\minecraft\tags\blocks\candles.json
+// 1.21.1	2025-06-02T15:30:38.1761111	Unidye/Tags for minecraft:block
+574c38bd41635b29a693fc101ae2ab8b7fefcfd0 data\minecraft\tags\block\candle_cakes.json
+cdefd46151a108599f1d90c3808af96b757061e9 data\minecraft\tags\block\mineable\pickaxe.json
+e0437d357e4826b7f93ddd01fae08071152d5298 data\minecraft\tags\block\mineable\axe.json
+40a0ecf928c99410ce6033066cb5ba9053c778dd data\minecraft\tags\block\candles.json
+274ff106f1d975a9c3303ce9ccca46a3172c6957 data\minecraft\tags\block\wool_carpets.json
+606bce3b0dba3dfc29dc0388a64b12ae4b1187fa data\minecraft\tags\block\wool.json
+68d4f474f9b7891a1256fbd00c413f6a10b63503 data\minecraft\tags\block\beds.json
+e0437d357e4826b7f93ddd01fae08071152d5298 data\minecraft\tags\block\banners.json
+d94ae2283653c83aa2e0e721dae61994b8ad05ec data\minecraft\tags\block\shulker_boxes.json
+4ed925c7fc8bb865f7a13efc4853730b2f2d8f1d data\c\tags\block\glass_panes.json
+3ac69242ed55db13dca216626a6b948c96aebd73 data\minecraft\tags\block\mineable\shovel.json
+588a175b3a50c2589613bd2862efd35ffcba2f5c data\minecraft\tags\block\terracotta.json
+8c54dac446704a57f3ebbe34192bd2a52ac9ea6a data\c\tags\block\glass_blocks.json

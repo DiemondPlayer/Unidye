@@ -116,3 +116,7 @@ The changelog posted on Modrinth/Curseforge would be without those minor changes
 • Fixed concrete powder issues
 • Now vanilla fireworks will always have a square colored with a color of a firework explosion to visualise the firework colors better
 • Now custom banners will always have the custom banner pattern component
+• Added c:concretes to control the behavior of cauldrons
+• Added (somewhat) automatic EMI support to cauldron behaviors
+• Fixed tags a bit (cheap glass, etc)
+• Removed not existing cauldron washing recipes from EMI
