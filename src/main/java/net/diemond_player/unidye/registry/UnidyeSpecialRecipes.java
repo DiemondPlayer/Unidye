@@ -3,8 +3,10 @@ package net.diemond_player.unidye.registry;
 import net.diemond_player.unidye.Unidye;
 import net.diemond_player.unidye.recipe.*;
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
+import net.minecraft.block.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
+import net.minecraft.item.Items;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SpecialCraftingRecipe;
 import net.minecraft.recipe.SpecialRecipeSerializer;
@@ -30,27 +32,27 @@ public class UnidyeSpecialRecipes {
 
     public static final RecipeSerializer<CustomCircleDyeingRecipe> CUSTOM_TERRACOTTA_DYEING = registerSpecialCircleDyeingRecipe(
             "crafting_special_custom_terracotta_dyeing",
-            ItemTags.TERRACOTTA, UnidyeBlocks.CUSTOM_TERRACOTTA);
+            ItemTags.TERRACOTTA, Blocks.TERRACOTTA, UnidyeBlocks.CUSTOM_TERRACOTTA);
 
     public static final RecipeSerializer<CustomCircleDyeingRecipe> CUSTOM_STAINED_GLASS_DYEING = registerSpecialCircleDyeingRecipe(
             "crafting_special_custom_stained_glass_dyeing",
-            ConventionalItemTags.GLASS_BLOCKS, UnidyeBlocks.CUSTOM_STAINED_GLASS);
+            ConventionalItemTags.GLASS_BLOCKS, Blocks.GLASS, UnidyeBlocks.CUSTOM_STAINED_GLASS);
 
     public static final RecipeSerializer<CustomCircleDyeingRecipe> CUSTOM_STAINED_GLASS_PANE_DYEING = registerSpecialCircleDyeingRecipe(
             "crafting_special_custom_stained_glass_pane_dyeing",
-            ConventionalItemTags.GLASS_PANES, UnidyeBlocks.CUSTOM_STAINED_GLASS_PANE);
+            ConventionalItemTags.GLASS_PANES, Blocks.GLASS_PANE, UnidyeBlocks.CUSTOM_STAINED_GLASS_PANE);
 
     public static final RecipeSerializer<CustomCircleDyeingRecipe> CUSTOM_CANDLE_DYEING = registerSpecialCircleDyeingRecipe(
             "crafting_special_custom_candle_dyeing",
-            ItemTags.CANDLES, UnidyeBlocks.CUSTOM_CANDLE);
+            ItemTags.CANDLES, Items.CANDLE, UnidyeBlocks.CUSTOM_CANDLE);
 
     public static final RecipeSerializer<CustomCircleDyeingRecipe> CUSTOM_CARPET_DYEING = registerSpecialCircleDyeingRecipe(
             "crafting_special_custom_carpet_dyeing",
-            ItemTags.WOOL_CARPETS, UnidyeBlocks.CUSTOM_CARPET);
+            ItemTags.WOOL_CARPETS, Blocks.WHITE_CARPET, UnidyeBlocks.CUSTOM_CARPET);
 
     public static final RecipeSerializer<CustomCircleDyeingRecipe> CUSTOM_WOOL_DYEING = registerSpecialCircleDyeingRecipe(
             "crafting_special_custom_wool_dyeing",
-            ItemTags.WOOL, UnidyeBlocks.CUSTOM_WOOL);
+            ItemTags.WOOL, Blocks.WHITE_WOOL, UnidyeBlocks.CUSTOM_WOOL);
 
     public static final RecipeSerializer<CustomConcretePowderRecipe> CUSTOM_CONCRETE_POWDER = (RecipeSerializer<CustomConcretePowderRecipe>)
             registerSpecialRecipe("crafting_special_custom_concrete_powder",
@@ -99,30 +101,30 @@ public class UnidyeSpecialRecipes {
     public static void registerSpecialRecipes() {
     }
 
-    private static RecipeSerializer<CustomCircleDyeingRecipe> registerSpecialCircleDyeingRecipe(String name, ArrayList<Item> acceptedItems, ItemConvertible outputItem){
-        return registerSpecialCircleDyeingRecipe(Unidye.MOD_ID, name, acceptedItems, outputItem);
+    private static RecipeSerializer<CustomCircleDyeingRecipe> registerSpecialCircleDyeingRecipe(String name, ArrayList<Item> acceptedItems, ItemConvertible inputFallback, ItemConvertible outputItem){
+        return registerSpecialCircleDyeingRecipe(Unidye.MOD_ID, name, acceptedItems, inputFallback, outputItem);
     }
 
-    private static RecipeSerializer<CustomCircleDyeingRecipe> registerSpecialCircleDyeingRecipe(String name, TagKey<Item> itemOrItemTag, ItemConvertible outputItem){
-        return registerSpecialCircleDyeingRecipe(Unidye.MOD_ID, name, itemOrItemTag, outputItem);
+    private static RecipeSerializer<CustomCircleDyeingRecipe> registerSpecialCircleDyeingRecipe(String name, TagKey<Item> itemOrItemTag, ItemConvertible inputFallback, ItemConvertible outputItem){
+        return registerSpecialCircleDyeingRecipe(Unidye.MOD_ID, name, itemOrItemTag, inputFallback, outputItem);
     }
 
     private static RecipeSerializer<? extends SpecialCraftingRecipe> registerSpecialRecipe(String name, Function<CraftingRecipeCategory, SpecialCraftingRecipe> toRecipe){
         return registerSpecialRecipe(Unidye.MOD_ID, name, toRecipe);
     }
 
-    public static RecipeSerializer<CustomCircleDyeingRecipe> registerSpecialCircleDyeingRecipe(String modId, String name, TagKey<Item> itemOrItemTag, ItemConvertible outputItem){
+    public static RecipeSerializer<CustomCircleDyeingRecipe> registerSpecialCircleDyeingRecipe(String modId, String name, TagKey<Item> itemOrItemTag, ItemConvertible inputFallback, ItemConvertible outputItem){
         Identifier identifier = Identifier.of(modId, name);
         return Registry.register(Registries.RECIPE_SERIALIZER, identifier,
                 new SpecialRecipeSerializer<>(((category) ->
-                        new CustomCircleDyeingRecipe(itemOrItemTag, outputItem, category, identifier))));
+                        new CustomCircleDyeingRecipe(itemOrItemTag, inputFallback, outputItem, category, identifier))));
     }
 
-    public static RecipeSerializer<CustomCircleDyeingRecipe> registerSpecialCircleDyeingRecipe(String modId, String name, ArrayList<Item> acceptedItems, ItemConvertible outputItem){
+    public static RecipeSerializer<CustomCircleDyeingRecipe> registerSpecialCircleDyeingRecipe(String modId, String name, ArrayList<Item> acceptedItems, ItemConvertible inputFallback, ItemConvertible outputItem){
         Identifier identifier = Identifier.of(modId, name);
         return Registry.register(Registries.RECIPE_SERIALIZER, identifier,
                 new SpecialRecipeSerializer<>((( category) ->
-                        new CustomCircleDyeingRecipe(acceptedItems, outputItem, category, identifier))));
+                        new CustomCircleDyeingRecipe(acceptedItems, inputFallback, outputItem, category, identifier))));
     }
 
     public static RecipeSerializer<? extends SpecialCraftingRecipe> registerSpecialRecipe(String modId, String name, Function<CraftingRecipeCategory, SpecialCraftingRecipe> toRecipe){

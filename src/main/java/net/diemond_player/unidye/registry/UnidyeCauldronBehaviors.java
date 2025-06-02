@@ -24,7 +24,6 @@ import net.minecraft.stat.Stats;
 import net.minecraft.util.ItemActionResult;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static net.minecraft.block.cauldron.CauldronBehavior.WATER_CAULDRON_BEHAVIOR;
 
@@ -39,7 +38,7 @@ public class UnidyeCauldronBehaviors {
             new EmiCauldronRecipeData("minecraft/glass", ConventionalItemTags.GLASS_BLOCKS_CHEAP, Blocks.GLASS),
             new EmiCauldronRecipeData("minecraft/glass_pane", ConventionalItemTags.GLASS_PANES, Blocks.GLASS_PANE),
             new EmiCauldronRecipeData("minecraft/carpet", ItemTags.WOOL_CARPETS, Blocks.WHITE_CARPET),
-            new EmiCauldronRecipeData("minecraft/concrete", UnidyeTags.CONCRETES, Blocks.WHITE_CONCRETE),
+            new EmiCauldronRecipeData("minecraft/concrete", UnidyeTags.C_CONCRETES, Blocks.WHITE_CONCRETE),
             new EmiCauldronRecipeData("minecraft/bed", ItemTags.BEDS, Blocks.WHITE_BED)
             //new EmiCauldronRecipeData("minecraft/axes", ItemTags.AXES, Items.DIAMOND_AXE)
     );
@@ -64,7 +63,7 @@ public class UnidyeCauldronBehaviors {
 
         registerUndyeingBehavior(ItemTags.CANDLES, Items.CANDLE);
 
-        registerUndyeingBehavior(UnidyeTags.CONCRETES, Blocks.WHITE_CONCRETE);
+        registerUndyeingBehavior(UnidyeTags.C_CONCRETES, Blocks.WHITE_CONCRETE);
 
         registerUndyeingBehavior(ItemTags.BEDS, Blocks.WHITE_BED);
 

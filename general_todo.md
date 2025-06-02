@@ -4,13 +4,8 @@
 - **FIXME** shearing a sheep gives a wool with no prefix component
 - **TODO** native usage of recipe saving system
 - **TODO** add exclusions to naming system
-- **TODO** recipe stacks should remember tags when possible
-- **unlikely TODO** naming system for fireworks
-- **unlikely TODO** updating naming system for fireworks
 - **TODO** add Llama carpets
 - **TODO** add Glazed Terracotta
-- **unlikely FIXME** dyed map markers; check MapIcon.Type, FilledMapItem, map_icons, MapRenderer
-- **unlikely TODO** add jeb_ dye
 
 ### Code:
 - **TODO** add "no added spaces option"
@@ -25,7 +20,6 @@
 - **TODO** merge leathery stuff with regular dyeable block entity stuff, making this more versatile
 - **TODO** add a component for custom dye item so you won't be using CUSTOM_DATA
 - **TODO** add/adapt a component for non-dye items to use
-- **consider TODO** remove ItemEntityMixin.class
 - **TODO** organize command names (because right now they are not intuitive probs)
 
 ### Assets:
@@ -45,3 +39,10 @@
 - **TODO** check every class for warns, errors
 - **TODO** cleanup/add comments
 - **TODO** add warns/errors through LOGGER where it is needed
+
+### The Unlikely Corner:
+- **unlikely TODO** naming system for fireworks
+- **unlikely TODO** updating naming system for fireworks
+- **unlikely FIXME** dyed map markers; check MapIcon.Type, FilledMapItem, map_icons, MapRenderer
+- **unlikely TODO** add jeb_ dye
+- **unlikely TODO** remove ItemEntityMixin.class

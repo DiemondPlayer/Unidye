@@ -22,23 +22,26 @@ import java.util.ArrayList;
 
 public class CustomCircleDyeingRecipe extends SpecialCraftingRecipe {
     public final TagKey<Item> itemTag;
+    public final ItemConvertible inputFallback;
     public final ArrayList<Item> acceptedItems;
     public final ItemConvertible outputItem;
     private final Identifier identifier;
 
-    public CustomCircleDyeingRecipe(TagKey<Item> itemTag, ItemConvertible outputItem, CraftingRecipeCategory category, Identifier identifier) {
+    public CustomCircleDyeingRecipe(TagKey<Item> itemTag, ItemConvertible inputFallback, ItemConvertible outputItem, CraftingRecipeCategory category, Identifier identifier) {
         super(category);
         this.outputItem = outputItem;
         this.identifier = identifier;
         this.itemTag = itemTag;
+        this.inputFallback = inputFallback;
         this.acceptedItems = null;
     }
 
-    public CustomCircleDyeingRecipe(ArrayList<Item> acceptedItems, ItemConvertible outputItem, CraftingRecipeCategory category, Identifier identifier) {
+    public CustomCircleDyeingRecipe(ArrayList<Item> acceptedItems, ItemConvertible inputFallback, ItemConvertible outputItem, CraftingRecipeCategory category, Identifier identifier) {
         super(category);
         this.outputItem = outputItem;
         this.identifier = identifier;
         this.itemTag = null;
+        this.inputFallback = inputFallback;
         this.acceptedItems = acceptedItems;
     }
 
@@ -73,7 +76,13 @@ public class CustomCircleDyeingRecipe extends SpecialCraftingRecipe {
             add(customDyeStack);
         }});
         itemStack1.setCount(8);
-        itemStack1.set(UnidyeDataComponentTypes.RECIPE_STACKS, RecipeStacksComponent.fromItemStacks(inventory.getStacks(), itemStack1.getCount()));
+        RecipeStacksComponent recipeStacksComponent = RecipeStacksComponent.fromItemStacks(inventory.getStacks(), itemStack1.getCount());
+        if(itemTag != null){
+            recipeStacksComponent = recipeStacksComponent.optimizeTagToFallback(itemTag, inputFallback);
+        }else if (acceptedItems != null) {
+            recipeStacksComponent = recipeStacksComponent.optimizeAcceptedItemsToFallback(acceptedItems, inputFallback);
+        }
+        itemStack1.set(UnidyeDataComponentTypes.RECIPE_STACKS, recipeStacksComponent);
         if(customDyeStack.contains(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES)){
             itemStack1.set(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, customDyeStack.get(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES));
         }

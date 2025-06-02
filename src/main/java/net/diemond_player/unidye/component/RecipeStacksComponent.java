@@ -7,6 +7,7 @@ import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
 import net.minecraft.component.ComponentChanges;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.network.RegistryByteBuf;
@@ -14,6 +15,7 @@ import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.registry.tag.TagKey;
 import org.apache.commons.compress.utils.Lists;
 
 import java.util.ArrayList;
@@ -70,6 +72,30 @@ public record RecipeStacksComponent(List<Stack> stacks, int outputAmount, boolea
             }));
         }
         return new RecipeStacksComponent(stackList, outputAmount, shapeless);
+    }
+
+    public RecipeStacksComponent optimizeTagToFallback(TagKey<Item> tag, ItemConvertible fallbackItem){
+        List<Stack> optimizedStackList = Lists.newArrayList();
+        for (Stack stack : stacks){
+            if(stack.item().value().getDefaultStack().isIn(tag)) {
+                optimizedStackList.add(new Stack(fallbackItem.asItem().getRegistryEntry(), ComponentChanges.EMPTY));
+            }else{
+                optimizedStackList.add(stack);
+            }
+        }
+        return new RecipeStacksComponent(optimizedStackList, this.outputAmount(), this.shapeless());
+    }
+
+    public RecipeStacksComponent optimizeAcceptedItemsToFallback(ArrayList<Item> acceptedItems, ItemConvertible fallbackItem){
+        List<Stack> optimizedStackList = Lists.newArrayList();
+        for (Stack stack : stacks){
+            if(acceptedItems.contains(stack.item().value())) {
+                optimizedStackList.add(new Stack(fallbackItem.asItem().getRegistryEntry(), ComponentChanges.EMPTY));
+            }else{
+                optimizedStackList.add(stack);
+            }
+        }
+        return new RecipeStacksComponent(optimizedStackList, this.outputAmount(), this.shapeless());
     }
 
     //should only be called when recipe stacks are sorted (aka shapeless recipe) and when ...

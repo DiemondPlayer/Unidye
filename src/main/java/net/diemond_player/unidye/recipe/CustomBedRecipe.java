@@ -7,6 +7,7 @@ import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.registry.UnidyeSpecialRecipes;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SpecialCraftingRecipe;
 import net.minecraft.recipe.book.CraftingRecipeCategory;
@@ -66,7 +67,7 @@ public class CustomBedRecipe extends SpecialCraftingRecipe {
             }
         }
         UnidyeUtils.setColor(itemStack1, DyeableLeatheryBlockItem.getLeatherColor(itemStack));
-        itemStack1.set(UnidyeDataComponentTypes.RECIPE_STACKS, RecipeStacksComponent.fromItemStacks(inventory.getStacks(), itemStack1.getCount()));
+        itemStack1.set(UnidyeDataComponentTypes.RECIPE_STACKS, RecipeStacksComponent.fromItemStacks(inventory.getStacks(), itemStack1.getCount()).optimizeTagToFallback(ItemTags.PLANKS, Items.OAK_PLANKS));
         if(itemStack.contains(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES)){
             itemStack1.set(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, itemStack.get(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES));
         }

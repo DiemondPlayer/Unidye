@@ -8,7 +8,7 @@ import net.minecraft.util.Identifier;
 
 public class UnidyeTags {
 
-    public static final TagKey<Item> CONCRETES = createConventionalItemTag("concretes");
+    public static final TagKey<Item> C_CONCRETES = createConventionalItemTag("concretes");
 
     private static TagKey<Item> createItemTag(String name){
         return TagKey.of(RegistryKeys.ITEM, Identifier.of(Unidye.MOD_ID, name));

@@ -40,7 +40,7 @@ public class UnidyeItemTagProvider extends FabricTagProvider.ItemTagProvider {
                 .add(UnidyeBlocks.CUSTOM_STAINED_GLASS_PANE.asItem());
         getOrCreateTagBuilder(ConventionalItemTags.SHULKER_BOXES)
                 .add(UnidyeBlocks.CUSTOM_SHULKER_BOX.asItem());
-        getOrCreateTagBuilder(UnidyeTags.CONCRETES)
+        getOrCreateTagBuilder(UnidyeTags.C_CONCRETES)
                 .add(UnidyeBlocks.CUSTOM_CONCRETE.asItem())
                 .add(Blocks.BLACK_CONCRETE.asItem())
                 .add(Blocks.BROWN_CONCRETE.asItem())
