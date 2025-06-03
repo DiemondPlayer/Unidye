@@ -1,10 +1,12 @@
 package net.diemond_player.unidye.mixin.gameplay;
 
-import net.diemond_player.unidye.item.DyeableLeatheryBlockItem;
+import net.diemond_player.unidye.component.RecipeStacksComponent;
 import net.diemond_player.unidye.registry.UnidyeBlocks;
-import net.diemond_player.unidye.registry.UnidyeMaterialTypes;
+import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
+import net.diemond_player.unidye.registry.UnidyeItems;
 import net.diemond_player.unidye.util.UnidyeAccessor;
 import net.diemond_player.unidye.util.UnidyeUtils;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.damage.DamageSource;
@@ -14,13 +16,20 @@ import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.passive.SheepEntity;
+import net.minecraft.item.DyeItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootTable;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
+import net.minecraft.recipe.CraftingRecipe;
+import net.minecraft.recipe.RecipeType;
+import net.minecraft.recipe.input.CraftingRecipeInput;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.world.World;
+import org.apache.commons.compress.utils.Lists;
+import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -29,14 +38,14 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.List;
+
 @Mixin(SheepEntity.class)
 public abstract class SheepEntityMixin extends AnimalEntity implements UnidyeAccessor {
     @Shadow public abstract boolean isSheared();
 
     @Unique
-    private static final TrackedData<Integer> CUSTOM_COLOR = DataTracker.registerData(SheepEntity.class, TrackedDataHandlerRegistry.INTEGER);
-    @Unique
-    private static final TrackedData<Integer> SECONDARY_CUSTOM_COLOR = DataTracker.registerData(SheepEntity.class, TrackedDataHandlerRegistry.INTEGER);
+    private static final TrackedData<ItemStack> CUSTOM_DYE_ITEMSTACK = DataTracker.registerData(SheepEntity.class, TrackedDataHandlerRegistry.ITEM_STACK);
 
     protected SheepEntityMixin(EntityType<? extends AnimalEntity> entityType, World world) {
         super(entityType, world);
@@ -47,42 +56,40 @@ public abstract class SheepEntityMixin extends AnimalEntity implements UnidyeAcc
         super.onDeath(damageSource);
         if (this.getWorld() instanceof ServerWorld serverWorld) {
             UnidyeAccessor sheep = (UnidyeAccessor) this;
-            if (sheep.unidye$getCustomColor() != 0xFFFFFF && !this.isSheared()) {
+            if (!sheep.unidye$getCustomDyeItemStack().isEmpty() && !this.isSheared()) {
                 this.drop(serverWorld, damageSource);
-                ItemStack itemStack = UnidyeBlocks.CUSTOM_WOOL.asItem().getDefaultStack();
-                UnidyeUtils.setColor(itemStack, sheep.unidye$getSecondaryCustomColor());
-                DyeableLeatheryBlockItem.setLeatherColor(itemStack, sheep.unidye$getCustomColor());
-                ItemEntity itemEntity = ((SheepEntity) (Object) this).dropStack(itemStack);
+                ItemStack itemStack = unidye$getCustomWoolItemStack();
+                ((SheepEntity) (Object) this).dropStack(itemStack.copyWithCount(1));
             }
         }
     }
 
     @Inject(method = "writeCustomDataToNbt", at = @At("HEAD"))
     private void unidye$writeCustomDataToNbt(NbtCompound nbt, CallbackInfo ci) {
-        nbt.putInt("unidye.custom_color", unidye$getCustomColor());
-        nbt.putInt("unidye.secondary_custom_color", unidye$getSecondaryCustomColor());
+        if(!unidye$getCustomDyeItemStack().isEmpty()) nbt.put("unidye.custom_dye_stack", ((SheepEntity) (Object) this).getDataTracker().get(CUSTOM_DYE_ITEMSTACK).encode(this.getRegistryManager()));
     }
 
     @Inject(method = "readCustomDataFromNbt", at = @At("HEAD"))
     private void unidye$readCustomDataFromNbt(NbtCompound nbt, CallbackInfo ci) {
-        if (nbt.contains("unidye.custom_color")) {
-            unidye$setCustomColor(nbt.getInt("unidye.custom_color"));
+        ItemStack itemStack;
+        if (nbt.contains("unidye.custom_dye_stack", NbtElement.COMPOUND_TYPE)) {
+            NbtCompound nbtCompound = nbt.getCompound("Item");
+            itemStack = (ItemStack)ItemStack.fromNbt(this.getRegistryManager(), nbtCompound).orElse(ItemStack.EMPTY);
+        } else {
+            itemStack = ItemStack.EMPTY;
         }
-        if (nbt.contains("unidye.secondary_custom_color")) {
-            unidye$setSecondaryCustomColor(nbt.getInt("unidye.secondary_custom_color"));
-        }
+        this.unidye$setCustomDyeItemStack(itemStack);
     }
 
     @Inject(method = "initDataTracker", at = @At("HEAD"))
     private void unidye$initDataTracker(DataTracker.Builder builder, CallbackInfo ci) {
-        builder.add(CUSTOM_COLOR, 0xFFFFFF);
-        builder.add(SECONDARY_CUSTOM_COLOR, 0xFFFFFF);
+        builder.add(CUSTOM_DYE_ITEMSTACK, ItemStack.EMPTY);
     }
 
     @Inject(method = "getLootTableId", at = @At("HEAD"), cancellable = true)
     private void unidye$getLootTableId(CallbackInfoReturnable<RegistryKey<LootTable>> cir) {
         UnidyeAccessor sheep = (UnidyeAccessor) ((SheepEntity) (Object) this);
-        if (sheep.unidye$getCustomColor() != 0xFFFFFF) {
+        if (!sheep.unidye$getCustomDyeItemStack().isEmpty()) {
             cir.setReturnValue(((SheepEntity) (Object) this).getType().getLootTableId());
         }
     }
@@ -91,126 +98,45 @@ public abstract class SheepEntityMixin extends AnimalEntity implements UnidyeAcc
     private void unidye$createChild(ServerWorld world, PassiveEntity entity, CallbackInfoReturnable<PassiveEntity> cir) {
         SheepEntity sheepEntity = (SheepEntity) EntityType.SHEEP.create(world);
         if (sheepEntity != null) {
-            UnidyeAccessor firstSheep = (UnidyeAccessor) ((SheepEntity) (Object) this);
-            UnidyeAccessor secondSheep = (UnidyeAccessor) entity;
-            UnidyeAccessor sheep = (UnidyeAccessor) sheepEntity;
-            if (firstSheep.unidye$getCustomColor() != 0xFFFFFF && secondSheep.unidye$getCustomColor() != 0xFFFFFF) {
-                int customColor1 = firstSheep.unidye$getCustomColor();
-                int red1 = (customColor1 >> 16 & 0xFF);
-                int green1 = (customColor1 >> 8 & 0xFF);
-                int blue1 = (customColor1 & 0xFF);
-                int customColor2 = secondSheep.unidye$getCustomColor();
-                int red2 = (customColor2 >> 16 & 0xFF);
-                int green2 = (customColor2 >> 8 & 0xFF);
-                int blue2 = (customColor2 & 0xFF);
-                int customColor3;
-                int red3 = (int) Math.sqrt((double) (red1 * red1 + red2 * red2) / 2);
-                int green3 = (int) Math.sqrt((double) (green1 * green1 + green2 * green2) / 2);
-                int blue3 = (int) Math.sqrt((double) (blue1 * blue1 + blue2 * blue2) / 2);
-                customColor3 = red3;
-                customColor3 = (customColor3 << 8) + green3;
-                customColor3 = (customColor3 << 8) + blue3;
-                sheep.unidye$setCustomColor(customColor3);
-                int customColor11 = firstSheep.unidye$getSecondaryCustomColor();
-                int red11 = (customColor11 >> 16 & 0xFF);
-                int green11 = (customColor11 >> 8 & 0xFF);
-                int blue11 = (customColor11 & 0xFF);
-                int customColor22 = secondSheep.unidye$getSecondaryCustomColor();
-                int red22 = (customColor22 >> 16 & 0xFF);
-                int green22 = (customColor22 >> 8 & 0xFF);
-                int blue22 = (customColor22 & 0xFF);
-                int customColor33;
-                int red33 = (int) Math.sqrt((double) (red11 * red11 + red22 * red22) / 2);
-                int green33 = (int) Math.sqrt((double) (green11 * green11 + green22 * green22) / 2);
-                int blue33 = (int) Math.sqrt((double) (blue11 * blue11 + blue22 * blue22) / 2);
-                customColor33 = red33;
-                customColor33 = (customColor33 << 8) + green33;
-                customColor33 = (customColor33 << 8) + blue33;
-                sheep.unidye$setSecondaryCustomColor(customColor33);
-                cir.setReturnValue(sheepEntity);
-            } else if (firstSheep.unidye$getCustomColor() != 0xFFFFFF && secondSheep.unidye$getCustomColor() == 0xFFFFFF) {
-                int customColor1 = firstSheep.unidye$getCustomColor();
-                int red1 = (customColor1 >> 16 & 0xFF);
-                int green1 = (customColor1 >> 8 & 0xFF);
-                int blue1 = (customColor1 & 0xFF);
-                SheepEntity second = (SheepEntity) entity;
-                float[] customColor2 = UnidyeUtils.getColorArray(UnidyeMaterialTypes.LEATHER.getColor(second.getColor()));
-                customColor2[0] = customColor2[0] * 255.0f;
-                customColor2[1] = customColor2[1] * 255.0f;
-                customColor2[2] = customColor2[2] * 255.0f;
-                int customColor3;
-                int red3 = (int) Math.sqrt((double) (red1 * red1 + customColor2[0] * customColor2[0]) / 2);
-                int green3 = (int) Math.sqrt((double) (green1 * green1 + customColor2[1] * customColor2[1]) / 2);
-                int blue3 = (int) Math.sqrt((double) (blue1 * blue1 + customColor2[2] * customColor2[2]) / 2);
-                customColor3 = red3;
-                customColor3 = (customColor3 << 8) + green3;
-                customColor3 = (customColor3 << 8) + blue3;
-                sheep.unidye$setCustomColor(customColor3);
-                int customColor11 = firstSheep.unidye$getSecondaryCustomColor();
-                int red11 = (customColor11 >> 16 & 0xFF);
-                int green11 = (customColor11 >> 8 & 0xFF);
-                int blue11 = (customColor11 & 0xFF);
-                float[] customColor22 = UnidyeUtils.getColorArray(UnidyeMaterialTypes.WOOL.getColor(second.getColor()));
-                customColor22[0] = customColor22[0] * 255.0f;
-                customColor22[1] = customColor22[1] * 255.0f;
-                customColor22[2] = customColor22[2] * 255.0f;
-                int customColor33;
-                int red33 = (int) Math.sqrt((double) (red11 * red11 + customColor22[0] * customColor22[0]) / 2);
-                int green33 = (int) Math.sqrt((double) (green11 * green11 + customColor22[1] * customColor22[1]) / 2);
-                int blue33 = (int) Math.sqrt((double) (blue11 * blue11 + customColor22[2] * customColor22[2]) / 2);
-                customColor33 = red33;
-                customColor33 = (customColor33 << 8) + green33;
-                customColor33 = (customColor33 << 8) + blue33;
-                sheep.unidye$setSecondaryCustomColor(customColor33);
-                cir.setReturnValue(sheepEntity);
-            } else if (secondSheep.unidye$getCustomColor() != 0xFFFFFF && firstSheep.unidye$getCustomColor() == 0xFFFFFF) {
-                int customColor1 = secondSheep.unidye$getCustomColor();
-                int red1 = (customColor1 >> 16 & 0xFF);
-                int green1 = (customColor1 >> 8 & 0xFF);
-                int blue1 = (customColor1 & 0xFF);
-                SheepEntity first = (SheepEntity) ((SheepEntity) (Object) this);
-                float[] customColor2 = UnidyeUtils.getColorArray(UnidyeMaterialTypes.LEATHER.getColor(first.getColor()));
-                customColor2[0] = customColor2[0] * 255.0f;
-                customColor2[1] = customColor2[1] * 255.0f;
-                customColor2[2] = customColor2[2] * 255.0f;
-                int customColor3;
-                int red3 = (int) Math.sqrt((double) (red1 * red1 + customColor2[0] * customColor2[0]) / 2);
-                int green3 = (int) Math.sqrt((double) (green1 * green1 + customColor2[1] * customColor2[1]) / 2);
-                int blue3 = (int) Math.sqrt((double) (blue1 * blue1 + customColor2[2] * customColor2[2]) / 2);
-                customColor3 = red3;
-                customColor3 = (customColor3 << 8) + green3;
-                customColor3 = (customColor3 << 8) + blue3;
-                sheep.unidye$setCustomColor(customColor3);
-                int customColor11 = secondSheep.unidye$getSecondaryCustomColor();
-                int red11 = (customColor11 >> 16 & 0xFF);
-                int green11 = (customColor11 >> 8 & 0xFF);
-                int blue11 = (customColor11 & 0xFF);
-                float[] customColor22 = UnidyeUtils.getColorArray(UnidyeMaterialTypes.WOOL.getColor(first.getColor()));
-                customColor22[0] = customColor22[0] * 255.0f;
-                customColor22[1] = customColor22[1] * 255.0f;
-                customColor22[2] = customColor22[2] * 255.0f;
-                int customColor33;
-                int red33 = (int) Math.sqrt((double) (red11 * red11 + customColor22[0] * customColor22[0]) / 2);
-                int green33 = (int) Math.sqrt((double) (green11 * green11 + customColor22[1] * customColor22[1]) / 2);
-                int blue33 = (int) Math.sqrt((double) (blue11 * blue11 + customColor22[2] * customColor22[2]) / 2);
-                customColor33 = red33;
-                customColor33 = (customColor33 << 8) + green33;
-                customColor33 = (customColor33 << 8) + blue33;
-                sheep.unidye$setSecondaryCustomColor(customColor33);
+            ItemStack itemStack = unidye$getChildCustomDyeStack(this, (SheepEntity) entity);
+            if(!itemStack.isEmpty()) {
+                ((UnidyeAccessor)sheepEntity).unidye$setCustomDyeItemStack(itemStack);
                 cir.setReturnValue(sheepEntity);
             }
         }
     }
 
+    @Unique
+    private ItemStack unidye$getChildCustomDyeStack(AnimalEntity firstParent, AnimalEntity secondParent){
+        UnidyeAccessor firstSheep = (UnidyeAccessor) ((SheepEntity) (Object) firstParent);
+        UnidyeAccessor secondSheep = (UnidyeAccessor) secondParent;
+        if(firstSheep.unidye$getCustomDyeItemStack().isEmpty() && secondSheep.unidye$getCustomDyeItemStack().isEmpty()) return ItemStack.EMPTY;
+        List<DyeItem> dyeItems = Lists.newArrayList();
+        List<ItemStack> customDyeItems = Lists.newArrayList();
+        if(firstSheep.unidye$getCustomDyeItemStack().isEmpty()){
+            dyeItems.add(DyeItem.byColor(((SheepEntity)firstParent).getColor()));
+        }else{
+            customDyeItems.add(firstSheep.unidye$getCustomDyeItemStack());
+        }
+        if(secondSheep.unidye$getCustomDyeItemStack().isEmpty()){
+            dyeItems.add(DyeItem.byColor(((SheepEntity)secondParent).getColor()));
+        }else{
+            customDyeItems.add(secondSheep.unidye$getCustomDyeItemStack());
+        }
+        ItemStack itemStack = UnidyeUtils.blendAndSetColor(new ItemStack(UnidyeItems.CUSTOM_DYE), dyeItems, customDyeItems);
+        List<ItemStack> itemStacks = customDyeItems;
+        itemStacks.addAll(dyeItems.stream().map(ItemStack::new).toList());
+        itemStack.set(UnidyeDataComponentTypes.RECIPE_STACKS, RecipeStacksComponent.fromItemStacks(itemStacks, itemStacks.size(), true).optimizeRecipeStacks());
+        return itemStack;
+    }
+
     @Inject(method = "sheared", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/passive/SheepEntity;setSheared(Z)V", shift = At.Shift.AFTER), cancellable = true)
     private void unidye$sheared(SoundCategory shearedSoundCategory, CallbackInfo ci) {
         UnidyeAccessor sheep = (UnidyeAccessor) ((SheepEntity) (Object) this);
-        if (sheep.unidye$getCustomColor() != 0xFFFFFF) {
+        if (!sheep.unidye$getCustomDyeItemStack().isEmpty()) {
             int i = 1 + ((SheepEntity) (Object) this).getRandom().nextInt(3);
             for (int j = 0; j < i; ++j) {
-                ItemStack itemStack = UnidyeBlocks.CUSTOM_WOOL.asItem().getDefaultStack();
-                UnidyeUtils.setColor(itemStack, sheep.unidye$getSecondaryCustomColor());
-                DyeableLeatheryBlockItem.setLeatherColor(itemStack, sheep.unidye$getCustomColor());
+                ItemStack itemStack = unidye$getCustomWoolItemStack();
                 ItemEntity itemEntity = ((SheepEntity) (Object) this).dropStack(itemStack, 1);
                 if (itemEntity != null) {
                     itemEntity.setVelocity(itemEntity.getVelocity().add((double) ((((SheepEntity) (Object) this).getRandom().nextFloat() - ((SheepEntity) (Object) this).getRandom().nextFloat()) * 0.1F), (double) (((SheepEntity) (Object) this).getRandom().nextFloat() * 0.05F), (double) ((((SheepEntity) (Object) this).getRandom().nextFloat() - ((SheepEntity) (Object) this).getRandom().nextFloat()) * 0.1F)));
@@ -220,23 +146,27 @@ public abstract class SheepEntityMixin extends AnimalEntity implements UnidyeAcc
         }
     }
 
-    @Override
-    public int unidye$getCustomColor() {
-        return ((SheepEntity) (Object) this).getDataTracker().get(CUSTOM_COLOR);
+    @Unique
+    private ItemStack unidye$getCustomWoolItemStack() {
+        CraftingRecipeInput craftingRecipeInput = CraftingRecipeInput.create(3, 3, List.of(
+                new ItemStack(Blocks.WHITE_WOOL), new ItemStack(Blocks.WHITE_WOOL), new ItemStack(Blocks.WHITE_WOOL),
+                new ItemStack(Blocks.WHITE_WOOL), this.unidye$getCustomDyeItemStack(), new ItemStack(Blocks.WHITE_WOOL),
+                new ItemStack(Blocks.WHITE_WOOL), new ItemStack(Blocks.WHITE_WOOL), new ItemStack(Blocks.WHITE_WOOL)));
+        ItemStack itemStack = this.getWorld()
+                .getRecipeManager()
+                .getFirstMatch(RecipeType.CRAFTING, craftingRecipeInput, this.getWorld())
+                .map(recipe -> ((CraftingRecipe)recipe.value()).craft(craftingRecipeInput, this.getWorld().getRegistryManager()))
+                .orElse(ItemStack.EMPTY);
+        return itemStack.isEmpty() ? itemStack : itemStack.copyWithCount(1);
     }
 
     @Override
-    public void unidye$setCustomColor(int color) {
-        ((SheepEntity) (Object) this).getDataTracker().set(CUSTOM_COLOR, color);
+    public ItemStack unidye$getCustomDyeItemStack() {
+        return ((SheepEntity) (Object) this).getDataTracker().get(CUSTOM_DYE_ITEMSTACK);
     }
 
     @Override
-    public int unidye$getSecondaryCustomColor() {
-        return ((SheepEntity) (Object) this).getDataTracker().get(SECONDARY_CUSTOM_COLOR);
-    }
-
-    @Override
-    public void unidye$setSecondaryCustomColor(int color) {
-        ((SheepEntity) (Object) this).getDataTracker().set(SECONDARY_CUSTOM_COLOR, color);
+    public void unidye$setCustomDyeItemStack(ItemStack itemStack) {
+        ((SheepEntity) (Object) this).getDataTracker().set(CUSTOM_DYE_ITEMSTACK, itemStack);
     }
 }

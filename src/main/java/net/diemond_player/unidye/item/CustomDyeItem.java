@@ -133,8 +133,7 @@ public class CustomDyeItem extends DyeItem implements SignChangingItem{
                     SoundEvents.ITEM_DYE_USE, SoundCategory.PLAYERS, 1.0f, 1.0f);
             if (!user.getWorld().isClient) {
                 UnidyeAccessor sheep = (UnidyeAccessor) sheepEntity;
-                sheep.unidye$setCustomColor(getMaterialColor(stack, UnidyeMaterialTypes.LEATHER));
-                sheep.unidye$setSecondaryCustomColor(getMaterialColor(stack, UnidyeMaterialTypes.WOOL));
+                sheep.unidye$setCustomDyeItemStack(stack.copyWithCount(1));
                 stack.decrement(1);
             }
             return ActionResult.success(user.getWorld().isClient);

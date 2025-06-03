@@ -24,8 +24,7 @@ public abstract class DyeItemMixin{
     @Inject(method = "useOnEntity", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/passive/SheepEntity;setColor(Lnet/minecraft/util/DyeColor;)V"))
     private void unidye$useOnEntity(ItemStack stack, PlayerEntity user, LivingEntity entity, Hand hand, CallbackInfoReturnable<ActionResult> cir) {
         UnidyeAccessor sheep = (UnidyeAccessor) entity;
-        sheep.unidye$setCustomColor(0xFFFFFF);
-        sheep.unidye$setSecondaryCustomColor(0xFFFFFF);
+        sheep.unidye$setCustomDyeItemStack(ItemStack.EMPTY);
     }
 
     @Inject(method = "useOnEntity", at = @At("HEAD"), cancellable = true)
@@ -36,8 +35,7 @@ public abstract class DyeItemMixin{
             if (!user.getWorld().isClient) {
                 sheepEntity.setColor(((DyeItem) (Object) this).getColor());
                 UnidyeAccessor sheep = (UnidyeAccessor) entity;
-                sheep.unidye$setCustomColor(0xFFFFFF);
-                sheep.unidye$setSecondaryCustomColor(0xFFFFFF);
+                sheep.unidye$setCustomDyeItemStack(ItemStack.EMPTY);
                 stack.decrement(1);
             }
             cir.setReturnValue(ActionResult.success(user.getWorld().isClient));

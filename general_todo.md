@@ -1,20 +1,15 @@
 ## TODOs and FIXMEs
 
 ### Gameplay:
-- **FIXME** shearing a sheep gives a wool with no prefix component
 - **TODO** native usage of recipe saving system
 - **TODO** add exclusions to naming system
 - **TODO** add Llama carpets
 - **TODO** add Glazed Terracotta
 
 ### Code:
-- **TODO** add "no added spaces option"
 - **TODO** add a capitalization version when there are no prefixes and only suffix
 - **TODO** figure out whether issuing a sync additionally is worth it
 - **TODO** add ownership system
-- **TODO** create config
-- **TODO** add perm levels of commands to config
-- **TODO** add ownership system to config (can only the author edit the name?) (discovery system)
 - **TODO** create a system for two-layered dyeable blocks that support translucent textures
 - **TODO** create a system for special resource-pack assets (for dyes, llama carpets, glazed terracotta, etc.)
 - **TODO** merge leathery stuff with regular dyeable block entity stuff, making this more versatile
@@ -22,14 +17,19 @@
 - **TODO** add/adapt a component for non-dye items to use
 - **TODO** organize command names (because right now they are not intuitive probs)
 
+### Config:
+- **TODO** add "no added spaces option"
+- **TODO** create config
+- **TODO** add perm levels of commands to config
+- **TODO** add ownership system to config (can only the author edit the name?) (discovery system)
+
 ### Assets:
 - **TODO** if the "two-layered dyeable blocks" system is implemented, utilise it
+- **TODO** new dye sprites for lime, pink, gray, purple, magenta
 
 ### Compat (Main Mod):
 - **TODO** built-in datapack system for recipe, advancements, etc.
 - **TODO** use the former mentioned datapack system to add new shapes when other dye mods are present
-- **TODO** JEI proper compat
-- **TODO** JEI recipe saving impl
 - **FIXME** EMI recipe tree knows no diff between custom dyes
 - **FIXME** REI compat gives way too many example displays
 - **consider TODO** replace fillers with just 1 display per recipe in REI compat
@@ -46,3 +46,5 @@
 - **unlikely FIXME** dyed map markers; check MapIcon.Type, FilledMapItem, map_icons, MapRenderer
 - **unlikely TODO** add jeb_ dye
 - **unlikely TODO** remove ItemEntityMixin.class
+- **unlikely TODO** JEI proper compat
+- **unlikely TODO** JEI recipe saving impl
