@@ -2,13 +2,11 @@
 
 ### Gameplay:
 - **TODO** native usage of recipe saving system
-- **TODO** add exclusions to naming system
 - **TODO** add Llama carpets
 - **TODO** add Glazed Terracotta
 
 ### Code:
 - **TODO** add a capitalization version when there are no prefixes and only suffix
-- **TODO** figure out whether issuing a sync additionally is worth it
 - **TODO** add ownership system
 - **TODO** create a system for two-layered dyeable blocks that support translucent textures
 - **TODO** create a system for special resource-pack assets (for dyes, llama carpets, glazed terracotta, etc.)
@@ -48,3 +46,4 @@
 - **unlikely TODO** remove ItemEntityMixin.class
 - **unlikely TODO** JEI proper compat
 - **unlikely TODO** JEI recipe saving impl
+- **unlikely TODO** figure out whether issuing a sync additionally is worth it

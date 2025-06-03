@@ -1,9 +1,13 @@
 package net.diemond_player.unidye.util;
 
 import net.diemond_player.unidye.Unidye;
+import net.minecraft.item.Item;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.Identifier;
 import net.minecraft.world.PersistentState;
 import net.minecraft.world.PersistentStateManager;
 import net.minecraft.world.World;
@@ -28,7 +32,16 @@ public class DyeDatabaseSaverAndLoader extends PersistentState {
             entryNbt.putInt("color", entry.getKey());
             entryNbt.putString("prefix", dyeData.getPrefix());
             entryNbt.putString("suffix", dyeData.getSuffix());
-            //add exclusions
+            NbtCompound prefixExclusionsNbt = new NbtCompound();
+            for(Map.Entry<Item, String> entry1 : dyeData.getPrefixExclusions().entrySet()){
+                prefixExclusionsNbt.putString(entry1.getKey().toString(), entry1.getValue());
+            }
+            entryNbt.put("prefixExclusions", prefixExclusionsNbt);
+            NbtCompound suffixExclusionsNbt = new NbtCompound();
+            for(Map.Entry<Item, String> entry1 : dyeData.getSuffixExclusions().entrySet()){
+                suffixExclusionsNbt.putString(entry1.getKey().toString(), entry1.getValue());
+            }
+            entryNbt.put("suffixExclusions", suffixExclusionsNbt);
             nbtCompound.put(String.valueOf(count), entryNbt);
             count++;
         }
@@ -40,11 +53,17 @@ public class DyeDatabaseSaverAndLoader extends PersistentState {
         DyeDatabaseSaverAndLoader state = new DyeDatabaseSaverAndLoader();
         NbtCompound nbtCompound = tag.getCompound("unidye.dye_name_database");
         nbtCompound.getKeys().forEach(key ->{
-            int color = nbtCompound.getCompound(key).getInt("color");
-            String prefix = nbtCompound.getCompound(key).getString("prefix");
-            String suffix = nbtCompound.getCompound(key).getString("suffix");
-            DyeData dyeData = new DyeData(prefix, suffix);
-            //add exclusions
+            NbtCompound entryNbt = nbtCompound.getCompound(key);
+            int color = entryNbt.getInt("color");
+            String prefix = entryNbt.getString("prefix");
+            String suffix = entryNbt.getString("suffix");
+            HashMap<Item, String> prefixExclusions = new HashMap<>();
+            NbtCompound prefixExclusionsNbt = entryNbt.getCompound("prefixExclusions");
+            prefixExclusionsNbt.getKeys().forEach(key1 -> prefixExclusions.put(Registries.ITEM.get(Identifier.splitOn(key1, ':')), prefixExclusionsNbt.getString(key1)));
+            HashMap<Item, String> suffixExclusions = new HashMap<>();
+            NbtCompound suffixExclusionsNbt = entryNbt.getCompound("suffixExclusions");
+            suffixExclusionsNbt.getKeys().forEach(key1 -> suffixExclusions.put(Registries.ITEM.get(Identifier.splitOn(key1, ':')), suffixExclusionsNbt.getString(key1)));
+            DyeData dyeData = new DyeData(prefix, suffix, prefixExclusions, suffixExclusions);
             state.database.put(color, dyeData);
         });
         return state;

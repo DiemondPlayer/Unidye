@@ -6,6 +6,7 @@ import net.diemond_player.unidye.Unidye;
 import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.util.DyeData;
 import net.diemond_player.unidye.util.DyeDatabaseSaverAndLoader;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
@@ -55,8 +56,9 @@ public record ItemNameAffixesComponent(Text prefix, Text suffix, int sourceCusto
             Unidye.LOGGER.info(serverState.database.toString());
             if (serverState.database.containsKey(color)) {
                 DyeData dyeData = serverState.database.get(color);
-                Text prefix = Text.literal(dyeData.getPrefix());
-                Text suffix = Text.literal(dyeData.getSuffix());
+                Item item = itemStack.getItem();
+                Text prefix = dyeData.getPrefixExclusions().containsKey(item) ?  Text.literal(dyeData.getPrefixExclusions().get(item)) : Text.literal(dyeData.getPrefix());
+                Text suffix = dyeData.getSuffixExclusions().containsKey(item) ?  Text.literal(dyeData.getSuffixExclusions().get(item)) : Text.literal(dyeData.getSuffix());
                 if(!itemStack.get(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES).prefix().equals(prefix) || !itemStack.get(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES).suffix().equals(suffix)) {
                     itemStack.set(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, new ItemNameAffixesComponent(prefix, suffix, color));
                 }

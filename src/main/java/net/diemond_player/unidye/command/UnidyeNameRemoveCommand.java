@@ -7,10 +7,13 @@ import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.util.DyeData;
 import net.diemond_player.unidye.util.DyeDatabaseSaverAndLoader;
 import net.minecraft.command.CommandRegistryAccess;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
+
+import java.util.HashMap;
 
 public class UnidyeNameRemoveCommand {
     @SuppressWarnings("unused")
@@ -21,23 +24,41 @@ public class UnidyeNameRemoveCommand {
                 .then(CommandManager.literal("name")
                 .then(CommandManager.literal("remove")
                 .then(CommandManager.literal("prefix")
-                .executes(context -> run(context, true, false))))));
+                .executes(context -> run(context, true, false, false))))));
         serverCommandSourceCommandDispatcher.register(CommandManager.literal("unidye")
                 .then(CommandManager.literal("name")
                 .then(CommandManager.literal("remove")
                 .then(CommandManager.literal("suffix")
-                .executes(context -> run(context, false, true))))));
+                .executes(context -> run(context, false, true, false))))));
         serverCommandSourceCommandDispatcher.register(CommandManager.literal("unidye")
                 .then(CommandManager.literal("name")
                 .then(CommandManager.literal("remove")
-                .executes(context -> run(context, true, true)))));
+                .executes(context -> run(context, true, true, false)))));
+        serverCommandSourceCommandDispatcher.register(CommandManager.literal("unidye")
+                .then(CommandManager.literal("name")
+                .then(CommandManager.literal("remove")
+                .then(CommandManager.literal("exclusion")
+                .then(CommandManager.literal("prefix")
+                .executes(context -> run(context, true, false, true)))))));
+        serverCommandSourceCommandDispatcher.register(CommandManager.literal("unidye")
+                .then(CommandManager.literal("name")
+                .then(CommandManager.literal("remove")
+                .then(CommandManager.literal("exclusion")
+                .then(CommandManager.literal("suffix")
+                .executes(context -> run(context, false, true, true)))))));
+        serverCommandSourceCommandDispatcher.register(CommandManager.literal("unidye")
+                .then(CommandManager.literal("name")
+                .then(CommandManager.literal("remove")
+                .then(CommandManager.literal("exclusion")
+                .executes(context -> run(context, true, true, true))))));
     }
 
-    public static int run(CommandContext<ServerCommandSource> context, boolean removePrefix, boolean removeSuffix) {
+    public static int run(CommandContext<ServerCommandSource> context, boolean removePrefix, boolean removeSuffix, boolean isExclusion) {
         ServerPlayerEntity serverPlayerEntity = context.getSource().getPlayer();
 
         if (serverPlayerEntity != null) {
             ItemStack itemStack = serverPlayerEntity.getMainHandStack();
+            Item item = itemStack.getItem();
             if (itemStack.contains(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES)) {
                 DyeDatabaseSaverAndLoader serverState = DyeDatabaseSaverAndLoader.getServerState(context.getSource().getWorld().getServer());
                 ItemNameAffixesComponent itemNameAffixesComponent = itemStack.get(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES);
@@ -45,16 +66,34 @@ public class UnidyeNameRemoveCommand {
                 if (serverState.database.containsKey(color)) {
                     DyeData dyeData = serverState.database.get(color);
                     if (removePrefix && removeSuffix) {
-                        itemStack.set(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, ItemNameAffixesComponent.noAffixes(color));
-                        serverState.database.remove(color);
+                        if(!isExclusion) {
+                            itemStack.set(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, ItemNameAffixesComponent.noAffixes(color));
+                            serverState.database.remove(color);
+                        }else{
+                            dyeData.prefixExclusions.remove(item);
+                            dyeData.suffixExclusions.remove(item);
+                            ItemNameAffixesComponent.updateAffixes(itemStack, context.getSource().getWorld());
+                        }
                     } else if (removePrefix) {
-                        itemStack.set(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, ItemNameAffixesComponent.noPrefix(itemNameAffixesComponent.suffix(), color));
-                        dyeData.setPrefix("");
-                        serverState.database.replace(color, dyeData);
+                        if(!isExclusion) {
+                            itemStack.set(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, ItemNameAffixesComponent.noPrefix(itemNameAffixesComponent.suffix(), color));
+                            dyeData.setPrefix("");
+                            dyeData.setPrefixExclusions(new HashMap<>());
+                            serverState.database.replace(color, dyeData);
+                        }else{
+                            dyeData.prefixExclusions.remove(item);
+                            ItemNameAffixesComponent.updateAffixes(itemStack, context.getSource().getWorld());
+                        }
                     } else if (removeSuffix) {
-                        itemStack.set(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, ItemNameAffixesComponent.noSuffix(itemNameAffixesComponent.prefix(), color));
-                        dyeData.setSuffix("");
-                        serverState.database.replace(color, dyeData);
+                        if(!isExclusion) {
+                            itemStack.set(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, ItemNameAffixesComponent.noSuffix(itemNameAffixesComponent.prefix(), color));
+                            dyeData.setSuffix("");
+                            dyeData.setSuffixExclusions(new HashMap<>());
+                            serverState.database.replace(color, dyeData);
+                        }else{
+                            dyeData.suffixExclusions.remove(item);
+                            ItemNameAffixesComponent.updateAffixes(itemStack, context.getSource().getWorld());
+                        }
                     }
                     serverState.markDirty();
                 }

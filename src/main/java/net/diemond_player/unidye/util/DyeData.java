@@ -9,10 +9,14 @@ public class DyeData {
     public String suffix;
 
     public HashMap<Item, String> prefixExclusions = new HashMap<>();
+    public HashMap<Item, String> suffixExclusions = new HashMap<>();
 
-    public DyeData(HashMap<Item, String> prefixExclusions, String prefix) {
-        this.prefixExclusions = prefixExclusions;
-        this.prefix = prefix;
+    public HashMap<Item, String> getSuffixExclusions() {
+        return suffixExclusions;
+    }
+
+    public void setSuffixExclusions(HashMap<Item, String> suffixExclusions) {
+        this.suffixExclusions = suffixExclusions;
     }
 
     public DyeData(String affix, boolean isSuffix) {
@@ -27,12 +31,11 @@ public class DyeData {
         this(prefix, false);
     }
 
-    public DyeData() {
-    }
-
-    public DyeData(String prefix, String suffix) {
+    public DyeData(String prefix, String suffix, HashMap<Item, String> prefixExclusions, HashMap<Item, String> suffixExclusions) {
         this.suffix = suffix;
         this.prefix = prefix;
+        this.suffixExclusions = suffixExclusions;
+        this.prefixExclusions = prefixExclusions;
     }
 
     public String getPrefix() {
@@ -51,7 +54,6 @@ public class DyeData {
         this.prefixExclusions = prefixExclusions;
     }
 
-
     public String getSuffix() {
         return suffix == null ? "" : suffix;
     }
@@ -66,6 +68,7 @@ public class DyeData {
                 "prefix='" + prefix + '\'' +
                 ", suffix='" + suffix + '\'' +
                 ", prefixExclusions=" + prefixExclusions +
+                ", suffixExclusions=" + suffixExclusions +
                 '}';
     }
 }

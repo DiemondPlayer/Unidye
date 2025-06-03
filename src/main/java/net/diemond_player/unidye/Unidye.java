@@ -120,6 +120,8 @@ public class Unidye implements ModInitializer {
         CommandRegistrationCallback.EVENT.register(UnidyeNameSuffixCommand::register);
         CommandRegistrationCallback.EVENT.register(UnidyeNameRemoveCommand::register);
         CommandRegistrationCallback.EVENT.register(UnidyeNameRemoveDatabaseCommand::register);
+        CommandRegistrationCallback.EVENT.register(UnidyeNamePrefixExclusionCommand::register);
+        CommandRegistrationCallback.EVENT.register(UnidyeNameSuffixExclusionCommand::register);
     }
 
     public static boolean isModLoaded(String id) {
