@@ -199,8 +199,8 @@ public class UnidyeCauldronBehaviors {
             return ItemActionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
         if (!world.isClient) {
-            ItemStack itemStack = new ItemStack(Blocks.SHULKER_BOX);
             stack.remove(DataComponentTypes.DYED_COLOR);
+            ItemStack itemStack = stack.copyComponentsToNewStack(Blocks.SHULKER_BOX, 1);
             player.setStackInHand(hand, itemStack);
             player.incrementStat(Stats.CLEAN_SHULKER_BOX);
             LeveledCauldronBlock.decrementFluidLevel(state, world, pos);
