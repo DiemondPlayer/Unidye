@@ -12,10 +12,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.LeveledCauldronBlock;
 import net.minecraft.block.cauldron.CauldronBehavior;
 import net.minecraft.component.DataComponentTypes;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemConvertible;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.ItemTags;
@@ -107,8 +104,10 @@ public class UnidyeCauldronBehaviors {
             return ItemActionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
         if (!world.isClient) {
-            ItemStack itemStack = new ItemStack(Blocks.SHULKER_BOX);
             stack.remove(DataComponentTypes.DYED_COLOR);
+            stack.remove(UnidyeDataComponentTypes.RECIPE_STACKS);
+            stack.remove(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES);
+            ItemStack itemStack = stack.copyComponentsToNewStack(Blocks.SHULKER_BOX, 1);
             player.setStackInHand(hand, itemStack);
             player.incrementStat(Stats.CLEAN_SHULKER_BOX);
             LeveledCauldronBlock.decrementFluidLevel(state, world, pos);
