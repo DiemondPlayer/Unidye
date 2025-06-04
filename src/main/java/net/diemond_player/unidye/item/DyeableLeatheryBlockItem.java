@@ -56,7 +56,6 @@ public class DyeableLeatheryBlockItem extends DyeableBlockItem {
         }else{
             tooltip.add(mutableText.setStyle(mutableText.getStyle().withColor(getLeatherColor(stack))).append(Text.translatable("tooltip.unidye.beacon_color").append(getLeatherHexColor(stack)).formatted(Formatting.GRAY)));
         }
-        tooltip.add(stack.getOrDefault(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, ItemNameAffixesComponent.DEFAULT).toText());
     }
 
     @Override

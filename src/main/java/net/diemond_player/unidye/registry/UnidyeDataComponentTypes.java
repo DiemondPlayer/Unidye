@@ -3,6 +3,7 @@ package net.diemond_player.unidye.registry;
 import net.diemond_player.unidye.Unidye;
 import net.diemond_player.unidye.component.CustomBannerPatternsComponent;
 import net.diemond_player.unidye.component.ItemNameAffixesComponent;
+import net.diemond_player.unidye.component.MaterialColorsComponent;
 import net.diemond_player.unidye.component.RecipeStacksComponent;
 import net.minecraft.component.ComponentType;
 import net.minecraft.registry.Registries;
@@ -23,6 +24,10 @@ public class UnidyeDataComponentTypes {
 
     public static final ComponentType<ItemNameAffixesComponent> ITEM_NAME_AFFIXES = register(
             "item_name_affixes", builder -> builder.codec(ItemNameAffixesComponent.CODEC).packetCodec(ItemNameAffixesComponent.PACKET_CODEC).cache()
+    );
+
+    public static final ComponentType<MaterialColorsComponent> MATERIAL_COLORS = register(
+            "material_colors", builder -> builder.codec(MaterialColorsComponent.CODEC).packetCodec(MaterialColorsComponent.PACKET_CODEC).cache()
     );
 
     private static <T> ComponentType<T> register(String name, UnaryOperator<ComponentType.Builder<T>> builderOperator) {

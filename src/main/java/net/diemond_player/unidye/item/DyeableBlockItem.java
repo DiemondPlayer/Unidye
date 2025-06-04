@@ -36,9 +36,4 @@ public class DyeableBlockItem extends BlockItem {
         Text text = ItemNameAffixesComponent.getName(stack, this.getTranslationKey());
         return text != null ? text : super.getName(stack);
     }
-
-    @Override
-    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
-        tooltip.add(stack.getOrDefault(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, ItemNameAffixesComponent.DEFAULT).toText());
-    }
 }

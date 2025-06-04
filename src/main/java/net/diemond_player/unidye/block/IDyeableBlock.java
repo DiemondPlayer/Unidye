@@ -37,7 +37,7 @@ public interface IDyeableBlock extends BlockEntityProvider {
             recipeStacksComponent = iDyeableBlockEntity.getRecipeStacks();
         }
         stack.set(DataComponentTypes.DYED_COLOR, new DyedColorComponent(color, true));
-        if(itemNameAffixesComponent != null)stack.set(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, itemNameAffixesComponent);
+        if(itemNameAffixesComponent != null) stack.set(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, itemNameAffixesComponent);
         if(recipeStacksComponent != null) stack.set(UnidyeDataComponentTypes.RECIPE_STACKS, recipeStacksComponent);
         return stack;
     }

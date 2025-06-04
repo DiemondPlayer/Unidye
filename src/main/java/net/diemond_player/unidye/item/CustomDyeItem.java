@@ -120,7 +120,6 @@ public class CustomDyeItem extends DyeItem implements SignChangingItem{
         } else {
             tooltip.add(Text.translatable("tooltip.unidye.press_shift"));
         }
-        tooltip.add(stack.getOrDefault(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, ItemNameAffixesComponent.DEFAULT).toText());
     }
 
     @Override

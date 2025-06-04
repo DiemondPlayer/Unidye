@@ -13,7 +13,6 @@
 - **TODO** merge leathery stuff with regular dyeable block entity stuff, making this more versatile
 - **TODO** add a component for custom dye item so you won't be using CUSTOM_DATA
 - **TODO** add/adapt a component for non-dye items to use
-- **TODO** organize command names (because right now they are not intuitive probs)
 
 ### Config:
 - **TODO** add "no added spaces option"
@@ -37,6 +36,7 @@
 - **TODO** check every class for warns, errors
 - **TODO** cleanup/add comments
 - **TODO** add warns/errors through LOGGER where it is needed
+- **TODO** organize command names (because right now they are not intuitive probs)
 
 ### The Unlikely Corner:
 - **unlikely TODO** naming system for fireworks
