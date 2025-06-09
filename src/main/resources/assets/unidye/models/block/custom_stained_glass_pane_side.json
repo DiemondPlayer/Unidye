@@ -1,5 +1,5 @@
 {
-  "parent": "unidye:block/templates/template_tintable_glass_pane_side",
+  "parent": "unidye:block/template/tintable_glass_pane_side",
   "textures": {
     "edge": "unidye:block/custom_stained_glass_pane_top",
     "pane": "unidye:block/custom_stained_glass"

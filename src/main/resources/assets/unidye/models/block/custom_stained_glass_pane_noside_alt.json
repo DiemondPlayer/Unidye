@@ -1,5 +1,5 @@
 {
-  "parent": "unidye:block/templates/template_tintable_glass_pane_noside_alt",
+  "parent": "unidye:block/template/tintable_glass_pane_noside_alt",
   "textures": {
     "pane": "unidye:block/custom_stained_glass"
   }

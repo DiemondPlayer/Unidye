@@ -65,20 +65,20 @@ public class UnidyeClient implements ClientModInitializer {
     private void registerModelLoadingPlugin() {
         ModelLoadingPlugin.register(pluginContext -> {
             File resourcepackDir = MinecraftClient.getInstance().getResourcePackDir().toFile();
-            File nativeSpecialDir = new File(resourcepackDir.getParentFile().getParentFile(), "src/main/resources/assets/unidye/models/item/custom_dye_special/");
+            File nativeSpecialDir = new File(resourcepackDir.getParentFile().getParentFile(), "src/main/resources/assets/unidye/models/item/custom_dye/special/");
             registerModels(pluginContext, nativeSpecialDir);
 
             ResourcePackManager resourcePackManager = MinecraftClient.getInstance().getResourcePackManager();
             List<ResourcePack> directoryResourcePacks = resourcePackManager.createResourcePacks()
                     .stream().filter(resourcePack -> resourcePack instanceof DirectoryResourcePack).toList();
             for(ResourcePack directoryResourcePack : directoryResourcePacks){
-                File resourcepackSpecialDir = new File(resourcepackDir, directoryResourcePack.getInfo().title().getString()+"/assets/unidye/models/item/custom_dye_special/");
+                File resourcepackSpecialDir = new File(resourcepackDir, directoryResourcePack.getInfo().title().getString()+"/assets/unidye/models/item/custom_dye/special/");
                 registerModels(pluginContext, resourcepackSpecialDir);
             }
 
             for(String name : UnidyeUtils.DYE_COLOR_TO_NAME.values()){
                 Unidye.LOGGER.info(name);
-                pluginContext.addModels(Identifier.of("unidye", "item/custom_" + name + "_dye"));
+                pluginContext.addModels(Identifier.of("unidye", "item/custom_dye/" + name));
             }
         });
     }
@@ -90,7 +90,7 @@ public class UnidyeClient implements ClientModInitializer {
                 if(fileName.endsWith(".json")){
                     fileName = fileName.substring(0, fileName.indexOf(".json"));
                     Unidye.LOGGER.info(fileName);
-                    pluginContext.addModels(Identifier.of("unidye", "item/custom_dye_special/" + fileName));
+                    pluginContext.addModels(Identifier.of("unidye", "item/custom_dye/special/" + fileName));
                 }
             }
         }
@@ -130,7 +130,7 @@ public class UnidyeClient implements ClientModInitializer {
     private void registerItemColors() {
         ColorProviderRegistry.ITEM.register((stack, tintIndex) -> {
             String colorHex = String.format("%06X", (0xFFFFFF & UnidyeUtils.getColor(stack))).toLowerCase();
-            Identifier patternModel = Identifier.of(Unidye.MOD_ID, "item/custom_dye_special/" + colorHex);
+            Identifier patternModel = Identifier.of(Unidye.MOD_ID, "item/custom_dye/special/" + colorHex);
             BakedModel model = MinecraftClient.getInstance().getBakedModelManager().getModel(patternModel);
             return model != null || tintIndex > 0 ? -1 : ColorHelper.Argb.fullAlpha(UnidyeUtils.getColor(stack));
         }, UnidyeItems.CUSTOM_DYE);

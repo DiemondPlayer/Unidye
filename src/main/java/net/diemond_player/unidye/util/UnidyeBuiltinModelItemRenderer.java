@@ -60,8 +60,8 @@ public class UnidyeBuiltinModelItemRenderer{
             ItemRenderer itemRenderer = MinecraftClient.getInstance().getItemRenderer();
             boolean leftHanded = mode == ModelTransformationMode.FIRST_PERSON_LEFT_HAND || mode == ModelTransformationMode.THIRD_PERSON_LEFT_HAND;
             String colorHex = String.format("%06X", (0xFFFFFF & UnidyeUtils.getColor(stack))).toLowerCase();
-            Identifier baseModel = Identifier.of(Unidye.MOD_ID, "item/custom_" + CustomDyeItem.getDyeShape(stack) + "_dye");
-            Identifier patternModel = Identifier.of(Unidye.MOD_ID, "item/custom_dye_special/" + colorHex);
+            Identifier baseModel = Identifier.of(Unidye.MOD_ID, "item/custom_dye/" + CustomDyeItem.getDyeShape(stack));
+            Identifier patternModel = Identifier.of(Unidye.MOD_ID, "item/custom_dye/special/" + colorHex);
             BakedModel loadedBaseModel = MinecraftClient.getInstance().getBakedModelManager().getModel(baseModel);
             BakedModel model = MinecraftClient.getInstance().getBakedModelManager().getModel(patternModel);
 
