@@ -1,6 +1,5 @@
 package net.diemond_player.unidye.mixin.compat.emi;
 
-import com.google.common.collect.Lists;
 import dev.emi.emi.api.stack.EmiIngredient;
 import dev.emi.emi.api.stack.EmiStack;
 import dev.emi.emi.recipe.special.EmiArmorDyeRecipe;

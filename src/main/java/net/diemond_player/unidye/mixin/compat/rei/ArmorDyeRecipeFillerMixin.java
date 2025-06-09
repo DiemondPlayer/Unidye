@@ -1,6 +1,5 @@
 package net.diemond_player.unidye.mixin.compat.rei;
 
-import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.entry.EntryStack;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
 import me.shedaniel.rei.plugin.client.categories.crafting.filler.ArmorDyeRecipeFiller;

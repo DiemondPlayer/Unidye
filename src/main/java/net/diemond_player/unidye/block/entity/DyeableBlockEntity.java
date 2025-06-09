@@ -4,7 +4,6 @@ package net.diemond_player.unidye.block.entity;
 // Source: https://github.com/Heccology/Bountiful-Fares/blob/1.20.1/src/main/java/net/hecco/bountifulfares/block/entity/DyeableBlockEntity.java
 
 import net.diemond_player.unidye.Unidye;
-import net.diemond_player.unidye.component.CustomBannerPatternsComponent;
 import net.diemond_player.unidye.component.ItemNameAffixesComponent;
 import net.diemond_player.unidye.component.RecipeStacksComponent;
 import net.diemond_player.unidye.registry.UnidyeBlockEntities;

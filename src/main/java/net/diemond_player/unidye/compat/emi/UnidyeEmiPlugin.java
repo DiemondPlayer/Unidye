@@ -17,7 +17,6 @@ import net.diemond_player.unidye.registry.UnidyeCauldronBehaviors;
 import net.diemond_player.unidye.util.EmiCauldronRecipeData;
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.CraftingRecipe;
@@ -28,7 +27,6 @@ import net.minecraft.recipe.input.RecipeInput;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.util.Identifier;
 
-import java.util.List;
 import java.util.function.Supplier;
 
 @SuppressWarnings("SameParameterValue")

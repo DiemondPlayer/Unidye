@@ -1,9 +1,7 @@
 package net.diemond_player.unidye.item;
 
 import net.diemond_player.unidye.block.entity.DyeableLeatheryBlockEntity;
-import net.diemond_player.unidye.component.ItemNameAffixesComponent;
 import net.diemond_player.unidye.registry.UnidyeBlocks;
-import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.registry.UnidyeMaterialTypes;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.block.Block;

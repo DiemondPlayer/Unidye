@@ -6,7 +6,6 @@ import me.shedaniel.rei.api.client.plugins.REIClientPlugin;
 import me.shedaniel.rei.api.client.registry.category.CategoryRegistry;
 import me.shedaniel.rei.api.client.registry.display.DisplayRegistry;
 import me.shedaniel.rei.plugin.client.categories.crafting.filler.CraftingRecipeFiller;
-import net.diemond_player.unidye.Unidye;
 import net.diemond_player.unidye.registry.UnidyeBlocks;
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 import net.minecraft.item.Item;

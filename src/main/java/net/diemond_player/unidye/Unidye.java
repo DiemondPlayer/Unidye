@@ -1,7 +1,6 @@
 package net.diemond_player.unidye;
 
 import com.google.common.collect.Lists;
-import com.ibm.icu.impl.Pair;
 import net.diemond_player.unidye.command.*;
 import net.diemond_player.unidye.payload.DatabasePayload;
 import net.diemond_player.unidye.payload.RequestDatabasePayload;
@@ -13,12 +12,8 @@ import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemConvertible;
-import net.minecraft.registry.tag.ItemTags;
-import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
