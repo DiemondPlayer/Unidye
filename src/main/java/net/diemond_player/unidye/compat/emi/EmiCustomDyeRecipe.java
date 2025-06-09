@@ -58,7 +58,10 @@ public class EmiCustomDyeRecipe extends EmiPatternCraftingRecipe {
 
     @Override
     public SlotWidget getOutputWidget(int x, int y) {
-        return new GeneratedSlotWidget(r -> EmiStack.of(UnidyeUtils.blendAndSetColor(new ItemStack(UnidyeItems.CUSTOM_DYE), getDyes(r), Lists.newArrayList())), unique, x, y);
+        return new GeneratedSlotWidget(r -> {
+            List<DyeItem> dyes = getDyes(r);
+            return EmiStack.of(UnidyeUtils.blendAndSetColor(new ItemStack(UnidyeItems.CUSTOM_DYE), dyes, Lists.newArrayList())).setAmount(dyes.size());
+        }, unique, x, y);
     }
 
     private List<DyeItem> getDyes(Random random) {

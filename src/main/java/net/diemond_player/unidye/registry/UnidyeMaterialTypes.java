@@ -2,7 +2,11 @@ package net.diemond_player.unidye.registry;
 
 import net.diemond_player.unidye.Unidye;
 import net.diemond_player.unidye.util.UnidyeMaterialType;
+import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
 import net.minecraft.item.Item;
+import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.SimpleRegistry;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.ColorHelper;
@@ -12,7 +16,10 @@ import java.util.Map;
 
 public class UnidyeMaterialTypes {
     // A class to store all the registered Material Types added by base Unidye
-    public static final HashMap<Identifier, UnidyeMaterialType> MATERIAL_TYPES = new HashMap<>();
+    public static final RegistryKey<Registry<UnidyeMaterialType>> MATERIAL_TYPE_REGISTRY_KEY = RegistryKey.ofRegistry(Identifier.of(Unidye.MOD_ID, "material_type"));
+
+    public static final SimpleRegistry<UnidyeMaterialType> MATERIAL_TYPE = FabricRegistryBuilder.createDefaulted(MATERIAL_TYPE_REGISTRY_KEY, Identifier.of(Unidye.MOD_ID, "leather")).buildAndRegister();
+
     public static Map<Item, UnidyeMaterialType> ITEM_TO_MATERIAL_TYPE = new HashMap<>();
 
 
@@ -174,13 +181,7 @@ public class UnidyeMaterialTypes {
 
     public static UnidyeMaterialType registerMaterialType(String modId, String name, HashMap<DyeColor, Integer> colors) {
         Identifier id = Identifier.of(modId, name);
-        UnidyeMaterialType type = new UnidyeMaterialType(colors, id);
-        if(!MATERIAL_TYPES.containsKey(id)) {
-            MATERIAL_TYPES.put(id, type);
-        }else{
-            Unidye.LOGGER.warn("Failed registering a Unidye material type: this material id already exists! Caused by {} while trying to add {} to {}", modId, name, id);
-        }
-        return type;
+        return Registry.register(MATERIAL_TYPE, id,  new UnidyeMaterialType(colors, id));
     }
 
     public static void addItemToMaterialType(Item item, UnidyeMaterialType type){

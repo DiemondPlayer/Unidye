@@ -120,3 +120,8 @@ The changelog posted on Modrinth/Curseforge would be without those minor changes
 • Added (somewhat) automatic EMI support to cauldron behaviors
 • Fixed tags a bit (cheap glass, etc)
 • Removed not existing cauldron washing recipes from EMI
+• No mope pseudo registry?
+• Fixed dye count in emi recipes (both dye armor recipe and custom dye recipe)
+• Fixed dye count in armor dye for REI
+• Added resourcepack system for specific dye sprites
+• Moved dye shape system from overrides to model loader registry

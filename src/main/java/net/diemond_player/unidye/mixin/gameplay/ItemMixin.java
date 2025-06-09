@@ -32,9 +32,8 @@ public abstract class ItemMixin {
         if (stack.getItem() instanceof DyeItem dyeItem && !(stack.getItem() instanceof CustomDyeItem)) {
             if (Screen.hasShiftDown()) {
                 DyeColor dyeColor = dyeItem.getColor();
-                for(Map.Entry<Identifier, UnidyeMaterialType> entry : UnidyeMaterialTypes.MATERIAL_TYPES.entrySet()){
-                    Identifier id = entry.getKey();
-                    UnidyeMaterialType materialType = entry.getValue();
+                for(UnidyeMaterialType materialType : UnidyeMaterialTypes.MATERIAL_TYPE.stream().toList()){
+                    Identifier id = materialType.getId();
                     if(materialType.materialColors.containsKey(dyeColor)) {
                         MutableText mutableText = Text.literal("■ ");
                         tooltip.add(mutableText.setStyle(mutableText.getStyle().withColor(materialType.getColor(dyeColor))).append(Text.translatable("tooltip." + id.getNamespace() + "." + id.getPath() + "_color").append(String.format("#%06X", (0xFFFFFF & materialType.getColor(dyeColor)))).formatted(Formatting.GRAY)));

@@ -5,6 +5,8 @@
   "plugin": "net.diemond_player.unidye.util.UnidyeMixinPlugin",
   "mixins": [
     "compat.emi.EmiApiMixin",
+    "compat.emi.EmiArmorDyeRecipeMixin",
+    "compat.rei.ArmorDyeRecipeFillerMixin",
     "compat.rei.ClientHelperImplMixin",
     "gameplay.BannerItemMixin",
     "gameplay.CakeBlockMixin",

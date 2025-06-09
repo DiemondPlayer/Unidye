@@ -24,6 +24,7 @@ import java.util.List;
 
 import static net.minecraft.item.ItemStack.ITEM_CODEC;
 
+@SuppressWarnings("deprecation")
 public record RecipeStacksComponent(List<Stack> stacks, int outputAmount, boolean shapeless) {
     public static final RecipeStacksComponent DEFAULT = new RecipeStacksComponent(List.of(), 1, false);
     public static final Codec<RecipeStacksComponent> CODEC = RecordCodecBuilder.create(

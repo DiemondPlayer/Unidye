@@ -246,7 +246,7 @@ public class UnidyeUtils {
     }
 
     public static void blendAndSetCustomDyeColor(ItemStack stack, List<DyeItem> colors, List<ItemStack> customColors) {
-        for(UnidyeMaterialType type : UnidyeMaterialTypes.MATERIAL_TYPES.values()){
+        for(UnidyeMaterialType type : UnidyeMaterialTypes.MATERIAL_TYPE.stream().toList()){
             if(type != UnidyeMaterialTypes.DYE) {
                 blendAndSetMaterialColor(stack, colors, customColors, type);
             }

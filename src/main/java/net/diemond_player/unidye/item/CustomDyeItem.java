@@ -18,6 +18,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.SignChangingItem;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.Registries;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.MutableText;
@@ -30,26 +31,6 @@ import java.util.List;
 import java.util.Map;
 
 public class CustomDyeItem extends DyeItem implements SignChangingItem{
-
-    public static final HashMap<String, Float> DYE_NAME_TO_FLOAT = new HashMap<>() {{
-        put("white", 0.0000f);
-        put("orange", 0.0001f);
-        put("magenta", 0.0002f);
-        put("light_blue", 0.0003f);
-        put("yellow", 0.0004f);
-        put("lime", 0.0005f);
-        put("pink", 0.0006f);
-        put("gray", 0.0007f);
-        put("light_gray", 0.0008f);
-        put("cyan", 0.0009f);
-        put("purple", 0.0010f);
-        put("blue", 0.0011f);
-        put("brown", 0.0012f);
-        put("green", 0.0013f);
-        put("red", 0.0014f);
-        put("black", 0.0015f);
-    }};
-
     //no longer used but used to convert to a new key
     public static final String CLOSEST_VANILLA_DYE_ID_KEY = "closest_vanilla_dye_id";
     //this is where the dye stores its shape now, and it's not an int, it's a string
@@ -60,11 +41,11 @@ public class CustomDyeItem extends DyeItem implements SignChangingItem{
         super(DyeColor.WHITE, settings);
     }
 
-    public static float getDyeShapeAsFloat(ItemStack stack) {
+    public static String getDyeShape(ItemStack stack) {
         NbtComponent nbtComponent = stack.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(new NbtCompound()));
         String name = "white";
         //This if statement converts old nbt keys to new ones so that world made before 2.0.0 don't get corrupted
-        if (nbtComponent != null && nbtComponent.contains(CLOSEST_VANILLA_DYE_ID_KEY)){
+        if (nbtComponent != null && nbtComponent.contains(CLOSEST_VANILLA_DYE_ID_KEY)) {
             NbtCompound nbtCompound = nbtComponent.copyNbt();
             name = DyeColor.byId(nbtCompound.getInt(CLOSEST_VANILLA_DYE_ID_KEY)).getName();
             nbtCompound.remove(CLOSEST_VANILLA_DYE_ID_KEY);
@@ -73,7 +54,7 @@ public class CustomDyeItem extends DyeItem implements SignChangingItem{
             NbtCompound nbtCompound = nbtComponent.copyNbt();
             name = nbtCompound.getString(DYE_SHAPE);
         }
-        return DYE_NAME_TO_FLOAT.getOrDefault(name, 0f);
+        return name;
     }
 
     public static Integer getMaterialColor(ItemStack stack, UnidyeMaterialType materialType) {
@@ -109,9 +90,8 @@ public class CustomDyeItem extends DyeItem implements SignChangingItem{
     public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
         super.appendTooltip(stack,context,tooltip,type);
         if (Screen.hasShiftDown()) {
-            for(Map.Entry<Identifier, UnidyeMaterialType> entry : UnidyeMaterialTypes.MATERIAL_TYPES.entrySet()){
-                Identifier id = entry.getKey();
-                UnidyeMaterialType materialType = entry.getValue();
+            for(UnidyeMaterialType materialType : UnidyeMaterialTypes.MATERIAL_TYPE.stream().toList()){
+                Identifier id = materialType.getId();
                 if(materialType != UnidyeMaterialTypes.DYE) {
                     MutableText mutableText = Text.literal("■ ");
                     tooltip.add(mutableText.setStyle(mutableText.getStyle().withColor(getMaterialColor(stack, materialType))).append(Text.translatable("tooltip." + id.getNamespace() + "." + id.getPath() + "_color").append(getMaterialHexColor(stack, materialType)).formatted(Formatting.GRAY)));
