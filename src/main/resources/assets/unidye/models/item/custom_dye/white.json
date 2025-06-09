@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "unidye:item/custom_white_dye",
-    "layer1": "unidye:item/custom_white_dye_overlay"
+    "layer0": "unidye:item/custom_dye/white",
+    "layer1": "unidye:item/custom_dye/white_overlay"
   }
 }

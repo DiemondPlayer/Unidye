@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "unidye:item/custom_blue_dye",
-    "layer1": "unidye:item/custom_blue_dye_overlay"
+    "layer0": "unidye:item/custom_dye/blue",
+    "layer1": "unidye:item/custom_dye/blue_overlay"
   }
 }

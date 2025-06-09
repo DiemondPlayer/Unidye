@@ -1,5 +1,7 @@
 ## TODOs and FIXMEs
 
+- **TODO** there was smth i thought of then went nah! (rember?)
+
 ### Gameplay:
 - **TODO** native usage of recipe saving system
 - **TODO** add Llama carpets
