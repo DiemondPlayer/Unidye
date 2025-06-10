@@ -69,32 +69,32 @@ public class UnidyeClient implements ClientModInitializer {
         registerBuiltinItemRenderer();
         registerNetworking();
         registerModelLoadingPlugin();
-//        registerEvents();
+        registerEvents();
     }
 
-//    private void registerEvents() {
-//        WorldRenderEvents.BLOCK_OUTLINE.register(((worldRenderContext, blockOutlineContext) -> {
-//            BlockState state = blockOutlineContext.blockState();
-//            BlockPos pos = blockOutlineContext.blockPos();
-//            World world = worldRenderContext.world();
-//            Entity entity = blockOutlineContext.entity();
-//            VertexConsumer vertexConsumer = worldRenderContext.consumers().getBuffer(UnidyeRenderLayers.LINE_STRIP_NO_TRANSPARENCY);
-//            if(blockOutlineContext.blockState().isOf(UnidyeBlocks.CUSTOM_CANDLE) || blockOutlineContext.blockState().isOf(UnidyeBlocks.CUSTOM_CANDLE_CAKE)){
-//                WorldRendererInvoker.invokeDrawCuboidShapeOutline(worldRenderContext.matrixStack(),
-//                        vertexConsumer,
-//                        state.getOutlineShape(world, pos, ShapeContext.of(entity)),
-//                        (double)pos.getX() - blockOutlineContext.cameraX(),
-//                        (double)pos.getY() - blockOutlineContext.cameraY(),
-//                        (double)pos.getZ() - blockOutlineContext.cameraZ(),
-//                        0.0F,
-//                        0.0F,
-//                        0.0F,
-//                        0.4F);
-//                return false;
-//            }
-//            return true;
-//        }));
-//    }
+    private void registerEvents() {
+        WorldRenderEvents.BLOCK_OUTLINE.register(((worldRenderContext, blockOutlineContext) -> {
+            BlockState state = blockOutlineContext.blockState();
+            BlockPos pos = blockOutlineContext.blockPos();
+            World world = worldRenderContext.world();
+            Entity entity = blockOutlineContext.entity();
+            VertexConsumer vertexConsumer = worldRenderContext.consumers().getBuffer(RenderLayer.LINES);
+            if(blockOutlineContext.blockState().isOf(UnidyeBlocks.CUSTOM_CANDLE) || blockOutlineContext.blockState().isOf(UnidyeBlocks.CUSTOM_CANDLE_CAKE)){
+                WorldRendererInvoker.invokeDrawCuboidShapeOutline(worldRenderContext.matrixStack(),
+                        vertexConsumer,
+                        state.getOutlineShape(world, pos, ShapeContext.of(entity)),
+                        (double)pos.getX() - blockOutlineContext.cameraX(),
+                        (double)pos.getY() - blockOutlineContext.cameraY(),
+                        (double)pos.getZ() - blockOutlineContext.cameraZ(),
+                        0.2F,
+                        0.2F,
+                        0.2F,
+                        1.0F);
+                return false;
+            }
+            return true;
+        }));
+    }
 
     private void registerModelLoadingPlugin() {
         ModelLoadingPlugin.register(pluginContext -> {
