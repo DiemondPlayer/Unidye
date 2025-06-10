@@ -1,7 +1,5 @@
 ## TODOs and FIXMEs
 
-- **TODO** there was smth i thought of then went nah! (rember?)
-
 ### Gameplay:
 - **TODO** native usage of recipe saving system
 - **TODO** add Llama carpets
@@ -25,7 +23,6 @@
 ### Assets:
 - **TODO** if the "two-layered dyeable blocks" system is implemented, utilise it
 - **TODO** new dye sprites for lime, pink, gray, purple, magenta
-- **TODO** candle fire as a second layer translucent texture
 
 ### Compat (Main Mod):
 - **TODO** built-in datapack system for recipe, advancements, etc.

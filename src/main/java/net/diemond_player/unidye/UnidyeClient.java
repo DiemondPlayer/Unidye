@@ -7,6 +7,7 @@ import net.diemond_player.unidye.entity.client.renderer.DyeableBannerBlockEntity
 import net.diemond_player.unidye.entity.client.renderer.DyeableBedBlockEntityRenderer;
 import net.diemond_player.unidye.entity.client.renderer.DyeableFallingBlockEntityRenderer;
 import net.diemond_player.unidye.entity.client.renderer.DyeableShulkerBoxBlockEntityRenderer;
+import net.diemond_player.unidye.mixin.util.WorldRendererInvoker;
 import net.diemond_player.unidye.payload.DatabasePayload;
 import net.diemond_player.unidye.payload.SetColorAndRerenderBlockPayload;
 import net.diemond_player.unidye.registry.*;
@@ -17,18 +18,20 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
-import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
-import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
-import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
-import net.minecraft.block.Block;
+import net.fabricmc.fabric.api.client.rendering.v1.*;
+import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
+import net.minecraft.client.render.debug.DebugRenderer;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.world.ClientWorld;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.resource.DirectoryResourcePack;
 import net.minecraft.resource.ResourcePack;
@@ -36,10 +39,15 @@ import net.minecraft.resource.ResourcePackManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ColorHelper;
+import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.util.shape.VoxelShapes;
+import net.minecraft.world.World;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 public class UnidyeClient implements ClientModInitializer {
 
@@ -51,6 +59,7 @@ public class UnidyeClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
+//        UnidyeRenderLayers.registerRenderLayers();
         registerEntityRenderers();
         registerBlockEntityRenderers();
         registerEntityModelLayers();
@@ -60,7 +69,32 @@ public class UnidyeClient implements ClientModInitializer {
         registerBuiltinItemRenderer();
         registerNetworking();
         registerModelLoadingPlugin();
+//        registerEvents();
     }
+
+//    private void registerEvents() {
+//        WorldRenderEvents.BLOCK_OUTLINE.register(((worldRenderContext, blockOutlineContext) -> {
+//            BlockState state = blockOutlineContext.blockState();
+//            BlockPos pos = blockOutlineContext.blockPos();
+//            World world = worldRenderContext.world();
+//            Entity entity = blockOutlineContext.entity();
+//            VertexConsumer vertexConsumer = worldRenderContext.consumers().getBuffer(UnidyeRenderLayers.LINE_STRIP_NO_TRANSPARENCY);
+//            if(blockOutlineContext.blockState().isOf(UnidyeBlocks.CUSTOM_CANDLE) || blockOutlineContext.blockState().isOf(UnidyeBlocks.CUSTOM_CANDLE_CAKE)){
+//                WorldRendererInvoker.invokeDrawCuboidShapeOutline(worldRenderContext.matrixStack(),
+//                        vertexConsumer,
+//                        state.getOutlineShape(world, pos, ShapeContext.of(entity)),
+//                        (double)pos.getX() - blockOutlineContext.cameraX(),
+//                        (double)pos.getY() - blockOutlineContext.cameraY(),
+//                        (double)pos.getZ() - blockOutlineContext.cameraZ(),
+//                        0.0F,
+//                        0.0F,
+//                        0.0F,
+//                        0.4F);
+//                return false;
+//            }
+//            return true;
+//        }));
+//    }
 
     private void registerModelLoadingPlugin() {
         ModelLoadingPlugin.register(pluginContext -> {
@@ -156,6 +190,7 @@ public class UnidyeClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlock(UnidyeBlocks.CUSTOM_STAINED_GLASS, RenderLayer.getTranslucent());
         BlockRenderLayerMap.INSTANCE.putBlock(UnidyeBlocks.CUSTOM_STAINED_GLASS_PANE, RenderLayer.getTranslucent());
         BlockRenderLayerMap.INSTANCE.putBlock(UnidyeBlocks.CUSTOM_CANDLE, RenderLayer.getTranslucent());
+        BlockRenderLayerMap.INSTANCE.putBlock(UnidyeBlocks.CUSTOM_CANDLE_CAKE, RenderLayer.getTranslucent());
     }
 
     private void registerEntityModelLayers() {

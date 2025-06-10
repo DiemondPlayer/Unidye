@@ -1,8 +1,9 @@
 {
-  "parent": "unidye:block/template/tintable_cake_with_candle",
+  "parent": "unidye:block/template/tintable_cake_with_candle_overlayed",
   "textures": {
     "bottom": "minecraft:block/cake_bottom",
     "candle": "unidye:block/custom_candle_lit",
+    "candle_overlay": "unidye:block/custom_candle_lit_overlay",
     "particle": "minecraft:block/cake_side",
     "side": "minecraft:block/cake_side",
     "top": "minecraft:block/cake_top"

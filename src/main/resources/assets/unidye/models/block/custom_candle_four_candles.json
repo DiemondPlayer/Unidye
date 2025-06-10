@@ -1,7 +1,7 @@
 {
   "parent": "unidye:block/template/tintable_four_candles",
   "textures": {
-    "all": "unidye:block/custom_candle",
+    "tint": "unidye:block/custom_candle",
     "particle": "unidye:block/custom_candle"
   }
 }

@@ -55,6 +55,7 @@
     "render.SheepWoolFeatureRendererMixin",
     "render.SignBlockEntityRendererMixin",
     "render.StonecutterScreenMixin",
-    "render.WolfCollarFeatureRendererMixin"
+    "render.WolfCollarFeatureRendererMixin",
+    "util.WorldRendererInvoker"
   ]
 }
