@@ -5,6 +5,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.diemond_player.unidye.Unidye;
 import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
 import net.minecraft.component.ComponentChanges;
+import net.minecraft.component.ComponentType;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
@@ -18,9 +19,7 @@ import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.TagKey;
 import org.apache.commons.compress.utils.Lists;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 import static net.minecraft.item.ItemStack.ITEM_CODEC;
 
@@ -62,17 +61,39 @@ public record RecipeStacksComponent(List<Stack> stacks, int outputAmount, boolea
                 ItemNameAffixesComponent itemNamePrefixComponent = itemStackCopy.get(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES);
                 itemStackCopy.set(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, ItemNameAffixesComponent.noAffixes(itemNamePrefixComponent.sourceCustomDyeColor()));
             }
+            restrictRecipeStackDepth(itemStack);
             stackList.add(new Stack(itemStackCopy.getRegistryEntry(), itemStackCopy.getComponentChanges()));
         }
         if (shapeless) {
             stackList.sort(Comparator.comparing(stack -> stack.item().getIdAsString()));
             stackList.sort(Comparator.comparing(stack -> {
-                if(stack.componentChanges.get(DataComponentTypes.DYED_COLOR) == null) return 1;
-                if(stack.componentChanges.get(DataComponentTypes.DYED_COLOR).isEmpty()) return 1;
-                return stack.componentChanges.get(DataComponentTypes.DYED_COLOR).get().rgb();
+                ComponentChanges componentChanges = stack.componentChanges();
+                if(componentChanges.get(DataComponentTypes.DYED_COLOR) == null) return 1;
+                if(componentChanges.get(DataComponentTypes.DYED_COLOR).isEmpty()) return 1;
+                return componentChanges.get(DataComponentTypes.DYED_COLOR).get().rgb();
             }));
         }
         return new RecipeStacksComponent(stackList, outputAmount, shapeless);
+    }
+
+    private static void restrictRecipeStackDepth(ItemStack itemStack) {
+        if(!itemStack.contains(UnidyeDataComponentTypes.RECIPE_STACKS)) return;
+        RecipeStacksComponent recipeStacksComponent = itemStack.get(UnidyeDataComponentTypes.RECIPE_STACKS);
+        List<Stack> newStacks = Lists.newArrayList();
+        List<Stack> stacks = recipeStacksComponent.stacks();
+        for(Stack stack : stacks){
+            ComponentChanges componentChanges = stack.componentChanges();
+            if(componentChanges.get(UnidyeDataComponentTypes.RECIPE_STACKS) == null) {
+                newStacks.add(stack);
+                continue;
+            }
+            if(componentChanges.get(UnidyeDataComponentTypes.RECIPE_STACKS).isEmpty()) {
+                newStacks.add(stack);
+                continue;
+            }
+            newStacks.add(new Stack(stack.item(), stack.componentChanges().withRemovedIf((componentType -> componentType == UnidyeDataComponentTypes.RECIPE_STACKS))));
+        }
+        itemStack.set(UnidyeDataComponentTypes.RECIPE_STACKS, new RecipeStacksComponent(newStacks, recipeStacksComponent.outputAmount(), recipeStacksComponent.shapeless()));
     }
 
     public RecipeStacksComponent optimizeTagToFallback(TagKey<Item> tag, ItemConvertible fallbackItem){
