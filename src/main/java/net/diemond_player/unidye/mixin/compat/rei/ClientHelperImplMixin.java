@@ -40,7 +40,7 @@ public abstract class ClientHelperImplMixin {
                         List<DisplaySpec> craftingDisplays = map.get(new DefaultCraftingCategory());
                         List<EntryIngredient> recipeInputs = new ArrayList<>(List.of());
                         HashMap<Integer, DyeData> database = UnidyeClient.database;
-                        Unidye.LOGGER.info("tried accessing database");
+//                        Unidye.LOGGER.info("tried accessing database");
                         for(ItemStack itemStack1 : recipeStacksComponent.toItemStacks()){
                             if (database != null) {
                                 if (itemStack1.contains(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES)) {
@@ -58,7 +58,7 @@ public abstract class ClientHelperImplMixin {
                                     }
                                 }
                             } else {
-                                Unidye.LOGGER.info("it's null");
+//                                Unidye.LOGGER.info("it's null");
                             }
                             recipeInputs.add(EntryIngredient.of(EntryStack.of(VanillaEntryTypes.ITEM,itemStack1)));
                         }

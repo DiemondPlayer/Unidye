@@ -114,7 +114,7 @@ public class UnidyeClient implements ClientModInitializer {
             }
 
             for(String name : UnidyeUtils.DYE_COLOR_TO_NAME.values()){
-                Unidye.LOGGER.info(name);
+//                Unidye.LOGGER.info(name);
                 pluginContext.addModels(Identifier.of("unidye", "item/custom_dye/" + name));
             }
         });
@@ -126,7 +126,7 @@ public class UnidyeClient implements ClientModInitializer {
                 String fileName = fileChild.getName();
                 if(fileName.endsWith(".json")){
                     fileName = fileName.substring(0, fileName.indexOf(".json"));
-                    Unidye.LOGGER.info(fileName);
+//                    Unidye.LOGGER.info(fileName);
                     pluginContext.addModels(Identifier.of("unidye", "item/custom_dye/special/" + fileName));
                 }
             }
@@ -145,9 +145,9 @@ public class UnidyeClient implements ClientModInitializer {
         }));
 
         ClientPlayNetworking.registerGlobalReceiver(DatabasePayload.ID, (payload, context) -> context.client().execute(() -> {
-            Unidye.LOGGER.info("received the database on client");
+//            Unidye.LOGGER.info("received the database on client");
             database = payload.database();
-            Unidye.LOGGER.info("successfully set the database on client");
+//            Unidye.LOGGER.info("successfully set the database on client");
         }));
 
 //        ClientPlayNetworking.registerGlobalReceiver(UpdatePrefixPayload.ID, (payload, context) -> context.client().execute(() -> {

@@ -71,10 +71,10 @@ public class Unidye implements ModInitializer {
         PayloadTypeRegistry.playS2C().register(DatabasePayload.ID, DatabasePayload.CODEC);
 
         ServerPlayNetworking.registerGlobalReceiver(RequestDatabasePayload.ID, (payload, context) -> context.server().execute(() -> {
-            Unidye.LOGGER.info("received the request");
+//            Unidye.LOGGER.info("received the request");
             DyeDatabaseSaverAndLoader serverState = DyeDatabaseSaverAndLoader.getServerState(context.server());
             ServerPlayNetworking.send(context.player(), new DatabasePayload(serverState.database));
-            Unidye.LOGGER.info("sent the database to client");
+//            Unidye.LOGGER.info("sent the database to client");
         }));
 
 //        PayloadTypeRegistry.playC2S().register(UpdatePrefixPayload.ID, UpdatePrefixPayload.CODEC);

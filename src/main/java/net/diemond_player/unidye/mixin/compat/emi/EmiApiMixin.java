@@ -65,7 +65,7 @@ public abstract class EmiApiMixin{
                 List<EmiRecipe> craftingRecipeList = recipes.get(VanillaEmiRecipeCategories.CRAFTING);
                 List<ItemStack> itemStacks = recipeStacksComponent.toItemStacks();
                 HashMap<Integer, DyeData> database = UnidyeClient.database;
-                Unidye.LOGGER.info("tried accessing database");
+//                Unidye.LOGGER.info("tried accessing database");
                 if (database != null) {
                     for (ItemStack itemStack1 : itemStacks) {
                         if (!itemStack1.contains(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES)) continue;
@@ -83,7 +83,7 @@ public abstract class EmiApiMixin{
                         }
                     }
                 } else {
-                    Unidye.LOGGER.info("it's null");
+//                    Unidye.LOGGER.info("it's null");
                 }
                 craftingRecipeList.add(0, new EmiCraftingRecipe(itemStacks.stream().map(i -> (EmiIngredient) EmiStack.of(i)).collect(Collectors.toList()),
                         EmiStack.of(itemStack, recipeStacksComponent.outputAmount()),

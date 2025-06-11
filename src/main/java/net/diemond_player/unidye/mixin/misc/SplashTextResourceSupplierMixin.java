@@ -57,7 +57,7 @@ public abstract class SplashTextResourceSupplierMixin {
 
             if (worked)
             {
-                Unidye.LOGGER.info("Successfully mixed splash texts.");
+//                Unidye.LOGGER.info("Successfully mixed splash texts.");
                 return complete;
             }
             else

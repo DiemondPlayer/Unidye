@@ -128,3 +128,8 @@ The changelog posted on Modrinth/Curseforge would be without those minor changes
 • Added depth restrictions to dye recipe stacks
 • New candle block overlays
 • New band-aid solution for outlines (gray outline)
+• no null in affixes components
+• new DYES map in DyeItem inject! YAY  (tells DYES map to never return Custom Dye when asked for DyeColor White)
+• Fixed EMI thinking that every white dye is custom in some cases
+• Fixed recipe crashes with supplementaries
+• Commented out debug logger things
