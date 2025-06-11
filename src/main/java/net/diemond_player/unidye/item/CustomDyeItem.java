@@ -25,6 +25,7 @@ import net.minecraft.util.*;
 import net.minecraft.world.World;
 
 import java.util.List;
+import java.util.Objects;
 
 public class CustomDyeItem extends DyeItem implements SignChangingItem{
     //no longer used but used to convert to a new key
@@ -157,6 +158,6 @@ public class CustomDyeItem extends DyeItem implements SignChangingItem{
     @Override
     public Text getName(ItemStack stack) {
         Text text = ItemNameAffixesComponent.getName(stack, this.getTranslationKey());
-        return text != null ? text : super.getName(stack);
+        return !Objects.equals(text, Text.empty()) ? text : super.getName(stack);
     }
 }

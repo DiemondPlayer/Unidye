@@ -11,6 +11,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 
+import java.util.Objects;
+
 public class DyeableBlockItem extends BlockItem {
     public DyeableBlockItem(Block block, Settings settings) {
         super(block, settings);
@@ -30,6 +32,6 @@ public class DyeableBlockItem extends BlockItem {
     @Override
     public Text getName(ItemStack stack) {
         Text text = ItemNameAffixesComponent.getName(stack, this.getTranslationKey());
-        return text != null ? text : super.getName(stack);
+        return !Objects.equals(text, Text.empty()) ? text : super.getName(stack);
     }
 }

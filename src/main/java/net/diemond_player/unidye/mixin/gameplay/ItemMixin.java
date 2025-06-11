@@ -23,6 +23,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.List;
+import java.util.Objects;
 
 @Mixin(Item.class)
 public abstract class ItemMixin {
@@ -51,7 +52,7 @@ public abstract class ItemMixin {
         String translationKey = stack.getItem().getTranslationKey(stack);
         if(translationKey.equals("item.unidye.shield_custom_color")) {
             Text text = ItemNameAffixesComponent.getName(stack, translationKey);
-            if(text != null) cir.setReturnValue(text);
+            if(!Objects.equals(text, Text.empty())) cir.setReturnValue(text);
         }
     }
 }

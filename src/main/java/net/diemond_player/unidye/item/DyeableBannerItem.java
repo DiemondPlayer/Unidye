@@ -17,6 +17,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.DyeColor;
 
 import java.util.List;
+import java.util.Objects;
 
 public class DyeableBannerItem extends BannerItem {
 
@@ -64,6 +65,6 @@ public class DyeableBannerItem extends BannerItem {
     @Override
     public Text getName(ItemStack stack) {
         Text text = ItemNameAffixesComponent.getName(stack, this.getTranslationKey());
-        return text != null ? text : super.getName(stack);
+        return !Objects.equals(text, Text.empty()) ? text : super.getName(stack);
     }
 }
