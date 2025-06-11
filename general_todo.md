@@ -6,7 +6,6 @@
 - **TODO** add Glazed Terracotta
 
 ### Code:
-- **FIXME** shield + banner go no no worky
 - **TODO** add a capitalization version when there are no prefixes and only suffix
 - **TODO** add ownership system
 - **TODO** a system to add new "vanilla dyes" without new items (aka fix your awful dye shape code again)

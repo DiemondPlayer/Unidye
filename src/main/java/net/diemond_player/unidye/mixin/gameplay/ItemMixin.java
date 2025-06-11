@@ -50,7 +50,8 @@ public abstract class ItemMixin {
         if (!stack.contains(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES)) return;
         String translationKey = stack.getItem().getTranslationKey(stack);
         if(translationKey.equals("item.unidye.shield_custom_color")) {
-            cir.setReturnValue(ItemNameAffixesComponent.getName(stack, translationKey));
+            Text text = ItemNameAffixesComponent.getName(stack, translationKey);
+            if(text != null) cir.setReturnValue(text);
         }
     }
 }
