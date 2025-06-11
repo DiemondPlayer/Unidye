@@ -9,7 +9,6 @@
 - **FIXME** shield + banner go no no worky
 - **TODO** add a capitalization version when there are no prefixes and only suffix
 - **TODO** add ownership system
-- **TODO** better if condition in event for outline
 - **TODO** a system to add new "vanilla dyes" without new items (aka fix your awful dye shape code again)
 - **TODO** merge leathery stuff with regular dyeable block entity stuff, making this more versatile
 - **TODO** add a component for custom dye item so you won't be using CUSTOM_DATA

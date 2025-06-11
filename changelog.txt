@@ -91,7 +91,7 @@ The changelog posted on Modrinth/Curseforge would be without those minor changes
 • Cleaned the code in UnidyeClient and Unidye
 • Fixed EMI warn slot int
 • Added isModLoaded to Unidye
-• Completely disabled datagen because it got annoying, here is a chunk of code for me to slep whenever ineed to enable it back:
+• Completely disabled datagen because it got annoying, here is a chunk of code for me to slap in whenever i need to enable it back:
 "fabric-datagen": [
    "net.diemond_player.unidye.UnidyeDataGenerator"
 ],
@@ -125,3 +125,6 @@ The changelog posted on Modrinth/Curseforge would be without those minor changes
 • Fixed dye count in armor dye for REI
 • Added resourcepack system for specific dye sprites
 • Moved dye shape system from overrides to model loader registry
+• Added depth restrictions to dye recipe stacks
+• New candle block overlays
+• New band-aid solution for outlines (gray outline)

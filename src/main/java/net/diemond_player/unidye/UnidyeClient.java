@@ -1,5 +1,6 @@
 package net.diemond_player.unidye;
 
+import com.google.common.collect.Lists;
 import net.diemond_player.unidye.block.entity.DyeableBlockEntity;
 import net.diemond_player.unidye.block.entity.IDyeableBlockEntity;
 import net.diemond_player.unidye.entity.client.model.DyeableShulkerEntityModel;
@@ -57,6 +58,8 @@ public class UnidyeClient implements ClientModInitializer {
             put(UnidyeBlocks.CUSTOM_CONCRETE_POWDER, 15);
     }};
 
+    public static final ArrayList<Block> GRAY_OUTLINE_BLOCKS = Lists.newArrayList(UnidyeBlocks.CUSTOM_CANDLE,UnidyeBlocks.CUSTOM_CANDLE_CAKE);
+
     @Override
     public void onInitializeClient() {
 //        UnidyeRenderLayers.registerRenderLayers();
@@ -75,11 +78,11 @@ public class UnidyeClient implements ClientModInitializer {
     private void registerEvents() {
         WorldRenderEvents.BLOCK_OUTLINE.register(((worldRenderContext, blockOutlineContext) -> {
             BlockState state = blockOutlineContext.blockState();
-            BlockPos pos = blockOutlineContext.blockPos();
-            World world = worldRenderContext.world();
-            Entity entity = blockOutlineContext.entity();
-            VertexConsumer vertexConsumer = worldRenderContext.consumers().getBuffer(RenderLayer.LINES);
-            if(blockOutlineContext.blockState().isOf(UnidyeBlocks.CUSTOM_CANDLE) || blockOutlineContext.blockState().isOf(UnidyeBlocks.CUSTOM_CANDLE_CAKE)){
+            if(GRAY_OUTLINE_BLOCKS.contains(state.getBlock())){
+                BlockPos pos = blockOutlineContext.blockPos();
+                World world = worldRenderContext.world();
+                Entity entity = blockOutlineContext.entity();
+                VertexConsumer vertexConsumer = worldRenderContext.consumers().getBuffer(RenderLayer.LINES);
                 WorldRendererInvoker.invokeDrawCuboidShapeOutline(worldRenderContext.matrixStack(),
                         vertexConsumer,
                         state.getOutlineShape(world, pos, ShapeContext.of(entity)),
