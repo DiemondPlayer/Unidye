@@ -133,3 +133,4 @@ The changelog posted on Modrinth/Curseforge would be without those minor changes
 • Fixed EMI thinking that every white dye is custom in some cases
 • Fixed recipe crashes with supplementaries
 • Commented out debug logger things
+• instanceof ShieldItem

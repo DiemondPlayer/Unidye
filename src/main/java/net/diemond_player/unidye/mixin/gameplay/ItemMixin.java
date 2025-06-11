@@ -6,10 +6,7 @@ import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.registry.UnidyeMaterialTypes;
 import net.diemond_player.unidye.util.UnidyeMaterialType;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.item.DyeItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
@@ -47,7 +44,7 @@ public abstract class ItemMixin {
 
     @Inject(method = "getName(Lnet/minecraft/item/ItemStack;)Lnet/minecraft/text/Text;", at = @At(value = "HEAD"), cancellable = true)
     private void unidye$getName(ItemStack stack, CallbackInfoReturnable<Text> cir) {
-        if(!stack.isOf(Items.SHIELD)) return;
+        if(!(stack.getItem() instanceof ShieldItem)) return;
         if (!stack.contains(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES)) return;
         String translationKey = stack.getItem().getTranslationKey(stack);
         if(translationKey.equals("item.unidye.shield_custom_color")) {

@@ -9,6 +9,7 @@ import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.DyedColorComponent;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.item.ShieldItem;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SpecialCraftingRecipe;
 import net.minecraft.recipe.book.CraftingRecipeCategory;
@@ -39,7 +40,7 @@ public class CustomShieldDecorationRecipe extends SpecialCraftingRecipe {
 
                     itemStack2 = itemStack3;
                 } else {
-                    if (!itemStack3.isOf(Items.SHIELD)) {
+                    if (!(itemStack3.getItem() instanceof ShieldItem)) {
                         return false;
                     }
 
@@ -70,7 +71,7 @@ public class CustomShieldDecorationRecipe extends SpecialCraftingRecipe {
             if (!itemStack3.isEmpty()) {
                 if (itemStack3.getItem() instanceof DyeableBannerItem) {
                     itemStack = itemStack3;
-                } else if (itemStack3.isOf(Items.SHIELD)) {
+                } else if (itemStack3.getItem() instanceof ShieldItem) {
                     itemStack2 = itemStack3.copy();
                 }
             }
