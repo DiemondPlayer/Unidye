@@ -96,7 +96,7 @@ public record ItemNameAffixesComponent(Text prefix, Text suffix, int sourceCusto
             MutableText name = Text.empty();
             if(isPrefixEmpty && isSuffixEmpty) return null;
             if(!isPrefixEmpty) name.append(prefix).append(Text.literal(" "));
-            name.append(Text.translatable(translationKey + ".root"));
+            name.append(Text.translatable(isPrefixEmpty ? translationKey + ".root_capitalized" : translationKey + ".root"));
             if(!isSuffixEmpty) name.append(Text.literal(" ")).append(suffix);
             return name;
         }

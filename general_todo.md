@@ -6,7 +6,6 @@
 - **TODO** add Glazed Terracotta
 
 ### Code:
-- **TODO** add a capitalization version when there are no prefixes and only suffix
 - **TODO** add ownership system
 - **TODO** a system to add new "vanilla dyes" without new items (aka fix your awful dye shape code again)
 - **TODO** merge leathery stuff with regular dyeable block entity stuff, making this more versatile

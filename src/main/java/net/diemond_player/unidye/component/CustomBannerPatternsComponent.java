@@ -102,7 +102,7 @@ public record CustomBannerPatternsComponent(List<CustomBannerPatternsComponent.L
                 MutableText name = Text.empty();
                 if(isPrefixEmpty && isSuffixEmpty) return mutableText.append(Text.literal("§7#" + Integer.toString(this.color, 16).toUpperCase() + " ").append(Text.translatable(string).formatted(Formatting.GRAY)));
                 if(!isPrefixEmpty) name.append(prefix).append(Text.literal(" "));
-                name.append(Text.translatable(string));
+                name.append(Text.translatable(isPrefixEmpty ? string + ".capitalized" : string));
                 if(!isSuffixEmpty) name.append(Text.literal(" ")).append(suffix);
                 return mutableText.append(name.formatted(Formatting.GRAY));
             } else {
