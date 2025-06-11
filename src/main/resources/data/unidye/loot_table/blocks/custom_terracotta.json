@@ -16,6 +16,7 @@
               "function": "minecraft:copy_components",
               "include": [
                 "minecraft:dyed_color",
+                "minecraft:profile",
                 "unidye:recipe_stacks",
                 "unidye:item_name_affixes"
               ],

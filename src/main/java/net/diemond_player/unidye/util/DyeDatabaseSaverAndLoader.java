@@ -1,8 +1,11 @@
 package net.diemond_player.unidye.util;
 
 import net.diemond_player.unidye.Unidye;
+import net.diemond_player.unidye.component.CustomBannerPatternsComponent;
+import net.minecraft.component.type.ProfileComponent;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.MinecraftServer;
@@ -14,6 +17,7 @@ import net.minecraft.world.World;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.UUID;
 
 public class DyeDatabaseSaverAndLoader extends PersistentState {
 
@@ -31,6 +35,7 @@ public class DyeDatabaseSaverAndLoader extends PersistentState {
             entryNbt.putInt("color", entry.getKey());
             entryNbt.putString("prefix", dyeData.getPrefix());
             entryNbt.putString("suffix", dyeData.getSuffix());
+            entryNbt.put("profileComponent", ProfileComponent.CODEC.encodeStart(registries.getOps(NbtOps.INSTANCE), dyeData.getProfileComponent()).getOrThrow());
             NbtCompound prefixExclusionsNbt = new NbtCompound();
             for(Map.Entry<Item, String> entry1 : dyeData.getPrefixExclusions().entrySet()){
                 prefixExclusionsNbt.putString(entry1.getKey().toString(), entry1.getValue());
@@ -63,6 +68,10 @@ public class DyeDatabaseSaverAndLoader extends PersistentState {
             NbtCompound suffixExclusionsNbt = entryNbt.getCompound("suffixExclusions");
             suffixExclusionsNbt.getKeys().forEach(key1 -> suffixExclusions.put(Registries.ITEM.get(Identifier.splitOn(key1, ':')), suffixExclusionsNbt.getString(key1)));
             DyeData dyeData = new DyeData(prefix, suffix, prefixExclusions, suffixExclusions);
+            ProfileComponent.CODEC
+                    .parse(registryLookup.getOps(NbtOps.INSTANCE), entryNbt.get("profileComponent"))
+                    .resultOrPartial(profileComp -> Unidye.LOGGER.error("Failed to parse profile component: '{}'", profileComp))
+                    .ifPresent(dyeData::setProfileComponent);
             state.database.put(color, dyeData);
         });
         return state;

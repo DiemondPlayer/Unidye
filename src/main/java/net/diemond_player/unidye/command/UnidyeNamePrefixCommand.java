@@ -8,6 +8,8 @@ import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.util.DyeData;
 import net.diemond_player.unidye.util.DyeDatabaseSaverAndLoader;
 import net.minecraft.command.CommandRegistryAccess;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.ProfileComponent;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
@@ -35,13 +37,15 @@ public class UnidyeNamePrefixCommand {
                 ItemNameAffixesComponent itemNameAffixesComponent = itemStack.get(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES);
                 int color = itemNameAffixesComponent.sourceCustomDyeColor();
                 itemStack.set(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, new ItemNameAffixesComponent(Text.literal(prefix), itemNameAffixesComponent.suffix(), color));
-
 //            NbtCompound nbtCompound = itemStack.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT).copyNbt();
 //            nbtCompound.remove("dye_shape");
 //            NbtComponent nbtComponent = NbtComponent.of(nbtCompound);
                 DyeDatabaseSaverAndLoader serverState = DyeDatabaseSaverAndLoader.getServerState(context.getSource().getWorld().getServer());
                 DyeData dyeData = new DyeData(prefix);
                 if (!serverState.database.containsKey(color)) {
+                    ProfileComponent profileComponent = new ProfileComponent(serverPlayerEntity.getGameProfile());
+                    itemStack.set(DataComponentTypes.PROFILE, profileComponent);
+                    dyeData.setProfileComponent(profileComponent);
                     serverState.database.put(color, dyeData);
                 } else {
                     dyeData = serverState.database.get(color);

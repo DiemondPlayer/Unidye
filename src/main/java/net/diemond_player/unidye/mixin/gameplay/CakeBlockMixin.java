@@ -7,6 +7,7 @@ import net.diemond_player.unidye.registry.UnidyeBlocks;
 import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.block.*;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
@@ -32,6 +33,7 @@ public abstract class CakeBlockMixin {
                 dyeableBlockEntity.setColor(UnidyeUtils.getColor(itemStack));
                 dyeableBlockEntity.setItemNameAffixes(itemStack.get(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES));
                 dyeableBlockEntity.setRecipeStacks(itemStack.get(UnidyeDataComponentTypes.RECIPE_STACKS));
+                if(itemStack.get(DataComponentTypes.PROFILE) != null) dyeableBlockEntity.setProfile(itemStack.get(DataComponentTypes.PROFILE));
             }
         }
     }

@@ -3,6 +3,7 @@ package net.diemond_player.unidye;
 import com.google.common.collect.Lists;
 import net.diemond_player.unidye.block.entity.DyeableBlockEntity;
 import net.diemond_player.unidye.block.entity.IDyeableBlockEntity;
+import net.diemond_player.unidye.component.ItemNameAffixesComponent;
 import net.diemond_player.unidye.entity.client.model.DyeableShulkerEntityModel;
 import net.diemond_player.unidye.entity.client.renderer.DyeableBannerBlockEntityRenderer;
 import net.diemond_player.unidye.entity.client.renderer.DyeableBedBlockEntityRenderer;
@@ -17,38 +18,37 @@ import net.diemond_player.unidye.util.UnidyeBuiltinModelItemRenderer;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
+import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.rendering.v1.*;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
-import net.minecraft.client.render.debug.DebugRenderer;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.world.ClientWorld;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.ProfileComponent;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.resource.DirectoryResourcePack;
 import net.minecraft.resource.ResourcePack;
 import net.minecraft.resource.ResourcePackManager;
+import net.minecraft.text.MutableText;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ColorHelper;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.World;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class UnidyeClient implements ClientModInitializer {
 
@@ -97,6 +97,17 @@ public class UnidyeClient implements ClientModInitializer {
             }
             return true;
         }));
+        ItemTooltipCallback.EVENT.register(
+                (stack, context, type, lines) -> {
+                    if(stack.contains(DataComponentTypes.PROFILE) && stack.contains(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES)) {
+                        ProfileComponent profileComponent = stack.get(DataComponentTypes.PROFILE);
+                        if(profileComponent.name().isPresent()) {
+                            MutableText discovererName = Text.literal(profileComponent.name().get());
+                            lines.add(lines.size()-2, Text.translatable("tooltip.unidye.discovered_by").append(discovererName.formatted(Formatting.BOLD)).formatted(Formatting.GRAY));
+                        }
+                    }
+                }
+        );
     }
 
     private void registerModelLoadingPlugin() {

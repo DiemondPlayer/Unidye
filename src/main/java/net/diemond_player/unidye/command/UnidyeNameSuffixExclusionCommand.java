@@ -35,7 +35,7 @@ public class UnidyeNameSuffixExclusionCommand {
             if(itemStack.contains(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES)) {
                 ItemNameAffixesComponent itemNameAffixesComponent = itemStack.get(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES);
                 int color = itemNameAffixesComponent.sourceCustomDyeColor();
-                itemStack.set(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, new ItemNameAffixesComponent(itemNameAffixesComponent.prefix(), Text.literal(suffix), color));
+                itemStack.set(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, itemNameAffixesComponent.withSuffix(itemNameAffixesComponent.prefix()));
 
 //            NbtCompound nbtCompound = itemStack.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT).copyNbt();
 //            nbtCompound.remove("dye_shape");

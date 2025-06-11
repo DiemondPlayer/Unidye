@@ -15,7 +15,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.tag.ItemTags;
+import net.minecraft.text.Text;
 import net.minecraft.util.DyeColor;
+import net.minecraft.util.Util;
 import net.minecraft.util.math.ColorHelper;
 
 import java.util.Arrays;
@@ -140,7 +142,7 @@ public class UnidyeUtils {
         int o = (int) Math.sqrt((double) is[1] / j);
         int p = (int) Math.sqrt((double) is[2] / j);
         n = ColorHelper.Argb.getArgb(0, k, o, p);
-        stack.set(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, ItemNameAffixesComponent.noAffixes(n));
+        stack.set(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, new ItemNameAffixesComponent(Text.empty(), Text.empty(), n));
     }
 
     public static ItemStack blendAndSetColor(ItemStack stack, List<DyeItem> colors, List<ItemStack> customColors) {

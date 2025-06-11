@@ -8,6 +8,8 @@ import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.util.DyeData;
 import net.diemond_player.unidye.util.DyeDatabaseSaverAndLoader;
 import net.minecraft.command.CommandRegistryAccess;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.ProfileComponent;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
@@ -42,6 +44,9 @@ public class UnidyeNameSuffixCommand {
                 DyeDatabaseSaverAndLoader serverState = DyeDatabaseSaverAndLoader.getServerState(context.getSource().getWorld().getServer());
                 DyeData dyeData = new DyeData(suffix, true);
                 if (!serverState.database.containsKey(color)) {
+                    ProfileComponent profileComponent = new ProfileComponent(serverPlayerEntity.getGameProfile());
+                    itemStack.set(DataComponentTypes.PROFILE, profileComponent);
+                    dyeData.setProfileComponent(profileComponent);
                     serverState.database.put(color, dyeData);
                 } else {
                     dyeData = serverState.database.get(color);

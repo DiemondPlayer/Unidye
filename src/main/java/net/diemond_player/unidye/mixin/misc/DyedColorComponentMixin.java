@@ -39,11 +39,9 @@ public abstract class DyedColorComponentMixin implements TooltipAppender {
     private int rgb;
     @Inject(method = "appendTooltip", at = @At(value = "INVOKE", target = "Ljava/util/function/Consumer;accept(Ljava/lang/Object;)V"), cancellable = true)
     private void unidye$appendTooltip(Item.TooltipContext context, Consumer<Text> tooltip, TooltipType type, CallbackInfo ci) {
-        if (type.isAdvanced()) {
-            MutableText mutableText = Text.literal("■ ");
-            mutableText.setStyle(mutableText.getStyle().withColor(this.rgb));
-            tooltip.accept(mutableText.append(Text.translatable("item.color", String.format(Locale.ROOT, "#%06X", this.rgb)).formatted(Formatting.GRAY)));
-            ci.cancel();
-        }
+        MutableText mutableText = Text.literal("■ ");
+        mutableText.setStyle(mutableText.getStyle().withColor(this.rgb));
+        tooltip.accept(mutableText.append(Text.translatable("item.color", String.format(Locale.ROOT, "#%06X", this.rgb)).formatted(Formatting.GRAY)));
+        ci.cancel();
     }
 }

@@ -30,6 +30,7 @@
               "include": [
                 "minecraft:dyed_color",
                 "minecraft:custom_data",
+                "minecraft:profile",
                 "unidye:recipe_stacks",
                 "unidye:item_name_affixes"
               ],

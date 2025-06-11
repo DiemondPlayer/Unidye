@@ -3,6 +3,7 @@ package net.diemond_player.unidye.block.entity;
 import net.diemond_player.unidye.component.ItemNameAffixesComponent;
 import net.diemond_player.unidye.component.RecipeStacksComponent;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.component.type.ProfileComponent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
 
@@ -20,6 +21,10 @@ public interface IDyeableBlockEntity {
     RecipeStacksComponent getRecipeStacks();
 
     void setRecipeStacks(RecipeStacksComponent recipeStacksComponent);
+
+    ProfileComponent getProfile();
+
+    void setProfile(ProfileComponent profileComponent);
 
     static int getColor(BlockView world, BlockPos pos) {
         if (world == null) {

@@ -7,6 +7,7 @@ import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.item.BannerItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
@@ -27,12 +28,16 @@ public class DyeableBannerItem extends BannerItem {
 
     @Override
     public ActionResult place(ItemPlacementContext context) {
-        int color = UnidyeUtils.getColor(context.getStack());
+        ItemStack itemStack = context.getStack();
+        int color = UnidyeUtils.getColor(itemStack);
         ActionResult result = super.place(context);
         BlockEntity blockEntity = context.getWorld().getBlockEntity(context.getBlockPos());
         if(result.isAccepted()) {
             if (blockEntity instanceof DyeableBannerBlockEntity dyeableBannerBlockEntity) {
                 dyeableBannerBlockEntity.setColor(color);
+                dyeableBannerBlockEntity.setItemNameAffixes(itemStack.get(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES));
+                dyeableBannerBlockEntity.setRecipeStacks(itemStack.get(UnidyeDataComponentTypes.RECIPE_STACKS));
+                if(itemStack.get(DataComponentTypes.PROFILE) != null) dyeableBannerBlockEntity.setProfile(itemStack.get(DataComponentTypes.PROFILE));
             }
         }
         return result;

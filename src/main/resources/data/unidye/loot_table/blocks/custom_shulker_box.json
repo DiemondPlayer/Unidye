@@ -15,6 +15,7 @@
                 "minecraft:container",
                 "minecraft:lock",
                 "minecraft:container_loot",
+                "minecraft:profile",
                 "unidye:recipe_stacks",
                 "unidye:item_name_affixes"
               ],

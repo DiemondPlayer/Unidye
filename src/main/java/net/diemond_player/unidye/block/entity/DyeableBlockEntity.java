@@ -13,6 +13,7 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.component.ComponentMap;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.DyedColorComponent;
+import net.minecraft.component.type.ProfileComponent;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.listener.ClientPlayPacketListener;
@@ -31,6 +32,7 @@ public class DyeableBlockEntity extends BlockEntity implements IDyeableBlockEnti
     private int color = DEFAULT_WHITE_COLOR;
     private ItemNameAffixesComponent itemNameAffixesComponent = ItemNameAffixesComponent.DEFAULT;
     private RecipeStacksComponent recipeStacksComponent = RecipeStacksComponent.DEFAULT;
+    private ProfileComponent profileComponent = null;
 
     @Override
     protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
@@ -42,6 +44,9 @@ public class DyeableBlockEntity extends BlockEntity implements IDyeableBlockEnti
         }
         if (!recipeStacksComponent.equals(RecipeStacksComponent.DEFAULT)) {
             nbt.put("recipeStacks", RecipeStacksComponent.CODEC.encodeStart(registryLookup.getOps(NbtOps.INSTANCE), this.recipeStacksComponent).getOrThrow());
+        }
+        if (profileComponent != null) {
+            nbt.put("profile", ProfileComponent.CODEC.encodeStart(registryLookup.getOps(NbtOps.INSTANCE), this.profileComponent).getOrThrow());
         }
         super.writeNbt(nbt, registryLookup);
     }
@@ -64,6 +69,12 @@ public class DyeableBlockEntity extends BlockEntity implements IDyeableBlockEnti
                     .parse(registryLookup.getOps(NbtOps.INSTANCE), nbt.get("recipeStacks"))
                     .resultOrPartial(recipeStacks -> Unidye.LOGGER.error("Failed to parse recipe stacks: '{}'", recipeStacks))
                     .ifPresent(recipeStacksComponent -> this.recipeStacksComponent = recipeStacksComponent);
+        }
+        if (nbt.contains("profile")) {
+            ProfileComponent.CODEC
+                    .parse(registryLookup.getOps(NbtOps.INSTANCE), nbt.get("profile"))
+                    .resultOrPartial(profile -> Unidye.LOGGER.error("Failed to parse profile: '{}'", profile))
+                    .ifPresent(profileComponent -> this.profileComponent = profileComponent);
         }
     }
 
@@ -116,6 +127,18 @@ public class DyeableBlockEntity extends BlockEntity implements IDyeableBlockEnti
     @Override
     public void setRecipeStacks(RecipeStacksComponent recipeStacksComponent) {
         this.recipeStacksComponent = recipeStacksComponent;
+        this.markDirty();
+    }
+
+    @Override
+    public ProfileComponent getProfile() {
+        return this.profileComponent;
+    }
+
+    @Override
+    public void setProfile(ProfileComponent profileComponent) {
+        this.profileComponent = profileComponent;
+        this.markDirty();
     }
 
     @Override
@@ -124,6 +147,7 @@ public class DyeableBlockEntity extends BlockEntity implements IDyeableBlockEnti
         this.color = components.getOrDefault(DataComponentTypes.DYED_COLOR, new DyedColorComponent(DyedColorComponent.DEFAULT_COLOR, true)).rgb();
         this.recipeStacksComponent = components.getOrDefault(UnidyeDataComponentTypes.RECIPE_STACKS, RecipeStacksComponent.DEFAULT);
         this.itemNameAffixesComponent = components.getOrDefault(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, ItemNameAffixesComponent.DEFAULT);
+        this.profileComponent = components.getOrDefault(DataComponentTypes.PROFILE, null);
     }
 
     @Override
@@ -132,5 +156,6 @@ public class DyeableBlockEntity extends BlockEntity implements IDyeableBlockEnti
         componentMapBuilder.add(DataComponentTypes.DYED_COLOR, new DyedColorComponent(color, true));
         componentMapBuilder.add(UnidyeDataComponentTypes.RECIPE_STACKS, this.recipeStacksComponent);
         componentMapBuilder.add(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, this.itemNameAffixesComponent);
+        componentMapBuilder.add(DataComponentTypes.PROFILE, this.profileComponent);
     }
 }

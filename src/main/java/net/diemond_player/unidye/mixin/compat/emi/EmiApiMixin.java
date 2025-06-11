@@ -6,12 +6,12 @@ import dev.emi.emi.api.recipe.*;
 import dev.emi.emi.api.stack.EmiIngredient;
 import dev.emi.emi.api.stack.EmiStack;
 import dev.emi.emi.registry.EmiRecipes;
-import net.diemond_player.unidye.Unidye;
 import net.diemond_player.unidye.UnidyeClient;
 import net.diemond_player.unidye.component.ItemNameAffixesComponent;
 import net.diemond_player.unidye.component.RecipeStacksComponent;
 import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.util.DyeData;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Mixin;
@@ -69,17 +69,19 @@ public abstract class EmiApiMixin{
                 if (database != null) {
                     for (ItemStack itemStack1 : itemStacks) {
                         if (!itemStack1.contains(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES)) continue;
-                        int color = itemStack1.get(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES).sourceCustomDyeColor();
+                        ItemNameAffixesComponent itemNameAffixesComponent = itemStack1.get(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES);
+                        int color = itemNameAffixesComponent.sourceCustomDyeColor();
                         //Unidye.LOGGER.info(serverState.database.toString());
                         if (database.containsKey(color)) {
                             DyeData dyeData = database.get(color);
                             Text prefix = Text.literal(dyeData.getPrefix());
                             Text suffix = Text.literal(dyeData.getSuffix());
-                            if(!itemStack1.get(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES).prefix().equals(prefix) || !itemStack.get(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES).suffix().equals(suffix)) {
+                            if(!itemNameAffixesComponent.prefix().equals(prefix) || !itemNameAffixesComponent.suffix().equals(suffix)) {
                                 itemStack1.set(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, new ItemNameAffixesComponent(prefix, suffix, color));
                             }
+                            itemStack.set(DataComponentTypes.PROFILE, dyeData.getProfileComponent());
                         } else {
-                            itemStack1.set(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, ItemNameAffixesComponent.noAffixes(color));
+                            itemStack1.set(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, itemNameAffixesComponent.noAffixes());
                         }
                     }
                 } else {

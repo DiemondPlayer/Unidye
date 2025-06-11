@@ -67,7 +67,7 @@ public class UnidyeNameRemoveCommand {
                     DyeData dyeData = serverState.database.get(color);
                     if (removePrefix && removeSuffix) {
                         if(!isExclusion) {
-                            itemStack.set(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, ItemNameAffixesComponent.noAffixes(color));
+                            itemStack.set(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, itemNameAffixesComponent.noAffixes());
                             serverState.database.remove(color);
                         }else{
                             dyeData.prefixExclusions.remove(item);
@@ -76,7 +76,7 @@ public class UnidyeNameRemoveCommand {
                         }
                     } else if (removePrefix) {
                         if(!isExclusion) {
-                            itemStack.set(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, ItemNameAffixesComponent.noPrefix(itemNameAffixesComponent.suffix(), color));
+                            itemStack.set(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, itemNameAffixesComponent.noPrefix());
                             dyeData.setPrefix("");
                             dyeData.setPrefixExclusions(new HashMap<>());
                             serverState.database.replace(color, dyeData);
@@ -86,7 +86,7 @@ public class UnidyeNameRemoveCommand {
                         }
                     } else if (removeSuffix) {
                         if(!isExclusion) {
-                            itemStack.set(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, ItemNameAffixesComponent.noSuffix(itemNameAffixesComponent.prefix(), color));
+                            itemStack.set(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, itemNameAffixesComponent.noSuffix());
                             dyeData.setSuffix("");
                             dyeData.setSuffixExclusions(new HashMap<>());
                             serverState.database.replace(color, dyeData);

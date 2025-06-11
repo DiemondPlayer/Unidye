@@ -2,6 +2,7 @@ package net.diemond_player.unidye.item;
 
 import net.diemond_player.unidye.block.entity.DyeableLeatheryBlockEntity;
 import net.diemond_player.unidye.registry.UnidyeBlocks;
+import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.registry.UnidyeMaterialTypes;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.block.Block;
@@ -61,11 +62,8 @@ public class DyeableLeatheryBlockItem extends DyeableBlockItem {
         ItemStack itemStack = context.getStack().copy();
         ActionResult result = super.place(context);
         BlockEntity blockEntity = context.getWorld().getBlockEntity(context.getBlockPos());
-        if(result.isAccepted()) {
-            if (blockEntity instanceof DyeableLeatheryBlockEntity dyeableBlockEntity) {
-                dyeableBlockEntity.setColor(UnidyeUtils.getColor(itemStack));
-                dyeableBlockEntity.leatherColor = getLeatherColor(itemStack);
-            }
+        if (result.isAccepted() && blockEntity instanceof DyeableLeatheryBlockEntity dyeableBlockEntity) {
+            dyeableBlockEntity.leatherColor = getLeatherColor(itemStack);
         }
         return result;
     }

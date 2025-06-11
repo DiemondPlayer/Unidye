@@ -6,6 +6,8 @@ import net.diemond_player.unidye.Unidye;
 import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.util.DyeData;
 import net.diemond_player.unidye.util.DyeDatabaseSaverAndLoader;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.ProfileComponent;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.RegistryByteBuf;
@@ -15,7 +17,11 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.text.TextCodecs;
+import net.minecraft.util.Util;
+import net.minecraft.util.Uuids;
 import net.minecraft.world.World;
+
+import java.util.UUID;
 
 public record ItemNameAffixesComponent(Text prefix, Text suffix, int sourceCustomDyeColor) {
     public static final ItemNameAffixesComponent DEFAULT = new ItemNameAffixesComponent(Text.empty(), Text.empty(), 0xFFFFFF);
@@ -36,34 +42,48 @@ public record ItemNameAffixesComponent(Text prefix, Text suffix, int sourceCusto
             ItemNameAffixesComponent::new
     );
 
-    public static ItemNameAffixesComponent noAffixes(int sourceCustomDyeColor){
-        return new ItemNameAffixesComponent(Text.empty(), Text.empty(), sourceCustomDyeColor);
+    public ItemNameAffixesComponent noAffixes(){
+        return new ItemNameAffixesComponent(Text.empty(), Text.empty(), this.sourceCustomDyeColor);
     }
 
-    public static ItemNameAffixesComponent noPrefix(Text suffix, int sourceCustomDyeColor){
-        return new ItemNameAffixesComponent(Text.empty(), suffix, sourceCustomDyeColor);
+    public ItemNameAffixesComponent noPrefix(){
+        return new ItemNameAffixesComponent(Text.empty(), this.suffix, this.sourceCustomDyeColor);
     }
 
-    public static ItemNameAffixesComponent noSuffix(Text prefix, int sourceCustomDyeColor){
-        return new ItemNameAffixesComponent(prefix, Text.empty(), sourceCustomDyeColor);
+    public ItemNameAffixesComponent noSuffix(){
+        return new ItemNameAffixesComponent(this.prefix, Text.empty(), this.sourceCustomDyeColor);
+    }
+
+    public ItemNameAffixesComponent withAffixes(Text prefix, Text suffix){
+        return new ItemNameAffixesComponent(prefix, suffix, this.sourceCustomDyeColor);
+    }
+
+    public ItemNameAffixesComponent withPrefix(Text prefix){
+        return new ItemNameAffixesComponent(prefix, this.suffix, this.sourceCustomDyeColor);
+    }
+
+    public ItemNameAffixesComponent withSuffix(Text suffix){
+        return new ItemNameAffixesComponent(this.prefix, suffix, this.sourceCustomDyeColor);
     }
 
 
     public static void updateAffixes(ItemStack itemStack, World world){
         if(!world.isClient && itemStack.contains(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES)) {
-            int color = itemStack.get(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES).sourceCustomDyeColor();
+            ItemNameAffixesComponent itemNameAffixesComponent = itemStack.get(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES);
+            int color = itemNameAffixesComponent.sourceCustomDyeColor();
             DyeDatabaseSaverAndLoader serverState = DyeDatabaseSaverAndLoader.getServerState(((ServerWorld) world).getServer());
-//            Unidye.LOGGER.info(serverState.database.toString());
+            Unidye.LOGGER.info(serverState.database.toString());
             if (serverState.database.containsKey(color)) {
                 DyeData dyeData = serverState.database.get(color);
                 Item item = itemStack.getItem();
-                Text prefix = dyeData.getPrefixExclusions().containsKey(item) ?  Text.literal(dyeData.getPrefixExclusions().get(item)) : Text.literal(dyeData.getPrefix());
-                Text suffix = dyeData.getSuffixExclusions().containsKey(item) ?  Text.literal(dyeData.getSuffixExclusions().get(item)) : Text.literal(dyeData.getSuffix());
-                if(!itemStack.get(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES).prefix().equals(prefix) || !itemStack.get(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES).suffix().equals(suffix)) {
+                Text prefix = dyeData.getPrefixExclusions().containsKey(item) ? Text.literal(dyeData.getPrefixExclusions().get(item)) : Text.literal(dyeData.getPrefix());
+                Text suffix = dyeData.getSuffixExclusions().containsKey(item) ? Text.literal(dyeData.getSuffixExclusions().get(item)) : Text.literal(dyeData.getSuffix());
+                if(!itemNameAffixesComponent.prefix().equals(prefix) || !itemNameAffixesComponent.suffix().equals(suffix)) {
                     itemStack.set(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, new ItemNameAffixesComponent(prefix, suffix, color));
                 }
+                itemStack.set(DataComponentTypes.PROFILE, dyeData.getProfileComponent());
             }else{
-                itemStack.set(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, noAffixes(color));
+                itemStack.set(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, itemNameAffixesComponent.noAffixes());
             }
         }
     }
@@ -72,7 +92,7 @@ public record ItemNameAffixesComponent(Text prefix, Text suffix, int sourceCusto
         int color = this.sourceCustomDyeColor();
         if(!world.isClient) {
             DyeDatabaseSaverAndLoader serverState = DyeDatabaseSaverAndLoader.getServerState(((ServerWorld) world).getServer());
-//            Unidye.LOGGER.info(serverState.database.toString());
+            Unidye.LOGGER.info(serverState.database.toString());
             if (serverState.database.containsKey(color)) {
                 DyeData dyeData = serverState.database.get(color);
                 Text prefix = Text.literal(dyeData.getPrefix());
@@ -84,7 +104,7 @@ public record ItemNameAffixesComponent(Text prefix, Text suffix, int sourceCusto
                 }
             }
         }
-        return noAffixes(color);
+        return this.noAffixes();
     }
 
     public static MutableText getName(ItemStack itemStack, String translationKey){

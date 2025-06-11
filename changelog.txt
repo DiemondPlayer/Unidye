@@ -134,3 +134,4 @@ The changelog posted on Modrinth/Curseforge would be without those minor changes
 • Fixed recipe crashes with supplementaries
 • Commented out debug logger things
 • instanceof ShieldItem
+• literally added trademarking colors to minecraft!

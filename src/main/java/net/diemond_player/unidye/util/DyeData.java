@@ -1,10 +1,13 @@
 package net.diemond_player.unidye.util;
 
+import net.minecraft.component.type.ProfileComponent;
 import net.minecraft.item.Item;
 
 import java.util.HashMap;
+import java.util.UUID;
 
 public class DyeData {
+    public ProfileComponent profileComponent;
     public String prefix;
     public String suffix;
 
@@ -62,10 +65,19 @@ public class DyeData {
         this.suffix = suffix;
     }
 
+    public ProfileComponent getProfileComponent() {
+        return profileComponent;
+    }
+
+    public void setProfileComponent(ProfileComponent profileComponent) {
+        this.profileComponent = profileComponent;
+    }
+
     @Override
     public String toString() {
         return "DyeData{" +
-                "prefix='" + prefix + '\'' +
+                "profileComponent=" + profileComponent +
+                ", prefix='" + prefix + '\'' +
                 ", suffix='" + suffix + '\'' +
                 ", prefixExclusions=" + prefixExclusions +
                 ", suffixExclusions=" + suffixExclusions +

@@ -59,7 +59,7 @@ public record RecipeStacksComponent(List<Stack> stacks, int outputAmount, boolea
             if(itemStackCopy.isOf(Items.STICK) && Unidye.POLYMORPH) continue;
             if(itemStackCopy.contains(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES)) {
                 ItemNameAffixesComponent itemNamePrefixComponent = itemStackCopy.get(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES);
-                itemStackCopy.set(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, ItemNameAffixesComponent.noAffixes(itemNamePrefixComponent.sourceCustomDyeColor()));
+                itemStackCopy.set(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, itemNamePrefixComponent.noAffixes());
             }
             restrictRecipeStackDepth(itemStack);
             stackList.add(new Stack(itemStackCopy.getRegistryEntry(), itemStackCopy.getComponentChanges()));
