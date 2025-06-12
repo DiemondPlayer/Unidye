@@ -3,14 +3,19 @@ package net.diemond_player.unidye.entity;
 import net.diemond_player.unidye.Unidye;
 import net.diemond_player.unidye.block.DyeableConcretePowderBlock;
 import net.diemond_player.unidye.block.entity.DyeableBlockEntity;
+import net.diemond_player.unidye.component.ItemNameAffixesComponent;
+import net.diemond_player.unidye.component.RecipeStacksComponent;
 import net.diemond_player.unidye.mixin.util.FallingBlockEntityAccessor;
 import net.diemond_player.unidye.payload.SetColorAndRerenderBlockPayload;
+import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.registry.UnidyeEntities;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.ProfileComponent;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.FallingBlockEntity;
 import net.minecraft.entity.MovementType;
@@ -21,6 +26,7 @@ import net.minecraft.fluid.Fluids;
 import net.minecraft.item.AutomaticItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.packet.s2c.play.BlockUpdateS2CPacket;
 import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
 import net.minecraft.registry.tag.FluidTags;
@@ -35,6 +41,8 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
+
+import static net.diemond_player.unidye.item.CustomDyeItem.DEFAULT_WHITE_COLOR;
 
 public class DyeableFallingBlockEntity extends FallingBlockEntity {
 
@@ -114,17 +122,17 @@ public class DyeableFallingBlockEntity extends FallingBlockEntity {
                                 }
 
                                 if (this.getWorld().setBlockState(blockPos, ((FallingBlockEntityAccessor)this).getBlock(), Block.NOTIFY_ALL)) {
-                                    BlockEntity fallenBlockEntity = this.getWorld().getBlockEntity(blockPos);
-                                    if (fallenBlockEntity instanceof DyeableBlockEntity dyeableBlockEntity) {
-                                        dyeableBlockEntity.setColor(this.getCustomColor());
-                                    }
-                                    ((ServerWorld)this.getWorld())
-                                            .getChunkManager()
-                                            .chunkLoadingManager
-                                            .sendToOtherNearbyPlayers(this, new BlockUpdateS2CPacket(blockPos, this.getWorld().getBlockState(blockPos)));
-                                    for (ServerPlayerEntity player : PlayerLookup.tracking((ServerWorld) this.getWorld(), blockPos)) {
-                                        ServerPlayNetworking.send(player, new SetColorAndRerenderBlockPayload(blockPos, this.getCustomColor()));
-                                    }
+//                                    BlockEntity fallenBlockEntity = this.getWorld().getBlockEntity(blockPos);
+//                                    if (fallenBlockEntity instanceof DyeableBlockEntity dyeableBlockEntity) {
+//                                        dyeableBlockEntity.setColor(this.getCustomColor());
+//                                    }
+//                                    ((ServerWorld)this.getWorld())
+//                                            .getChunkManager()
+//                                            .chunkLoadingManager
+//                                            .sendToOtherNearbyPlayers(this, new BlockUpdateS2CPacket(blockPos, this.getWorld().getBlockState(blockPos)));
+//                                    for (ServerPlayerEntity player : PlayerLookup.tracking((ServerWorld) this.getWorld(), blockPos)) {
+//                                        ServerPlayNetworking.send(player, new SetColorAndRerenderBlockPayload(blockPos, this.getCustomColor()));
+//                                    }
                                     this.discard();
                                     if (block instanceof LandingBlock) {
                                         ((LandingBlock)block).onLanding(this.getWorld(), blockPos, ((FallingBlockEntityAccessor)this).getBlock(), blockState, this);
@@ -149,15 +157,13 @@ public class DyeableFallingBlockEntity extends FallingBlockEntity {
                                         }
                                     }
                                 } else if (this.dropItem && this.getWorld().getGameRules().getBoolean(GameRules.DO_ENTITY_DROPS)) {
-                                    ItemStack itemStack = new ItemStack(block, 1);
-                                    UnidyeUtils.setColor(itemStack, this.getCustomColor());
+                                    ItemStack itemStack = getDropItemstack();
                                     this.discard();
                                     this.onDestroyedOnLanding(block, blockPos);
                                     this.dropStack(itemStack);
                                 }
                             } else {
-                                ItemStack itemStack = new ItemStack(block, 1);
-                                UnidyeUtils.setColor(itemStack, this.getCustomColor());
+                                ItemStack itemStack = getDropItemstack();
                                 this.discard();
                                 if (this.dropItem && this.getWorld().getGameRules().getBoolean(GameRules.DO_ENTITY_DROPS)) {
                                     this.onDestroyedOnLanding(block, blockPos);
@@ -172,9 +178,7 @@ public class DyeableFallingBlockEntity extends FallingBlockEntity {
                 } else if (!this.getWorld().isClient
                         && (this.timeFalling > 100 && (blockPos.getY() <= this.getWorld().getBottomY() || blockPos.getY() > this.getWorld().getTopY()) || this.timeFalling > 600)) {
                     if (this.dropItem && this.getWorld().getGameRules().getBoolean(GameRules.DO_ENTITY_DROPS)) {
-                        ItemStack itemStack = new ItemStack(block, 1);
-                        UnidyeUtils.setColor(itemStack, this.getCustomColor());
-                        this.dropStack(itemStack);
+                        this.dropStack(getDropItemstack());
                     }
 
                     this.discard();
@@ -183,6 +187,31 @@ public class DyeableFallingBlockEntity extends FallingBlockEntity {
 
             this.setVelocity(this.getVelocity().multiply(0.98));
         }
+    }
+
+    private ItemStack getDropItemstack(){
+        ItemStack itemStack = new ItemStack(((FallingBlockEntityAccessor)this).getBlock().getBlock(), 1);
+        NbtCompound nbt = this.blockEntityData != null ? this.blockEntityData : new NbtCompound();
+        if (nbt.getInt("color") != DEFAULT_WHITE_COLOR) UnidyeUtils.setColor(itemStack, nbt.getInt("color"));
+        if (nbt.contains("itemNameAffixes")) {
+            ItemNameAffixesComponent.CODEC
+                    .parse(this.getWorld().getRegistryManager().getOps(NbtOps.INSTANCE), nbt.get("itemNameAffixes"))
+                    .resultOrPartial(itemNameAffixes -> Unidye.LOGGER.error("Failed to parse item name affixes: '{}'", itemNameAffixes))
+                    .ifPresent(itemNameAffixesComponent -> itemStack.set(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES,itemNameAffixesComponent));
+        }
+        if (nbt.contains("recipeStacks")) {
+            RecipeStacksComponent.CODEC
+                    .parse(this.getWorld().getRegistryManager().getOps(NbtOps.INSTANCE), nbt.get("recipeStacks"))
+                    .resultOrPartial(recipeStacks -> Unidye.LOGGER.error("Failed to parse recipe stacks: '{}'", recipeStacks))
+                    .ifPresent(recipeStacksComponent -> itemStack.set(UnidyeDataComponentTypes.RECIPE_STACKS, recipeStacksComponent));
+        }
+        if (nbt.contains("profile")) {
+            ProfileComponent.CODEC
+                    .parse(this.getWorld().getRegistryManager().getOps(NbtOps.INSTANCE), nbt.get("profile"))
+                    .resultOrPartial(profile -> Unidye.LOGGER.error("Failed to parse profile: '{}'", profile))
+                    .ifPresent(profileComponent -> itemStack.set(DataComponentTypes.PROFILE, profileComponent));
+        }
+        return itemStack;
     }
 
     @Override

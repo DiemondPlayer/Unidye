@@ -136,3 +136,4 @@ The changelog posted on Modrinth/Curseforge would be without those minor changes
 • instanceof ShieldItem
 • literally added trademarking colors to minecraft!
 • significantly better CatEntity and WolfEntity mixins regarding collars
+• significantly better concrete powder entity code
