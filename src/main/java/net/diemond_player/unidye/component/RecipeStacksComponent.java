@@ -56,7 +56,7 @@ public record RecipeStacksComponent(List<Stack> stacks, int outputAmount, boolea
         for(ItemStack itemStack : itemStacks){
             ItemStack itemStackCopy = itemStack.copy();
             if(itemStackCopy.isEmpty()) continue;
-            if(itemStackCopy.isOf(Items.STICK) && Unidye.POLYMORPH) continue;
+            if(itemStackCopy.isOf(Items.STICK) && Unidye.POLYMORPH && shapeless) continue;
             if(itemStackCopy.contains(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES)) {
                 ItemNameAffixesComponent itemNamePrefixComponent = itemStackCopy.get(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES);
                 itemStackCopy.set(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, itemNamePrefixComponent.noAffixes());
