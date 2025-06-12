@@ -22,9 +22,9 @@ public class UnidyeNameSuffixExclusionCommand {
         serverCommandSourceCommandDispatcher.register(CommandManager.literal("unidye")
                 .then(CommandManager.literal("name")
                 .then(CommandManager.literal("exclusion")
-                .then(CommandManager.literal("suffix")
-                .then(CommandManager.argument("suffix", StringArgumentType.greedyString())
-                .executes(context -> run(context, StringArgumentType.getString(context, "suffix"))))))));
+                        .then(CommandManager.literal("suffix")
+                                .then(CommandManager.argument("suffix", StringArgumentType.greedyString())
+                                        .executes(context -> run(context, StringArgumentType.getString(context, "suffix"))))))));
     }
 
     public static int run(CommandContext<ServerCommandSource> context, String suffix) {
@@ -35,7 +35,7 @@ public class UnidyeNameSuffixExclusionCommand {
             if(itemStack.contains(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES)) {
                 ItemNameAffixesComponent itemNameAffixesComponent = itemStack.get(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES);
                 int color = itemNameAffixesComponent.sourceCustomDyeColor();
-                itemStack.set(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, itemNameAffixesComponent.withSuffix(itemNameAffixesComponent.prefix()));
+                itemStack.set(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, itemNameAffixesComponent.withSuffix(Text.literal(suffix)));
 
 //            NbtCompound nbtCompound = itemStack.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT).copyNbt();
 //            nbtCompound.remove("dye_shape");

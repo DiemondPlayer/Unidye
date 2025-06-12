@@ -137,3 +137,6 @@ The changelog posted on Modrinth/Curseforge would be without those minor changes
 • literally added trademarking colors to minecraft!
 • significantly better CatEntity and WolfEntity mixins regarding collars
 • significantly better concrete powder entity code
+• supplementaries flag + custom dye in loom crash fixed
+• discoverers are never altered or forgotten (unless cleardata)
+• discoverer tooltip is not shown if there is no prefix AND no suffix

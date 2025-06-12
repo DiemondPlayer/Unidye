@@ -24,8 +24,8 @@ public class UnidyeNamePrefixCommand {
         serverCommandSourceCommandDispatcher.register(CommandManager.literal("unidye")
                 .then(CommandManager.literal("name")
                 .then(CommandManager.literal("prefix")
-                .then(CommandManager.argument("prefix", StringArgumentType.greedyString())
-                .executes(context -> run(context, StringArgumentType.getString(context, "prefix")))))));
+                        .then(CommandManager.argument("prefix", StringArgumentType.greedyString())
+                                .executes(context -> run(context, StringArgumentType.getString(context, "prefix")))))));
     }
 
     public static int run(CommandContext<ServerCommandSource> context, String prefix) {
@@ -36,15 +36,16 @@ public class UnidyeNamePrefixCommand {
             if(itemStack.contains(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES)) {
                 ItemNameAffixesComponent itemNameAffixesComponent = itemStack.get(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES);
                 int color = itemNameAffixesComponent.sourceCustomDyeColor();
-                itemStack.set(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, new ItemNameAffixesComponent(Text.literal(prefix), itemNameAffixesComponent.suffix(), color));
+                itemStack.set(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, itemNameAffixesComponent.withPrefix(Text.literal(prefix)));
 //            NbtCompound nbtCompound = itemStack.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT).copyNbt();
 //            nbtCompound.remove("dye_shape");
 //            NbtComponent nbtComponent = NbtComponent.of(nbtCompound);
                 DyeDatabaseSaverAndLoader serverState = DyeDatabaseSaverAndLoader.getServerState(context.getSource().getWorld().getServer());
-                DyeData dyeData = new DyeData(prefix);
+                DyeData dyeData;
                 if (!serverState.database.containsKey(color)) {
                     ProfileComponent profileComponent = new ProfileComponent(serverPlayerEntity.getGameProfile());
                     itemStack.set(DataComponentTypes.PROFILE, profileComponent);
+                    dyeData = new DyeData(prefix);
                     dyeData.setProfileComponent(profileComponent);
                     serverState.database.put(color, dyeData);
                 } else {

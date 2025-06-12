@@ -22,9 +22,9 @@ public class UnidyeNamePrefixExclusionCommand {
         serverCommandSourceCommandDispatcher.register(CommandManager.literal("unidye")
                 .then(CommandManager.literal("name")
                 .then(CommandManager.literal("exclusion")
-                .then(CommandManager.literal("prefix")
-                .then(CommandManager.argument("prefix", StringArgumentType.greedyString())
-                .executes(context -> run(context, StringArgumentType.getString(context, "prefix"))))))));
+                        .then(CommandManager.literal("prefix")
+                                .then(CommandManager.argument("prefix", StringArgumentType.greedyString())
+                                        .executes(context -> run(context, StringArgumentType.getString(context, "prefix"))))))));
     }
 
     public static int run(CommandContext<ServerCommandSource> context, String prefix) {

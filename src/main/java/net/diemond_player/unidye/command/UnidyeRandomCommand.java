@@ -37,15 +37,15 @@ public class UnidyeRandomCommand {
                 .then(CommandManager.literal("random")
                 .requires(source -> source.hasPermissionLevel(4))
                 .then(CommandManager.argument("item", ItemStackArgumentType.itemStack(commandRegistryAccess))
-                .then(CommandManager.argument("min_amount", IntegerArgumentType.integer(1))
-                .then(CommandManager.argument("max_amount", IntegerArgumentType.integer(1))
-                .then(CommandManager.argument("amount_of_entries", IntegerArgumentType.integer(1))
+                .then(CommandManager.argument("min amount", IntegerArgumentType.integer(1))
+                .then(CommandManager.argument("max amount", IntegerArgumentType.integer(1))
+                .then(CommandManager.argument("amount of entries", IntegerArgumentType.integer(1))
                 .executes(context -> run(
                         context,
                         ItemStackArgumentType.getItemStackArgument(context, "item"),
-                        IntegerArgumentType.getInteger(context, "min_amount"),
-                        IntegerArgumentType.getInteger(context, "max_amount"),
-                        IntegerArgumentType.getInteger(context, "amount_of_entries")))))))));
+                        IntegerArgumentType.getInteger(context, "min amount"),
+                        IntegerArgumentType.getInteger(context, "max amount"),
+                        IntegerArgumentType.getInteger(context, "amount of entries")))))))));
     }
 
     public static int run(CommandContext<ServerCommandSource> context, ItemStackArgument item, int min_amount, int max_amount, int amount_of_entries) {

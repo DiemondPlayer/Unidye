@@ -12,6 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.Text;
 
 import java.util.HashMap;
 
@@ -23,34 +24,19 @@ public class UnidyeNameRemoveCommand {
         serverCommandSourceCommandDispatcher.register(CommandManager.literal("unidye")
                 .then(CommandManager.literal("name")
                 .then(CommandManager.literal("remove")
-                .then(CommandManager.literal("prefix")
-                .executes(context -> run(context, true, false, false))))));
-        serverCommandSourceCommandDispatcher.register(CommandManager.literal("unidye")
-                .then(CommandManager.literal("name")
-                .then(CommandManager.literal("remove")
-                .then(CommandManager.literal("suffix")
-                .executes(context -> run(context, false, true, false))))));
-        serverCommandSourceCommandDispatcher.register(CommandManager.literal("unidye")
-                .then(CommandManager.literal("name")
-                .then(CommandManager.literal("remove")
-                .executes(context -> run(context, true, true, false)))));
-        serverCommandSourceCommandDispatcher.register(CommandManager.literal("unidye")
-                .then(CommandManager.literal("name")
-                .then(CommandManager.literal("remove")
-                .then(CommandManager.literal("exclusion")
-                .then(CommandManager.literal("prefix")
-                .executes(context -> run(context, true, false, true)))))));
-        serverCommandSourceCommandDispatcher.register(CommandManager.literal("unidye")
-                .then(CommandManager.literal("name")
-                .then(CommandManager.literal("remove")
-                .then(CommandManager.literal("exclusion")
-                .then(CommandManager.literal("suffix")
-                .executes(context -> run(context, false, true, true)))))));
-        serverCommandSourceCommandDispatcher.register(CommandManager.literal("unidye")
-                .then(CommandManager.literal("name")
-                .then(CommandManager.literal("remove")
-                .then(CommandManager.literal("exclusion")
-                .executes(context -> run(context, true, true, true))))));
+                        .then(CommandManager.literal("prefix")
+                                .executes(context -> run(context, true, false, false)))
+                        .then(CommandManager.literal("suffix")
+                                .executes(context -> run(context, false, true, false)))
+                        .then(CommandManager.literal("both")
+                                .executes(context -> run(context, true, true, false)))
+                        .then(CommandManager.literal("exclusion")
+                                .then(CommandManager.literal("prefix")
+                                        .executes(context -> run(context, true, false, true)))
+                                .then(CommandManager.literal("suffix")
+                                        .executes(context -> run(context, false, true, true)))
+                                .then(CommandManager.literal("both")
+                                        .executes(context -> run(context, true, true, true)))))));
     }
 
     public static int run(CommandContext<ServerCommandSource> context, boolean removePrefix, boolean removeSuffix, boolean isExclusion) {
@@ -68,7 +54,12 @@ public class UnidyeNameRemoveCommand {
                     if (removePrefix && removeSuffix) {
                         if(!isExclusion) {
                             itemStack.set(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, itemNameAffixesComponent.noAffixes());
-                            serverState.database.remove(color);
+                            dyeData.setPrefix("");
+                            dyeData.setPrefixExclusions(new HashMap<>());
+                            dyeData.setSuffix("");
+                            dyeData.setSuffixExclusions(new HashMap<>());
+                            serverState.database.replace(color, dyeData);
+                            ItemNameAffixesComponent.updateAffixes(itemStack, context.getSource().getWorld());
                         }else{
                             dyeData.prefixExclusions.remove(item);
                             dyeData.suffixExclusions.remove(item);

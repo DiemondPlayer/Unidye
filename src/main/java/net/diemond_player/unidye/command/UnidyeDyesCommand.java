@@ -22,7 +22,9 @@ public class UnidyeDyesCommand {
                                 CommandRegistryAccess commandRegistryAccess,
                                 CommandManager.RegistrationEnvironment registrationEnvironment) {
         serverCommandSourceCommandDispatcher.register(CommandManager.literal("unidye")
-                .then(CommandManager.literal("dyes").requires(source -> source.hasPermissionLevel(4)).executes(UnidyeDyesCommand::run)));
+                .then(CommandManager.literal("dyes")
+                        .requires(source -> source.hasPermissionLevel(4))
+                        .executes(UnidyeDyesCommand::run)));
     }
 
     public static int run(CommandContext<ServerCommandSource> context) {

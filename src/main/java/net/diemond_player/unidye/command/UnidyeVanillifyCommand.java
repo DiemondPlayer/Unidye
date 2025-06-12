@@ -29,11 +29,11 @@ public class UnidyeVanillifyCommand {
                                 CommandManager.RegistrationEnvironment registrationEnvironment) {
         serverCommandSourceCommandDispatcher.register(CommandManager.literal("unidye")
                 .then(CommandManager.literal("vanillify")
-                .requires(source -> source.hasPermissionLevel(4))
-                .then(CommandManager.argument("item", ItemStackArgumentType.itemStack(commandRegistryAccess))
-                .executes(context -> run(
-                        context,
-                        ItemStackArgumentType.getItemStackArgument(context, "item"))))));
+                        .requires(source -> source.hasPermissionLevel(4))
+                        .then(CommandManager.argument("item", ItemStackArgumentType.itemStack(commandRegistryAccess))
+                                .executes(context -> run(
+                                        context,
+                                        ItemStackArgumentType.getItemStackArgument(context, "item"))))));
     }
 
     public static int run(CommandContext<ServerCommandSource> context, ItemStackArgument item) {

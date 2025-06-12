@@ -28,7 +28,9 @@ public class UnidyeColorizeCommand {
                                 CommandRegistryAccess commandRegistryAccess,
                                 CommandManager.RegistrationEnvironment registrationEnvironment) {
         serverCommandSourceCommandDispatcher.register(CommandManager.literal("unidye")
-                .then(CommandManager.literal("colorize").requires(source -> source.hasPermissionLevel(4)).executes(UnidyeColorizeCommand::run)));
+                .then(CommandManager.literal("colorize")
+                        .requires(source -> source.hasPermissionLevel(4))
+                        .executes(UnidyeColorizeCommand::run)));
     }
 
     public static int run(CommandContext<ServerCommandSource> context) {

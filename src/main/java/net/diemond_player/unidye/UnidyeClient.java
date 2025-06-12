@@ -100,10 +100,12 @@ public class UnidyeClient implements ClientModInitializer {
         ItemTooltipCallback.EVENT.register(
                 (stack, context, type, lines) -> {
                     if(stack.contains(DataComponentTypes.PROFILE) && stack.contains(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES)) {
-                        ProfileComponent profileComponent = stack.get(DataComponentTypes.PROFILE);
-                        if(profileComponent.name().isPresent()) {
-                            MutableText discovererName = Text.literal(profileComponent.name().get());
-                            lines.add(lines.size()-2, Text.translatable("tooltip.unidye.discovered_by").append(discovererName.formatted(Formatting.BOLD)).formatted(Formatting.GRAY));
+                        if(!stack.get(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES).containsNoAffixes()) {
+                            ProfileComponent profileComponent = stack.get(DataComponentTypes.PROFILE);
+                            if (profileComponent.name().isPresent()) {
+                                MutableText discovererName = Text.literal(profileComponent.name().get());
+                                lines.add(lines.size() - 2, Text.translatable("tooltip.unidye.discovered_by").append(discovererName.formatted(Formatting.BOLD)).formatted(Formatting.GRAY));
+                            }
                         }
                     }
                 }

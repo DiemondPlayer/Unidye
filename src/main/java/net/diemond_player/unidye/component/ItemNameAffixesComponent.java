@@ -134,4 +134,8 @@ public record ItemNameAffixesComponent(Text prefix, Text suffix, int sourceCusto
         if(isSuffixEmpty) name.append("No Suffix");
         return name;
     }
+
+    public boolean containsNoAffixes(){
+        return this.suffix().equals(Text.empty()) && this.prefix().equals(Text.empty());
+    }
 }

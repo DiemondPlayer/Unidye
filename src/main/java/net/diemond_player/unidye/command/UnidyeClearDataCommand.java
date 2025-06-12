@@ -13,16 +13,15 @@ import net.minecraft.server.network.ServerPlayerEntity;
 
 import java.util.HashMap;
 
-public class UnidyeNameRemoveDatabaseCommand {
+public class UnidyeClearDataCommand {
     @SuppressWarnings("unused")
     public static void register(CommandDispatcher<ServerCommandSource> serverCommandSourceCommandDispatcher,
                                 CommandRegistryAccess commandRegistryAccess,
                                 CommandManager.RegistrationEnvironment registrationEnvironment) {
         serverCommandSourceCommandDispatcher.register(CommandManager.literal("unidye")
-                .then(CommandManager.literal("name")
-                .then(CommandManager.literal("remove")
-                .then(CommandManager.literal("database")
-                .executes(UnidyeNameRemoveDatabaseCommand::run)))));
+                .then(CommandManager.literal("cleardata")
+                        .requires(source -> source.hasPermissionLevel(4))
+                        .executes(UnidyeClearDataCommand::run)));
     }
 
     public static int run(CommandContext<ServerCommandSource> context) {
@@ -32,7 +31,6 @@ public class UnidyeNameRemoveDatabaseCommand {
             ItemStack itemStack = serverPlayerEntity.getMainHandStack();
             if(itemStack.contains(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES)) {
                 ItemNameAffixesComponent itemNameAffixesComponent = itemStack.get(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES);
-                int color = itemNameAffixesComponent.sourceCustomDyeColor();
                 itemStack.set(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, itemNameAffixesComponent.noAffixes());
             }
 //            NbtCompound nbtCompound = itemStack.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT).copyNbt();
