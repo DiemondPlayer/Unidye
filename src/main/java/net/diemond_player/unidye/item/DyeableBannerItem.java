@@ -28,7 +28,7 @@ public class DyeableBannerItem extends BannerItem {
 
     @Override
     public ActionResult place(ItemPlacementContext context) {
-        ItemStack itemStack = context.getStack();
+        ItemStack itemStack = context.getStack().copy();
         int color = UnidyeUtils.getColor(itemStack);
         ActionResult result = super.place(context);
         BlockEntity blockEntity = context.getWorld().getBlockEntity(context.getBlockPos());
