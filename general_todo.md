@@ -12,9 +12,7 @@
 - **TODO** add/adapt a component for non-dye items to use
 - **FIXME** loom flag supp crash
 - **FIXME** concrete powder data components after falling
-- **FIXME** new lang files for new banner patterns
 - **TODO** golden name
-- **FIXME** sheep again?
 
 ### Config:
 - **TODO** add "no added spaces option"

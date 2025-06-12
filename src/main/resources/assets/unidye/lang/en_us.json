@@ -100,6 +100,8 @@
   "block.minecraft.banner.triangle_top": "Inverted Chevron",
   "block.minecraft.banner.triangles_bottom": "Base Indented",
   "block.minecraft.banner.triangles_top": "Chief Indented",
+  "block.minecraft.banner.flow": "Flow",
+  "block.minecraft.banner.guster": "Guster",
 
   "block.minecraft.banner.base.capitalized": "Fully Field",
   "block.minecraft.banner.border.capitalized": "Bordure",
@@ -142,6 +144,8 @@
   "block.minecraft.banner.triangle_top.capitalized": "Inverted Chevron",
   "block.minecraft.banner.triangles_bottom.capitalized": "Base Indented",
   "block.minecraft.banner.triangles_top.capitalized": "Chief Indented",
+  "block.minecraft.banner.flow.capitalized": "Flow",
+  "block.minecraft.banner.guster.capitalized": "Guster",
 
   "jei_description.unidye.custom_dye_polymorph": "Mix any dyes in a crafting table to get custom dyes! Then use custom dyes just like the vanilla ones to craft custom colored blocks, fireworks, dye sheep, signs, etc.",
   "jei_description.unidye.custom_dye": "Mix any dyes and a stick in a crafting table to get custom dyes! Then use custom dyes just like the vanilla ones to craft custom colored blocks, fireworks, dye sheep, signs, etc.",
