@@ -10,6 +10,11 @@
 - **TODO** merge leathery stuff with regular dyeable block entity stuff, making this more versatile
 - **TODO** add a component for custom dye item so you won't be using CUSTOM_DATA
 - **TODO** add/adapt a component for non-dye items to use
+- **FIXME** loom flag supp crash
+- **FIXME** concrete powder data components after falling
+- **FIXME** new lang files for new banner patterns
+- **TODO** golden name
+- **FIXME** sheep again?
 
 ### Config:
 - **TODO** add "no added spaces option"

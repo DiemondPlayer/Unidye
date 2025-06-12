@@ -53,7 +53,10 @@ public abstract class CatEntityMixin implements UnidyeAccessor {
     @Inject(method = "interactMob", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/passive/CatEntity;setCollarColor(Lnet/minecraft/util/DyeColor;)V"))
     private void unidye$interactMobReset(PlayerEntity player, Hand hand, CallbackInfoReturnable<ActionResult> cir) {
         UnidyeAccessor cat = (UnidyeAccessor) ((CatEntity) (Object) this);
-        cat.unidye$setCustomColor(0xFFFFFF);
+        if(cat.unidye$getCustomColor() != 0xFFFFFF) {
+            cat.unidye$setCustomColor(0xFFFFFF);
+            ((CatEntity) (Object) this).setPersistent();
+        }
     }
 
     @Inject(method = "interactMob", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/DyeItem;getColor()Lnet/minecraft/util/DyeColor;", shift = At.Shift.AFTER), cancellable = true)
@@ -79,15 +82,21 @@ public abstract class CatEntityMixin implements UnidyeAccessor {
         ItemStack itemStack = player.getStackInHand(hand);
         Item item = itemStack.getItem();
         UnidyeAccessor cat = (UnidyeAccessor) ((CatEntity) (Object) this);
-        if (!(((CatEntity) (Object) this).getWorld().isClient)) {
-            if (((CatEntity) (Object) this).isTamed()) {
-                if (item instanceof CustomDyeItem && ((CatEntity) (Object) this).isOwner(player)) {
-                    cat.unidye$setCustomColor(CustomDyeItem.getMaterialColor(itemStack, UnidyeMaterialTypes.LEATHER));
-                    if (!player.getAbilities().creativeMode) {
-                        itemStack.decrement(1);
+        if (((CatEntity) (Object) this).isTamed()) {
+            if (item instanceof CustomDyeItem && ((CatEntity) (Object) this).isOwner(player)) {
+                int color = CustomDyeItem.getMaterialColor(itemStack, UnidyeMaterialTypes.LEATHER);
+                if (cat.unidye$getCustomColor() != color || cat.unidye$getCustomColor() == 0xFFFFFF) {
+                    if (!(((CatEntity) (Object) this).getWorld().isClient())) {
+                        cat.unidye$setCustomColor(color);
+                        if (!player.getAbilities().creativeMode) {
+                            itemStack.decrement(1);
+                        }
+                        ((CatEntity) (Object) this).setPersistent();
                     }
-                    cir.setReturnValue(ActionResult.SUCCESS);
+                    cir.setReturnValue(ActionResult.success(((CatEntity) (Object) this).getWorld().isClient()));
+                    return;
                 }
+                cir.setReturnValue(ActionResult.PASS);
             }
         }
     }

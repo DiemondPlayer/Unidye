@@ -6,6 +6,7 @@ import net.diemond_player.unidye.util.UnidyeAccessor;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
+import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.DyeItem;
@@ -52,7 +53,10 @@ public abstract class WolfEntityMixin implements UnidyeAccessor {
     @Inject(method = "interactMob", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/passive/WolfEntity;setCollarColor(Lnet/minecraft/util/DyeColor;)V"))
     private void unidye$interactMobReset(PlayerEntity player, Hand hand, CallbackInfoReturnable<ActionResult> cir) {
         UnidyeAccessor wolf = (UnidyeAccessor) ((WolfEntity) (Object) this);
-        wolf.unidye$setCustomColor(0xFFFFFF);
+        if(wolf.unidye$getCustomColor() != 0xFFFFFF) {
+            wolf.unidye$setCustomColor(0xFFFFFF);
+            ((WolfEntity) (Object) this).setPersistent();
+        }
     }
 
     @Inject(method = "interactMob", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/DyeItem;getColor()Lnet/minecraft/util/DyeColor;", shift = At.Shift.AFTER), cancellable = true)
@@ -66,6 +70,7 @@ public abstract class WolfEntityMixin implements UnidyeAccessor {
             wolf.unidye$setCustomColor(0xFFFFFF);
             if (player.getAbilities().creativeMode) cir.setReturnValue(ActionResult.SUCCESS);
             itemStack.decrement(1);
+            ((WolfEntity) (Object) this).setPersistent();
             cir.setReturnValue(ActionResult.SUCCESS);
         }
     }
@@ -75,15 +80,21 @@ public abstract class WolfEntityMixin implements UnidyeAccessor {
         ItemStack itemStack = player.getStackInHand(hand);
         Item item = itemStack.getItem();
         UnidyeAccessor wolf = (UnidyeAccessor) ((WolfEntity) (Object) this);
-        if (!(((WolfEntity) (Object) this).getWorld().isClient)) {
-            if (((WolfEntity) (Object) this).isTamed()) {
-                if (item instanceof CustomDyeItem && ((WolfEntity) (Object) this).isOwner(player)) {
-                    wolf.unidye$setCustomColor(CustomDyeItem.getMaterialColor(itemStack, UnidyeMaterialTypes.LEATHER));
-                    if (!player.getAbilities().creativeMode) {
-                        itemStack.decrement(1);
+        if (((WolfEntity) (Object) this).isTamed()) {
+            if (item instanceof CustomDyeItem && ((WolfEntity) (Object) this).isOwner(player)) {
+                int color = CustomDyeItem.getMaterialColor(itemStack, UnidyeMaterialTypes.LEATHER);
+                if (wolf.unidye$getCustomColor() != color || wolf.unidye$getCustomColor() == 0xFFFFFF) {
+                    if (!(((WolfEntity) (Object) this).getWorld().isClient())) {
+                        wolf.unidye$setCustomColor(color);
+                        if (!player.getAbilities().creativeMode) {
+                            itemStack.decrement(1);
+                        }
+                        ((WolfEntity) (Object) this).setPersistent();
                     }
-                    cir.setReturnValue(ActionResult.SUCCESS);
+                    cir.setReturnValue(ActionResult.success(((WolfEntity) (Object) this).getWorld().isClient()));
+                    return;
                 }
+                cir.setReturnValue(ActionResult.PASS);
             }
         }
     }
