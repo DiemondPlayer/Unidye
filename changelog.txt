@@ -140,3 +140,4 @@ The changelog posted on Modrinth/Curseforge would be without those minor changes
 • supplementaries flag + custom dye in loom crash fixed
 • discoverers are never altered or forgotten (unless cleardata)
 • discoverer tooltip is not shown if there is no prefix AND no suffix
+• added missing translation files for guster and flow patterns

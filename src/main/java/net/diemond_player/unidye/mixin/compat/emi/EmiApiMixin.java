@@ -77,7 +77,7 @@ public abstract class EmiApiMixin{
                             Text prefix = Text.literal(dyeData.getPrefix());
                             Text suffix = Text.literal(dyeData.getSuffix());
                             if(!itemNameAffixesComponent.prefix().equals(prefix) || !itemNameAffixesComponent.suffix().equals(suffix)) {
-                                itemStack1.set(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, new ItemNameAffixesComponent(prefix, suffix, color));
+                                itemStack1.set(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, itemNameAffixesComponent.withAffixes(prefix, suffix));
                             }
                             itemStack.set(DataComponentTypes.PROFILE, dyeData.getProfileComponent());
                         } else {
