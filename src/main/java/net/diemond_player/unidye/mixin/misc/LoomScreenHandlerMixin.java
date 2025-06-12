@@ -88,7 +88,7 @@ public abstract class LoomScreenHandlerMixin extends ScreenHandler {
                 this.outputSlot.setStackNoCallbacks(itemStack3);
             }
             ci.cancel();
-        } else if (itemStack2.getItem() instanceof CustomDyeItem) {
+        } else if (itemStack2.getItem() instanceof CustomDyeItem && itemStack.getItem() instanceof BannerItem) {
             ItemStack itemStack3 = new ItemStack(UnidyeItems.CUSTOM_BANNER, 1);
             itemStack3.set(DataComponentTypes.DYED_COLOR, new DyedColorComponent(ColorHelper.Argb.withAlpha(0, ((BannerItem) itemStack.getItem()).getColor().getEntityColor()), false));
             itemStack3.set(DataComponentTypes.ITEM_NAME, itemStack.getName());
