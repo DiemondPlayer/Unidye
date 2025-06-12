@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 
-@Mixin(value = PresentDyeRecipe.class, remap = false)
+@Mixin(PresentDyeRecipe.class)
 public abstract class PresentDyeRecipeMixin {
 
     @ModifyReturnValue(method = "matches(Lnet/minecraft/recipe/input/CraftingRecipeInput;Lnet/minecraft/world/World;)Z", at = @At(value = "RETURN"))

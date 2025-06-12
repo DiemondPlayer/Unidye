@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(value = FlagFromBannerRecipe.class, remap = false)
+@Mixin(FlagFromBannerRecipe.class)
 public abstract class FlagFromBannerRecipeMixin {
 
     @Inject(method = "matches(Lnet/minecraft/recipe/input/CraftingRecipeInput;Lnet/minecraft/world/World;)Z", at = @At(value = "HEAD"), cancellable = true)
