@@ -21,6 +21,7 @@
     "gameplay.SignBlockEntityMixin",
     "gameplay.WolfEntityMixin",
     "misc.AbstractCauldronBlockMixin",
+    "misc.BannerBlockMixin",
     "misc.CrafterScreenHandlerMixin",
     "misc.CraftingScreenHandlerMixin",
     "misc.DyedColorComponentMixin",

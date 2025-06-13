@@ -103,13 +103,63 @@ public class UnidyeClient implements ClientModInitializer {
                         if(!stack.get(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES).containsNoAffixes()) {
                             ProfileComponent profileComponent = stack.get(DataComponentTypes.PROFILE);
                             if (profileComponent.name().isPresent()) {
-                                MutableText discovererName = Text.literal(profileComponent.name().get());
-                                lines.add(lines.size() - 2, Text.translatable("tooltip.unidye.discovered_by").append(discovererName.formatted(Formatting.BOLD)).formatted(Formatting.GRAY));
+                                MutableText discovererName = createGoldenGradientText(profileComponent.name().get());
+                                lines.add(lines.size() - 2, Text.translatable("tooltip.unidye.discovered_by").formatted(Formatting.GRAY).append(discovererName.formatted(Formatting.BOLD)));
                             }
+//                            lines.add(createGoldenGradientText("Smol"));
+//                            lines.add(createGoldenGradientText("Hello"));
+//                            lines.add(createGoldenGradientText("Goodbye"));
+//                            lines.add(createGoldenGradientText("Roomba"));
+//                            lines.add(createGoldenGradientText("Eagernesses"));
+//                            lines.add(createGoldenGradientText("Abandonments"));
+//                            lines.add(createGoldenGradientText("Waistcoatings"));
+//                            lines.add(createGoldenGradientText("Jargonizations"));
+//                            lines.add(createGoldenGradientText("Electromagnetic"));
+//                            lines.add(createGoldenGradientText("Paleethnologists"));
+//                            lines.add(createGoldenGradientText("Paleethnologists!"));
+//                            lines.add(createGoldenGradientText("Paleethnologists!!"));
+//                            lines.add(createGoldenGradientText("HeccologicalDiscovery"));
                         }
                     }
                 }
         );
+    }
+
+    private MutableText createGoldenGradientText(String string) {
+        MutableText gradientText = Text.empty();
+        int length = string.length();
+        if(length > 22) return Text.literal(string);
+        int middleIndex = (int) Math.floor((double) length / 2);
+        List<Integer> colors = Lists.newArrayList(
+                0x943203,
+                0xBE6208,
+                0xED9514,
+                0xF8C83B,
+                0xFFEC6E,
+                0xFFFFFF
+        );
+        int colorsSize = colors.size() - 1;
+        int baseGradientLength = colorsSize * 2 + 1;
+        int overTheLimit = length > baseGradientLength ? length - baseGradientLength : 0;
+        if(overTheLimit != 0) {
+            List<Integer> newColors = new ArrayList<>(colors);
+            if (overTheLimit % 2 == 0) {
+                for (int i = 0; i < overTheLimit; i += 2) {
+                    newColors.add(newColors.size() - 1 - i, colors.get(Math.max(0, colorsSize - (i / 2))));
+                }
+            } else {
+                for (int i = 0; i < overTheLimit - 1; i += 2) {
+                    newColors.add(newColors.size() - 2 - i, colors.get(Math.max(0, colorsSize - 1 - (i / 2))));
+                }
+            }
+            colors = newColors;
+        }
+        colorsSize = colors.size() - 1;
+        for (int i = 0; i < length; i++) {
+            gradientText.append(Text.literal(String.valueOf(string.charAt(i))).
+                    withColor(colors.get(Math.max(0, colorsSize - Math.abs(i - middleIndex < 0 && overTheLimit % 2 == 1 ? i + 1 - middleIndex : i - middleIndex)))));
+        }
+        return gradientText;
     }
 
     private void registerModelLoadingPlugin() {

@@ -141,3 +141,6 @@ The changelog posted on Modrinth/Curseforge would be without those minor changes
 • discoverers are never altered or forgotten (unless cleardata)
 • discoverer tooltip is not shown if there is no prefix AND no suffix
 • added missing translation files for guster and flow patterns
+• Fixed banner placing when itemstack is gone after placing
+• Golden Gradient for discoverers (experimental)
+• Fixed amendments thinking that Custom banner leads to White Ceiling banner instead of White Banner leading to it
