@@ -144,3 +144,5 @@ The changelog posted on Modrinth/Curseforge would be without those minor changes
 • Fixed banner placing when itemstack is gone after placing
 • Golden Gradient for discoverers (experimental)
 • Fixed amendments thinking that Custom banner leads to White Ceiling banner instead of White Banner leading to it
+• Unidye Items can no longer be combined with DyeBottleItem from amendments (bandaid solution because no actual compat)
+• Custom Dyes cannot dye water in cauldrons from amendments (bandaid solution)

@@ -43,10 +43,10 @@ public class DyeableLeatheryBlockEntity extends BlockEntity implements IDyeableB
         if (leatherColor != DEFAULT_WHITE_COLOR) {
             nbt.putInt("leather", leatherColor);
         }
-        if (!itemNameAffixesComponent.equals(ItemNameAffixesComponent.DEFAULT)) {
+        if (itemNameAffixesComponent != null && !itemNameAffixesComponent.equals(ItemNameAffixesComponent.DEFAULT)) {
             nbt.put("itemNameAffixes", ItemNameAffixesComponent.CODEC.encodeStart(registryLookup.getOps(NbtOps.INSTANCE), this.itemNameAffixesComponent).getOrThrow());
         }
-        if (!recipeStacksComponent.equals(RecipeStacksComponent.DEFAULT)) {
+        if (recipeStacksComponent != null && !recipeStacksComponent.equals(RecipeStacksComponent.DEFAULT)) {
             nbt.put("recipeStacks", RecipeStacksComponent.CODEC.encodeStart(registryLookup.getOps(NbtOps.INSTANCE), this.recipeStacksComponent).getOrThrow());
         }
         if (profileComponent != null) {

@@ -90,8 +90,8 @@ dependencies {
 	//modImplementation "me.shedaniel:RoughlyEnoughItems-fabric:$rei_version"
 
 	//EMI
-	//modCompileOnly "dev.emi:emi-fabric:${emi_version}"
-	modImplementation "dev.emi:emi-fabric:${emi_version}"
+	modCompileOnly "dev.emi:emi-fabric:${emi_version}"
+	//modImplementation "dev.emi:emi-fabric:${emi_version}"
 	modCompileOnly "dev.emi:emi-fabric:${emi_version}:api"
 
 	//ModMenu
@@ -100,6 +100,9 @@ dependencies {
 	//Supplementaries
 	//modImplementation "maven.modrinth:supplementaries:${supplementaries_version}"
 	modCompileOnly "maven.modrinth:supplementaries:${supplementaries_version}"
+
+	//Amendments
+	modCompileOnly "maven.modrinth:amendments:${amendments_version}"
 
 	// compile against the JEI API but do not include it at runtime
 	//modCompileOnlyApi("mezz.jei:jei-${mc_version}-fabric-api:${jei_version}")

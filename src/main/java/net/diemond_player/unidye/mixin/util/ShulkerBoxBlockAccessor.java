@@ -11,5 +11,7 @@ import java.util.Map;
 @Mixin(ShulkerBoxBlock.class)
 public interface ShulkerBoxBlockAccessor {
     @Accessor("SIDES_SHAPES")
-    Map<Direction, VoxelShape> getSidesShapes();
+    static Map<Direction, VoxelShape> getSidesShapes() {
+        throw new AssertionError();
+    }
 }

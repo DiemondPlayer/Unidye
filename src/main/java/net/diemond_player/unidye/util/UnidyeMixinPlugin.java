@@ -17,15 +17,18 @@ import java.util.function.Supplier;
 public class UnidyeMixinPlugin implements IMixinConfigPlugin {
     private static final Supplier<Boolean> TRUE = () -> true;
 
-    private static final Map<String, Supplier<Boolean>> CONDITIONS = ImmutableMap.of(
-            "net.diemond_player.unidye.mixin.compat.emi.EmiApiMixin", () -> FabricLoader.getInstance().isModLoaded("emi"),
-            "net.diemond_player.unidye.mixin.compat.emi.EmiArmorDyeRecipeMixin", () -> FabricLoader.getInstance().isModLoaded("emi"),
-            "net.diemond_player.unidye.mixin.compat.rei.ClientHelperImplMixin", () -> FabricLoader.getInstance().isModLoaded("roughlyenoughitems"),
-            "net.diemond_player.unidye.mixin.compat.rei.ArmorDyeRecipeFillerMixin", () -> FabricLoader.getInstance().isModLoaded("roughlyenoughitems"),
-            "net.diemond_player.unidye.mixin.render.BlockDustParticleMixin", () -> !FabricLoader.getInstance().isModLoaded("bountifulfares"),
-            "net.diemond_player.unidye.mixin.compat.supplementaries.FlagFromBannerRecipeMixin", () -> FabricLoader.getInstance().isModLoaded("supplementaries"),
-            "net.diemond_player.unidye.mixin.compat.supplementaries.PresentDyeRecipeMixin", () -> FabricLoader.getInstance().isModLoaded("supplementaries"),
-            "net.diemond_player.unidye.mixin.compat.supplementaries.SoapClearRecipeMixin", () -> FabricLoader.getInstance().isModLoaded("supplementaries")
+    private static final Map<String, Supplier<Boolean>> CONDITIONS = ImmutableMap.ofEntries(
+            Map.entry("net.diemond_player.unidye.mixin.compat.emi.EmiApiMixin", () -> FabricLoader.getInstance().isModLoaded("emi")),
+            Map.entry("net.diemond_player.unidye.mixin.compat.emi.EmiArmorDyeRecipeMixin", () -> FabricLoader.getInstance().isModLoaded("emi")),
+            Map.entry("net.diemond_player.unidye.mixin.compat.rei.ClientHelperImplMixin", () -> FabricLoader.getInstance().isModLoaded("roughlyenoughitems")),
+            Map.entry("net.diemond_player.unidye.mixin.compat.rei.ArmorDyeRecipeFillerMixin", () -> FabricLoader.getInstance().isModLoaded("roughlyenoughitems")),
+            Map.entry("net.diemond_player.unidye.mixin.render.BlockDustParticleMixin", () -> !FabricLoader.getInstance().isModLoaded("bountifulfares")),
+            Map.entry("net.diemond_player.unidye.mixin.compat.supplementaries.FlagFromBannerRecipeMixin", () -> FabricLoader.getInstance().isModLoaded("supplementaries")),
+            Map.entry("net.diemond_player.unidye.mixin.compat.supplementaries.PresentDyeRecipeMixin", () -> FabricLoader.getInstance().isModLoaded("supplementaries")),
+            Map.entry("net.diemond_player.unidye.mixin.compat.supplementaries.SoapClearRecipeMixin", () -> FabricLoader.getInstance().isModLoaded("supplementaries")),
+            Map.entry("net.diemond_player.unidye.mixin.compat.amendments.CauldronDyeWaterMixin", () -> FabricLoader.getInstance().isModLoaded("amendments")),
+            Map.entry("net.diemond_player.unidye.mixin.compat.amendments.DyeBottleRecipeMixin", () -> FabricLoader.getInstance().isModLoaded("amendments")),
+            Map.entry("net.diemond_player.unidye.mixin.compat.amendments.DyeCauldronBlockMixin", () -> FabricLoader.getInstance().isModLoaded("amendments"))
     );
 
     @Override

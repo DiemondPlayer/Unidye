@@ -266,10 +266,10 @@ public class DyeableShulkerBoxBlockEntity extends LootableContainerBlockEntity
         if (color != DEFAULT_WHITE_COLOR) {
             nbt.putInt("color", color);
         }
-        if (!itemNameAffixesComponent.equals(ItemNameAffixesComponent.DEFAULT)) {
+        if (itemNameAffixesComponent != null && !itemNameAffixesComponent.equals(ItemNameAffixesComponent.DEFAULT)) {
             nbt.put("itemNameAffixes", ItemNameAffixesComponent.CODEC.encodeStart(registryLookup.getOps(NbtOps.INSTANCE), this.itemNameAffixesComponent).getOrThrow());
         }
-        if (!recipeStacksComponent.equals(RecipeStacksComponent.DEFAULT)) {
+        if (recipeStacksComponent != null && !recipeStacksComponent.equals(RecipeStacksComponent.DEFAULT)) {
             nbt.put("recipeStacks", RecipeStacksComponent.CODEC.encodeStart(registryLookup.getOps(NbtOps.INSTANCE), this.recipeStacksComponent).getOrThrow());
         }
         if (profileComponent != null) {

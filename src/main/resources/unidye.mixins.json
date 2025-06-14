@@ -4,6 +4,9 @@
   "compatibilityLevel": "JAVA_17",
   "plugin": "net.diemond_player.unidye.util.UnidyeMixinPlugin",
   "mixins": [
+    "compat.amendments.CauldronDyeWaterMixin",
+    "compat.amendments.DyeBottleRecipeMixin",
+    "compat.amendments.DyeCauldronBlockMixin",
     "compat.emi.EmiApiMixin",
     "compat.emi.EmiArmorDyeRecipeMixin",
     "compat.rei.ArmorDyeRecipeFillerMixin",

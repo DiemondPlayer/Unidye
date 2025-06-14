@@ -72,7 +72,7 @@ public record ItemNameAffixesComponent(Text prefix, Text suffix, int sourceCusto
             ItemNameAffixesComponent itemNameAffixesComponent = itemStack.get(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES);
             int color = itemNameAffixesComponent.sourceCustomDyeColor();
             DyeDatabaseSaverAndLoader serverState = DyeDatabaseSaverAndLoader.getServerState(((ServerWorld) world).getServer());
-            Unidye.LOGGER.info(serverState.database.toString());
+//            Unidye.LOGGER.info(serverState.database.toString());
             if (serverState.database.containsKey(color)) {
                 DyeData dyeData = serverState.database.get(color);
                 Item item = itemStack.getItem();
@@ -92,7 +92,7 @@ public record ItemNameAffixesComponent(Text prefix, Text suffix, int sourceCusto
         int color = this.sourceCustomDyeColor();
         if(!world.isClient) {
             DyeDatabaseSaverAndLoader serverState = DyeDatabaseSaverAndLoader.getServerState(((ServerWorld) world).getServer());
-            Unidye.LOGGER.info(serverState.database.toString());
+//            Unidye.LOGGER.info(serverState.database.toString());
             if (serverState.database.containsKey(color)) {
                 DyeData dyeData = serverState.database.get(color);
                 Text prefix = Text.literal(dyeData.getPrefix());
