@@ -39,31 +39,28 @@ public record MaterialColorsComponent(List<MaterialColor> materialColors){
     public static final int DEFAULT_WHITE_COLOR = 16777215;
 
     public static void convertFromCustomDataComponent(ItemStack itemStack){
-        //This if statement converts old nbt to new one so that world made before 2.0.0 don't get corrupted
-        if(itemStack.contains(DataComponentTypes.CUSTOM_DATA)) {
-            NbtComponent nbtComponent = itemStack.get(DataComponentTypes.CUSTOM_DATA);
-            if (nbtComponent == null) return;
-            NbtCompound nbtCompoundTest = nbtComponent.copyNbt();
-            nbtCompoundTest.remove(DYE_SHAPE);
-            if(nbtCompoundTest.isEmpty()) return;
-            List<MaterialColor> materialColorList = Lists.newArrayList();
-            NbtCompound nbtCompound = nbtComponent.copyNbt();
-            for (UnidyeMaterialType materialType : UnidyeMaterialTypes.MATERIAL_TYPE.stream().toList()) {
-                int n = -1;
-                if (nbtComponent.contains(materialType.getId().getPath())) {
-                    n = nbtCompound.getInt(materialType.getId().getPath());
-                    nbtCompound.remove(materialType.getId().getPath());
-                } else if (nbtComponent.contains(materialType.getId().toString())) {
-                    n = nbtCompound.getInt(materialType.getId().toString());
-                    nbtCompound.remove(materialType.getId().toString());
-                }
-                if (n != -1) {
-                    materialColorList.add(new MaterialColor(materialType.getId(), n));
-                }
+        //This method converts old nbt to new one so that world made before 2.0.0 don't get corrupted
+        if(itemStack.contains(UnidyeDataComponentTypes.MATERIAL_COLORS)) return;
+        if(!itemStack.contains(DataComponentTypes.CUSTOM_DATA)) return;
+        NbtComponent nbtComponent = itemStack.get(DataComponentTypes.CUSTOM_DATA);
+        if (nbtComponent == null) return;
+        List<MaterialColor> materialColorList = Lists.newArrayList();
+        NbtCompound nbtCompound = nbtComponent.copyNbt();
+        for (UnidyeMaterialType materialType : UnidyeMaterialTypes.MATERIAL_TYPE.stream().toList()) {
+            int n = -1;
+            if (nbtComponent.contains(materialType.getId().getPath())) {
+                n = nbtCompound.getInt(materialType.getId().getPath());
+                nbtCompound.remove(materialType.getId().getPath());
+            } else if (nbtComponent.contains(materialType.getId().toString())) {
+                n = nbtCompound.getInt(materialType.getId().toString());
+                nbtCompound.remove(materialType.getId().toString());
             }
-            itemStack.set(UnidyeDataComponentTypes.MATERIAL_COLORS, new MaterialColorsComponent(materialColorList));
-            itemStack.set(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(nbtCompound));
+            if (n != -1) {
+                materialColorList.add(new MaterialColor(materialType.getId(), n));
+            }
         }
+        itemStack.set(UnidyeDataComponentTypes.MATERIAL_COLORS, new MaterialColorsComponent(materialColorList));
+        itemStack.set(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(nbtCompound));
     }
 
     public static int getMaterialColor(ItemStack stack, UnidyeMaterialType materialType) {
