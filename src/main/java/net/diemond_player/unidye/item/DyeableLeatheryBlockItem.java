@@ -2,9 +2,7 @@ package net.diemond_player.unidye.item;
 
 import net.diemond_player.unidye.block.entity.DyeableLeatheryBlockEntity;
 import net.diemond_player.unidye.registry.UnidyeBlocks;
-import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.registry.UnidyeMaterialTypes;
-import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.component.DataComponentTypes;
@@ -21,6 +19,8 @@ import net.minecraft.util.Formatting;
 
 import java.util.List;
 
+import static net.diemond_player.unidye.component.MaterialColorsComponent.DEFAULT_WHITE_COLOR;
+
 public class DyeableLeatheryBlockItem extends DyeableBlockItem {
     public DyeableLeatheryBlockItem(Block block, Settings settings) {
         super(block, settings);
@@ -31,7 +31,7 @@ public class DyeableLeatheryBlockItem extends DyeableBlockItem {
         if (nbtComponent.contains(UnidyeMaterialTypes.LEATHER.getId().toString())) {
             return nbtComponent.copyNbt().getInt(UnidyeMaterialTypes.LEATHER.getId().toString());
         }
-        return CustomDyeItem.DEFAULT_WHITE_COLOR;
+        return DEFAULT_WHITE_COLOR;
     }
 
     public String getLeatherHexColor(ItemStack stack) {

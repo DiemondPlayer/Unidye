@@ -2,9 +2,7 @@ package net.diemond_player.unidye.mixin.compat.supplementaries;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.sugar.Local;
-import net.diemond_player.unidye.item.DyeableBannerItem;
 import net.diemond_player.unidye.registry.UnidyeItemGroups;
-import net.mehvahdjukaar.supplementaries.common.items.crafting.FlagFromBannerRecipe;
 import net.mehvahdjukaar.supplementaries.common.items.crafting.SoapClearRecipe;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;

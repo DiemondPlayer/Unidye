@@ -5,7 +5,6 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.diemond_player.unidye.Unidye;
 import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
 import net.minecraft.component.ComponentChanges;
-import net.minecraft.component.ComponentType;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
@@ -19,7 +18,9 @@ import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.TagKey;
 import org.apache.commons.compress.utils.Lists;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 import static net.minecraft.item.ItemStack.ITEM_CODEC;
 
@@ -61,7 +62,10 @@ public record RecipeStacksComponent(List<Stack> stacks, int outputAmount, boolea
                 ItemNameAffixesComponent itemNamePrefixComponent = itemStackCopy.get(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES);
                 itemStackCopy.set(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, itemNamePrefixComponent.noAffixes());
             }
-            restrictRecipeStackDepth(itemStack);
+            if(itemStackCopy.contains(DataComponentTypes.PROFILE)) {
+                itemStackCopy.remove(DataComponentTypes.PROFILE);
+            }
+            restrictRecipeStackDepth(itemStackCopy);
             stackList.add(new Stack(itemStackCopy.getRegistryEntry(), itemStackCopy.getComponentChanges()));
         }
         if (shapeless) {

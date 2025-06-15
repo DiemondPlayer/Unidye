@@ -23,7 +23,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
 import org.jetbrains.annotations.Nullable;
 
-import static net.diemond_player.unidye.item.CustomDyeItem.DEFAULT_WHITE_COLOR;
+import static net.diemond_player.unidye.component.MaterialColorsComponent.DEFAULT_WHITE_COLOR;
 
 public class DyeableLeatheryBlockEntity extends BlockEntity implements IDyeableBlockEntity{
     public DyeableLeatheryBlockEntity(BlockPos pos, BlockState state) {

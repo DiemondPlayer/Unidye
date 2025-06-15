@@ -17,7 +17,6 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.text.Text;
 import net.minecraft.util.DyeColor;
-import net.minecraft.util.Util;
 import net.minecraft.util.math.ColorHelper;
 
 import java.util.Arrays;
@@ -25,7 +24,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
-import static net.diemond_player.unidye.item.CustomDyeItem.*;
+import static net.diemond_player.unidye.component.MaterialColorsComponent.*;
+import static net.diemond_player.unidye.item.CustomDyeItem.DYE_SHAPE;
 import static net.diemond_player.unidye.registry.UnidyeMaterialTypes.getMaterialType;
 
 public class UnidyeUtils {

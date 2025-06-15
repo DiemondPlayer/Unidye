@@ -23,6 +23,8 @@ import net.minecraft.world.World;
 
 import java.util.Map;
 
+import static net.diemond_player.unidye.component.MaterialColorsComponent.getMaterialColor;
+
 public class CustomFireworkStarRecipe extends SpecialCraftingRecipe {
     public CustomFireworkStarRecipe(CraftingRecipeCategory category) {
         super(category);
@@ -128,7 +130,7 @@ public class CustomFireworkStarRecipe extends SpecialCraftingRecipe {
                     bl2 = true;
                 } else if (itemStack.getItem() instanceof DyeItem) {
                     if (itemStack.getItem() instanceof CustomDyeItem){
-                        intList.add(CustomDyeItem.getMaterialColor(itemStack, UnidyeMaterialTypes.FIREWORK).intValue());
+                        intList.add(((Integer) getMaterialColor(itemStack, UnidyeMaterialTypes.FIREWORK)).intValue());
                     } else {
                         intList.add(((DyeItem) itemStack.getItem()).getColor().getFireworkColor());
                     }

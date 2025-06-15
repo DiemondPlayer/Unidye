@@ -1,16 +1,5 @@
 package net.diemond_player.unidye.registry;
 
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.RenderPhase;
-import net.minecraft.client.render.VertexFormat;
-import net.minecraft.client.render.VertexFormats;
-
-import java.util.OptionalDouble;
-
-import static net.minecraft.client.render.RenderPhase.*;
-
 public class UnidyeRenderLayers {
 
 //    public static final RenderPhase.Transparency TRANSPARENCY_CUSTOM = new RenderPhase.Transparency("unidye_transparency_custom", () -> {

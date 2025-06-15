@@ -7,7 +7,7 @@ import net.minecraft.component.type.ProfileComponent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
 
-import static net.diemond_player.unidye.item.CustomDyeItem.DEFAULT_WHITE_COLOR;
+import static net.diemond_player.unidye.component.MaterialColorsComponent.DEFAULT_WHITE_COLOR;
 
 public interface IDyeableBlockEntity {
     int getColor();

@@ -6,7 +6,6 @@ import net.diemond_player.unidye.util.UnidyeAccessor;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.DyeItem;
@@ -23,6 +22,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import static net.diemond_player.unidye.component.MaterialColorsComponent.getMaterialColor;
 
 @Mixin(WolfEntity.class)
 public abstract class WolfEntityMixin implements UnidyeAccessor {
@@ -82,7 +83,7 @@ public abstract class WolfEntityMixin implements UnidyeAccessor {
         UnidyeAccessor wolf = (UnidyeAccessor) ((WolfEntity) (Object) this);
         if (((WolfEntity) (Object) this).isTamed()) {
             if (item instanceof CustomDyeItem && ((WolfEntity) (Object) this).isOwner(player)) {
-                int color = CustomDyeItem.getMaterialColor(itemStack, UnidyeMaterialTypes.LEATHER);
+                int color = getMaterialColor(itemStack, UnidyeMaterialTypes.LEATHER);
                 if (wolf.unidye$getCustomColor() != color || wolf.unidye$getCustomColor() == 0xFFFFFF) {
                     if (!(((WolfEntity) (Object) this).getWorld().isClient())) {
                         wolf.unidye$setCustomColor(color);

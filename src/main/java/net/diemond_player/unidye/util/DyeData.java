@@ -4,7 +4,6 @@ import net.minecraft.component.type.ProfileComponent;
 import net.minecraft.item.Item;
 
 import java.util.HashMap;
-import java.util.UUID;
 
 public class DyeData {
     public ProfileComponent profileComponent;

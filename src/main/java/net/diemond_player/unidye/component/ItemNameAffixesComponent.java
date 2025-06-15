@@ -2,12 +2,10 @@ package net.diemond_player.unidye.component;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.diemond_player.unidye.Unidye;
 import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.util.DyeData;
 import net.diemond_player.unidye.util.DyeDatabaseSaverAndLoader;
 import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.ProfileComponent;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.RegistryByteBuf;
@@ -17,11 +15,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.text.TextCodecs;
-import net.minecraft.util.Util;
-import net.minecraft.util.Uuids;
 import net.minecraft.world.World;
-
-import java.util.UUID;
 
 public record ItemNameAffixesComponent(Text prefix, Text suffix, int sourceCustomDyeColor) {
     public static final ItemNameAffixesComponent DEFAULT = new ItemNameAffixesComponent(Text.empty(), Text.empty(), 0xFFFFFF);

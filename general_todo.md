@@ -6,9 +6,7 @@
 - **TODO** add Glazed Terracotta
 
 ### Code:
-- **TODO** a system to add new "vanilla dyes" without new items (aka fix your awful dye shape code again)
 - **TODO** merge leathery stuff with regular dyeable block entity stuff, making this more versatile
-- **TODO** add a component for custom dye item so you won't be using CUSTOM_DATA
 - **TODO** add/adapt a component for non-dye items to use
 - **TODO** unidye utils is a mess, fix it
 
@@ -24,7 +22,7 @@
 
 ### Compat (Main Mod):
 - **TODO** built-in datapack system for recipe, advancements, etc.
-- **TODO** use the former mentioned datapack system to add new shapes when other dye mods are present
+- **TODO** use the former mentioned datapack system to add new recipe advancements when other dye mods are present
 - **FIXME** EMI recipe tree knows no diff between custom dyes
 - **FIXME** REI compat gives way too many example displays
 - **consider TODO** replace fillers with just 1 display per recipe in REI compat
@@ -34,9 +32,9 @@
 - **TODO** check every class for warns, errors
 - **TODO** cleanup/add comments
 - **TODO** add warns/errors through LOGGER where it is needed
-- **TODO** organize command names (because right now they are not intuitive probs)
 
 ### The Unlikely Corner:
+- **unlikely TODO** a system to add new "vanilla dyes" without new items (aka fix your awful dye shape code again)
 - **unlikely TODO** naming system for fireworks
 - **unlikely TODO** updating naming system for fireworks
 - **unlikely FIXME** dyed map markers; check MapIcon.Type, FilledMapItem, map_icons, MapRenderer

@@ -31,6 +31,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import static net.diemond_player.unidye.component.MaterialColorsComponent.getMaterialColor;
+
 @Mixin(LoomScreenHandler.class)
 public abstract class LoomScreenHandlerMixin extends ScreenHandler {
     protected LoomScreenHandlerMixin(@Nullable ScreenHandlerType<?> type, int syncId, Inventory input) {
@@ -73,7 +75,7 @@ public abstract class LoomScreenHandlerMixin extends ScreenHandler {
                     itemStack3.apply(
                             UnidyeDataComponentTypes.CUSTOM_BANNER_PATTERNS,
                             CustomBannerPatternsComponent.DEFAULT,
-                            component -> new CustomBannerPatternsComponent.Builder().addAll(component).add(pattern, CustomDyeItem.getMaterialColor(itemStack2, UnidyeMaterialTypes.LEATHER), itemStack2.getOrDefault(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, ItemNameAffixesComponent.DEFAULT)).build()
+                            component -> new CustomBannerPatternsComponent.Builder().addAll(component).add(pattern, getMaterialColor(itemStack2, UnidyeMaterialTypes.LEATHER), itemStack2.getOrDefault(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, ItemNameAffixesComponent.DEFAULT)).build()
                     );
                 } else {
                     DyeColor dyeColor = ((DyeItem) itemStack2.getItem()).getColor();
@@ -103,7 +105,7 @@ public abstract class LoomScreenHandlerMixin extends ScreenHandler {
                 itemStack3.apply(
                         UnidyeDataComponentTypes.CUSTOM_BANNER_PATTERNS,
                         CustomBannerPatternsComponent.DEFAULT,
-                        component -> new CustomBannerPatternsComponent.Builder().addAll(component).add(pattern, CustomDyeItem.getMaterialColor(itemStack2, UnidyeMaterialTypes.LEATHER), itemStack2.getOrDefault(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, ItemNameAffixesComponent.DEFAULT)).build()
+                        component -> new CustomBannerPatternsComponent.Builder().addAll(component).add(pattern, getMaterialColor(itemStack2, UnidyeMaterialTypes.LEATHER), itemStack2.getOrDefault(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, ItemNameAffixesComponent.DEFAULT)).build()
                 );
             }
 

@@ -1,6 +1,7 @@
 package net.diemond_player.unidye.item;
 
 import net.diemond_player.unidye.component.ItemNameAffixesComponent;
+import net.diemond_player.unidye.component.MaterialColorsComponent;
 import net.diemond_player.unidye.registry.UnidyeMaterialTypes;
 import net.diemond_player.unidye.util.UnidyeAccessor;
 import net.diemond_player.unidye.util.UnidyeMaterialType;
@@ -27,12 +28,13 @@ import net.minecraft.world.World;
 import java.util.List;
 import java.util.Objects;
 
+import static net.diemond_player.unidye.component.MaterialColorsComponent.*;
+
 public class CustomDyeItem extends DyeItem implements SignChangingItem{
     //no longer used but used to convert to a new key
     public static final String CLOSEST_VANILLA_DYE_ID_KEY = "closest_vanilla_dye_id";
     //this is where the dye stores its shape now, and it's not an int, it's a string
     public static final String DYE_SHAPE = "dye_shape";
-    public static final int DEFAULT_WHITE_COLOR = 16777215;
 
     public CustomDyeItem(Settings settings) {
         super(DyeColor.WHITE, settings);
@@ -54,49 +56,10 @@ public class CustomDyeItem extends DyeItem implements SignChangingItem{
         return name;
     }
 
-    public static Integer getMaterialColor(ItemStack stack, UnidyeMaterialType materialType) {
-        NbtComponent nbtComponent = stack.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(new NbtCompound()));
-        //This if statement converts old nbt keys to new ones so that world made before 2.0.0 don't get corrupted
-        if (nbtComponent != null && nbtComponent.contains(materialType.getId().getPath())){
-            NbtCompound nbtCompound = nbtComponent.copyNbt();
-            int n = nbtCompound.getInt(materialType.getId().getPath());
-            nbtCompound.remove(materialType.getId().getPath());
-            stack.set(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(nbtCompound));
-            setMaterialColor(stack, n, materialType);
-            return n;
-        }
-        if (nbtComponent != null && nbtComponent.contains(materialType.getId().toString())) {
-            return nbtComponent.copyNbt().getInt(materialType.getId().toString());
-        }
-        return DEFAULT_WHITE_COLOR;
-    }
-
-    public static String getMaterialHexColor(ItemStack stack, UnidyeMaterialType materialType) {
-        Integer color = getMaterialColor(stack, materialType);
-        return String.format("#%06X", (0xFFFFFF & color));
-    }
-
-    public static void setMaterialColor(ItemStack itemStack, int n, UnidyeMaterialType materialType) {
-        NbtComponent nbtComponent = itemStack.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(new NbtCompound()));
-        NbtCompound nbtCompound = nbtComponent.copyNbt();
-        nbtCompound.putInt(materialType.getId().toString(), n);
-        itemStack.set(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(nbtCompound));
-    }
-
     @Override
     public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
         super.appendTooltip(stack,context,tooltip,type);
-        if (Screen.hasShiftDown()) {
-            for(UnidyeMaterialType materialType : UnidyeMaterialTypes.MATERIAL_TYPE.stream().toList()){
-                Identifier id = materialType.getId();
-                if(materialType != UnidyeMaterialTypes.DYE) {
-                    MutableText mutableText = Text.literal("■ ");
-                    tooltip.add(mutableText.setStyle(mutableText.getStyle().withColor(getMaterialColor(stack, materialType))).append(Text.translatable("tooltip." + id.getNamespace() + "." + id.getPath() + "_color").append(getMaterialHexColor(stack, materialType)).formatted(Formatting.GRAY)));
-                }
-            }
-        } else {
-            tooltip.add(Text.translatable("tooltip.unidye.press_shift"));
-        }
+        MaterialColorsComponent.appendTooltip(stack, tooltip::add);
     }
 
     @Override

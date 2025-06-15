@@ -19,6 +19,8 @@ import net.minecraft.recipe.input.CraftingRecipeInput;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.world.World;
 
+import static net.diemond_player.unidye.component.MaterialColorsComponent.getMaterialColor;
+
 public class CustomFireworkStarFadeRecipe extends SpecialCraftingRecipe {
     public CustomFireworkStarFadeRecipe(CraftingRecipeCategory category) {
         super(category);
@@ -66,7 +68,7 @@ public class CustomFireworkStarFadeRecipe extends SpecialCraftingRecipe {
             ItemStack itemStack2 = recipeInputInventory.getStackInSlot(i);
             Item item = itemStack2.getItem();
             if (item instanceof CustomDyeItem){
-                intList.add(CustomDyeItem.getMaterialColor(itemStack2, UnidyeMaterialTypes.FIREWORK).intValue());
+                intList.add(((Integer)getMaterialColor(itemStack2, UnidyeMaterialTypes.FIREWORK)).intValue());
             }else if (item instanceof DyeItem) {
                 intList.add(((DyeItem)item).getColor().getFireworkColor());
             } else if (INPUT_STAR.test(itemStack2)) {

@@ -10,7 +10,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.WorldView;
 
-import static net.diemond_player.unidye.item.CustomDyeItem.DEFAULT_WHITE_COLOR;
+import static net.diemond_player.unidye.component.MaterialColorsComponent.DEFAULT_WHITE_COLOR;
+
 
 public class DyeableBlock extends Block implements IDyeableBlock {
     public DyeableBlock(Settings settings) {

@@ -1,7 +1,6 @@
 package net.diemond_player.unidye.util;
 
 import net.diemond_player.unidye.Unidye;
-import net.diemond_player.unidye.component.CustomBannerPatternsComponent;
 import net.minecraft.component.type.ProfileComponent;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NbtCompound;
@@ -17,7 +16,6 @@ import net.minecraft.world.World;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.UUID;
 
 public class DyeDatabaseSaverAndLoader extends PersistentState {
 

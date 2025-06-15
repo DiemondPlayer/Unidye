@@ -14,6 +14,8 @@ import net.minecraft.recipe.input.CraftingRecipeInput;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.world.World;
 
+import static net.diemond_player.unidye.component.MaterialColorsComponent.getMaterialColor;
+
 public class CustomConcretePowderRecipe extends SpecialCraftingRecipe {
     public CustomConcretePowderRecipe(CraftingRecipeCategory category) {
         super(category);
@@ -53,7 +55,7 @@ public class CustomConcretePowderRecipe extends SpecialCraftingRecipe {
             }
         }
         ItemStack itemStack1 = new ItemStack(UnidyeBlocks.CUSTOM_CONCRETE_POWDER.asItem());
-        UnidyeUtils.setColor(itemStack1, CustomDyeItem.getMaterialColor(itemStack, UnidyeMaterialTypes.CONCRETE));
+        UnidyeUtils.setColor(itemStack1, getMaterialColor(itemStack, UnidyeMaterialTypes.CONCRETE));
         itemStack1.setCount(8);
         itemStack1.set(UnidyeDataComponentTypes.RECIPE_STACKS, RecipeStacksComponent.fromItemStacks(inventory.getStacks(), itemStack1.getCount(), true));
         if(itemStack.contains(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES)){

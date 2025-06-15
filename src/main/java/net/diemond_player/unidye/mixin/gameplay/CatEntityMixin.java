@@ -23,6 +23,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import static net.diemond_player.unidye.component.MaterialColorsComponent.getMaterialColor;
+
 @Mixin(CatEntity.class)
 public abstract class CatEntityMixin implements UnidyeAccessor {
     @Unique
@@ -84,7 +86,7 @@ public abstract class CatEntityMixin implements UnidyeAccessor {
         UnidyeAccessor cat = (UnidyeAccessor) ((CatEntity) (Object) this);
         if (((CatEntity) (Object) this).isTamed()) {
             if (item instanceof CustomDyeItem && ((CatEntity) (Object) this).isOwner(player)) {
-                int color = CustomDyeItem.getMaterialColor(itemStack, UnidyeMaterialTypes.LEATHER);
+                int color = getMaterialColor(itemStack, UnidyeMaterialTypes.LEATHER);
                 if (cat.unidye$getCustomColor() != color || cat.unidye$getCustomColor() == 0xFFFFFF) {
                     if (!(((CatEntity) (Object) this).getWorld().isClient())) {
                         cat.unidye$setCustomColor(color);
