@@ -12,6 +12,7 @@
   },
   "license": "ARR",
   "icon": "assets/unidye/icon.png",
+  "accessWidener": "unidye.accesswidener",
   "environment": "*",
   "entrypoints": {
     "main": [

@@ -23,8 +23,7 @@ public class DyeableBedItem extends DyeableBlockItem{
         ActionResult result = super.place(context);
         BlockEntity blockEntity = context.getWorld().getBlockEntity(context.getBlockPos());
         if(result.isAccepted()) {
-            if (blockEntity instanceof DyeableBedBlockEntity dyeableBedBlockEntity) {
-                if(itemStack.get(DataComponentTypes.PROFILE) != null) dyeableBedBlockEntity.setProfile(itemStack.get(DataComponentTypes.PROFILE));
+            if (blockEntity instanceof DyeableBedBlockEntity) {
                 DyeableBedBlockEntity dyeableBedBlockEntity1 = (DyeableBedBlockEntity) context.getWorld().getBlockEntity(context.getBlockPos().offset(context.getWorld().getBlockState(context.getBlockPos()).get(FACING)));
                 if (dyeableBedBlockEntity1 != null) {
                     dyeableBedBlockEntity1.setColor(UnidyeUtils.getColor(itemStack));

@@ -147,3 +147,4 @@ The changelog posted on Modrinth/Curseforge would be without those minor changes
 • Unidye Items can no longer be combined with DyeBottleItem from amendments (bandaid solution because no actual compat)
 • Custom Dyes cannot dye water in cauldrons from amendments (bandaid solution)
 • Custom Dyes no longer use CUSTOM_DATA but instead uses MATERIAL_COLORS
+• More usage of IDyeableBlockEntity (added common nbt methods)

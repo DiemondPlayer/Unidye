@@ -161,3 +161,9 @@ publishing {
 		// retrieving dependencies.
 	}
 }
+
+loom {
+	if (file("src/main/resources/unidye.accesswidener").exists()) {
+		accessWidenerPath.set(file("src/main/resources/unidye.accesswidener"))
+	}
+}
