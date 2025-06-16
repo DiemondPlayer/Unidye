@@ -22,7 +22,6 @@ import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.text.Text;
 import net.minecraft.util.Nameable;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.BlockView;
 import org.jetbrains.annotations.Nullable;
 
 import static net.diemond_player.unidye.component.MaterialColorsComponent.DEFAULT_WHITE_COLOR;

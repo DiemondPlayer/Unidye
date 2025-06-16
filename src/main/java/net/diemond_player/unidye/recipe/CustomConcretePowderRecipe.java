@@ -1,7 +1,6 @@
 package net.diemond_player.unidye.recipe;
 
 import net.diemond_player.unidye.component.RecipeStacksComponent;
-import net.diemond_player.unidye.item.CustomDyeItem;
 import net.diemond_player.unidye.registry.*;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.item.Item;

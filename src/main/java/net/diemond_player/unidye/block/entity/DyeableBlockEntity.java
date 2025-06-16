@@ -3,19 +3,14 @@ package net.diemond_player.unidye.block.entity;
 // Mostly taken with permission from Hecco's Bountiful Fares mod back when Unidye was still indev for 1.20.1
 // Source: https://github.com/Heccology/Bountiful-Fares/blob/1.20.1/src/main/java/net/hecco/bountifulfares/block/entity/DyeableBlockEntity.java
 
-import net.diemond_player.unidye.Unidye;
 import net.diemond_player.unidye.component.ItemNameAffixesComponent;
 import net.diemond_player.unidye.component.RecipeStacksComponent;
 import net.diemond_player.unidye.registry.UnidyeBlockEntities;
-import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.component.ComponentMap;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.DyedColorComponent;
 import net.minecraft.component.type.ProfileComponent;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;

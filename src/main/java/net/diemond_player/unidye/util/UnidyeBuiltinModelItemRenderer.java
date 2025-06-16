@@ -46,8 +46,8 @@ public class UnidyeBuiltinModelItemRenderer{
                 blockEntity = this.renderDyeableShulkerBox;
             }
             if (block instanceof DyeableBannerBlock || block instanceof DyeableWallBannerBlock) {
-                this.renderDyeableBanner.setColor(UnidyeUtils.getColor(stack));
                 this.renderDyeableBanner.readFrom(stack);
+                this.renderDyeableBanner.setColor(UnidyeUtils.getColor(stack));
                 blockEntity = this.renderDyeableBanner;
             }
             blockEntityRenderDispatcher.renderEntity((BlockEntity) blockEntity, matrices, vertexConsumers, light, overlay);

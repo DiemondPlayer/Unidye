@@ -1,6 +1,5 @@
 package net.diemond_player.unidye.mixin.render;
 
-import net.diemond_player.unidye.item.CustomDyeItem;
 import net.diemond_player.unidye.registry.UnidyeMaterialTypes;
 import net.diemond_player.unidye.util.UnidyeAccessor;
 import net.minecraft.client.render.entity.feature.SheepWoolFeatureRenderer;

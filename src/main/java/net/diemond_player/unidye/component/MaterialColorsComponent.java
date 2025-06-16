@@ -6,7 +6,6 @@ import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.registry.UnidyeMaterialTypes;
 import net.diemond_player.unidye.util.UnidyeMaterialType;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.component.ComponentChanges;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.NbtComponent;
 import net.minecraft.item.ItemStack;
@@ -21,11 +20,10 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.dynamic.Codecs;
 import org.apache.commons.compress.utils.Lists;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Consumer;
-
-import static net.diemond_player.unidye.item.CustomDyeItem.DYE_SHAPE;
 
 public record MaterialColorsComponent(List<MaterialColor> materialColors){
     public static final MaterialColorsComponent DEFAULT = new MaterialColorsComponent(List.of());
@@ -87,7 +85,7 @@ public record MaterialColorsComponent(List<MaterialColor> materialColors){
     }
 
     public static void setMaterialColor(ItemStack itemStack, int color, UnidyeMaterialType materialType) {
-        List<MaterialColor> materialColors = itemStack.getOrDefault(UnidyeDataComponentTypes.MATERIAL_COLORS, DEFAULT).materialColors();
+        ArrayList<MaterialColor> materialColors = new ArrayList<>(itemStack.getOrDefault(UnidyeDataComponentTypes.MATERIAL_COLORS, DEFAULT).materialColors());
         materialColors.remove(new MaterialColor(materialType.getId(), getMaterialColor(itemStack, materialType)));
         materialColors.add(new MaterialColor(materialType.getId(), color));
         itemStack.set(UnidyeDataComponentTypes.MATERIAL_COLORS, new MaterialColorsComponent(materialColors));
@@ -95,7 +93,7 @@ public record MaterialColorsComponent(List<MaterialColor> materialColors){
 
     public static void appendTooltip(ItemStack itemStack, Consumer<Text> tooltip) {
         convertFromCustomDataComponent(itemStack);
-        List<MaterialColor> materialColors = itemStack.getOrDefault(UnidyeDataComponentTypes.MATERIAL_COLORS, DEFAULT).materialColors();
+        ArrayList<MaterialColor> materialColors = new ArrayList<>(itemStack.getOrDefault(UnidyeDataComponentTypes.MATERIAL_COLORS, DEFAULT).materialColors());
         if(materialColors.isEmpty()) return;
         materialColors.sort(Comparator.comparing(materialColor -> materialColor.materialTypeId().toString()));
         if (Screen.hasShiftDown() || materialColors.size() < 3) {
@@ -103,12 +101,10 @@ public record MaterialColorsComponent(List<MaterialColor> materialColors){
                 int color = materialColor.color();
                 if(color != 0xFFFFFF) {
                     Identifier id = materialColor.materialTypeId();
-                    if (!id.equals(UnidyeMaterialTypes.getMaterialType(itemStack.getItem()).getId())) {
-                        MutableText mutableText = Text.literal("■ ");
-                        tooltip.accept(mutableText.setStyle(mutableText.getStyle().withColor(color))
-                                .append(Text.translatable("tooltip." + id.getNamespace() + "." + id.getPath() + "_color")
-                                        .append(getMaterialHexColor(itemStack, id)).formatted(Formatting.GRAY)));
-                    }
+                    MutableText mutableText = Text.literal("■ ");
+                    tooltip.accept(mutableText.setStyle(mutableText.getStyle().withColor(color))
+                            .append(Text.translatable("tooltip." + id.getNamespace() + "." + id.getPath() + "_color")
+                                    .append(getMaterialHexColor(itemStack, id)).formatted(Formatting.GRAY)));
                 }
             }
         } else {

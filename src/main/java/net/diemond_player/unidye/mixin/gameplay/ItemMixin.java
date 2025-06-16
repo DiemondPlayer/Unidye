@@ -22,6 +22,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
@@ -32,7 +34,9 @@ public abstract class ItemMixin {
         if (stack.getItem() instanceof DyeItem dyeItem && !(stack.getItem() instanceof CustomDyeItem)) {
             if (Screen.hasShiftDown()) {
                 DyeColor dyeColor = dyeItem.getColor();
-                for(UnidyeMaterialType materialType : UnidyeMaterialTypes.MATERIAL_TYPE.stream().toList()){
+                ArrayList<UnidyeMaterialType> materialTypes = new ArrayList<>(UnidyeMaterialTypes.MATERIAL_TYPE.stream().toList());
+                materialTypes.sort(Comparator.comparing(materialColor -> materialColor.getId().toString()));
+                for(UnidyeMaterialType materialType : materialTypes){
                     Identifier id = materialType.getId();
                     if(materialType.materialColors.containsKey(dyeColor)) {
                         MutableText mutableText = Text.literal("■ ");

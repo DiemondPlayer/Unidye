@@ -4,10 +4,8 @@ import net.diemond_player.unidye.component.ItemNameAffixesComponent;
 import net.diemond_player.unidye.component.MaterialColorsComponent;
 import net.diemond_player.unidye.registry.UnidyeMaterialTypes;
 import net.diemond_player.unidye.util.UnidyeAccessor;
-import net.diemond_player.unidye.util.UnidyeMaterialType;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.SignBlockEntity;
-import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.NbtComponent;
 import net.minecraft.entity.LivingEntity;
@@ -20,15 +18,16 @@ import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
-import net.minecraft.util.*;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.DyeColor;
+import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 
 import java.util.List;
 import java.util.Objects;
 
-import static net.diemond_player.unidye.component.MaterialColorsComponent.*;
+import static net.diemond_player.unidye.component.MaterialColorsComponent.getMaterialColor;
 
 public class CustomDyeItem extends DyeItem implements SignChangingItem{
     //no longer used but used to convert to a new key

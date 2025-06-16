@@ -5,9 +5,7 @@ import net.diemond_player.unidye.component.ItemNameAffixesComponent;
 import net.diemond_player.unidye.component.RecipeStacksComponent;
 import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.component.Component;
 import net.minecraft.component.ComponentMap;
-import net.minecraft.component.ComponentType;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.DyedColorComponent;
 import net.minecraft.component.type.ProfileComponent;
@@ -16,10 +14,6 @@ import net.minecraft.nbt.NbtOps;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
-
-import java.util.function.BiConsumer;
-import java.util.function.BiFunction;
-import java.util.function.Consumer;
 
 import static net.diemond_player.unidye.component.MaterialColorsComponent.DEFAULT_WHITE_COLOR;
 

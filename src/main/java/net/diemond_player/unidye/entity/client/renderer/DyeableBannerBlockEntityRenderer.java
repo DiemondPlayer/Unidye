@@ -15,7 +15,6 @@ import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
-import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.render.model.ModelLoader;
 import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
@@ -30,14 +29,12 @@ public class DyeableBannerBlockEntityRenderer
     private final ModelPart banner;
     private final ModelPart pillar;
     private final ModelPart crossbar;
-    private final ItemRenderer itemRenderer;
 
     public DyeableBannerBlockEntityRenderer(BlockEntityRendererFactory.Context ctx) {
         ModelPart modelPart = ctx.getLayerModelPart(UnidyeModelLayers.CUSTOM_BANNER);
         this.banner = modelPart.getChild(BANNER);
         this.pillar = modelPart.getChild(PILLAR);
         this.crossbar = modelPart.getChild(CROSSBAR);
-        this.itemRenderer = ctx.getItemRenderer();
     }
 
     public static TexturedModelData getTexturedModelData() {
