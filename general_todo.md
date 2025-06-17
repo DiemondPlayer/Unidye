@@ -6,8 +6,6 @@
 - **TODO** add Glazed Terracotta
 
 ### Code:
-- **TODO** merge leathery stuff with regular dyeable block entity stuff, making this more versatile
-- **TODO** add/adapt a component for non-dye items to use
 - **TODO** unidye utils is a mess, fix it
 
 ### Config:
@@ -28,7 +26,7 @@
 - **consider TODO** replace fillers with just 1 display per recipe in REI compat
 
 ### Misc:
-- **TODO** final world conversion check
+- **TODO** final world conversion check (block entities still broken)
 - **TODO** check every class for warns, errors
 - **TODO** cleanup/add comments
 - **TODO** add warns/errors through LOGGER where it is needed

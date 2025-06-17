@@ -46,9 +46,16 @@ public class Unidye implements ModInitializer {
         UnidyeDataComponentTypes.registerModDataComponentTypes();
 
         addItemsToMaterialTypes();
+        addAdditionalMaterialTypes();
         registerCommands();
         registerNetworking();
         registerEvents();
+    }
+
+    private void addAdditionalMaterialTypes() {
+        UnidyeMaterialTypes.addAdditionalMaterialType(UnidyeBlocks.CUSTOM_WOOL.asItem(), UnidyeMaterialTypes.LEATHER);
+        UnidyeMaterialTypes.addAdditionalMaterialType(UnidyeBlocks.CUSTOM_STAINED_GLASS.asItem(), UnidyeMaterialTypes.LEATHER);
+        UnidyeMaterialTypes.addAdditionalMaterialType(UnidyeBlocks.CUSTOM_STAINED_GLASS_PANE.asItem(), UnidyeMaterialTypes.LEATHER);
     }
 
     private void registerEvents() {

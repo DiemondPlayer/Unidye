@@ -1,9 +1,11 @@
 package net.diemond_player.unidye.recipe;
 
+import net.diemond_player.unidye.component.MaterialColorsComponent;
 import net.diemond_player.unidye.component.RecipeStacksComponent;
-import net.diemond_player.unidye.item.DyeableLeatheryBlockItem;
+
 import net.diemond_player.unidye.registry.UnidyeBlocks;
 import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
+import net.diemond_player.unidye.registry.UnidyeMaterialTypes;
 import net.diemond_player.unidye.registry.UnidyeSpecialRecipes;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.item.ItemStack;
@@ -33,7 +35,7 @@ public class CustomBannerRecipe extends SpecialCraftingRecipe {
             if (itemStack2.getItem() == UnidyeBlocks.CUSTOM_WOOL.asItem() && i <= 5) {
                 if (!itemStack.isEmpty()) {
                     if (UnidyeUtils.getColor(itemStack2) == UnidyeUtils.getColor(itemStack)
-                            && DyeableLeatheryBlockItem.getLeatherColor(itemStack2) == DyeableLeatheryBlockItem.getLeatherColor(itemStack)) {
+                            && MaterialColorsComponent.getMaterialColor(itemStack2, UnidyeMaterialTypes.LEATHER) == MaterialColorsComponent.getMaterialColor(itemStack, UnidyeMaterialTypes.LEATHER)) {
                         continue;
                     } else {
                         return false;
@@ -51,7 +53,7 @@ public class CustomBannerRecipe extends SpecialCraftingRecipe {
     public ItemStack craft(CraftingRecipeInput inventory, RegistryWrapper.WrapperLookup lookup) {
         ItemStack itemStack1 = new ItemStack(UnidyeBlocks.CUSTOM_BANNER.asItem());
         ItemStack itemStack = inventory.getStackInSlot(0);
-        UnidyeUtils.setColor(itemStack1, DyeableLeatheryBlockItem.getLeatherColor(itemStack));
+        UnidyeUtils.setColor(itemStack1, MaterialColorsComponent.getMaterialColor(itemStack, UnidyeMaterialTypes.LEATHER));
         itemStack1.set(UnidyeDataComponentTypes.RECIPE_STACKS, RecipeStacksComponent.fromItemStacks(inventory.getStacks(), itemStack1.getCount()));
         if(itemStack.contains(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES)){
             itemStack1.set(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, itemStack.get(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES));

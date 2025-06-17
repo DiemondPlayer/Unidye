@@ -27,8 +27,9 @@ public class DyeableBedItem extends DyeableBlockItem{
                 DyeableBedBlockEntity dyeableBedBlockEntity1 = (DyeableBedBlockEntity) context.getWorld().getBlockEntity(context.getBlockPos().offset(context.getWorld().getBlockState(context.getBlockPos()).get(FACING)));
                 if (dyeableBedBlockEntity1 != null) {
                     dyeableBedBlockEntity1.setColor(UnidyeUtils.getColor(itemStack));
-                    dyeableBedBlockEntity1.setItemNameAffixes(itemStack.get(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES));
-                    dyeableBedBlockEntity1.setRecipeStacks(itemStack.get(UnidyeDataComponentTypes.RECIPE_STACKS));
+                    if(itemStack.contains(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES)) dyeableBedBlockEntity1.setItemNameAffixes(itemStack.get(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES));
+                    if(itemStack.contains(UnidyeDataComponentTypes.RECIPE_STACKS)) dyeableBedBlockEntity1.setRecipeStacks(itemStack.get(UnidyeDataComponentTypes.RECIPE_STACKS));
+                    if(itemStack.contains(UnidyeDataComponentTypes.MATERIAL_COLORS)) dyeableBedBlockEntity1.setMaterialColors(itemStack.get(UnidyeDataComponentTypes.MATERIAL_COLORS));
                     if(itemStack.get(DataComponentTypes.PROFILE) != null) dyeableBedBlockEntity1.setProfile(itemStack.get(DataComponentTypes.PROFILE));
                 }
             }

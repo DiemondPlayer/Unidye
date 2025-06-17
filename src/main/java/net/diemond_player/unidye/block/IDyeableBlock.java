@@ -6,6 +6,7 @@ package net.diemond_player.unidye.block;
 import net.diemond_player.unidye.block.entity.DyeableBlockEntity;
 import net.diemond_player.unidye.block.entity.IDyeableBlockEntity;
 import net.diemond_player.unidye.component.ItemNameAffixesComponent;
+import net.diemond_player.unidye.component.MaterialColorsComponent;
 import net.diemond_player.unidye.component.RecipeStacksComponent;
 import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
 import net.minecraft.block.BlockEntityProvider;
@@ -34,16 +35,19 @@ public interface IDyeableBlock extends BlockEntityProvider {
         ItemNameAffixesComponent itemNameAffixesComponent = null;
         RecipeStacksComponent recipeStacksComponent = null;
         ProfileComponent profileComponent = null;
+        MaterialColorsComponent materialColorsComponent = null;
         if (blockEntity instanceof IDyeableBlockEntity iDyeableBlockEntity) {
             color = iDyeableBlockEntity.getColor();
             itemNameAffixesComponent = iDyeableBlockEntity.getItemNameAffixes();
             recipeStacksComponent = iDyeableBlockEntity.getRecipeStacks();
             profileComponent = iDyeableBlockEntity.getProfile();
+            materialColorsComponent = iDyeableBlockEntity.getMaterialColors();
         }
         stack.set(DataComponentTypes.DYED_COLOR, new DyedColorComponent(color, true));
-        if(itemNameAffixesComponent != null) stack.set(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, itemNameAffixesComponent);
-        if(recipeStacksComponent != null) stack.set(UnidyeDataComponentTypes.RECIPE_STACKS, recipeStacksComponent);
+        if(itemNameAffixesComponent != null && !itemNameAffixesComponent.equals(ItemNameAffixesComponent.DEFAULT)) stack.set(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, itemNameAffixesComponent);
+        if(recipeStacksComponent != null && !recipeStacksComponent.equals(RecipeStacksComponent.DEFAULT)) stack.set(UnidyeDataComponentTypes.RECIPE_STACKS, recipeStacksComponent);
         if(profileComponent != null) stack.set(DataComponentTypes.PROFILE, profileComponent);
+        if(materialColorsComponent != null && !materialColorsComponent.equals(MaterialColorsComponent.DEFAULT)) stack.set(UnidyeDataComponentTypes.MATERIAL_COLORS, materialColorsComponent);
         return stack;
     }
 }

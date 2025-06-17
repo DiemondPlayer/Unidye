@@ -19,7 +19,10 @@ public class UnidyeBlockEntities {
             UnidyeBlocks.CUSTOM_CONCRETE_POWDER,
             UnidyeBlocks.CUSTOM_CARPET,
             UnidyeBlocks.CUSTOM_CANDLE,
-            UnidyeBlocks.CUSTOM_CANDLE_CAKE);
+            UnidyeBlocks.CUSTOM_CANDLE_CAKE,
+            UnidyeBlocks.CUSTOM_WOOL,
+            UnidyeBlocks.CUSTOM_STAINED_GLASS,
+            UnidyeBlocks.CUSTOM_STAINED_GLASS_PANE);
 
     public static final BlockEntityType<DyeableBlockEntity> DYEABLE_BE = Registry.register(
             Registries.BLOCK_ENTITY_TYPE, Identifier.of(Unidye.MOD_ID, "dyeable_block_entity"),
@@ -42,13 +45,6 @@ public class UnidyeBlockEntities {
             BlockEntityType.Builder.create(DyeableBannerBlockEntity::new,
                     UnidyeBlocks.CUSTOM_BANNER,
                     UnidyeBlocks.CUSTOM_WALL_BANNER
-            ).build(null));
-    public static final BlockEntityType<DyeableLeatheryBlockEntity> DYEABLE_LEATHERY_BE = Registry.register(
-            Registries.BLOCK_ENTITY_TYPE, Identifier.of(Unidye.MOD_ID, "dyeable_leathery_block_entity"),
-            BlockEntityType.Builder.create(DyeableLeatheryBlockEntity::new,
-                    UnidyeBlocks.CUSTOM_WOOL,
-                    UnidyeBlocks.CUSTOM_STAINED_GLASS,
-                    UnidyeBlocks.CUSTOM_STAINED_GLASS_PANE
             ).build(null));
 
 

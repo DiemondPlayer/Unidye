@@ -1,9 +1,11 @@
 package net.diemond_player.unidye.recipe;
 
+import net.diemond_player.unidye.component.MaterialColorsComponent;
 import net.diemond_player.unidye.component.RecipeStacksComponent;
-import net.diemond_player.unidye.item.DyeableLeatheryBlockItem;
+
 import net.diemond_player.unidye.registry.UnidyeBlocks;
 import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
+import net.diemond_player.unidye.registry.UnidyeMaterialTypes;
 import net.diemond_player.unidye.registry.UnidyeSpecialRecipes;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.item.ItemStack;
@@ -32,7 +34,7 @@ public class CustomStainedGlassPaneRecipe extends SpecialCraftingRecipe {
             if (itemStack2.getItem() == UnidyeBlocks.CUSTOM_STAINED_GLASS.asItem()) {
                 if (!itemStack.isEmpty()) {
                     if (UnidyeUtils.getColor(itemStack2) == UnidyeUtils.getColor(itemStack)
-                            && Objects.equals(DyeableLeatheryBlockItem.getLeatherColor(itemStack2), DyeableLeatheryBlockItem.getLeatherColor(itemStack))) {
+                            && MaterialColorsComponent.getMaterialColor(itemStack2, UnidyeMaterialTypes.LEATHER) == MaterialColorsComponent.getMaterialColor(itemStack, UnidyeMaterialTypes.LEATHER)) {
                         continue;
                     } else {
                         return false;
@@ -58,7 +60,7 @@ public class CustomStainedGlassPaneRecipe extends SpecialCraftingRecipe {
             }
         }
         UnidyeUtils.setColor(itemStack1, UnidyeUtils.getColor(itemStack));
-        DyeableLeatheryBlockItem.setLeatherColor(itemStack1, DyeableLeatheryBlockItem.getLeatherColor(itemStack));
+        MaterialColorsComponent.setMaterialColor(itemStack1, MaterialColorsComponent.getMaterialColor(itemStack, UnidyeMaterialTypes.LEATHER), UnidyeMaterialTypes.LEATHER);
         itemStack1.setCount(16);
         if(itemStack.contains(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES)){
             itemStack1.set(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, itemStack.get(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES));

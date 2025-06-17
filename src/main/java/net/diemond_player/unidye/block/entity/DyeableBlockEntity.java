@@ -4,11 +4,16 @@ package net.diemond_player.unidye.block.entity;
 // Source: https://github.com/Heccology/Bountiful-Fares/blob/1.20.1/src/main/java/net/hecco/bountifulfares/block/entity/DyeableBlockEntity.java
 
 import net.diemond_player.unidye.component.ItemNameAffixesComponent;
+import net.diemond_player.unidye.component.MaterialColorsComponent;
 import net.diemond_player.unidye.component.RecipeStacksComponent;
 import net.diemond_player.unidye.registry.UnidyeBlockEntities;
+import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
+import net.diemond_player.unidye.registry.UnidyeMaterialTypes;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.component.ComponentMap;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.NbtComponent;
 import net.minecraft.component.type.ProfileComponent;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.listener.ClientPlayPacketListener;
@@ -18,6 +23,8 @@ import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
+
 import static net.diemond_player.unidye.component.MaterialColorsComponent.DEFAULT_WHITE_COLOR;
 
 public class DyeableBlockEntity extends BlockEntity implements IDyeableBlockEntity {
@@ -26,6 +33,7 @@ public class DyeableBlockEntity extends BlockEntity implements IDyeableBlockEnti
     private ItemNameAffixesComponent itemNameAffixesComponent = ItemNameAffixesComponent.DEFAULT;
     private RecipeStacksComponent recipeStacksComponent = RecipeStacksComponent.DEFAULT;
     private ProfileComponent profileComponent = null;
+    private MaterialColorsComponent materialColorsComponent = MaterialColorsComponent.DEFAULT;
 
     public DyeableBlockEntity(BlockPos pos, BlockState state) {
         super(UnidyeBlockEntities.DYEABLE_BE, pos, state);
@@ -41,6 +49,10 @@ public class DyeableBlockEntity extends BlockEntity implements IDyeableBlockEnti
     protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
         readCommonNbt(nbt, registryLookup);
         super.readNbt(nbt, registryLookup);
+        //should convert LeatheryBlockEntities
+        if(nbt.contains("leather")) {
+            setMaterialColors(new MaterialColorsComponent(List.of(new MaterialColorsComponent.MaterialColor(UnidyeMaterialTypes.LEATHER.getId(), nbt.getInt("leather") == 0 ? DEFAULT_WHITE_COLOR : nbt.getInt("leather")))));
+        }
     }
 
     @Override
@@ -107,9 +119,25 @@ public class DyeableBlockEntity extends BlockEntity implements IDyeableBlockEnti
     }
 
     @Override
+    public MaterialColorsComponent getMaterialColors() {
+        return this.materialColorsComponent;
+    }
+
+    @Override
+    public void setMaterialColors(MaterialColorsComponent materialColorsComponent) {
+        this.materialColorsComponent = materialColorsComponent;
+        this.markDirty();
+    }
+
+    @Override
     protected void readComponents(ComponentsAccess components) {
         super.readComponents(components);
         readCommonComponents(components);
+        //should convert LeatheryBlockEntities
+        NbtCompound nbtCompound = components.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT).copyNbt();
+        if(!nbtCompound.isEmpty() && nbtCompound.contains("leather")) {
+            setMaterialColors(new MaterialColorsComponent(List.of(new MaterialColorsComponent.MaterialColor(UnidyeMaterialTypes.LEATHER.getId(), nbtCompound.getInt("leather")))));
+        }
     }
 
     @Override

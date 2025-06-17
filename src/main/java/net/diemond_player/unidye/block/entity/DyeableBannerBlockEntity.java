@@ -3,6 +3,7 @@ package net.diemond_player.unidye.block.entity;
 import net.diemond_player.unidye.Unidye;
 import net.diemond_player.unidye.component.CustomBannerPatternsComponent;
 import net.diemond_player.unidye.component.ItemNameAffixesComponent;
+import net.diemond_player.unidye.component.MaterialColorsComponent;
 import net.diemond_player.unidye.component.RecipeStacksComponent;
 import net.diemond_player.unidye.registry.UnidyeBlockEntities;
 import net.diemond_player.unidye.registry.UnidyeBlocks;
@@ -35,6 +36,7 @@ public class DyeableBannerBlockEntity extends BlockEntity implements Nameable, I
     private ItemNameAffixesComponent itemNameAffixesComponent = ItemNameAffixesComponent.DEFAULT;
     private RecipeStacksComponent recipeStacksComponent = RecipeStacksComponent.DEFAULT;
     private ProfileComponent profileComponent = null;
+    private MaterialColorsComponent materialColorsComponent = MaterialColorsComponent.DEFAULT;
 
     public DyeableBannerBlockEntity(BlockPos pos, BlockState state) {
         super(UnidyeBlockEntities.DYEABLE_BANNER_BE, pos, state);
@@ -161,13 +163,23 @@ public class DyeableBannerBlockEntity extends BlockEntity implements Nameable, I
         this.markDirty();
     }
 
+    @Override
+    public MaterialColorsComponent getMaterialColors() {
+        return this.materialColorsComponent;
+    }
+
+    @Override
+    public void setMaterialColors(MaterialColorsComponent materialColorsComponent) {
+        this.materialColorsComponent = materialColorsComponent;
+        this.markDirty();
+    }
 
     @Override
     protected void readComponents(BlockEntity.ComponentsAccess components) {
         super.readComponents(components);
+        readCommonComponents(components);
         this.customName = components.get(DataComponentTypes.CUSTOM_NAME);
         this.patterns = components.getOrDefault(UnidyeDataComponentTypes.CUSTOM_BANNER_PATTERNS, CustomBannerPatternsComponent.DEFAULT);
-        readCommonComponents(components);
     }
 
     @Override

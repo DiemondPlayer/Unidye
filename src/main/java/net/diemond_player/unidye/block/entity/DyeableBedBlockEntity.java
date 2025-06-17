@@ -1,6 +1,7 @@
 package net.diemond_player.unidye.block.entity;
 
 import net.diemond_player.unidye.component.ItemNameAffixesComponent;
+import net.diemond_player.unidye.component.MaterialColorsComponent;
 import net.diemond_player.unidye.component.RecipeStacksComponent;
 import net.diemond_player.unidye.registry.UnidyeBlockEntities;
 import net.minecraft.block.BlockState;
@@ -22,6 +23,7 @@ public class DyeableBedBlockEntity extends BlockEntity implements IDyeableBlockE
     private ItemNameAffixesComponent itemNameAffixesComponent = ItemNameAffixesComponent.DEFAULT;
     private RecipeStacksComponent recipeStacksComponent = RecipeStacksComponent.DEFAULT;
     private ProfileComponent profileComponent = null;
+    private MaterialColorsComponent materialColorsComponent = MaterialColorsComponent.DEFAULT;
 
     public DyeableBedBlockEntity(BlockPos pos, BlockState state) {
         super(UnidyeBlockEntities.DYEABLE_BED_BE, pos, state);
@@ -99,6 +101,17 @@ public class DyeableBedBlockEntity extends BlockEntity implements IDyeableBlockE
     @Override
     public void setProfile(ProfileComponent profileComponent) {
         this.profileComponent = profileComponent;
+        this.markDirty();
+    }
+
+    @Override
+    public MaterialColorsComponent getMaterialColors() {
+        return this.materialColorsComponent;
+    }
+
+    @Override
+    public void setMaterialColors(MaterialColorsComponent materialColorsComponent) {
+        this.materialColorsComponent = materialColorsComponent;
         this.markDirty();
     }
 

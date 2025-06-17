@@ -20,6 +20,7 @@
                 "minecraft:item_name",
                 "minecraft:hide_additional_tooltip",
                 "minecraft:profile",
+                "unidye:material_colors",
                 "unidye:custom_banner_patterns",
                 "unidye:recipe_stacks",
                 "unidye:item_name_affixes"

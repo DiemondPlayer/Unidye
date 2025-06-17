@@ -17,6 +17,7 @@ import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Language;
 import net.minecraft.util.dynamic.Codecs;
 import org.apache.commons.compress.utils.Lists;
 
@@ -58,11 +59,27 @@ public record MaterialColorsComponent(List<MaterialColor> materialColors){
             }
         }
         itemStack.set(UnidyeDataComponentTypes.MATERIAL_COLORS, new MaterialColorsComponent(materialColorList));
-        itemStack.set(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(nbtCompound));
+        if(!nbtCompound.isEmpty()) {
+            itemStack.set(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(nbtCompound));
+        }else{
+            itemStack.remove(DataComponentTypes.CUSTOM_DATA);
+        }
     }
 
     public static int getMaterialColor(ItemStack stack, UnidyeMaterialType materialType) {
         return getMaterialColor(stack, materialType.getId());
+    }
+
+    public static boolean containsMaterialColor(ItemStack stack, UnidyeMaterialType materialType){
+        return containsMaterialColor(stack, materialType.getId());
+    }
+
+    public static boolean containsMaterialColor(ItemStack stack, Identifier materialTypeId){
+        convertFromCustomDataComponent(stack);
+        if(!stack.contains(UnidyeDataComponentTypes.MATERIAL_COLORS)) return false;
+        return stack.get(UnidyeDataComponentTypes.MATERIAL_COLORS).materialColors()
+                .stream().anyMatch((materialColor ->
+                        materialColor.materialTypeId().equals(materialTypeId)));
     }
 
     public static int getMaterialColor(ItemStack stack, Identifier materialTypeId) {
@@ -74,6 +91,17 @@ public record MaterialColorsComponent(List<MaterialColor> materialColors){
                     .findFirst().map(MaterialColor::color).orElse(DEFAULT_WHITE_COLOR);
         }
         return DEFAULT_WHITE_COLOR;
+    }
+
+    public int getMaterialColor(Identifier materialTypeId) {
+        return this.materialColors()
+                .stream().filter((materialColor ->
+                        materialColor.materialTypeId().equals(materialTypeId)))
+                .findFirst().map(MaterialColor::color).orElse(DEFAULT_WHITE_COLOR);
+    }
+
+    public int getMaterialColor(UnidyeMaterialType materialType) {
+        return this.getMaterialColor(materialType.getId());
     }
 
     public static String getMaterialHexColor(ItemStack stack, UnidyeMaterialType materialType) {
@@ -102,8 +130,11 @@ public record MaterialColorsComponent(List<MaterialColor> materialColors){
                 if(color != 0xFFFFFF) {
                     Identifier id = materialColor.materialTypeId();
                     MutableText mutableText = Text.literal("■ ");
+                    String fallbackKey = "tooltip." + id.getNamespace() + "." + id.getPath() + "_color";
+                    String itemKey = itemStack.getItem().getTranslationKey();
+                    String specialKey = fallbackKey + itemKey.substring(itemKey.indexOf("."));
                     tooltip.accept(mutableText.setStyle(mutableText.getStyle().withColor(color))
-                            .append(Text.translatable("tooltip." + id.getNamespace() + "." + id.getPath() + "_color")
+                            .append(Text.translatable(Language.getInstance().hasTranslation(specialKey) ? specialKey : fallbackKey)
                                     .append(getMaterialHexColor(itemStack, id)).formatted(Formatting.GRAY)));
                 }
             }

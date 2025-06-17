@@ -31,8 +31,9 @@ public abstract class CakeBlockMixin {
             if(world.getBlockEntity(pos, UnidyeBlockEntities.DYEABLE_BE).isPresent()) {
                 IDyeableBlockEntity dyeableBlockEntity = world.getBlockEntity(pos, UnidyeBlockEntities.DYEABLE_BE).get();
                 dyeableBlockEntity.setColor(UnidyeUtils.getColor(itemStack));
-                dyeableBlockEntity.setItemNameAffixes(itemStack.get(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES));
-                dyeableBlockEntity.setRecipeStacks(itemStack.get(UnidyeDataComponentTypes.RECIPE_STACKS));
+                if(itemStack.contains(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES)) dyeableBlockEntity.setItemNameAffixes(itemStack.get(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES));
+                if(itemStack.contains(UnidyeDataComponentTypes.RECIPE_STACKS))dyeableBlockEntity.setRecipeStacks(itemStack.get(UnidyeDataComponentTypes.RECIPE_STACKS));
+                if(itemStack.contains(UnidyeDataComponentTypes.MATERIAL_COLORS))dyeableBlockEntity.setMaterialColors(itemStack.get(UnidyeDataComponentTypes.MATERIAL_COLORS));
                 if(itemStack.get(DataComponentTypes.PROFILE) != null) dyeableBlockEntity.setProfile(itemStack.get(DataComponentTypes.PROFILE));
             }
         }

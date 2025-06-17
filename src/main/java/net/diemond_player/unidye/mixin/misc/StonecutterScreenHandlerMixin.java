@@ -2,6 +2,7 @@ package net.diemond_player.unidye.mixin.misc;
 
 import com.llamalad7.mixinextras.sugar.Local;
 import net.diemond_player.unidye.Unidye;
+import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.StonecutterScreenHandler;
@@ -23,7 +24,11 @@ public abstract class StonecutterScreenHandlerMixin {
     @Inject(method = "populateResult", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;isItemEnabled(Lnet/minecraft/resource/featuretoggle/FeatureSet;)Z"))
     public void unidye$populateResult(CallbackInfo ci, @Local ItemStack itemStack) {
         if(Unidye.STONECUTTER_PRESERVE_COLOR.contains(itemStack.getItem())){
-            itemStack.set(DataComponentTypes.DYED_COLOR, inputSlot.getStack().get(DataComponentTypes.DYED_COLOR));
+            ItemStack inputStack = inputSlot.getStack();
+            if(itemStack.contains(DataComponentTypes.DYED_COLOR)) itemStack.set(DataComponentTypes.DYED_COLOR, inputStack.get(DataComponentTypes.DYED_COLOR));
+            if(itemStack.contains(UnidyeDataComponentTypes.MATERIAL_COLORS)) itemStack.set(UnidyeDataComponentTypes.MATERIAL_COLORS, inputStack.get(UnidyeDataComponentTypes.MATERIAL_COLORS));
+            if(itemStack.contains(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES)) itemStack.set(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, inputStack.get(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES));
+            if(itemStack.contains(DataComponentTypes.PROFILE)) itemStack.set(DataComponentTypes.PROFILE, inputStack.get(DataComponentTypes.PROFILE));
         }
     }
 }

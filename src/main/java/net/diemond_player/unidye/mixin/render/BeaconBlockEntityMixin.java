@@ -4,6 +4,7 @@ import com.llamalad7.mixinextras.sugar.Local;
 import net.diemond_player.unidye.block.DyeableGlassBlock;
 import net.diemond_player.unidye.block.DyeablePaneBlock;
 import net.diemond_player.unidye.registry.UnidyeBlockEntities;
+import net.diemond_player.unidye.registry.UnidyeMaterialTypes;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BeaconBlockEntity;
@@ -22,8 +23,8 @@ public abstract class BeaconBlockEntityMixin {
         BlockState blockState = world.getBlockState(pos);
         Block block = blockState.getBlock();
         if (block instanceof DyeableGlassBlock || block instanceof DyeablePaneBlock) {
-            if (world.getBlockEntity(pos, UnidyeBlockEntities.DYEABLE_LEATHERY_BE).isPresent()) {
-                return ColorHelper.Argb.fullAlpha(world.getBlockEntity(pos, UnidyeBlockEntities.DYEABLE_LEATHERY_BE).get().leatherColor);
+            if (world.getBlockEntity(pos, UnidyeBlockEntities.DYEABLE_BE).isPresent()) {
+                return ColorHelper.Argb.fullAlpha(world.getBlockEntity(pos, UnidyeBlockEntities.DYEABLE_BE).get().getMaterialColors().getMaterialColor(UnidyeMaterialTypes.LEATHER));
             }
         }
         return instance.getEntityColor();

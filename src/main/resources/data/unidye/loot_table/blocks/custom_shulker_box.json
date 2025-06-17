@@ -17,7 +17,8 @@
                 "minecraft:container_loot",
                 "minecraft:profile",
                 "unidye:recipe_stacks",
-                "unidye:item_name_affixes"
+                "unidye:item_name_affixes",
+                "unidye:material_colors"
               ],
               "source": "block_entity"
             }

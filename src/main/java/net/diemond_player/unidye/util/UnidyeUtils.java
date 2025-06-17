@@ -2,7 +2,7 @@ package net.diemond_player.unidye.util;
 
 import net.diemond_player.unidye.component.ItemNameAffixesComponent;
 import net.diemond_player.unidye.item.CustomDyeItem;
-import net.diemond_player.unidye.item.DyeableLeatheryBlockItem;
+
 import net.diemond_player.unidye.registry.UnidyeBlocks;
 import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.registry.UnidyeMaterialTypes;
@@ -66,7 +66,7 @@ public class UnidyeUtils {
 //        put(Items.PURPLE_DYE, UnidyeColor.PURPLE);
 //        put(Items.MAGENTA_DYE, UnidyeColor.MAGENTA);
 //        put(Items.PINK_DYE, UnidyeColor.PINK);
-////        put(ElsDyeModItems.MINT_DYE, UnidyeColor.ELL_MINT);
+//        put(ElsDyeModItems.MINT_DYE, UnidyeColor.ELL_MINT);
 //    }};
 //    public static Map<Item, String> MATERIAL_TYPES = new HashMap<>() {{
 //        put(UnidyeBlocks.CUSTOM_WOOL.asItem(), "wool");
@@ -109,30 +109,30 @@ public class UnidyeUtils {
         if (stack.contains(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES)) {
             if (stack.get(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES).sourceCustomDyeColor() != 0xFFFFFF) {
                 int k = stack.get(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES).sourceCustomDyeColor();
-                float f = (float) (k >> 16 & 0xFF);
-                float g = (float) (k >> 8 & 0xFF);
-                float h = (float) (k & 0xFF);
-                is[0] = is[0] + (int) (f * f);
-                is[1] = is[1] + (int) (g * g);
-                is[2] = is[2] + (int) (h * h);
+                int f = k >> 16 & 0xFF;
+                int g = k >> 8 & 0xFF;
+                int h = k & 0xFF;
+                is[0] = is[0] + f * f;
+                is[1] = is[1] + g * g;
+                is[2] = is[2] + h * h;
                 ++j;
             }
         }
         for (DyeItem dyeItem : colors) {
-            float[] fs = getColorArray(UnidyeMaterialTypes.DYE, dyeItem);
-            int l = (int) (fs[0] * 255.0f * fs[0] * 255.0f);
-            int m = (int) (fs[1] * 255.0f * fs[1] * 255.0f);
-            n = (int) (fs[2] * 255.0f * fs[2] * 255.0f);
+            int[] fs = getIntColorArray(UnidyeMaterialTypes.DYE, dyeItem);
+            int l = fs[0] * fs[0];
+            int m = fs[1] * fs[1];
+            n = fs[2] * fs[2];
             is[0] = is[0] + l;
             is[1] = is[1] + m;
             is[2] = is[2] + n;
             ++j;
         }
         for (ItemStack customDye : customColors) {
-            float[] fs = getCustomColorArray(UnidyeMaterialTypes.DYE, customDye);
-            int l = (int) (fs[0] * 255.0f * fs[0] * 255.0f);
-            int m = (int) (fs[1] * 255.0f * fs[1] * 255.0f);
-            n = (int) (fs[2] * 255.0f * fs[2] * 255.0f);
+            int[] fs = getCustomIntColorArray(UnidyeMaterialTypes.DYE, customDye);
+            int l = fs[0] * fs[0];
+            int m = fs[1] * fs[1];
+            n = fs[2] * fs[2];
             is[0] = is[0] + l;
             is[1] = is[1] + m;
             is[2] = is[2] + n;
@@ -147,121 +147,32 @@ public class UnidyeUtils {
 
     public static ItemStack blendAndSetColor(ItemStack stack, List<DyeItem> colors, List<ItemStack> customColors) {
         ItemStack itemStack = ItemStack.EMPTY;
-        int n;
-        int[] is = new int[3];
-        int j = 0;
         Item item = stack.getItem();
         if (stack.isIn(ItemTags.DYEABLE)) {
             itemStack = stack.copyWithCount(1);
-            if (itemStack.getItem() instanceof CustomDyeItem) {
-                blendAndSetCustomDyeColor(itemStack, colors, customColors);
-            }
-            if (itemStack.isOf(UnidyeBlocks.CUSTOM_WOOL.asItem()) || itemStack.isOf(UnidyeBlocks.CUSTOM_STAINED_GLASS.asItem()) || itemStack.isOf(UnidyeBlocks.CUSTOM_STAINED_GLASS_PANE.asItem())) {
-                blendAndSetLeatherColor(itemStack, colors, customColors);
-            }
             updateSourceCustomDyeColor(itemStack, colors, customColors);
-            if (UnidyeUtils.hasColor(stack)) {
-                int k = UnidyeUtils.getColor(itemStack);
-                float f = (float) (k >> 16 & 0xFF) / 255.0f;
-                float g = (float) (k >> 8 & 0xFF) / 255.0f;
-                float h = (float) (k & 0xFF) / 255.0f;
-                is[0] = is[0] + (int) (f * 255.0f * f * 255.0f);
-                is[1] = is[1] + (int) (g * 255.0f * g * 255.0f);
-                is[2] = is[2] + (int) (h * 255.0f * h * 255.0f);
-                ++j;
+            if (item instanceof CustomDyeItem) {
+                for(UnidyeMaterialType type : UnidyeMaterialTypes.MATERIAL_TYPE.stream().toList()){
+                    blendAndSetMaterialColor(itemStack, colors, customColors, type);
+                }
+                defineClosestVanillaDye(itemStack);
+            } else if (UnidyeMaterialTypes.ITEM_TO_ADDITIONAL_MATERIAL_TYPES.containsKey(item)){
+                for (UnidyeMaterialType type : UnidyeMaterialTypes.ITEM_TO_ADDITIONAL_MATERIAL_TYPES.get(item)) {
+                    blendAndSetMaterialColor(itemStack, colors, customColors, type);
+                }
+                blendAndSetMaterialColor(itemStack, colors, customColors, UnidyeMaterialTypes.getMaterialType(item));
             }
-            for (DyeItem dyeItem : colors) {
-                float[] fs = getColorArray(getMaterialType(item), dyeItem);
-                int l = (int) (fs[0] * 255.0f * fs[0] * 255.0f);
-                int m = (int) (fs[1] * 255.0f * fs[1] * 255.0f);
-                n = (int) (fs[2] * 255.0f * fs[2] * 255.0f);
-                is[0] = is[0] + l;
-                is[1] = is[1] + m;
-                is[2] = is[2] + n;
-                ++j;
-            }
-            for (ItemStack customDyeItem : customColors) {
-                float[] fs = getCustomColorArray(getMaterialType(item), customDyeItem);
-                int l = (int) (fs[0] * 255.0f * fs[0] * 255.0f);
-                int m = (int) (fs[1] * 255.0f * fs[1] * 255.0f);
-                n = (int) (fs[2] * 255.0f * fs[2] * 255.0f);
-                is[0] = is[0] + l;
-                is[1] = is[1] + m;
-                is[2] = is[2] + n;
-                ++j;
-            }
-        }
-        if (item == null) {
-            return ItemStack.EMPTY;
-        }
-        int k = (int) Math.sqrt((double) is[0] / j);
-        int o = (int) Math.sqrt((double) is[1] / j);
-        int p = (int) Math.sqrt((double) is[2] / j);
-        n = ColorHelper.Argb.getArgb(0, k, o, p);
-        UnidyeUtils.setColor(itemStack, n);
-        if (stack.getItem() instanceof CustomDyeItem) {
-            defineClosestVanillaDye(itemStack);
         }
         return itemStack;
     }
 
-
-    public static void blendAndSetLeatherColor(ItemStack stack, List<DyeItem> colors, List<ItemStack> customColors) {
-        int n;
-        int[] is = new int[3];
-        int j = 0;
-        if (UnidyeUtils.hasColor(stack)) {
-            int k = DyeableLeatheryBlockItem.getLeatherColor(stack);
-            float f = (float) (k >> 16 & 0xFF);
-            float g = (float) (k >> 8 & 0xFF);
-            float h = (float) (k & 0xFF);
-            is[0] = is[0] + (int) (f * f);
-            is[1] = is[1] + (int) (g * g);
-            is[2] = is[2] + (int) (h * h);
-            ++j;
-        }
-        for (DyeItem dyeItem : colors) {
-            float[] fs = getColorArray(UnidyeMaterialTypes.LEATHER, dyeItem);
-            int l = (int) (fs[0] * 255.0f * fs[0] * 255.0f);
-            int m = (int) (fs[1] * 255.0f * fs[1] * 255.0f);
-            n = (int) (fs[2] * 255.0f * fs[2] * 255.0f);
-            is[0] = is[0] + l;
-            is[1] = is[1] + m;
-            is[2] = is[2] + n;
-            ++j;
-        }
-        for (ItemStack customDye : customColors) {
-            float[] fs = getCustomColorArray(UnidyeMaterialTypes.LEATHER, customDye);
-            int l = (int) (fs[0] * 255.0f * fs[0] * 255.0f);
-            int m = (int) (fs[1] * 255.0f * fs[1] * 255.0f);
-            n = (int) (fs[2] * 255.0f * fs[2] * 255.0f);
-            is[0] = is[0] + l;
-            is[1] = is[1] + m;
-            is[2] = is[2] + n;
-            ++j;
-        }
-        int k = (int) Math.sqrt((double) is[0] / j);
-        int o = (int) Math.sqrt((double) is[1] / j);
-        int p = (int) Math.sqrt((double) is[2] / j);
-        n = ColorHelper.Argb.getArgb(0, k, o, p);
-        DyeableLeatheryBlockItem.setLeatherColor(stack, n);
-    }
-
-    public static void blendAndSetCustomDyeColor(ItemStack stack, List<DyeItem> colors, List<ItemStack> customColors) {
-        for(UnidyeMaterialType type : UnidyeMaterialTypes.MATERIAL_TYPE.stream().toList()){
-            if(type != UnidyeMaterialTypes.DYE) {
-                blendAndSetMaterialColor(stack, colors, customColors, type);
-            }
-        }
-    }
-
     public static void defineClosestVanillaDye(ItemStack itemStack) {
-        float[] customColorArray = getCustomColorArray(UnidyeMaterialTypes.DYE, itemStack);
+        int[] customColorArray = getCustomIntColorArray(UnidyeMaterialTypes.DYE, itemStack);
         double distance;
         double minDistance = -1;
         String name = "white";
         for (DyeItem dyeItem : Registries.ITEM.stream().filter(i -> i instanceof DyeItem && !(i instanceof CustomDyeItem)).map(i -> (DyeItem) i).toList()) {
-            float[] colorArray = UnidyeUtils.getColorArray(UnidyeMaterialTypes.DYE.getColor(dyeItem.getColor()));
+            int[] colorArray = UnidyeUtils.getIntColorArray(UnidyeMaterialTypes.DYE.getColor(dyeItem.getColor()));
             distance = Math.pow(customColorArray[0] - colorArray[0], 2)
                     + Math.pow(customColorArray[1] - colorArray[1], 2) + Math.pow(customColorArray[2] - colorArray[2], 2);
             if (distance < minDistance || minDistance == -1) {
@@ -281,31 +192,33 @@ public class UnidyeUtils {
         int n;
         int[] is = new int[3];
         int j = 0;
-        if (UnidyeUtils.hasColor(stack)) {
-            int k = getMaterialColor(stack, materialType);
-            float f = (float) (k >> 16 & 0xFF);
-            float g = (float) (k >> 8 & 0xFF);
-            float h = (float) (k & 0xFF);
-            is[0] = is[0] + (int) (f * f);
-            is[1] = is[1] + (int) (g * g);
-            is[2] = is[2] + (int) (h * h);
+        boolean isBaseMaterialColor = UnidyeMaterialTypes.getMaterialType(stack.getItem()) == materialType;
+        if ((isBaseMaterialColor && UnidyeUtils.hasColor(stack)) || (!isBaseMaterialColor && containsMaterialColor(stack, materialType))) {
+            int k = isBaseMaterialColor ?
+                    UnidyeUtils.getColor(stack) : getMaterialColor(stack, materialType);
+            int f = k >> 16 & 0xFF;
+            int g = k >> 8 & 0xFF;
+            int h = k & 0xFF;
+            is[0] = is[0] + f * f;
+            is[1] = is[1] + g * g;
+            is[2] = is[2] + h * h;
             ++j;
         }
         for (DyeItem dyeItem : colors) {
-            float[] fs = getColorArray(materialType, dyeItem);
-            int l = (int) (fs[0] * 255.0f * fs[0] * 255.0f);
-            int m = (int) (fs[1] * 255.0f * fs[1] * 255.0f);
-            n = (int) (fs[2] * 255.0f * fs[2] * 255.0f);
+            int[] fs = getIntColorArray(materialType, dyeItem);
+            int l = fs[0] * fs[0];
+            int m = fs[1] * fs[1];
+            n = fs[2] * fs[2];
             is[0] = is[0] + l;
             is[1] = is[1] + m;
             is[2] = is[2] + n;
             ++j;
         }
         for (ItemStack customDye : customColors) {
-            float[] fs = getCustomColorArray(materialType, customDye);
-            int l = (int) (fs[0] * 255.0f * fs[0] * 255.0f);
-            int m = (int) (fs[1] * 255.0f * fs[1] * 255.0f);
-            n = (int) (fs[2] * 255.0f * fs[2] * 255.0f);
+            int[] fs = getCustomIntColorArray(materialType, customDye);
+            int l = fs[0] * fs[0];
+            int m = fs[1] * fs[1];
+            n = fs[2] * fs[2];
             is[0] = is[0] + l;
             is[1] = is[1] + m;
             is[2] = is[2] + n;
@@ -315,7 +228,11 @@ public class UnidyeUtils {
         int o = (int) Math.sqrt((double) is[1] / j);
         int p = (int) Math.sqrt((double) is[2] / j);
         n = ColorHelper.Argb.getArgb(0, k, o, p);
-        setMaterialColor(stack, n, materialType);
+        if(isBaseMaterialColor){
+            UnidyeUtils.setColor(stack, n);
+        }else{
+            setMaterialColor(stack, n, materialType);
+        }
     }
 
     public static float[] getColorArray(UnidyeMaterialType type, DyeItem dyeItem) {
@@ -324,6 +241,15 @@ public class UnidyeUtils {
             return getColorArray(type.getColor(dyeColor));
         }else{
             return getColorArray(UnidyeMaterialTypes.LEATHER.getColor(dyeColor));
+        }
+    }
+
+    public static int[] getIntColorArray(UnidyeMaterialType type, DyeItem dyeItem) {
+        DyeColor dyeColor = dyeItem.getColor();
+        if(type.materialColors.containsKey(dyeColor)){
+            return getIntColorArray(type.getColor(dyeColor));
+        }else{
+            return getIntColorArray(UnidyeMaterialTypes.LEATHER.getColor(dyeColor));
         }
     }
 
@@ -340,6 +266,19 @@ public class UnidyeUtils {
         return new float[]{(float) j / 255.0f, (float) k / 255.0f, (float) l / 255.0f};
     }
 
+    public static int[] getCustomIntColorArray(UnidyeMaterialType materialType, ItemStack itemStack) {
+        int color;
+        if(materialType == UnidyeMaterialTypes.DYE){
+            color = getColor(itemStack);
+        }else {
+            color = getMaterialColor(itemStack, materialType);
+        }
+        int j = (color & 0xFF0000) >> 16;
+        int k = (color & 0xFF00) >> 8;
+        int l = (color & 0xFF);
+        return new int[]{j, k, l};
+    }
+
 
     public static float[] getColorArray(int n) {
         int j = (n & 0xFF0000) >> 16;
@@ -348,10 +287,24 @@ public class UnidyeUtils {
         return new float[]{(float) j / 255.0f, (float) k / 255.0f, (float) l / 255.0f};
     }
 
+    public static int[] getIntColorArray(int n) {
+        int j = (n & 0xFF0000) >> 16;
+        int k = (n & 0xFF00) >> 8;
+        int l = (n & 0xFF);
+        return new int[]{j, k, l};
+    }
+
     public static int getColorByColorArray(float[] fs){
         int n = (int) (fs[0]*255.0f);
         n = (n << 8) + (int) (fs[1]*255.0f);
         n = (n << 8) + (int) (fs[2]*255.0f);
+        return n;
+    }
+
+    public static int getColorByColorArray(int[] fs){
+        int n = fs[0];
+        n = (n << 8) + fs[1];
+        n = (n << 8) + fs[2];
         return n;
     }
 

@@ -2,6 +2,7 @@ package net.diemond_player.unidye.block.entity;
 
 import net.diemond_player.unidye.Unidye;
 import net.diemond_player.unidye.component.ItemNameAffixesComponent;
+import net.diemond_player.unidye.component.MaterialColorsComponent;
 import net.diemond_player.unidye.component.RecipeStacksComponent;
 import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
 import net.minecraft.block.entity.BlockEntity;
@@ -34,6 +35,10 @@ public interface IDyeableBlockEntity {
 
     void setProfile(ProfileComponent profileComponent);
 
+    MaterialColorsComponent getMaterialColors();
+
+    void setMaterialColors(MaterialColorsComponent materialColorsComponent);
+
     static int getColor(BlockView world, BlockPos pos) {
         if (world == null) {
             return DEFAULT_WHITE_COLOR;
@@ -56,16 +61,17 @@ public interface IDyeableBlockEntity {
         if (getRecipeStacks() != null && !getRecipeStacks().equals(RecipeStacksComponent.DEFAULT)) {
             nbt.put("recipeStacks", RecipeStacksComponent.CODEC.encodeStart(registryLookup.getOps(NbtOps.INSTANCE), getRecipeStacks()).getOrThrow());
         }
+        if (getMaterialColors() != null && !getMaterialColors().equals(MaterialColorsComponent.DEFAULT)) {
+            nbt.put("materialColors", MaterialColorsComponent.CODEC.encodeStart(registryLookup.getOps(NbtOps.INSTANCE), getMaterialColors()).getOrThrow());
+        }
         if (getProfile() != null) {
             nbt.put("profile", ProfileComponent.CODEC.encodeStart(registryLookup.getOps(NbtOps.INSTANCE), getProfile()).getOrThrow());
         }
     }
 
     default void readCommonNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-        if (nbt.getInt("color") == 0) {
-            setColor(DEFAULT_WHITE_COLOR);
-        } else {
-            setColor(nbt.getInt("color"));
+        if(nbt.contains("color")) {
+            setColor(nbt.getInt("color") == 0 ? DEFAULT_WHITE_COLOR : nbt.getInt("color"));
         }
         if (nbt.contains("itemNameAffixes")) {
             ItemNameAffixesComponent.CODEC
@@ -79,6 +85,12 @@ public interface IDyeableBlockEntity {
                     .resultOrPartial(recipeStacks -> Unidye.LOGGER.error("Failed to parse recipe stacks: '{}'", recipeStacks))
                     .ifPresent(this::setRecipeStacks);
         }
+        if (nbt.contains("materialColors")) {
+            MaterialColorsComponent.CODEC
+                    .parse(registryLookup.getOps(NbtOps.INSTANCE), nbt.get("materialColors"))
+                    .resultOrPartial(materialColors -> Unidye.LOGGER.error("Failed to parse material colors: '{}'", materialColors))
+                    .ifPresent(this::setMaterialColors);
+        }
         if (nbt.contains("profile")) {
             ProfileComponent.CODEC
                     .parse(registryLookup.getOps(NbtOps.INSTANCE), nbt.get("profile"))
@@ -91,6 +103,7 @@ public interface IDyeableBlockEntity {
         setColor(components.getOrDefault(DataComponentTypes.DYED_COLOR, new DyedColorComponent(DyedColorComponent.DEFAULT_COLOR, true)).rgb());
         setRecipeStacks(components.getOrDefault(UnidyeDataComponentTypes.RECIPE_STACKS, RecipeStacksComponent.DEFAULT));
         setItemNameAffixes(components.getOrDefault(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, ItemNameAffixesComponent.DEFAULT));
+        setMaterialColors(components.getOrDefault(UnidyeDataComponentTypes.MATERIAL_COLORS, MaterialColorsComponent.DEFAULT));
         setProfile(components.getOrDefault(DataComponentTypes.PROFILE, null));
     }
 
@@ -98,6 +111,7 @@ public interface IDyeableBlockEntity {
         componentMapBuilder.add(DataComponentTypes.DYED_COLOR, new DyedColorComponent(getColor(), true));
         componentMapBuilder.add(UnidyeDataComponentTypes.RECIPE_STACKS, getRecipeStacks());
         componentMapBuilder.add(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES, getItemNameAffixes());
+        componentMapBuilder.add(UnidyeDataComponentTypes.MATERIAL_COLORS, getMaterialColors());
         componentMapBuilder.add(DataComponentTypes.PROFILE, getProfile());
     }
 }

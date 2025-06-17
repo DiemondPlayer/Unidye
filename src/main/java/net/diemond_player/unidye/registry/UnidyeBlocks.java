@@ -4,7 +4,7 @@ import net.diemond_player.unidye.Unidye;
 import net.diemond_player.unidye.block.*;
 import net.diemond_player.unidye.item.DyeableBedItem;
 import net.diemond_player.unidye.item.DyeableBlockItem;
-import net.diemond_player.unidye.item.DyeableLeatheryBlockItem;
+
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -20,8 +20,8 @@ import java.util.function.BiFunction;
 @SuppressWarnings("unused")
 public class UnidyeBlocks {
     public static final Block CUSTOM_WOOL = registerBlock(Unidye.MOD_ID, "custom_wool",
-            new DyeableWoolBlock(AbstractBlock.Settings.copy(Blocks.WHITE_WOOL)),
-            DyeableLeatheryBlockItem::new);
+            new DyeableBlock(AbstractBlock.Settings.copy(Blocks.WHITE_WOOL)),
+            DyeableBlockItem::new);
 
     public static final Block CUSTOM_CONCRETE = registerBlock(Unidye.MOD_ID,
             "custom_concrete",
@@ -36,7 +36,7 @@ public class UnidyeBlocks {
     public static final Block CUSTOM_STAINED_GLASS = registerBlock(Unidye.MOD_ID,
             "custom_stained_glass",
             new DyeableGlassBlock(AbstractBlock.Settings.copy(Blocks.GLASS)),
-            DyeableLeatheryBlockItem::new);
+            DyeableBlockItem::new);
 
     public static final Block CUSTOM_CONCRETE_POWDER = registerBlock(Unidye.MOD_ID,
             "custom_concrete_powder",
@@ -50,7 +50,7 @@ public class UnidyeBlocks {
     public static final Block CUSTOM_STAINED_GLASS_PANE = registerBlock(Unidye.MOD_ID,
             "custom_stained_glass_pane",
             new DyeablePaneBlock(AbstractBlock.Settings.copy(Blocks.WHITE_STAINED_GLASS_PANE)),
-            DyeableLeatheryBlockItem::new);
+            DyeableBlockItem::new);
 
     public static final Block CUSTOM_CANDLE = registerBlock(Unidye.MOD_ID, "custom_candle",
             new DyeableCandleBlock(AbstractBlock.Settings.copy(Blocks.WHITE_CANDLE)),

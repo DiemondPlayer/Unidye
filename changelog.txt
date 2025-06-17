@@ -148,3 +148,4 @@ The changelog posted on Modrinth/Curseforge would be without those minor changes
 • Custom Dyes cannot dye water in cauldrons from amendments (bandaid solution)
 • Custom Dyes no longer use CUSTOM_DATA but instead uses MATERIAL_COLORS
 • More usage of IDyeableBlockEntity (added common nbt methods)
+• NO MORE LEATHERY STUFF

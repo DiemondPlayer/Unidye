@@ -35,8 +35,9 @@ public class DyeableBannerItem extends BannerItem {
         if(result.isAccepted()) {
             if (blockEntity instanceof DyeableBannerBlockEntity dyeableBannerBlockEntity) {
                 dyeableBannerBlockEntity.setColor(color);
-                dyeableBannerBlockEntity.setItemNameAffixes(itemStack.get(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES));
-                dyeableBannerBlockEntity.setRecipeStacks(itemStack.get(UnidyeDataComponentTypes.RECIPE_STACKS));
+                if(itemStack.contains(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES)) dyeableBannerBlockEntity.setItemNameAffixes(itemStack.get(UnidyeDataComponentTypes.ITEM_NAME_AFFIXES));
+                if(itemStack.contains(UnidyeDataComponentTypes.RECIPE_STACKS)) dyeableBannerBlockEntity.setRecipeStacks(itemStack.get(UnidyeDataComponentTypes.RECIPE_STACKS));
+                if(itemStack.contains(UnidyeDataComponentTypes.MATERIAL_COLORS)) dyeableBannerBlockEntity.setMaterialColors(itemStack.get(UnidyeDataComponentTypes.MATERIAL_COLORS));
                 if(itemStack.get(DataComponentTypes.PROFILE) != null) dyeableBannerBlockEntity.setProfile(itemStack.get(DataComponentTypes.PROFILE));
             }
         }

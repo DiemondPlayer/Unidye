@@ -2,6 +2,7 @@ package net.diemond_player.unidye.block.entity;
 
 import net.diemond_player.unidye.block.DyeableShulkerBoxBlock;
 import net.diemond_player.unidye.component.ItemNameAffixesComponent;
+import net.diemond_player.unidye.component.MaterialColorsComponent;
 import net.diemond_player.unidye.component.RecipeStacksComponent;
 import net.diemond_player.unidye.registry.UnidyeBlockEntities;
 import net.minecraft.block.Block;
@@ -52,6 +53,7 @@ public class DyeableShulkerBoxBlockEntity extends LootableContainerBlockEntity
     private float prevAnimationProgress;
     private ItemNameAffixesComponent itemNameAffixesComponent = ItemNameAffixesComponent.DEFAULT;
     private RecipeStacksComponent recipeStacksComponent = RecipeStacksComponent.DEFAULT;
+    private MaterialColorsComponent materialColorsComponent = MaterialColorsComponent.DEFAULT;
     private ProfileComponent profileComponent = null;
 
     public DyeableShulkerBoxBlockEntity(BlockPos pos, BlockState state) {
@@ -297,6 +299,17 @@ public class DyeableShulkerBoxBlockEntity extends LootableContainerBlockEntity
     @Override
     public void setProfile(ProfileComponent profileComponent) {
         this.profileComponent = profileComponent;
+        this.markDirty();
+    }
+
+    @Override
+    public MaterialColorsComponent getMaterialColors() {
+        return this.materialColorsComponent;
+    }
+
+    @Override
+    public void setMaterialColors(MaterialColorsComponent materialColorsComponent) {
+        this.materialColorsComponent = materialColorsComponent;
         this.markDirty();
     }
 

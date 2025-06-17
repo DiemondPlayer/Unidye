@@ -11,7 +11,9 @@ import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.ColorHelper;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class UnidyeMaterialTypes {
@@ -21,7 +23,7 @@ public class UnidyeMaterialTypes {
     public static final SimpleRegistry<UnidyeMaterialType> MATERIAL_TYPE = FabricRegistryBuilder.createDefaulted(MATERIAL_TYPE_REGISTRY_KEY, Identifier.of(Unidye.MOD_ID, "leather")).buildAndRegister();
 
     public static Map<Item, UnidyeMaterialType> ITEM_TO_MATERIAL_TYPE = new HashMap<>();
-
+    public static Map<Item, ArrayList<UnidyeMaterialType>> ITEM_TO_ADDITIONAL_MATERIAL_TYPES = new HashMap<>();
 
     public static final UnidyeMaterialType DYE = registerMaterialType("dye", new HashMap<>(){{
         put(DyeColor.WHITE, 0xF5F4FF);
@@ -189,6 +191,32 @@ public class UnidyeMaterialTypes {
             ITEM_TO_MATERIAL_TYPE.put(item, type);
         }else{
             Unidye.LOGGER.warn("Failed adding an item to {} Unidye material type: {} already has a material type!", type.getId().toString(), item);
+        }
+    }
+
+    public static void addAdditionalMaterialType(Item item, UnidyeMaterialType type){
+        if(!ITEM_TO_ADDITIONAL_MATERIAL_TYPES.containsKey(item)){
+            ITEM_TO_ADDITIONAL_MATERIAL_TYPES.put(item, new ArrayList<>(List.of(type)));
+        }else{
+            ArrayList<UnidyeMaterialType> additionalMaterialTypes = ITEM_TO_ADDITIONAL_MATERIAL_TYPES.get(item);
+            if(!additionalMaterialTypes.contains(type)) {
+                additionalMaterialTypes.add(type);
+                ITEM_TO_ADDITIONAL_MATERIAL_TYPES.replace(item, additionalMaterialTypes);
+            }
+        }
+    }
+
+    public static void addAdditionalMaterialType(Item item, List<UnidyeMaterialType> types){
+        if(!ITEM_TO_ADDITIONAL_MATERIAL_TYPES.containsKey(item)){
+            ITEM_TO_ADDITIONAL_MATERIAL_TYPES.put(item, new ArrayList<>(types));
+        }else{
+            ArrayList<UnidyeMaterialType> additionalMaterialTypes = ITEM_TO_ADDITIONAL_MATERIAL_TYPES.get(item);
+            for(UnidyeMaterialType type : types) {
+                if (!additionalMaterialTypes.contains(type)) {
+                    additionalMaterialTypes.add(type);
+                }
+            }
+            ITEM_TO_ADDITIONAL_MATERIAL_TYPES.replace(item, additionalMaterialTypes);
         }
     }
 
