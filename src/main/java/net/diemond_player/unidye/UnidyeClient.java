@@ -106,21 +106,8 @@ public class UnidyeClient implements ClientModInitializer {
                             ProfileComponent profileComponent = stack.get(DataComponentTypes.PROFILE);
                             if (profileComponent.name().isPresent()) {
                                 MutableText discovererName = createGoldenGradientText(profileComponent.name().get());
-                                lines.add(lines.size() - 2, Text.translatable("tooltip.unidye.discovered_by").formatted(Formatting.GRAY).append(discovererName.formatted(Formatting.BOLD)));
+                                lines.add(type.isAdvanced() ? lines.size() - 2 : lines.size(), Text.translatable("tooltip.unidye.discovered_by").formatted(Formatting.GRAY).append(discovererName.formatted(Formatting.BOLD)));
                             }
-//                            lines.add(createGoldenGradientText("Smol"));
-//                            lines.add(createGoldenGradientText("Hello"));
-//                            lines.add(createGoldenGradientText("Goodbye"));
-//                            lines.add(createGoldenGradientText("Roomba"));
-//                            lines.add(createGoldenGradientText("Eagernesses"));
-//                            lines.add(createGoldenGradientText("Abandonments"));
-//                            lines.add(createGoldenGradientText("Waistcoatings"));
-//                            lines.add(createGoldenGradientText("Jargonizations"));
-//                            lines.add(createGoldenGradientText("Electromagnetic"));
-//                            lines.add(createGoldenGradientText("Paleethnologists"));
-//                            lines.add(createGoldenGradientText("Paleethnologists!"));
-//                            lines.add(createGoldenGradientText("Paleethnologists!!"));
-//                            lines.add(createGoldenGradientText("HeccologicalDiscovery"));
                         }
                     }
                 }

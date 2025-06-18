@@ -156,9 +156,11 @@ public class UnidyeUtils {
                     blendAndSetMaterialColor(itemStack, colors, customColors, type);
                 }
                 defineClosestVanillaDye(itemStack);
-            } else if (UnidyeMaterialTypes.ITEM_TO_ADDITIONAL_MATERIAL_TYPES.containsKey(item)){
-                for (UnidyeMaterialType type : UnidyeMaterialTypes.ITEM_TO_ADDITIONAL_MATERIAL_TYPES.get(item)) {
-                    blendAndSetMaterialColor(itemStack, colors, customColors, type);
+            } else {
+                if (UnidyeMaterialTypes.ITEM_TO_ADDITIONAL_MATERIAL_TYPES.containsKey(item)) {
+                    for (UnidyeMaterialType type : UnidyeMaterialTypes.ITEM_TO_ADDITIONAL_MATERIAL_TYPES.get(item)) {
+                        blendAndSetMaterialColor(itemStack, colors, customColors, type);
+                    }
                 }
                 blendAndSetMaterialColor(itemStack, colors, customColors, UnidyeMaterialTypes.getMaterialType(item));
             }
