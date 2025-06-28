@@ -7,6 +7,10 @@
 
 ### Code:
 - **TODO** unidye utils is a mess, fix it
+- **consider TODO** resourcepack driven stuff for everything else
+- **TODO** move recipe stacks to be a database not a component
+- **TODO** new crafting station?????
+- **TODO** whole 'nother dye shape system
 
 ### Config:
 - **TODO** add "no added spaces option"

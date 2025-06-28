@@ -67,14 +67,17 @@ public class CustomDyeItem extends DyeItem implements SignChangingItem{
         if (entity instanceof SheepEntity
                 && (sheepEntity = (SheepEntity) entity).isAlive()
                 && !sheepEntity.isSheared()) {
-            sheepEntity.getWorld().playSoundFromEntity(user, sheepEntity,
-                    SoundEvents.ITEM_DYE_USE, SoundCategory.PLAYERS, 1.0f, 1.0f);
-            if (!user.getWorld().isClient) {
-                UnidyeAccessor sheep = (UnidyeAccessor) sheepEntity;
-                sheep.unidye$setCustomDyeItemStack(stack.copyWithCount(1));
-                stack.decrement(1);
+            int color = getMaterialColor(stack, UnidyeMaterialTypes.LEATHER);
+            UnidyeAccessor sheep = (UnidyeAccessor) sheepEntity;
+            if (sheep.unidye$getCustomColor() != color || sheep.unidye$getCustomColor() == 0xFFFFFF) {
+                sheepEntity.getWorld().playSoundFromEntity(user, sheepEntity,
+                        SoundEvents.ITEM_DYE_USE, SoundCategory.PLAYERS, 1.0f, 1.0f);
+                if (!user.getWorld().isClient) {
+                    sheep.unidye$setCustomDyeItemStack(stack.copyWithCount(1));
+                    stack.decrement(1);
+                }
+                return ActionResult.success(user.getWorld().isClient);
             }
-            return ActionResult.success(user.getWorld().isClient);
         }
         return ActionResult.PASS;
     }

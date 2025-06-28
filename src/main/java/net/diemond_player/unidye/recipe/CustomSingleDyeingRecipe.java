@@ -5,29 +5,53 @@ import net.diemond_player.unidye.component.RecipeStacksComponent;
 import net.diemond_player.unidye.item.CustomDyeItem;
 import net.diemond_player.unidye.registry.UnidyeBlocks;
 import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
-import net.diemond_player.unidye.registry.UnidyeSpecialRecipes;
+import net.diemond_player.unidye.registry.UnidyeItems;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.item.DyeItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SpecialCraftingRecipe;
 import net.minecraft.recipe.book.CraftingRecipeCategory;
 import net.minecraft.recipe.input.CraftingRecipeInput;
+import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.ItemTags;
+import net.minecraft.registry.tag.TagKey;
+import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
 
-public class CustomBedDyeingRecipe extends SpecialCraftingRecipe {
-    public CustomBedDyeingRecipe(CraftingRecipeCategory category) {
+public class CustomSingleDyeingRecipe extends SpecialCraftingRecipe {
+    public final TagKey<Item> itemTag;
+    public final ItemConvertible inputFallback;
+    public final ArrayList<Item> acceptedItems;
+    public final ItemConvertible outputItem;
+    private final Identifier identifier;
+
+    public CustomSingleDyeingRecipe(TagKey<Item> itemTag, ItemConvertible inputFallback, ItemConvertible outputItem, CraftingRecipeCategory category, Identifier identifier) {
         super(category);
+        this.outputItem = outputItem;
+        this.identifier = identifier;
+        this.itemTag = itemTag;
+        this.inputFallback = inputFallback;
+        this.acceptedItems = null;
+    }
+
+    public CustomSingleDyeingRecipe(ArrayList<Item> acceptedItems, ItemConvertible inputFallback, ItemConvertible outputItem, CraftingRecipeCategory category, Identifier identifier) {
+        super(category);
+        this.outputItem = outputItem;
+        this.identifier = identifier;
+        this.itemTag = null;
+        this.inputFallback = inputFallback;
+        this.acceptedItems = acceptedItems;
     }
 
     @Override
     public boolean matches(CraftingRecipeInput inventory, World world) {
-        boolean bed = false;
+        boolean keyItem = false;
         boolean difference = false;
         int count = 0;
         Item item = null;
@@ -59,16 +83,26 @@ public class CustomBedDyeingRecipe extends SpecialCraftingRecipe {
                 }
                 continue;
             }
-            if (itemStack2.isIn(ItemTags.BEDS) && itemStack2.getItem() != UnidyeBlocks.CUSTOM_BED.asItem()) {
-                if (bed) {
-                    return false;
+            if(itemTag != null) {
+                if (itemStack2.isIn(itemTag) && itemStack2.getItem() != outputItem.asItem()) {
+                    if (keyItem) {
+                        return false;
+                    }
+                    keyItem = true;
+                    continue;
                 }
-                bed = true;
-                continue;
+            } else if (acceptedItems != null) {
+                if (acceptedItems.contains(itemStack2.getItem()) && itemStack2.getItem() != outputItem.asItem()) {
+                    if (keyItem) {
+                        return false;
+                    }
+                    keyItem = true;
+                    continue;
+                }
             }
             return false;
         }
-        return bed && (difference || count == 1);
+        return keyItem && (difference || count == 1);
     }
 
     @Override
@@ -90,8 +124,14 @@ public class CustomBedDyeingRecipe extends SpecialCraftingRecipe {
         if (customDyeList.isEmpty() && dyeList.isEmpty()) {
             return ItemStack.EMPTY;
         }
-        ItemStack itemStack = UnidyeUtils.blendAndSetColor(new ItemStack(UnidyeBlocks.CUSTOM_BED), dyeList, customDyeList);
-        itemStack.set(UnidyeDataComponentTypes.RECIPE_STACKS, RecipeStacksComponent.fromItemStacks(inventory.getStacks(), itemStack.getCount(), true));
+        ItemStack itemStack = UnidyeUtils.blendAndSetColor(new ItemStack(outputItem), dyeList, customDyeList);
+        RecipeStacksComponent recipeStacksComponent = RecipeStacksComponent.fromItemStacks(inventory.getStacks(), itemStack.getCount());
+        if(itemTag != null){
+            recipeStacksComponent = recipeStacksComponent.optimizeTagToFallback(itemTag, inputFallback);
+        }else if (acceptedItems != null) {
+            recipeStacksComponent = recipeStacksComponent.optimizeAcceptedItemsToFallback(acceptedItems, inputFallback);
+        }
+        itemStack.set(UnidyeDataComponentTypes.RECIPE_STACKS, recipeStacksComponent);
         return itemStack;
     }
 
@@ -102,6 +142,6 @@ public class CustomBedDyeingRecipe extends SpecialCraftingRecipe {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return UnidyeSpecialRecipes.CUSTOM_BED_DYEING;
+        return Registries.RECIPE_SERIALIZER.get(identifier);
     }
 }

@@ -152,3 +152,5 @@ The changelog posted on Modrinth/Curseforge would be without those minor changes
 • Fixed colorize (simple error smh)
 • No apache in Sheep
 • Tooltip not-advanced crash fixed
+• Single Dyeing (wool and candle)
+• Can no longer do stuff like custom dye + the same custom dye = custom dye

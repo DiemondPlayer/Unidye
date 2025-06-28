@@ -6,14 +6,18 @@ import me.shedaniel.rei.api.client.plugins.REIClientPlugin;
 import me.shedaniel.rei.api.client.registry.category.CategoryRegistry;
 import me.shedaniel.rei.api.client.registry.display.DisplayRegistry;
 import me.shedaniel.rei.plugin.client.categories.crafting.filler.CraftingRecipeFiller;
+import net.diemond_player.unidye.recipe.CustomCircleDyeingRecipe;
 import net.diemond_player.unidye.registry.UnidyeBlocks;
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
+import net.minecraft.recipe.SpecialRecipeSerializer;
+import net.minecraft.registry.Registries;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.registry.tag.TagKey;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class UnidyeREIClientPlugin implements REIClientPlugin {
 
@@ -26,6 +30,12 @@ public class UnidyeREIClientPlugin implements REIClientPlugin {
             Pair.of(ItemTags.WOOL, UnidyeBlocks.CUSTOM_WOOL),
             Pair.of(ItemTags.TERRACOTTA, UnidyeBlocks.CUSTOM_TERRACOTTA)
     );
+    public static final ArrayList<Pair<ArrayList<Item>, ItemConvertible>> REI_ARRAY_DRIVEN_SINGLE_DYEING_RECIPE_PARAMETERS = Lists.newArrayList();
+    public static final ArrayList<Pair<TagKey<Item>, ItemConvertible>> REI_TAG_DRIVEN_SINGLE_DYEING_RECIPE_PARAMETERS = Lists.newArrayList(
+            Pair.of(ItemTags.BEDS, UnidyeBlocks.CUSTOM_BED),
+            Pair.of(ItemTags.CANDLES, UnidyeBlocks.CUSTOM_CANDLE),
+            Pair.of(ItemTags.WOOL, UnidyeBlocks.CUSTOM_WOOL)
+    );
 
     public static final CraftingRecipeFiller<?>[] CRAFTING_RECIPE_FILLERS = new CraftingRecipeFiller[]{
             new CustomDyeRecipeFiller(),
@@ -35,8 +45,7 @@ public class UnidyeREIClientPlugin implements REIClientPlugin {
             new CustomBannerDuplicateRecipeFiller(),
             new CustomStainedGlassPaneRecipeFiller(),
             new CustomConcretePowderRecipeFiller(),
-            new CustomShulkerBoxDyeingRecipeFiller(),
-            new CustomBedDyeingRecipeFiller()
+            new CustomShulkerBoxDyeingRecipeFiller()
     };
 
     @Override
@@ -50,6 +59,14 @@ public class UnidyeREIClientPlugin implements REIClientPlugin {
         }
         for (Pair<ArrayList<Item>, ItemConvertible> params : REI_ARRAY_DRIVEN_CIRCLE_DYEING_RECIPE_PARAMETERS){
             CraftingRecipeFiller<?> filler = new CustomCircleDyeingRecipeFiller(params.first, params.second);
+            filler.registerDisplays(registry);
+        }
+        for (Pair<TagKey<Item>, ItemConvertible> params : REI_TAG_DRIVEN_SINGLE_DYEING_RECIPE_PARAMETERS){
+            CraftingRecipeFiller<?> filler = new CustomSingleDyeingRecipeFiller(params.first, params.second);
+            filler.registerDisplays(registry);
+        }
+        for (Pair<ArrayList<Item>, ItemConvertible> params : REI_ARRAY_DRIVEN_SINGLE_DYEING_RECIPE_PARAMETERS){
+            CraftingRecipeFiller<?> filler = new CustomSingleDyeingRecipeFiller(params.first, params.second);
             filler.registerDisplays(registry);
         }
     }

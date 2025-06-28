@@ -46,6 +46,18 @@ public class UnidyeSpecialRecipes {
             "crafting_special_custom_candle_dyeing",
             ItemTags.CANDLES, Items.CANDLE, UnidyeBlocks.CUSTOM_CANDLE);
 
+    public static final RecipeSerializer<CustomSingleDyeingRecipe> CUSTOM_CANDLE_DYEING_SINGLE = registerSpecialSingleDyeingRecipe(
+            "crafting_special_custom_candle_dyeing_single",
+            ItemTags.CANDLES, Items.CANDLE, UnidyeBlocks.CUSTOM_CANDLE);
+
+    public static final RecipeSerializer<CustomSingleDyeingRecipe> CUSTOM_WOOL_DYEING_SINGLE = registerSpecialSingleDyeingRecipe(
+            "crafting_special_custom_wool_dyeing_single",
+            ItemTags.WOOL, Blocks.WHITE_WOOL, UnidyeBlocks.CUSTOM_WOOL);
+
+    public static final RecipeSerializer<CustomSingleDyeingRecipe> CUSTOM_BED_DYEING = registerSpecialSingleDyeingRecipe(
+            "crafting_special_custom_bed_dyeing",
+            ItemTags.BEDS, Blocks.WHITE_BED, UnidyeBlocks.CUSTOM_BED);
+
     public static final RecipeSerializer<CustomCircleDyeingRecipe> CUSTOM_CARPET_DYEING = registerSpecialCircleDyeingRecipe(
             "crafting_special_custom_carpet_dyeing",
             ItemTags.WOOL_CARPETS, Blocks.WHITE_CARPET, UnidyeBlocks.CUSTOM_CARPET);
@@ -69,10 +81,6 @@ public class UnidyeSpecialRecipes {
     public static final RecipeSerializer<CustomBedRecipe> CUSTOM_BED = (RecipeSerializer<CustomBedRecipe>)
             registerSpecialRecipe("crafting_special_custom_bed",
             CustomBedRecipe::new);
-
-    public static final RecipeSerializer<CustomBedDyeingRecipe> CUSTOM_BED_DYEING = (RecipeSerializer<CustomBedDyeingRecipe>)
-            registerSpecialRecipe("crafting_special_custom_bed_dyeing",
-            CustomBedDyeingRecipe::new);
 
     public static final RecipeSerializer<CustomShulkerBoxDyeingRecipe> CUSTOM_SHULKER_BOX_DYEING = (RecipeSerializer<CustomShulkerBoxDyeingRecipe>)
             registerSpecialRecipe("crafting_special_custom_shulker_box_dyeing",
@@ -113,11 +121,19 @@ public class UnidyeSpecialRecipes {
         return registerSpecialRecipe(Unidye.MOD_ID, name, toRecipe);
     }
 
-    public static RecipeSerializer<CustomCircleDyeingRecipe> registerSpecialCircleDyeingRecipe(String modId, String name, TagKey<Item> itemOrItemTag, ItemConvertible inputFallback, ItemConvertible outputItem){
+    private static RecipeSerializer<CustomSingleDyeingRecipe> registerSpecialSingleDyeingRecipe(String name, ArrayList<Item> acceptedItems, ItemConvertible inputFallback, ItemConvertible outputItem){
+        return registerSpecialSingleDyeingRecipe(Unidye.MOD_ID, name, acceptedItems, inputFallback, outputItem);
+    }
+
+    private static RecipeSerializer<CustomSingleDyeingRecipe> registerSpecialSingleDyeingRecipe(String name, TagKey<Item> itemOrItemTag, ItemConvertible inputFallback, ItemConvertible outputItem){
+        return registerSpecialSingleDyeingRecipe(Unidye.MOD_ID, name, itemOrItemTag, inputFallback, outputItem);
+    }
+
+    public static RecipeSerializer<CustomCircleDyeingRecipe> registerSpecialCircleDyeingRecipe(String modId, String name, TagKey<Item> itemTag, ItemConvertible inputFallback, ItemConvertible outputItem){
         Identifier identifier = Identifier.of(modId, name);
         return Registry.register(Registries.RECIPE_SERIALIZER, identifier,
                 new SpecialRecipeSerializer<>(((category) ->
-                        new CustomCircleDyeingRecipe(itemOrItemTag, inputFallback, outputItem, category, identifier))));
+                        new CustomCircleDyeingRecipe(itemTag, inputFallback, outputItem, category, identifier))));
     }
 
     public static RecipeSerializer<CustomCircleDyeingRecipe> registerSpecialCircleDyeingRecipe(String modId, String name, ArrayList<Item> acceptedItems, ItemConvertible inputFallback, ItemConvertible outputItem){
@@ -125,6 +141,20 @@ public class UnidyeSpecialRecipes {
         return Registry.register(Registries.RECIPE_SERIALIZER, identifier,
                 new SpecialRecipeSerializer<>((( category) ->
                         new CustomCircleDyeingRecipe(acceptedItems, inputFallback, outputItem, category, identifier))));
+    }
+
+    public static RecipeSerializer<CustomSingleDyeingRecipe> registerSpecialSingleDyeingRecipe(String modId, String name, TagKey<Item> itemTag, ItemConvertible inputFallback, ItemConvertible outputItem){
+        Identifier identifier = Identifier.of(modId, name);
+        return Registry.register(Registries.RECIPE_SERIALIZER, identifier,
+                new SpecialRecipeSerializer<>(((category) ->
+                        new CustomSingleDyeingRecipe(itemTag, inputFallback, outputItem, category, identifier))));
+    }
+
+    public static RecipeSerializer<CustomSingleDyeingRecipe> registerSpecialSingleDyeingRecipe(String modId, String name, ArrayList<Item> acceptedItems, ItemConvertible inputFallback, ItemConvertible outputItem){
+        Identifier identifier = Identifier.of(modId, name);
+        return Registry.register(Registries.RECIPE_SERIALIZER, identifier,
+                new SpecialRecipeSerializer<>((( category) ->
+                        new CustomSingleDyeingRecipe(acceptedItems, inputFallback, outputItem, category, identifier))));
     }
 
     public static RecipeSerializer<? extends SpecialCraftingRecipe> registerSpecialRecipe(String modId, String name, Function<CraftingRecipeCategory, SpecialCraftingRecipe> toRecipe){

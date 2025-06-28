@@ -6,6 +6,7 @@ import dev.emi.emi.api.stack.EmiIngredient;
 import dev.emi.emi.api.stack.EmiStack;
 import dev.emi.emi.api.widget.GeneratedSlotWidget;
 import dev.emi.emi.api.widget.SlotWidget;
+import net.diemond_player.unidye.Unidye;
 import net.diemond_player.unidye.item.CustomDyeItem;
 import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.item.DyeItem;
@@ -15,6 +16,7 @@ import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -24,6 +26,7 @@ public class EmiCustomSingleDyeingRecipe extends EmiPatternCraftingRecipe {
     private static final List<DyeItem> DYES = Stream.of(DyeColor.values()).map(DyeItem::byColor).filter(c -> !(c instanceof CustomDyeItem)).toList();
     private final Item item_output;
     private final TagKey<Item> tag;
+    private final ArrayList<Item> acceptedItems;
 
     public EmiCustomSingleDyeingRecipe(TagKey<Item> tag, Item item, Identifier id) {
         super(List.of(
@@ -31,12 +34,28 @@ public class EmiCustomSingleDyeingRecipe extends EmiPatternCraftingRecipe {
                 EmiIngredient.of(tag)), EmiStack.of(item), id);
         this.tag = tag;
         this.item_output = item;
+        this.acceptedItems = null;
+    }
+
+    public EmiCustomSingleDyeingRecipe(ArrayList<Item> acceptedItems, Item item, Identifier id) {
+        super(List.of(
+                EmiIngredient.of(DYES.stream().map(i -> (EmiIngredient) EmiStack.of(i)).collect(Collectors.toList())),
+                EmiIngredient.of(acceptedItems.stream().filter(item1 -> item1 != item).map(EmiStack::of).toList())), EmiStack.of(item), id);
+        this.tag = null;
+        this.item_output = item;
+        this.acceptedItems = new ArrayList<>(acceptedItems.stream().filter(item1 -> item1 != item).toList());
     }
 
     @Override
     public SlotWidget getInputWidget(int slot, int x, int y) {
         if (slot == 0) {
-            return new SlotWidget(EmiIngredient.of(tag), x, y);
+            if(tag != null) {
+                return new SlotWidget(EmiIngredient.of(tag), x, y);
+            } else if (acceptedItems != null) {
+                return new SlotWidget(EmiIngredient.of(acceptedItems.stream().map(EmiStack::of).toList()), x, y);
+            }
+            Unidye.LOGGER.warn("Error loading EMI special recipe display for {} in slot ({})", this.id, slot);
+            return new SlotWidget(EmiStack.of(ItemStack.EMPTY), x, y);
         } else {
             final int s = slot - 1;
             return new GeneratedSlotWidget(r -> {

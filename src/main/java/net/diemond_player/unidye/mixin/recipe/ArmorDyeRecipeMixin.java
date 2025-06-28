@@ -98,6 +98,7 @@ public abstract class ArmorDyeRecipeMixin {
         ItemStack itemStack1 = UnidyeUtils.blendAndSetColor(itemStack, list, customColors);
         if (itemStack1.isOf(UnidyeItems.CUSTOM_DYE)) {
             itemStack1.setCount(list.size() + customColors.size() + 1);
+            if(UnidyeUtils.getColor(itemStack1) == UnidyeUtils.getColor(itemStack)) return ItemStack.EMPTY;
         }
         RecipeStacksComponent recipeStacksComponent = RecipeStacksComponent.fromItemStacks(recipeInputInventory.getStacks(), itemStack1.getCount(), true);
         itemStack1.set(UnidyeDataComponentTypes.RECIPE_STACKS, itemStack.isOf(UnidyeItems.CUSTOM_DYE) ? recipeStacksComponent.optimizeRecipeStacks() : recipeStacksComponent);

@@ -70,9 +70,7 @@ public abstract class CatEntityMixin implements UnidyeAccessor {
         if (cat.unidye$getCustomColor() != 0xFFFFFF) {
             this.setCollarColor(dyeColor);
             cat.unidye$setCustomColor(0xFFFFFF);
-            if (!player.getAbilities().creativeMode) {
-                itemStack.decrement(1);
-            }
+            itemStack.decrementUnlessCreative(1, player);
 
             ((CatEntity) (Object) this).setPersistent();
             cir.setReturnValue(ActionResult.SUCCESS);
@@ -90,9 +88,7 @@ public abstract class CatEntityMixin implements UnidyeAccessor {
                 if (cat.unidye$getCustomColor() != color || cat.unidye$getCustomColor() == 0xFFFFFF) {
                     if (!(((CatEntity) (Object) this).getWorld().isClient())) {
                         cat.unidye$setCustomColor(color);
-                        if (!player.getAbilities().creativeMode) {
-                            itemStack.decrement(1);
-                        }
+                        itemStack.decrementUnlessCreative(1, player);
                         ((CatEntity) (Object) this).setPersistent();
                     }
                     cir.setReturnValue(ActionResult.success(((CatEntity) (Object) this).getWorld().isClient()));

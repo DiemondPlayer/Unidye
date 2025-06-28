@@ -50,6 +50,12 @@ public class UnidyeEmiPlugin implements EmiPlugin {
                 }else if(customCircleDyeingRecipe.acceptedItems != null){
                     addRecipeSafe(registry, () -> new EmiCustomCircleDyeingRecipe(customCircleDyeingRecipe.acceptedItems, customCircleDyeingRecipe.outputItem, id), recipe);
                 }
+            } else if(recipe instanceof CustomSingleDyeingRecipe customSingleDyeingRecipe){
+                if(customSingleDyeingRecipe.itemTag != null) {
+                    addRecipeSafe(registry, () -> new EmiCustomSingleDyeingRecipe(customSingleDyeingRecipe.itemTag, customSingleDyeingRecipe.outputItem.asItem(), id), recipe);
+                }else if(customSingleDyeingRecipe.acceptedItems != null){
+                    addRecipeSafe(registry, () -> new EmiCustomSingleDyeingRecipe(customSingleDyeingRecipe.acceptedItems, customSingleDyeingRecipe.outputItem.asItem(), id), recipe);
+                }
             } else if(recipe instanceof CustomStainedGlassPaneRecipe) {
                 addRecipeSafe(registry, () -> new EmiCustomStainedGlassPaneRecipe(id), recipe);
             } else if(recipe instanceof CustomCarpetRecipe) {
@@ -62,8 +68,6 @@ public class UnidyeEmiPlugin implements EmiPlugin {
                 addRecipeSafe(registry, () -> new EmiCustomBannerRecipe(id), recipe);
             } else if (recipe instanceof CustomBannerDuplicateRecipe) {
                 addRecipeSafe(registry, () -> new EmiCustomBannerDuplicateRecipe(id), recipe);
-            } else if (recipe instanceof CustomBedDyeingRecipe) {
-                addRecipeSafe(registry, () -> new EmiCustomSingleDyeingRecipe(ItemTags.BEDS, UnidyeBlocks.CUSTOM_BED.asItem(), id), recipe);
             } else if (recipe instanceof CustomShulkerBoxDyeingRecipe) {
                 addRecipeSafe(registry, () -> new EmiCustomSingleDyeingRecipe(ConventionalItemTags.SHULKER_BOXES, UnidyeBlocks.CUSTOM_SHULKER_BOX.asItem(), id), recipe);
             } else if (recipe instanceof CustomShieldDecorationRecipe) {
