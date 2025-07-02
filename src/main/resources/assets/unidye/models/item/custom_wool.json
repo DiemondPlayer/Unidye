@@ -1,3 +1,6 @@
 {
-  "parent": "unidye:block/custom_wool"
+  "parent": "unidye:block/template/tintable_block",
+  "textures": {
+    "tint": "unidye:block/custom_wool"
+  }
 }

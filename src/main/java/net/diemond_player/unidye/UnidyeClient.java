@@ -60,7 +60,11 @@ public class UnidyeClient implements ClientModInitializer {
             put(UnidyeBlocks.CUSTOM_CONCRETE_POWDER, 15);
     }};
 
-    public static final ArrayList<Block> GRAY_OUTLINE_BLOCKS = Lists.newArrayList(UnidyeBlocks.CUSTOM_CANDLE,UnidyeBlocks.CUSTOM_CANDLE_CAKE);
+    public static final ArrayList<Block> GRAY_OUTLINE_BLOCKS = Lists.newArrayList(
+            UnidyeBlocks.CUSTOM_CANDLE,
+            UnidyeBlocks.CUSTOM_CANDLE_CAKE,
+            UnidyeBlocks.CUSTOM_WOOL,
+            UnidyeBlocks.CUSTOM_CARPET);
 
     @Override
     public void onInitializeClient() {
@@ -246,6 +250,8 @@ public class UnidyeClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlock(UnidyeBlocks.CUSTOM_STAINED_GLASS_PANE, RenderLayer.getTranslucent());
         BlockRenderLayerMap.INSTANCE.putBlock(UnidyeBlocks.CUSTOM_CANDLE, RenderLayer.getTranslucent());
         BlockRenderLayerMap.INSTANCE.putBlock(UnidyeBlocks.CUSTOM_CANDLE_CAKE, RenderLayer.getTranslucent());
+        BlockRenderLayerMap.INSTANCE.putBlock(UnidyeBlocks.CUSTOM_WOOL, RenderLayer.getTranslucent());
+        BlockRenderLayerMap.INSTANCE.putBlock(UnidyeBlocks.CUSTOM_CARPET, RenderLayer.getTranslucent());
     }
 
     private void registerEntityModelLayers() {

@@ -10,7 +10,8 @@
 - **consider TODO** resourcepack driven stuff for everything else
 - **TODO** move recipe stacks to be a database not a component
 - **TODO** new crafting station?????
-- **TODO** whole 'nother dye shape system
+- **TODO** whole 'nother dye shape system (choose in the crafting station)
+- **TODO** a datapack (?) system to add new "vanilla dyes" without new items
 
 ### Config:
 - **TODO** add "no added spaces option"
@@ -19,8 +20,8 @@
 - **TODO** add ownership system to config (can only the author edit the name?) (discovery system)
 
 ### Assets:
-- **TODO** if the "two-layered dyeable blocks" system is implemented, utilise it
-- **TODO** new dye sprites for lime, pink, gray, purple, magenta
+- **TODO** new dye sprites (for lime, pink, gray, purple, magenta) and new unique shapes
+- **FIXME** item models are weird with carpets and wool
 
 ### Compat (Main Mod):
 - **TODO** built-in datapack system for recipe, advancements, etc.
@@ -36,7 +37,6 @@
 - **TODO** add warns/errors through LOGGER where it is needed
 
 ### The Unlikely Corner:
-- **unlikely TODO** a system to add new "vanilla dyes" without new items (aka fix your awful dye shape code again)
 - **unlikely TODO** naming system for fireworks
 - **unlikely TODO** updating naming system for fireworks
 - **unlikely FIXME** dyed map markers; check MapIcon.Type, FilledMapItem, map_icons, MapRenderer
@@ -45,3 +45,4 @@
 - **unlikely TODO** JEI proper compat
 - **unlikely TODO** JEI recipe saving impl
 - **unlikely TODO** figure out whether issuing a sync additionally is worth it
+- **unlikely TODO** second layer concrete powder
