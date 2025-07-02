@@ -220,8 +220,16 @@ public class UnidyeMaterialTypes {
         }
     }
 
+    public static boolean hasAdditionalMaterialTypes(Item dyeableItem){
+        return ITEM_TO_ADDITIONAL_MATERIAL_TYPES.containsKey(dyeableItem);
+    }
+
+    public static ArrayList<UnidyeMaterialType> getAdditionalMaterialTypes(Item dyeableItem){
+        return ITEM_TO_ADDITIONAL_MATERIAL_TYPES.getOrDefault(dyeableItem, new ArrayList<>());
+    }
+
     public static UnidyeMaterialType getMaterialType(Item dyeableItem) {
-        return UnidyeMaterialTypes.ITEM_TO_MATERIAL_TYPE.getOrDefault(dyeableItem, UnidyeMaterialTypes.LEATHER);
+        return ITEM_TO_MATERIAL_TYPE.getOrDefault(dyeableItem, LEATHER);
     }
 
     public static void registerMaterialTypes(){

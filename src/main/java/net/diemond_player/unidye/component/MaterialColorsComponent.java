@@ -5,6 +5,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.registry.UnidyeMaterialTypes;
 import net.diemond_player.unidye.util.UnidyeMaterialType;
+import net.diemond_player.unidye.util.UnidyeUtils;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.NbtComponent;
@@ -84,6 +85,7 @@ public record MaterialColorsComponent(List<MaterialColor> materialColors){
 
     public static int getMaterialColor(ItemStack stack, Identifier materialTypeId) {
         convertFromCustomDataComponent(stack);
+        if(materialTypeId == UnidyeMaterialTypes.getMaterialType(stack.getItem()).getId()) return UnidyeUtils.getColor(stack);
         if(stack.contains(UnidyeDataComponentTypes.MATERIAL_COLORS)) {
             return stack.get(UnidyeDataComponentTypes.MATERIAL_COLORS).materialColors()
                     .stream().filter((materialColor ->

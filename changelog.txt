@@ -155,3 +155,4 @@ The changelog posted on Modrinth/Curseforge would be without those minor changes
 • Single Dyeing (wool and candle)
 • Can no longer do stuff like custom dye + the same custom dye = custom dye
 • Custom wool and carpet better textures
+• Hopefully better programmed UnidyeUtils
