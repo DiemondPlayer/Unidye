@@ -1,25 +1,12 @@
 package net.diemond_player.unidye.block;
 
-import net.diemond_player.unidye.block.entity.DyeableBlockEntity;
 import net.diemond_player.unidye.block.entity.IDyeableBlockEntity;
-import net.diemond_player.unidye.component.ItemNameAffixesComponent;
-import net.diemond_player.unidye.component.RecipeStacksComponent;
-import net.diemond_player.unidye.registry.UnidyeBlockEntities;
-import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
-import net.diemond_player.unidye.registry.UnidyeMaterialTypes;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.PaneBlock;
 import net.minecraft.block.Stainable;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.DyedColorComponent;
-import net.minecraft.component.type.NbtComponent;
-import net.minecraft.component.type.ProfileComponent;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.BlockView;
 import net.minecraft.world.WorldView;
 
 import static net.diemond_player.unidye.component.MaterialColorsComponent.DEFAULT_WHITE_COLOR;

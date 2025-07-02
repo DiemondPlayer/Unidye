@@ -4,7 +4,6 @@ import net.diemond_player.unidye.Unidye;
 import net.diemond_player.unidye.block.*;
 import net.diemond_player.unidye.item.DyeableBedItem;
 import net.diemond_player.unidye.item.DyeableBlockItem;
-
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;

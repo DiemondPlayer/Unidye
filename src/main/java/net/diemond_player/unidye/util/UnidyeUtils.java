@@ -1,9 +1,7 @@
 package net.diemond_player.unidye.util;
 
 import net.diemond_player.unidye.component.ItemNameAffixesComponent;
-import net.diemond_player.unidye.component.MaterialColorsComponent;
 import net.diemond_player.unidye.item.CustomDyeItem;
-
 import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.registry.UnidyeMaterialTypes;
 import net.minecraft.component.DataComponentTypes;

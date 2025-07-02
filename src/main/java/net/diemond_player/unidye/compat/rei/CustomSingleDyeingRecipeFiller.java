@@ -8,7 +8,6 @@ import me.shedaniel.rei.api.common.entry.type.VanillaEntryTypes;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
 import me.shedaniel.rei.plugin.client.categories.crafting.filler.CraftingRecipeFiller;
 import me.shedaniel.rei.plugin.common.displays.crafting.DefaultCustomShapedDisplay;
-import net.diemond_player.unidye.recipe.CustomCircleDyeingRecipe;
 import net.diemond_player.unidye.recipe.CustomSingleDyeingRecipe;
 import net.diemond_player.unidye.registry.UnidyeItems;
 import net.diemond_player.unidye.util.UnidyeUtils;

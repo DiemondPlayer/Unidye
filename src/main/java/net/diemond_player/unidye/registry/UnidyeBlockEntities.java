@@ -2,7 +2,10 @@ package net.diemond_player.unidye.registry;
 
 import com.google.common.collect.Lists;
 import net.diemond_player.unidye.Unidye;
-import net.diemond_player.unidye.block.entity.*;
+import net.diemond_player.unidye.block.entity.DyeableBannerBlockEntity;
+import net.diemond_player.unidye.block.entity.DyeableBedBlockEntity;
+import net.diemond_player.unidye.block.entity.DyeableBlockEntity;
+import net.diemond_player.unidye.block.entity.DyeableShulkerBoxBlockEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.registry.Registries;

@@ -2,7 +2,6 @@ package net.diemond_player.unidye.recipe;
 
 import net.diemond_player.unidye.component.MaterialColorsComponent;
 import net.diemond_player.unidye.component.RecipeStacksComponent;
-
 import net.diemond_player.unidye.registry.UnidyeBlocks;
 import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.registry.UnidyeMaterialTypes;

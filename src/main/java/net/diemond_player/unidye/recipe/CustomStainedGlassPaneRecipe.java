@@ -2,7 +2,6 @@ package net.diemond_player.unidye.recipe;
 
 import net.diemond_player.unidye.component.MaterialColorsComponent;
 import net.diemond_player.unidye.component.RecipeStacksComponent;
-
 import net.diemond_player.unidye.registry.UnidyeBlocks;
 import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.registry.UnidyeMaterialTypes;
@@ -15,8 +14,6 @@ import net.minecraft.recipe.book.CraftingRecipeCategory;
 import net.minecraft.recipe.input.CraftingRecipeInput;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.world.World;
-
-import java.util.Objects;
 
 public class CustomStainedGlassPaneRecipe extends SpecialCraftingRecipe {
     public CustomStainedGlassPaneRecipe(CraftingRecipeCategory category) {

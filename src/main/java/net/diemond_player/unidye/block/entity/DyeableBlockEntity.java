@@ -7,7 +7,6 @@ import net.diemond_player.unidye.component.ItemNameAffixesComponent;
 import net.diemond_player.unidye.component.MaterialColorsComponent;
 import net.diemond_player.unidye.component.RecipeStacksComponent;
 import net.diemond_player.unidye.registry.UnidyeBlockEntities;
-import net.diemond_player.unidye.registry.UnidyeDataComponentTypes;
 import net.diemond_player.unidye.registry.UnidyeMaterialTypes;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;

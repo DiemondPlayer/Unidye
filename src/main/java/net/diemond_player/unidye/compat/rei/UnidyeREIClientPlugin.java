@@ -6,18 +6,14 @@ import me.shedaniel.rei.api.client.plugins.REIClientPlugin;
 import me.shedaniel.rei.api.client.registry.category.CategoryRegistry;
 import me.shedaniel.rei.api.client.registry.display.DisplayRegistry;
 import me.shedaniel.rei.plugin.client.categories.crafting.filler.CraftingRecipeFiller;
-import net.diemond_player.unidye.recipe.CustomCircleDyeingRecipe;
 import net.diemond_player.unidye.registry.UnidyeBlocks;
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
-import net.minecraft.recipe.SpecialRecipeSerializer;
-import net.minecraft.registry.Registries;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.registry.tag.TagKey;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class UnidyeREIClientPlugin implements REIClientPlugin {
 

@@ -1,5 +1,6 @@
 package net.diemond_player.unidye.component;
 
+import com.google.common.collect.Lists;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.diemond_player.unidye.Unidye;
@@ -16,7 +17,6 @@ import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.TagKey;
-import com.google.common.collect.Lists;
 
 import java.util.ArrayList;
 import java.util.Comparator;
